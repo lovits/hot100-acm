@@ -1,0 +1,10 @@
+{
+  "counts": {
+    "reference": 301,
+    "boundary": 44,
+    "differential": 1350
+  },
+  "total": 1695,
+  "failures": [],
+  "seed": 20261102
+}

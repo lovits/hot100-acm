@@ -1,0 +1,4573 @@
+[
+  {
+    "questionId": 1,
+    "questionSlug": "two-sum",
+    "title": "两数之和",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2326193",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【动画】从两数之和中，我们可以学到什么？（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/two-sum/solutions/2326193/dong-hua-cong-liang-shu-zhi-he-zhong-wo-0yvmj/",
+          "articleId": 2326193,
+          "articleSlug": "dong-hua-cong-liang-shu-zhi-he-zhong-wo-0yvmj",
+          "questionSlug": "two-sum",
+          "questionId": 1,
+          "tags": [
+            "哈希表",
+            "枚举",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 30801
+  },
+  {
+    "questionId": 49,
+    "questionSlug": "group-anagrams",
+    "title": "字母异位词分组",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2718519",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "哈希表分组，简洁写法（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/group-anagrams/solutions/2718519/ha-xi-biao-fen-zu-jian-ji-xie-fa-pythonj-1ukv/",
+          "articleId": 2718519,
+          "articleSlug": "ha-xi-biao-fen-zu-jian-ji-xie-fa-pythonj-1ukv",
+          "questionSlug": "group-anagrams",
+          "questionId": 49,
+          "tags": [
+            "哈希表",
+            "字符串",
+            "排序",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5773
+  },
+  {
+    "questionId": 128,
+    "questionSlug": "longest-consecutive-sequence",
+    "title": "最长连续序列",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3005726",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两个关键优化，O(n) 时间复杂度（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/longest-consecutive-sequence/solutions/3005726/ha-xi-biao-on-zuo-fa-pythonjavacgojsrust-whop/",
+          "articleId": 3005726,
+          "articleSlug": "ha-xi-biao-on-zuo-fa-pythonjavacgojsrust-whop",
+          "questionSlug": "longest-consecutive-sequence",
+          "questionId": 128,
+          "tags": [
+            "哈希表",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6352
+  },
+  {
+    "questionId": 283,
+    "questionSlug": "move-zeroes",
+    "title": "移动零",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2969353",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：原地栈 / 交换元素（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/move-zeroes/solutions/2969353/kuai-man-zhi-zhen-wei-shi-yao-ke-yi-ba-s-1h8x/",
+          "articleId": 2969353,
+          "articleSlug": "kuai-man-zhi-zhen-wei-shi-yao-ke-yi-ba-s-1h8x",
+          "questionSlug": "move-zeroes",
+          "questionId": 283,
+          "tags": [
+            "栈",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 11587
+  },
+  {
+    "questionId": 11,
+    "questionSlug": "container-with-most-water",
+    "title": "盛最多水的容器",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1974355",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】双指针做法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/container-with-most-water/solutions/1974355/by-endlesscheng-f0xz/",
+          "articleId": 1974355,
+          "articleSlug": "by-endlesscheng-f0xz",
+          "questionSlug": "container-with-most-water",
+          "questionId": 11,
+          "tags": [
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-11491",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "11. 盛最多水的容器（双指针，清晰图解）",
+          "url": "https://leetcode.cn/problems/container-with-most-water/solutions/11491/container-with-most-water-shuang-zhi-zhen-fa-yi-do/",
+          "articleId": 11491,
+          "articleSlug": "container-with-most-water-shuang-zhi-zhen-fa-yi-do",
+          "questionSlug": "container-with-most-water",
+          "questionId": 11,
+          "tags": [
+            "双指针",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 9482
+  },
+  {
+    "questionId": 15,
+    "questionSlug": "3sum",
+    "title": "三数之和",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1968332",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】极致优化！一个视频讲透双指针！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/3sum/solutions/1968332/shuang-zhi-zhen-xiang-bu-ming-bai-yi-ge-pno55/",
+          "articleId": 1968332,
+          "articleSlug": "shuang-zhi-zhen-xiang-bu-ming-bai-yi-ge-pno55",
+          "questionSlug": "3sum",
+          "questionId": 15,
+          "tags": [
+            "双指针",
+            "排序",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-11525",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "三数之和（排序+双指针，易懂图解）",
+          "url": "https://leetcode.cn/problems/3sum/solutions/11525/3sumpai-xu-shuang-zhi-zhen-yi-dong-by-jyd/",
+          "articleId": 11525,
+          "articleSlug": "3sumpai-xu-shuang-zhi-zhen-yi-dong-by-jyd",
+          "questionSlug": "3sum",
+          "questionId": 15,
+          "tags": [
+            "双指针",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 9898
+  },
+  {
+    "questionId": 42,
+    "questionSlug": "trapping-rain-water",
+    "title": "接雨水",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1974340",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】三种方法：前后缀分解/双指针/单调栈（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/trapping-rain-water/solutions/1974340/zuo-liao-nbian-huan-bu-hui-yi-ge-shi-pin-ukwm/",
+          "articleId": 1974340,
+          "articleSlug": "zuo-liao-nbian-huan-bu-hui-yi-ge-shi-pin-ukwm",
+          "questionSlug": "trapping-rain-water",
+          "questionId": 42,
+          "tags": [
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "单调栈"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 8325
+  },
+  {
+    "questionId": 3,
+    "questionSlug": "longest-substring-without-repeating-characters",
+    "title": "无重复字符的最长子串",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1959540",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】一个视频讲透滑动窗口！附题单！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/longest-substring-without-repeating-characters/solutions/1959540/xia-biao-zong-suan-cuo-qing-kan-zhe-by-e-iaks/",
+          "articleId": 1959540,
+          "articleSlug": "xia-biao-zong-suan-cuo-qing-kan-zhe-by-e-iaks",
+          "questionSlug": "longest-substring-without-repeating-characters",
+          "questionId": 3,
+          "tags": [
+            "哈希表",
+            "滑动窗口",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361797",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "3. 无重复字符的最长子串（滑动窗口，清晰图解）",
+          "url": "https://leetcode.cn/problems/longest-substring-without-repeating-characters/solutions/2361797/3-wu-zhong-fu-zi-fu-de-zui-chang-zi-chua-26i5/",
+          "articleId": 2361797,
+          "articleSlug": "3-wu-zhong-fu-zi-fu-de-zui-chang-zi-chua-26i5",
+          "questionSlug": "longest-substring-without-repeating-characters",
+          "questionId": 3,
+          "tags": [
+            "动态规划",
+            "滑动窗口",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 20521
+  },
+  {
+    "questionId": 438,
+    "questionSlug": "find-all-anagrams-in-a-string",
+    "title": "找到字符串中所有字母异位词",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2969498",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：定长滑窗/不定长滑窗（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/find-all-anagrams-in-a-string/solutions/2969498/liang-chong-fang-fa-ding-chang-hua-chuan-14pd/",
+          "articleId": 2969498,
+          "articleSlug": "liang-chong-fang-fa-ding-chang-hua-chuan-14pd",
+          "questionSlug": "find-all-anagrams-in-a-string",
+          "questionId": 438,
+          "tags": [
+            "字符串",
+            "滑动窗口",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4540
+  },
+  {
+    "questionId": 560,
+    "questionSlug": "subarray-sum-equals-k",
+    "title": "和为 K 的子数组",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2781031",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "前缀和+哈希表：从两次遍历到一次遍历，附变形题（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/subarray-sum-equals-k/solutions/2781031/qian-zhui-he-ha-xi-biao-cong-liang-ci-bi-4mwr/",
+          "articleId": 2781031,
+          "articleSlug": "qian-zhui-he-ha-xi-biao-cong-liang-ci-bi-4mwr",
+          "questionSlug": "subarray-sum-equals-k",
+          "questionId": 560,
+          "tags": [
+            "哈希表",
+            "前缀和",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3851
+  },
+  {
+    "questionId": 239,
+    "questionSlug": "sliding-window-maximum",
+    "title": "滑动窗口最大值",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2499715",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "降本增笑，秒懂单调队列！附题单！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/sliding-window-maximum/solutions/2499715/shi-pin-yi-ge-shi-pin-miao-dong-dan-diao-ezj6/",
+          "articleId": 2499715,
+          "articleSlug": "shi-pin-yi-ge-shi-pin-miao-dong-dan-diao-ezj6",
+          "questionSlug": "sliding-window-maximum",
+          "questionId": 239,
+          "tags": [
+            "滑动窗口",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "单调队列"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361228",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "239. 滑动窗口最大值（单调队列，清晰图解）",
+          "url": "https://leetcode.cn/problems/sliding-window-maximum/solutions/2361228/239-hua-dong-chuang-kou-zui-da-zhi-dan-d-u6h0/",
+          "articleId": 2361228,
+          "articleSlug": "239-hua-dong-chuang-kou-zui-da-zhi-dan-d-u6h0",
+          "questionSlug": "sliding-window-maximum",
+          "questionId": 239,
+          "tags": [
+            "滑动窗口",
+            "C++",
+            "Java",
+            "Python3",
+            "单调队列"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5465
+  },
+  {
+    "questionId": 76,
+    "questionSlug": "minimum-window-substring",
+    "title": "最小覆盖子串",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2713911",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：从 O(52m+n) 到 O(m+n)，附题单（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/minimum-window-substring/solutions/2713911/liang-chong-fang-fa-cong-o52mn-dao-omnfu-3ezz/",
+          "articleId": 2713911,
+          "articleSlug": "liang-chong-fang-fa-cong-o52mn-dao-omnfu-3ezz",
+          "questionSlug": "minimum-window-substring",
+          "questionId": 76,
+          "tags": [
+            "滑动窗口",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5759
+  },
+  {
+    "questionId": 53,
+    "questionSlug": "maximum-subarray",
+    "title": "最大子数组和",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2533977",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：前缀和+贪心 / 动态规划，附变形题（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/maximum-subarray/solutions/2533977/qian-zhui-he-zuo-fa-ben-zhi-shi-mai-mai-abu71/",
+          "articleId": 2533977,
+          "articleSlug": "qian-zhui-he-zuo-fa-ben-zhi-shi-mai-mai-abu71",
+          "questionSlug": "maximum-subarray",
+          "questionId": 53,
+          "tags": [
+            "动态规划",
+            "前缀和",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361770",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "53. 最大子数组和（动态规划，清晰图解）",
+          "url": "https://leetcode.cn/problems/maximum-subarray/solutions/2361770/53-zui-da-zi-shu-zu-he-dong-tai-gui-hua-bvkq9/",
+          "articleId": 2361770,
+          "articleSlug": "53-zui-da-zi-shu-zu-he-dong-tai-gui-hua-bvkq9",
+          "questionSlug": "maximum-subarray",
+          "questionId": 53,
+          "tags": [
+            "动态规划",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 10241
+  },
+  {
+    "questionId": 56,
+    "questionSlug": "merge-intervals",
+    "title": "合并区间",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2798138",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "三种方法：排序 / 差分数组 / 扫描线（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/merge-intervals/solutions/2798138/jian-dan-zuo-fa-yi-ji-wei-shi-yao-yao-zh-f2b3/",
+          "articleId": 2798138,
+          "articleSlug": "jian-dan-zuo-fa-yi-ji-wei-shi-yao-yao-zh-f2b3",
+          "questionSlug": "merge-intervals",
+          "questionId": 56,
+          "tags": [
+            "哈希表",
+            "排序",
+            "扫描线",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6906
+  },
+  {
+    "questionId": 189,
+    "questionSlug": "rotate-array",
+    "title": "轮转数组",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2784427",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】负负得正，一图秒懂！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/rotate-array/solutions/2784427/tu-jie-yuan-di-zuo-fa-yi-tu-miao-dong-py-ryfv/",
+          "articleId": 2784427,
+          "articleSlug": "tu-jie-yuan-di-zuo-fa-yi-tu-miao-dong-py-ryfv",
+          "questionSlug": "rotate-array",
+          "questionId": 189,
+          "tags": [
+            "数学",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6386
+  },
+  {
+    "questionId": 238,
+    "questionSlug": "product-of-array-except-self",
+    "title": "除了自身以外数组的乘积",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2783788",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "前后缀分解，附题单！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/product-of-array-except-self/solutions/2783788/qian-hou-zhui-fen-jie-fu-ti-dan-pythonja-86r1/",
+          "articleId": 2783788,
+          "articleSlug": "qian-hou-zhui-fen-jie-fu-ti-dan-pythonja-86r1",
+          "questionSlug": "product-of-array-except-self",
+          "questionId": 238,
+          "tags": [
+            "动态规划",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "递推"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-11472",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "238. 除自身以外数组的乘积（清晰图解）",
+          "url": "https://leetcode.cn/problems/product-of-array-except-self/solutions/11472/product-of-array-except-self-shang-san-jiao-xia-sa/",
+          "articleId": 11472,
+          "articleSlug": "product-of-array-except-self-shang-san-jiao-xia-sa",
+          "questionSlug": "product-of-array-except-self",
+          "questionId": 238,
+          "tags": [
+            "数组",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3978
+  },
+  {
+    "questionId": 41,
+    "questionSlug": "first-missing-positive",
+    "title": "缺失的第一个正数",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3655377",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "O(n) 换座位，通过例子理解算法思想（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/first-missing-positive/solutions/3655377/huan-zuo-wei-tong-guo-li-zi-li-jie-suan-qa94e/",
+          "articleId": 3655377,
+          "articleSlug": "huan-zuo-wei-tong-guo-li-zi-li-jie-suan-qa94e",
+          "questionSlug": "first-missing-positive",
+          "questionId": 41,
+          "tags": [
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3920
+  },
+  {
+    "questionId": 73,
+    "questionSlug": "set-matrix-zeroes",
+    "title": "矩阵置零",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3799648",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "一步步优化，从 O(m+n) 到 O(1) 空间（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/set-matrix-zeroes/solutions/3799648/yi-bu-bu-you-hua-cong-omn-dao-o1-kong-ji-fdgt/",
+          "articleId": 3799648,
+          "articleSlug": "yi-bu-bu-you-hua-cong-omn-dao-o1-kong-ji-fdgt",
+          "questionSlug": "set-matrix-zeroes",
+          "questionId": 73,
+          "tags": [
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3570
+  },
+  {
+    "questionId": 54,
+    "questionSlug": "spiral-matrix",
+    "title": "螺旋矩阵",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2966229",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法，简洁高效（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/spiral-matrix/solutions/2966229/liang-chong-fang-fa-jian-ji-gao-xiao-pyt-4wzk/",
+          "articleId": 2966229,
+          "articleSlug": "liang-chong-fang-fa-jian-ji-gao-xiao-pyt-4wzk",
+          "questionSlug": "spiral-matrix",
+          "questionId": 54,
+          "tags": [
+            "矩阵",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "模拟"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2362055",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "54. 螺旋矩阵（模拟，清晰图解）",
+          "url": "https://leetcode.cn/problems/spiral-matrix/solutions/2362055/54-luo-xuan-ju-zhen-mo-ni-qing-xi-tu-jie-juvi/",
+          "articleId": 2362055,
+          "articleSlug": "54-luo-xuan-ju-zhen-mo-ni-qing-xi-tu-jie-juvi",
+          "questionSlug": "spiral-matrix",
+          "questionId": 54,
+          "tags": [
+            "矩阵",
+            "C++",
+            "Java",
+            "Python3",
+            "模拟"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 7241
+  },
+  {
+    "questionId": 48,
+    "questionSlug": "rotate-image",
+    "title": "旋转图像",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3655166",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "数学本质：两次翻转等于一次旋转（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/rotate-image/solutions/3655166/shu-xue-ben-zhi-liang-ci-fan-zhuan-deng-aon4a/",
+          "articleId": 3655166,
+          "articleSlug": "shu-xue-ben-zhi-liang-ci-fan-zhuan-deng-aon4a",
+          "questionSlug": "rotate-image",
+          "questionId": 48,
+          "tags": [
+            "数学",
+            "矩阵",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-1228078",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "48. 旋转图像（辅助矩阵 / 原地修改，清晰图解）",
+          "url": "https://leetcode.cn/problems/rotate-image/solutions/1228078/48-xuan-zhuan-tu-xiang-fu-zhu-ju-zhen-yu-jobi/",
+          "articleId": 1228078,
+          "articleSlug": "48-xuan-zhuan-tu-xiang-fu-zhu-ju-zhen-yu-jobi",
+          "questionSlug": "rotate-image",
+          "questionId": 48,
+          "tags": [
+            "数学",
+            "矩阵",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6963
+  },
+  {
+    "questionId": 240,
+    "questionSlug": "search-a-2d-matrix-ii",
+    "title": "搜索二维矩阵 II",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2783938",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】排除法，一图秒懂！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/search-a-2d-matrix-ii/solutions/2783938/tu-jie-pai-chu-fa-yi-tu-miao-dong-python-kytg/",
+          "articleId": 2783938,
+          "articleSlug": "tu-jie-pai-chu-fa-yi-tu-miao-dong-python-kytg",
+          "questionSlug": "search-a-2d-matrix-ii",
+          "questionId": 240,
+          "tags": [
+            "双指针",
+            "矩阵",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361487",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "240. 搜索二维矩阵 II（贪心，清晰图解）",
+          "url": "https://leetcode.cn/problems/search-a-2d-matrix-ii/solutions/2361487/240-sou-suo-er-wei-ju-zhen-iitan-xin-qin-7mtf/",
+          "articleId": 2361487,
+          "articleSlug": "240-sou-suo-er-wei-ju-zhen-iitan-xin-qin-7mtf",
+          "questionSlug": "search-a-2d-matrix-ii",
+          "questionId": 240,
+          "tags": [
+            "贪心",
+            "矩阵",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2877
+  },
+  {
+    "questionId": 160,
+    "questionSlug": "intersection-of-two-linked-lists",
+    "title": "相交链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2958778",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】一张图秒懂相交链表！（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/intersection-of-two-linked-lists/solutions/2958778/tu-jie-yi-zhang-tu-miao-dong-xiang-jiao-m6tg1/",
+          "articleId": 2958778,
+          "articleSlug": "tu-jie-yi-zhang-tu-miao-dong-xiang-jiao-m6tg1",
+          "questionSlug": "intersection-of-two-linked-lists",
+          "questionId": 160,
+          "tags": [
+            "图",
+            "链表",
+            "数学",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-12624",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "160. 相交链表（双指针，清晰图解）",
+          "url": "https://leetcode.cn/problems/intersection-of-two-linked-lists/solutions/12624/intersection-of-two-linked-lists-shuang-zhi-zhen-l/",
+          "articleId": 12624,
+          "articleSlug": "intersection-of-two-linked-lists-shuang-zhi-zhen-l",
+          "questionSlug": "intersection-of-two-linked-lists",
+          "questionId": 160,
+          "tags": [
+            "链表",
+            "双指针",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5978
+  },
+  {
+    "questionId": 206,
+    "questionSlug": "reverse-linked-list",
+    "title": "反转链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1992225",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：递归 / 迭代，本质是尾插法和头插法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/reverse-linked-list/solutions/1992225/you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-o5zy/",
+          "articleId": 1992225,
+          "articleSlug": "you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-o5zy",
+          "questionSlug": "reverse-linked-list",
+          "questionId": 206,
+          "tags": [
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361282",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "206. 反转链表（双指针，清晰图解）",
+          "url": "https://leetcode.cn/problems/reverse-linked-list/solutions/2361282/206-fan-zhuan-lian-biao-shuang-zhi-zhen-r1jel/",
+          "articleId": 2361282,
+          "articleSlug": "206-fan-zhuan-lian-biao-shuang-zhi-zhen-r1jel",
+          "questionSlug": "reverse-linked-list",
+          "questionId": 206,
+          "tags": [
+            "链表",
+            "双指针",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 15079
+  },
+  {
+    "questionId": 234,
+    "questionSlug": "palindrome-linked-list",
+    "title": "回文链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2952645",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：递归 / 寻找中间节点+反转链表（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/palindrome-linked-list/solutions/2952645/o1-kong-jian-zuo-fa-xun-zhao-zhong-jian-rv0f3/",
+          "articleId": 2952645,
+          "articleSlug": "o1-kong-jian-zuo-fa-xun-zhao-zhong-jian-rv0f3",
+          "questionSlug": "palindrome-linked-list",
+          "questionId": 234,
+          "tags": [
+            "递归",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5489
+  },
+  {
+    "questionId": 141,
+    "questionSlug": "linked-list-cycle",
+    "title": "环形链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1999269",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "没想明白？一个视频讲透快慢指针！（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/linked-list-cycle/solutions/1999269/mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-c4sw/",
+          "articleId": 1999269,
+          "articleSlug": "mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-c4sw",
+          "questionSlug": "linked-list-cycle",
+          "questionId": 141,
+          "tags": [
+            "链表",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 7518
+  },
+  {
+    "questionId": 142,
+    "questionSlug": "linked-list-cycle-ii",
+    "title": "环形链表 II",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1999271",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】一张图秒懂环形链表 II，Floyd 判圈算法（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/linked-list-cycle-ii/solutions/1999271/mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-nvsq/",
+          "articleId": 1999271,
+          "articleSlug": "mei-xiang-ming-bai-yi-ge-shi-pin-jiang-t-nvsq",
+          "questionSlug": "linked-list-cycle-ii",
+          "questionId": 142,
+          "tags": [
+            "链表",
+            "数学",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-12616",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "环形链表 II（双指针，清晰图解）",
+          "url": "https://leetcode.cn/problems/linked-list-cycle-ii/solutions/12616/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/",
+          "articleId": 12616,
+          "articleSlug": "linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-",
+          "questionSlug": "linked-list-cycle-ii",
+          "questionId": 142,
+          "tags": [
+            "链表",
+            "双指针",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6236
+  },
+  {
+    "questionId": 21,
+    "questionSlug": "merge-two-sorted-lists",
+    "title": "合并两个有序链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2373691",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：迭代（尾插法）/ 递归（头插法）Python/Java/C++/C/Go/JS/Rust",
+          "url": "https://leetcode.cn/problems/merge-two-sorted-lists/solutions/2373691/liang-chong-fang-fa-die-dai-di-gui-pytho-wf75/",
+          "articleId": 2373691,
+          "articleSlug": "liang-chong-fang-fa-die-dai-di-gui-pytho-wf75",
+          "questionSlug": "merge-two-sorted-lists",
+          "questionId": 21,
+          "tags": [
+            "递归",
+            "链表",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361535",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "21. 合并两个有序链表（双指针，清晰图解）",
+          "url": "https://leetcode.cn/problems/merge-two-sorted-lists/solutions/2361535/21-he-bing-liang-ge-you-xu-lian-biao-shu-aisw/",
+          "articleId": 2361535,
+          "articleSlug": "21-he-bing-liang-ge-you-xu-lian-biao-shu-aisw",
+          "questionSlug": "merge-two-sorted-lists",
+          "questionId": 21,
+          "tags": [
+            "链表",
+            "双指针",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 10188
+  },
+  {
+    "questionId": 2,
+    "questionSlug": "add-two-numbers",
+    "title": "两数相加",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2327008",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【动画】简洁写法！从递归到迭代！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/add-two-numbers/solutions/2327008/dong-hua-jian-ji-xie-fa-cong-di-gui-dao-oe0di/",
+          "articleId": 2327008,
+          "articleSlug": "dong-hua-jian-ji-xie-fa-cong-di-gui-dao-oe0di",
+          "questionSlug": "add-two-numbers",
+          "questionId": 2,
+          "tags": [
+            "图",
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 16615
+  },
+  {
+    "questionId": 19,
+    "questionSlug": "remove-nth-node-from-end-of-list",
+    "title": "删除链表的倒数第 N 个结点",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2004057",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】前后指针，简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/remove-nth-node-from-end-of-list/solutions/2004057/ru-he-shan-chu-jie-dian-liu-fen-zhong-ga-xpfs/",
+          "articleId": 2004057,
+          "articleSlug": "ru-he-shan-chu-jie-dian-liu-fen-zhong-ga-xpfs",
+          "questionSlug": "remove-nth-node-from-end-of-list",
+          "questionId": 19,
+          "tags": [
+            "链表",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 11504
+  },
+  {
+    "questionId": 24,
+    "questionSlug": "swap-nodes-in-pairs",
+    "title": "两两交换链表中的节点",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2374872",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】迭代/递归，一张图秒懂！（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/swap-nodes-in-pairs/solutions/2374872/tu-jie-die-dai-di-gui-yi-zhang-tu-miao-d-51ap/",
+          "articleId": 2374872,
+          "articleSlug": "tu-jie-die-dai-di-gui-yi-zhang-tu-miao-d-51ap",
+          "questionSlug": "swap-nodes-in-pairs",
+          "questionId": 24,
+          "tags": [
+            "图",
+            "递归",
+            "链表",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python3",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 7287
+  },
+  {
+    "questionId": 25,
+    "questionSlug": "reverse-nodes-in-k-group",
+    "title": "K 个一组翻转链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1992228",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】从反转链表到 K 个一组反转（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/reverse-nodes-in-k-group/solutions/1992228/you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-plfs/",
+          "articleId": 1992228,
+          "articleSlug": "you-xie-cuo-liao-yi-ge-shi-pin-jiang-tou-plfs",
+          "questionSlug": "reverse-nodes-in-k-group",
+          "questionId": 25,
+          "tags": [
+            "链表",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6473
+  },
+  {
+    "questionId": 138,
+    "questionSlug": "copy-list-with-random-pointer",
+    "title": "随机链表的复制",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2993775",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "不用哈希表，简洁写法（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/copy-list-with-random-pointer/solutions/2993775/bu-yong-ha-xi-biao-de-zuo-fa-pythonjavac-nzdo/",
+          "articleId": 2993775,
+          "articleSlug": "bu-yong-ha-xi-biao-de-zuo-fa-pythonjavac-nzdo",
+          "questionSlug": "copy-list-with-random-pointer",
+          "questionId": 138,
+          "tags": [
+            "链表",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361362",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "138. 复制带随机指针的链表（清晰图解）",
+          "url": "https://leetcode.cn/problems/copy-list-with-random-pointer/solutions/2361362/138-fu-zhi-dai-sui-ji-zhi-zhen-de-lian-b-6jeo/",
+          "articleId": 2361362,
+          "articleSlug": "138-fu-zhi-dai-sui-ji-zhi-zhen-de-lian-b-6jeo",
+          "questionSlug": "copy-list-with-random-pointer",
+          "questionId": 138,
+          "tags": [
+            "哈希表",
+            "链表",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2754
+  },
+  {
+    "questionId": 148,
+    "questionSlug": "sort-list",
+    "title": "排序链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2993518",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：分治/迭代，模块化设计，代码可读性高（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/sort-list/solutions/2993518/liang-chong-fang-fa-fen-zhi-die-dai-mo-k-caei/",
+          "articleId": 2993518,
+          "articleSlug": "liang-chong-fang-fa-fen-zhi-die-dai-mo-k-caei",
+          "questionSlug": "sort-list",
+          "questionId": 148,
+          "tags": [
+            "双指针",
+            "分治",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-13728",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "Sort List （归并排序链表）",
+          "url": "https://leetcode.cn/problems/sort-list/solutions/13728/sort-list-gui-bing-pai-xu-lian-biao-by-jyd/",
+          "articleId": 13728,
+          "articleSlug": "sort-list-gui-bing-pai-xu-lian-biao-by-jyd",
+          "questionSlug": "sort-list",
+          "questionId": 148,
+          "tags": [
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3711
+  },
+  {
+    "questionId": 23,
+    "questionSlug": "merge-k-sorted-lists",
+    "title": "合并 K 个升序链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2384305",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "三种方法：最小堆/分治/迭代（Python/Java/C++/Go/JS）",
+          "url": "https://leetcode.cn/problems/merge-k-sorted-lists/solutions/2384305/liang-chong-fang-fa-zui-xiao-dui-fen-zhi-zbzx/",
+          "articleId": 2384305,
+          "articleSlug": "liang-chong-fang-fa-zui-xiao-dui-fen-zhi-zbzx",
+          "questionSlug": "merge-k-sorted-lists",
+          "questionId": 23,
+          "tags": [
+            "递归",
+            "分治",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "堆（优先队列）",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6135
+  },
+  {
+    "questionId": 146,
+    "questionSlug": "lru-cache",
+    "title": "LRU 缓存",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2456294",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】一张图秒懂 LRU！（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/lru-cache/solutions/2456294/tu-jie-yi-zhang-tu-miao-dong-lrupythonja-czgt/",
+          "articleId": 2456294,
+          "articleSlug": "tu-jie-yi-zhang-tu-miao-dong-lrupythonja-czgt",
+          "questionSlug": "lru-cache",
+          "questionId": 146,
+          "tags": [
+            "哈希表",
+            "链表",
+            "双向链表",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5156
+  },
+  {
+    "questionId": 94,
+    "questionSlug": "binary-tree-inorder-traversal",
+    "title": "二叉树的中序遍历",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3844031",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】Morris 遍历（线索二叉树），一图秒懂！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/binary-tree-inorder-traversal/solutions/3844031/tu-jie-morris-bian-li-xian-suo-er-cha-sh-cm2s/",
+          "articleId": 3844031,
+          "articleSlug": "tu-jie-morris-bian-li-xian-suo-er-cha-sh-cm2s",
+          "questionSlug": "binary-tree-inorder-traversal",
+          "questionId": 94,
+          "tags": [
+            "图",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6234
+  },
+  {
+    "questionId": 104,
+    "questionSlug": "maximum-depth-of-binary-tree",
+    "title": "二叉树的最大深度",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2010612",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】让你对递归的理解更上一层楼！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/maximum-depth-of-binary-tree/solutions/2010612/kan-wan-zhe-ge-shi-pin-rang-ni-dui-di-gu-44uz/",
+          "articleId": 2010612,
+          "articleSlug": "kan-wan-zhe-ge-shi-pin-rang-ni-dui-di-gu-44uz",
+          "questionSlug": "maximum-depth-of-binary-tree",
+          "questionId": 104,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361697",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "104. 二叉树的最大深度（后序或层序遍历，清晰图解）",
+          "url": "https://leetcode.cn/problems/maximum-depth-of-binary-tree/solutions/2361697/104-er-cha-shu-de-zui-da-shen-du-hou-xu-txzrx/",
+          "articleId": 2361697,
+          "articleSlug": "104-er-cha-shu-de-zui-da-shen-du-hou-xu-txzrx",
+          "questionSlug": "maximum-depth-of-binary-tree",
+          "questionId": 104,
+          "tags": [
+            "树",
+            "C++",
+            "Java",
+            "Python3",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 7487
+  },
+  {
+    "questionId": 226,
+    "questionSlug": "invert-binary-tree",
+    "title": "翻转二叉树",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2713610",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种递归写法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/invert-binary-tree/solutions/2713610/shi-pin-shen-ru-li-jie-di-gui-pythonjava-zhqh/",
+          "articleId": 2713610,
+          "articleSlug": "shi-pin-shen-ru-li-jie-di-gui-pythonjava-zhqh",
+          "questionSlug": "invert-binary-tree",
+          "questionId": 226,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "二叉树",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361621",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "226. 翻转二叉树（深度优先搜索，清晰图解）",
+          "url": "https://leetcode.cn/problems/invert-binary-tree/solutions/2361621/226-fan-zhuan-er-cha-shu-fen-zhi-qing-xi-tqlf/",
+          "articleId": 2361621,
+          "articleSlug": "226-fan-zhuan-er-cha-shu-fen-zhi-qing-xi-tqlf",
+          "questionSlug": "invert-binary-tree",
+          "questionId": 226,
+          "tags": [
+            "树",
+            "深度优先搜索",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6129
+  },
+  {
+    "questionId": 101,
+    "questionSlug": "symmetric-tree",
+    "title": "对称二叉树",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2015063",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】如何灵活运用递归？附思考题（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/symmetric-tree/solutions/2015063/ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-6dq5/",
+          "articleId": 2015063,
+          "articleSlug": "ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-6dq5",
+          "questionSlug": "symmetric-tree",
+          "questionId": 101,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361627",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "101. 对称二叉树（深度优先搜索，清晰图解）",
+          "url": "https://leetcode.cn/problems/symmetric-tree/solutions/2361627/101-dui-cheng-er-cha-shu-fen-zhi-qing-xi-8oba/",
+          "articleId": 2361627,
+          "articleSlug": "101-dui-cheng-er-cha-shu-fen-zhi-qing-xi-8oba",
+          "questionSlug": "symmetric-tree",
+          "questionId": 101,
+          "tags": [
+            "树",
+            "深度优先搜索",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6579
+  },
+  {
+    "questionId": 543,
+    "questionSlug": "diameter-of-binary-tree",
+    "title": "二叉树的直径",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2227017",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】彻底掌握直径 DP，从二叉树到一般树（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/diameter-of-binary-tree/solutions/2227017/shi-pin-che-di-zhang-wo-zhi-jing-dpcong-taqma/",
+          "articleId": 2227017,
+          "articleSlug": "shi-pin-che-di-zhang-wo-zhi-jing-dpcong-taqma",
+          "questionSlug": "diameter-of-binary-tree",
+          "questionId": 543,
+          "tags": [
+            "深度优先搜索",
+            "动态规划",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3476
+  },
+  {
+    "questionId": 102,
+    "questionSlug": "binary-tree-level-order-traversal",
+    "title": "二叉树的层序遍历",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2049807",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "BFS 为什么要用队列？一个视频讲透！（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/binary-tree-level-order-traversal/solutions/2049807/bfs-wei-shi-yao-yao-yong-dui-lie-yi-ge-s-xlpz/",
+          "articleId": 2049807,
+          "articleSlug": "bfs-wei-shi-yao-yao-yong-dui-lie-yi-ge-s-xlpz",
+          "questionSlug": "binary-tree-level-order-traversal",
+          "questionId": 102,
+          "tags": [
+            "广度优先搜索",
+            "队列",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361604",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "102. 二叉树的层序遍历（广度优先遍历，清晰图解）",
+          "url": "https://leetcode.cn/problems/binary-tree-level-order-traversal/solutions/2361604/102-er-cha-shu-de-ceng-xu-bian-li-yan-du-dyf7/",
+          "articleId": 2361604,
+          "articleSlug": "102-er-cha-shu-de-ceng-xu-bian-li-yan-du-dyf7",
+          "questionSlug": "binary-tree-level-order-traversal",
+          "questionId": 102,
+          "tags": [
+            "树",
+            "广度优先搜索",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6599
+  },
+  {
+    "questionId": 108,
+    "questionSlug": "convert-sorted-array-to-binary-search-tree",
+    "title": "将有序数组转换为二叉搜索树",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2927064",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "入门递归，从二叉树开始（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/solutions/2927064/ru-men-di-gui-cong-er-cha-shu-kai-shi-py-inu6/",
+          "articleId": 2927064,
+          "articleSlug": "ru-men-di-gui-cong-er-cha-shu-kai-shi-py-inu6",
+          "questionSlug": "convert-sorted-array-to-binary-search-tree",
+          "questionId": 108,
+          "tags": [
+            "递归",
+            "分治",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3252
+  },
+  {
+    "questionId": 98,
+    "questionSlug": "validate-binary-search-tree",
+    "title": "验证二叉搜索树",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2020306",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】前序中序后序，三种方法，一个视频讲透！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/validate-binary-search-tree/solutions/2020306/qian-xu-zhong-xu-hou-xu-san-chong-fang-f-yxvh/",
+          "articleId": 2020306,
+          "articleSlug": "qian-xu-zhong-xu-hou-xu-san-chong-fang-f-yxvh",
+          "questionSlug": "validate-binary-search-tree",
+          "questionId": 98,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5905
+  },
+  {
+    "questionId": 230,
+    "questionSlug": "kth-smallest-element-in-a-bst",
+    "title": "二叉搜索树中第 K 小的元素",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2952810",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "中序遍历（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/kth-smallest-element-in-a-bst/solutions/2952810/zhong-xu-bian-li-pythonjavaccgojsrust-by-wc02/",
+          "articleId": 2952810,
+          "articleSlug": "zhong-xu-bian-li-pythonjavaccgojsrust-by-wc02",
+          "questionSlug": "kth-smallest-element-in-a-bst",
+          "questionId": 230,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361685",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "230. 二叉搜索树中第 K 小的元素（中序遍历，清晰图解）",
+          "url": "https://leetcode.cn/problems/kth-smallest-element-in-a-bst/solutions/2361685/230-er-cha-sou-suo-shu-zhong-di-k-xiao-d-n3he/",
+          "articleId": 2361685,
+          "articleSlug": "230-er-cha-sou-suo-shu-zhong-di-k-xiao-d-n3he",
+          "questionSlug": "kth-smallest-element-in-a-bst",
+          "questionId": 230,
+          "tags": [
+            "树",
+            "深度优先搜索",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3167
+  },
+  {
+    "questionId": 199,
+    "questionSlug": "binary-tree-right-side-view",
+    "title": "二叉树的右视图",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2015061",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：BFS / DFS（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/binary-tree-right-side-view/solutions/2015061/ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-r1nc/",
+          "articleId": 2015061,
+          "articleSlug": "ru-he-ling-huo-yun-yong-di-gui-lai-kan-s-r1nc",
+          "questionSlug": "binary-tree-right-side-view",
+          "questionId": 199,
+          "tags": [
+            "深度优先搜索",
+            "广度优先搜索",
+            "递归",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4900
+  },
+  {
+    "questionId": 114,
+    "questionSlug": "flatten-binary-tree-to-linked-list",
+    "title": "二叉树展开为链表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2992172",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：头插法/分治（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/solutions/2992172/liang-chong-fang-fa-tou-cha-fa-fen-zhi-p-h9bg/",
+          "articleId": 2992172,
+          "articleSlug": "liang-chong-fang-fa-tou-cha-fa-fen-zhi-p-h9bg",
+          "questionSlug": "flatten-binary-tree-to-linked-list",
+          "questionId": 114,
+          "tags": [
+            "深度优先搜索",
+            "分治",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4641
+  },
+  {
+    "questionId": 105,
+    "questionSlug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "title": "从前序与中序遍历序列构造二叉树",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2646359",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】从 O(n^2) 到 O(n)（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solutions/2646359/tu-jie-cong-on2-dao-onpythonjavacgojsrus-aob8/",
+          "articleId": 2646359,
+          "articleSlug": "tu-jie-cong-on2-dao-onpythonjavacgojsrus-aob8",
+          "questionSlug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+          "questionId": 105,
+          "tags": [
+            "递归",
+            "哈希表",
+            "分治",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361558",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "105. 从前序与中序遍历序列构造二叉树（分治，清晰图解）",
+          "url": "https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/solutions/2361558/105-cong-qian-xu-yu-zhong-xu-bian-li-xu-4lvkz/",
+          "articleId": 2361558,
+          "articleSlug": "105-cong-qian-xu-yu-zhong-xu-bian-li-xu-4lvkz",
+          "questionSlug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+          "questionId": 105,
+          "tags": [
+            "树",
+            "分治",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4115
+  },
+  {
+    "questionId": 437,
+    "questionSlug": "path-sum-iii",
+    "title": "路径总和 III",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2784856",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "做法和 560 题是一样的，附常见问题及其解答（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/path-sum-iii/solutions/2784856/zuo-fa-he-560-ti-shi-yi-yang-de-pythonja-fmzo/",
+          "articleId": 2784856,
+          "articleSlug": "zuo-fa-he-560-ti-shi-yi-yang-de-pythonja-fmzo",
+          "questionSlug": "path-sum-iii",
+          "questionId": 437,
+          "tags": [
+            "深度优先搜索",
+            "回溯",
+            "前缀和",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2544
+  },
+  {
+    "questionId": 236,
+    "questionSlug": "lowest-common-ancestor-of-a-binary-tree",
+    "title": "二叉树的最近公共祖先",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2023872",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/solutions/2023872/fen-lei-tao-lun-luan-ru-ma-yi-ge-shi-pin-2r95/",
+          "articleId": 2023872,
+          "articleSlug": "fen-lei-tao-lun-luan-ru-ma-yi-ge-shi-pin-2r95",
+          "questionSlug": "lowest-common-ancestor-of-a-binary-tree",
+          "questionId": 236,
+          "tags": [
+            "深度优先搜索",
+            "二叉树",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-240096",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "236. 二叉树的最近公共祖先（DFS ，清晰图解）",
+          "url": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/solutions/240096/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/",
+          "articleId": 240096,
+          "articleSlug": "236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu",
+          "questionSlug": "lowest-common-ancestor-of-a-binary-tree",
+          "questionId": 236,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "二叉树",
+            "C++",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4588
+  },
+  {
+    "questionId": 124,
+    "questionSlug": "binary-tree-maximum-path-sum",
+    "title": "二叉树中的最大路径和",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2227021",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】彻底掌握直径 DP！从二叉树到一般树！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/binary-tree-maximum-path-sum/solutions/2227021/shi-pin-che-di-zhang-wo-zhi-jing-dpcong-n9s91/",
+          "articleId": 2227021,
+          "articleSlug": "shi-pin-che-di-zhang-wo-zhi-jing-dpcong-n9s91",
+          "questionSlug": "binary-tree-maximum-path-sum",
+          "questionId": 124,
+          "tags": [
+            "深度优先搜索",
+            "动态规划",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3118
+  },
+  {
+    "questionId": 200,
+    "questionSlug": "number-of-islands",
+    "title": "岛屿数量",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2965773",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "把访问过的格子插上旗子🚩（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/number-of-islands/solutions/2965773/ba-fang-wen-guo-de-ge-zi-cha-shang-qi-zi-9gs0/",
+          "articleId": 2965773,
+          "articleSlug": "ba-fang-wen-guo-de-ge-zi-cha-shang-qi-zi-9gs0",
+          "questionSlug": "number-of-islands",
+          "questionId": 200,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-16884",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "200. 岛屿数量（DFS / BFS）",
+          "url": "https://leetcode.cn/problems/number-of-islands/solutions/16884/number-of-islands-shen-du-you-xian-bian-li-dfs-or-/",
+          "articleId": 16884,
+          "articleSlug": "number-of-islands-shen-du-you-xian-bian-li-dfs-or-",
+          "questionSlug": "number-of-islands",
+          "questionId": 200,
+          "tags": [
+            "Java",
+            "Python"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5761
+  },
+  {
+    "questionId": 994,
+    "questionSlug": "rotting-oranges",
+    "title": "腐烂的橘子",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2773461",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "多源 BFS，附变形题（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/rotting-oranges/solutions/2773461/duo-yuan-bfsfu-ti-dan-pythonjavacgojsrus-yfmh/",
+          "articleId": 2773461,
+          "articleSlug": "duo-yuan-bfsfu-ti-dan-pythonjavacgojsrus-yfmh",
+          "questionSlug": "rotting-oranges",
+          "questionId": 994,
+          "tags": [
+            "广度优先搜索",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3642
+  },
+  {
+    "questionId": 207,
+    "questionSlug": "course-schedule",
+    "title": "课程表",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2992884",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "DFS 三色标记法（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/course-schedule/solutions/2992884/san-se-biao-ji-fa-pythonjavacgojsrust-by-pll7/",
+          "articleId": 2992884,
+          "articleSlug": "san-se-biao-ji-fa-pythonjavacgojsrust-by-pll7",
+          "questionSlug": "course-schedule",
+          "questionId": 207,
+          "tags": [
+            "深度优先搜索",
+            "图",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-18806",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "课程表（拓扑排序：入度表BFS法 / DFS法，清晰图解）",
+          "url": "https://leetcode.cn/problems/course-schedule/solutions/18806/course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa/",
+          "articleId": 18806,
+          "articleSlug": "course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa",
+          "questionSlug": "course-schedule",
+          "questionId": 207,
+          "tags": [
+            "深度优先搜索",
+            "广度优先搜索",
+            "拓扑排序",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3513
+  },
+  {
+    "questionId": 208,
+    "questionSlug": "implement-trie-prefix-tree",
+    "title": "实现 Trie (前缀树)",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2993894",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "从二叉树到二十六叉树（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/implement-trie-prefix-tree/solutions/2993894/cong-er-cha-shu-dao-er-shi-liu-cha-shu-p-xsj4/",
+          "articleId": 2993894,
+          "articleSlug": "cong-er-cha-shu-dao-er-shi-liu-cha-shu-p-xsj4",
+          "questionSlug": "implement-trie-prefix-tree",
+          "questionId": 208,
+          "tags": [
+            "树",
+            "字典树",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2474
+  },
+  {
+    "questionId": 46,
+    "questionSlug": "permutations",
+    "title": "全排列",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2079585",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】回溯不会写？套路在此！精确计算搜索树的节点个数！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/permutations/solutions/2079585/hui-su-bu-hui-xie-tao-lu-zai-ci-jing-que-6hrh/",
+          "articleId": 2079585,
+          "articleSlug": "hui-su-bu-hui-xie-tao-lu-zai-ci-jing-que-6hrh",
+          "questionSlug": "permutations",
+          "questionId": 46,
+          "tags": [
+            "递归",
+            "回溯",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2363882",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "46. 全排列（回溯，清晰图解）",
+          "url": "https://leetcode.cn/problems/permutations/solutions/2363882/46-quan-pai-lie-hui-su-qing-xi-tu-jie-by-6o7h/",
+          "articleId": 2363882,
+          "articleSlug": "46-quan-pai-lie-hui-su-qing-xi-tu-jie-by-6o7h",
+          "questionSlug": "permutations",
+          "questionId": 46,
+          "tags": [
+            "数组",
+            "回溯",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 7902
+  },
+  {
+    "questionId": 78,
+    "questionSlug": "subsets",
+    "title": "子集",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2059409",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】三种写法：选或不选/枚举选哪个/二进制枚举（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/subsets/solutions/2059409/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-8tkl/",
+          "articleId": 2059409,
+          "articleSlug": "hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-8tkl",
+          "questionSlug": "subsets",
+          "questionId": 78,
+          "tags": [
+            "位运算",
+            "递归",
+            "回溯",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5948
+  },
+  {
+    "questionId": 17,
+    "questionSlug": "letter-combinations-of-a-phone-number",
+    "title": "电话号码的字母组合",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2059416",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】回溯不会写？套路在此！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/letter-combinations-of-a-phone-number/solutions/2059416/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-3orv/",
+          "articleId": 2059416,
+          "articleSlug": "hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-3orv",
+          "questionSlug": "letter-combinations-of-a-phone-number",
+          "questionId": 17,
+          "tags": [
+            "递归",
+            "回溯",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 7873
+  },
+  {
+    "questionId": 39,
+    "questionSlug": "combination-sum",
+    "title": "组合总和",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2747858",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "三种方法：选或不选/枚举选哪个/完全背包预处理+可行性剪枝（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/combination-sum/solutions/2747858/liang-chong-fang-fa-xuan-huo-bu-xuan-mei-mhf9/",
+          "articleId": 2747858,
+          "articleSlug": "liang-chong-fang-fa-xuan-huo-bu-xuan-mei-mhf9",
+          "questionSlug": "combination-sum",
+          "questionId": 39,
+          "tags": [
+            "递归",
+            "动态规划",
+            "回溯",
+            "排序",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2363929",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "39. 组合总和（回溯，清晰图解）",
+          "url": "https://leetcode.cn/problems/combination-sum/solutions/2363929/39-zu-he-zong-he-hui-su-qing-xi-tu-jie-b-9zx7/",
+          "articleId": 2363929,
+          "articleSlug": "39-zu-he-zong-he-hui-su-qing-xi-tu-jie-b-9zx7",
+          "questionSlug": "combination-sum",
+          "questionId": 39,
+          "tags": [
+            "数组",
+            "回溯",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5753
+  },
+  {
+    "questionId": 22,
+    "questionSlug": "generate-parentheses",
+    "title": "括号生成",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2071015",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种基本回溯思想：选或不选 / 枚举选哪个（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/generate-parentheses/solutions/2071015/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-wcdw/",
+          "articleId": 2071015,
+          "articleSlug": "hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-wcdw",
+          "questionSlug": "generate-parentheses",
+          "questionId": 22,
+          "tags": [
+            "递归",
+            "回溯",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6769
+  },
+  {
+    "questionId": 79,
+    "questionSlug": "word-search",
+    "title": "单词搜索",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2927294",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "极致优化！代码击败接近 100%！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/word-search/solutions/2927294/liang-ge-you-hua-rang-dai-ma-ji-bai-jie-g3mmm/",
+          "articleId": 2927294,
+          "articleSlug": "liang-ge-you-hua-rang-dai-ma-ji-bai-jie-g3mmm",
+          "questionSlug": "word-search",
+          "questionId": 79,
+          "tags": [
+            "深度优先搜索",
+            "递归",
+            "回溯",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361646",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "79. 单词搜索（回溯，清晰图解）",
+          "url": "https://leetcode.cn/problems/word-search/solutions/2361646/79-dan-ci-sou-suo-hui-su-qing-xi-tu-jie-5yui2/",
+          "articleId": 2361646,
+          "articleSlug": "79-dan-ci-sou-suo-hui-su-qing-xi-tu-jie-5yui2",
+          "questionSlug": "word-search",
+          "questionId": 79,
+          "tags": [
+            "回溯",
+            "矩阵",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3851
+  },
+  {
+    "questionId": 131,
+    "questionSlug": "palindrome-partitioning",
+    "title": "分割回文串",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2059414",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】回溯不会写？套路在此！（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/palindrome-partitioning/solutions/2059414/hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-fues/",
+          "articleId": 2059414,
+          "articleSlug": "hui-su-bu-hui-xie-tao-lu-zai-ci-pythonja-fues",
+          "questionSlug": "palindrome-partitioning",
+          "questionId": 131,
+          "tags": [
+            "递归",
+            "回溯",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2923
+  },
+  {
+    "questionId": 51,
+    "questionSlug": "n-queens",
+    "title": "N 皇后",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2079586",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】排列型回溯，简洁高效！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/n-queens/solutions/2079586/hui-su-tao-lu-miao-sha-nhuang-hou-shi-pi-mljv/",
+          "articleId": 2079586,
+          "articleSlug": "hui-su-tao-lu-miao-sha-nhuang-hou-shi-pi-mljv",
+          "questionSlug": "n-queens",
+          "questionId": 51,
+          "tags": [
+            "递归",
+            "回溯",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4513
+  },
+  {
+    "questionId": 35,
+    "questionSlug": "search-insert-position",
+    "title": "搜索插入位置",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2023391",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "二分查找总是写不对？一个视频讲透！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/search-insert-position/solutions/2023391/er-fen-cha-zhao-zong-shi-xie-bu-dui-yi-g-nq23/",
+          "articleId": 2023391,
+          "articleSlug": "er-fen-cha-zhao-zong-shi-xie-bu-dui-yi-g-nq23",
+          "questionSlug": "search-insert-position",
+          "questionId": 35,
+          "tags": [
+            "二分查找",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "API"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 10626
+  },
+  {
+    "questionId": 74,
+    "questionSlug": "search-a-2d-matrix",
+    "title": "搜索二维矩阵",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2783931",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "把二维矩阵拉成一维数组，二分查找（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/search-a-2d-matrix/solutions/2783931/liang-chong-fang-fa-er-fen-cha-zhao-pai-39d74/",
+          "articleId": 2783931,
+          "articleSlug": "liang-chong-fang-fa-er-fen-cha-zhao-pai-39d74",
+          "questionSlug": "search-a-2d-matrix",
+          "questionId": 74,
+          "tags": [
+            "双指针",
+            "二分查找",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4481
+  },
+  {
+    "questionId": 34,
+    "questionSlug": "find-first-and-last-position-of-element-in-sorted-array",
+    "title": "在排序数组中查找元素的第一个和最后一个位置",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1980196",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频讲解】二分查找总是写不对？三种写法，一个视频讲透！（Python/Java/C++/C/Go/JS）",
+          "url": "https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/solutions/1980196/er-fen-cha-zhao-zong-shi-xie-bu-dui-yi-g-t9l9/",
+          "articleId": 1980196,
+          "articleSlug": "er-fen-cha-zhao-zong-shi-xie-bu-dui-yi-g-t9l9",
+          "questionSlug": "find-first-and-last-position-of-element-in-sorted-array",
+          "questionId": 34,
+          "tags": [
+            "二分查找",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 10703
+  },
+  {
+    "questionId": 33,
+    "questionSlug": "search-in-rotated-sorted-array",
+    "title": "搜索旋转排序数组",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1987503",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：两次二分 / 一次二分（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/search-in-rotated-sorted-array/solutions/1987503/by-endlesscheng-auuh/",
+          "articleId": 1987503,
+          "articleSlug": "by-endlesscheng-auuh",
+          "questionSlug": "search-in-rotated-sorted-array",
+          "questionId": 33,
+          "tags": [
+            "二分查找",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6710
+  },
+  {
+    "questionId": 153,
+    "questionSlug": "find-minimum-in-rotated-sorted-array",
+    "title": "寻找旋转排序数组中的最小值",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-1987499",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "和最后一个数比大小，简洁二分（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/solutions/1987499/by-endlesscheng-owgd/",
+          "articleId": 1987499,
+          "articleSlug": "by-endlesscheng-owgd",
+          "questionSlug": "find-minimum-in-rotated-sorted-array",
+          "questionId": 153,
+          "tags": [
+            "二分查找",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3964
+  },
+  {
+    "questionId": 4,
+    "questionSlug": "median-of-two-sorted-arrays",
+    "title": "寻找两个正序数组的中位数",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2950686",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】循序渐进：从排序到双指针到二分（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/median-of-two-sorted-arrays/solutions/2950686/tu-jie-xun-xu-jian-jin-cong-shuang-zhi-z-p2gd/",
+          "articleId": 2950686,
+          "articleSlug": "tu-jie-xun-xu-jian-jin-cong-shuang-zhi-z-p2gd",
+          "questionSlug": "median-of-two-sorted-arrays",
+          "questionId": 4,
+          "tags": [
+            "双指针",
+            "二分查找",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 9661
+  },
+  {
+    "questionId": 20,
+    "questionSlug": "valid-parentheses",
+    "title": "有效的括号",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2809539",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "括号消消乐：三种利用栈的写法，附题单！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/valid-parentheses/solutions/2809539/gua-hao-xiao-xiao-le-san-chong-li-yong-z-2xb3/",
+          "articleId": 2809539,
+          "articleSlug": "gua-hao-xiao-xiao-le-san-chong-li-yong-z-2xb3",
+          "questionSlug": "valid-parentheses",
+          "questionId": 20,
+          "tags": [
+            "栈",
+            "字符串",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-9185",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "有效的括号（辅助栈法，极简+图解）",
+          "url": "https://leetcode.cn/problems/valid-parentheses/solutions/9185/valid-parentheses-fu-zhu-zhan-fa-by-jin407891080/",
+          "articleId": 9185,
+          "articleSlug": "valid-parentheses-fu-zhu-zhan-fa-by-jin407891080",
+          "questionSlug": "valid-parentheses",
+          "questionId": 20,
+          "tags": [
+            "栈",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 13410
+  },
+  {
+    "questionId": 155,
+    "questionSlug": "min-stack",
+    "title": "最小栈",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2974438",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：保存前缀最小值 / 保存差值，不用辅助栈（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/min-stack/solutions/2974438/ben-zhi-shi-wei-hu-qian-zhui-zui-xiao-zh-x0g8/",
+          "articleId": 2974438,
+          "articleSlug": "ben-zhi-shi-wei-hu-qian-zhui-zui-xiao-zh-x0g8",
+          "questionSlug": "min-stack",
+          "questionId": 155,
+          "tags": [
+            "栈",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-9036",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "最小栈 （辅助栈法，清晰图解）",
+          "url": "https://leetcode.cn/problems/min-stack/solutions/9036/min-stack-fu-zhu-stackfa-by-jin407891080/",
+          "articleId": 9036,
+          "articleSlug": "min-stack-fu-zhu-stackfa-by-jin407891080",
+          "questionSlug": "min-stack",
+          "questionId": 155,
+          "tags": [
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3750
+  },
+  {
+    "questionId": 394,
+    "questionSlug": "decode-string",
+    "title": "字符串解码",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3744428",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "递归 / 用栈模拟递归（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/decode-string/solutions/3744428/di-gui-yong-zhan-mo-ni-di-gui-pythonjava-kcsv/",
+          "articleId": 3744428,
+          "articleSlug": "di-gui-yong-zhan-mo-ni-di-gui-pythonjava-kcsv",
+          "questionSlug": "decode-string",
+          "questionId": 394,
+          "tags": [
+            "栈",
+            "递归",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-19447",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "字符串解码（辅助栈法 / 递归法，清晰图解）",
+          "url": "https://leetcode.cn/problems/decode-string/solutions/19447/decode-string-fu-zhu-zhan-fa-di-gui-fa-by-jyd/",
+          "articleId": 19447,
+          "articleSlug": "decode-string-fu-zhu-zhan-fa-di-gui-fa-by-jyd",
+          "questionSlug": "decode-string",
+          "questionId": 394,
+          "tags": [
+            "栈",
+            "递归",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3756
+  },
+  {
+    "questionId": 739,
+    "questionSlug": "daily-temperatures",
+    "title": "每日温度",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2470179",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】讲清楚为什么要用单调栈！两种写法：从右到左 / 从左到右",
+          "url": "https://leetcode.cn/problems/daily-temperatures/solutions/2470179/shi-pin-jiang-qing-chu-wei-shi-yao-yao-y-k0ks/",
+          "articleId": 2470179,
+          "articleSlug": "shi-pin-jiang-qing-chu-wei-shi-yao-yao-y-k0ks",
+          "questionSlug": "daily-temperatures",
+          "questionId": 739,
+          "tags": [
+            "栈",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "单调栈"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4126
+  },
+  {
+    "questionId": 84,
+    "questionSlug": "largest-rectangle-in-histogram",
+    "title": "柱状图中最大的矩形",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2695467",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "一步步优化：从三次遍历到一次遍历（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/largest-rectangle-in-histogram/solutions/2695467/dan-diao-zhan-fu-ti-dan-pythonjavacgojsr-89s7/",
+          "articleId": 2695467,
+          "articleSlug": "dan-diao-zhan-fu-ti-dan-pythonjavacgojsr-89s7",
+          "questionSlug": "largest-rectangle-in-histogram",
+          "questionId": 84,
+          "tags": [
+            "栈",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "单调栈"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2965
+  },
+  {
+    "questionId": 215,
+    "questionSlug": "kth-largest-element-in-an-array",
+    "title": "数组中的第K个最大元素",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3799769",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "O(n) 快速选择算法，附常见问题解答（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/kth-largest-element-in-an-array/solutions/3799769/on-kuai-su-xuan-ze-suan-fa-pythonjavaccg-lh7c/",
+          "articleId": 3799769,
+          "articleSlug": "on-kuai-su-xuan-ze-suan-fa-pythonjavaccg-lh7c",
+          "questionSlug": "kth-largest-element-in-an-array",
+          "questionId": 215,
+          "tags": [
+            "快速选择",
+            "Random",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361969",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "215. 数组中的第 K 个最大元素（分治，清晰图解）",
+          "url": "https://leetcode.cn/problems/kth-largest-element-in-an-array/solutions/2361969/215-shu-zu-zhong-de-di-k-ge-zui-da-yuan-d786p/",
+          "articleId": 2361969,
+          "articleSlug": "215-shu-zu-zhong-de-di-k-ge-zui-da-yuan-d786p",
+          "questionSlug": "kth-largest-element-in-an-array",
+          "questionId": 215,
+          "tags": [
+            "数组",
+            "分治",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6096
+  },
+  {
+    "questionId": 347,
+    "questionSlug": "top-k-frequent-elements",
+    "title": "前 K 个高频元素",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3655287",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "桶排序，O(n) 线性做法（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/top-k-frequent-elements/solutions/3655287/tong-pai-xu-on-xian-xing-zuo-fa-pythonja-oqq2/",
+          "articleId": 3655287,
+          "articleSlug": "tong-pai-xu-on-xian-xing-zuo-fa-pythonja-oqq2",
+          "questionSlug": "top-k-frequent-elements",
+          "questionId": 347,
+          "tags": [
+            "哈希表",
+            "桶排序",
+            "排序",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4542
+  },
+  {
+    "questionId": 295,
+    "questionSlug": "find-median-from-data-stream",
+    "title": "数据流的中位数",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3015873",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "如何自然引入大小堆？简洁写法！（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/find-median-from-data-stream/solutions/3015873/ru-he-zi-ran-yin-ru-da-xiao-dui-jian-ji-4v22k/",
+          "articleId": 3015873,
+          "articleSlug": "ru-he-zi-ran-yin-ru-da-xiao-dui-jian-ji-4v22k",
+          "questionSlug": "find-median-from-data-stream",
+          "questionId": 295,
+          "tags": [
+            "设计",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "堆（优先队列）"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361972",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "295. 数据流的中位数（堆，清晰图解）",
+          "url": "https://leetcode.cn/problems/find-median-from-data-stream/solutions/2361972/295-shu-ju-liu-de-zhong-wei-shu-dui-qing-gmdo/",
+          "articleId": 2361972,
+          "articleSlug": "295-shu-ju-liu-de-zhong-wei-shu-dui-qing-gmdo",
+          "questionSlug": "find-median-from-data-stream",
+          "questionId": 295,
+          "tags": [
+            "数据流",
+            "C++",
+            "Java",
+            "Python3",
+            "堆（优先队列）"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 1318
+  },
+  {
+    "questionId": 121,
+    "questionSlug": "best-time-to-buy-and-sell-stock",
+    "title": "买卖股票的最佳时机",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2464650",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "简洁写法：枚举卖出价格，维护买入的最小值（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/solutions/2464650/mei-ju-mai-chu-jie-ge-wei-hu-mai-ru-de-z-02ud/",
+          "articleId": 2464650,
+          "articleSlug": "mei-ju-mai-chu-jie-ge-wei-hu-mai-ru-de-z-02ud",
+          "questionSlug": "best-time-to-buy-and-sell-stock",
+          "questionId": 121,
+          "tags": [
+            "贪心",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-1692872",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "121. 买卖股票的最佳时机（动态规划，清晰图解）",
+          "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/solutions/1692872/by-jyd-cu90/",
+          "articleId": 1692872,
+          "articleSlug": "by-jyd-cu90",
+          "questionSlug": "best-time-to-buy-and-sell-stock",
+          "questionId": 121,
+          "tags": [
+            "贪心",
+            "动态规划",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 9448
+  },
+  {
+    "questionId": 55,
+    "questionSlug": "jump-game",
+    "title": "跳跃游戏",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2798996",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种理解方式：维护最右可达位置/合并区间（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/jump-game/solutions/2798996/liang-chong-li-jie-fang-shi-wei-hu-zui-y-q67s/",
+          "articleId": 2798996,
+          "articleSlug": "liang-chong-li-jie-fang-shi-wei-hu-zui-y-q67s",
+          "questionSlug": "jump-game",
+          "questionId": 55,
+          "tags": [
+            "贪心",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 8333
+  },
+  {
+    "questionId": 45,
+    "questionSlug": "jump-game-ii",
+    "title": "跳跃游戏 II",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2926993",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【图解】一张图秒懂跳跃游戏！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/jump-game-ii/solutions/2926993/tu-jie-yi-zhang-tu-miao-dong-tiao-yue-yo-h2d4/",
+          "articleId": 2926993,
+          "articleSlug": "tu-jie-yi-zhang-tu-miao-dong-tiao-yue-yo-h2d4",
+          "questionSlug": "jump-game-ii",
+          "questionId": 45,
+          "tags": [
+            "贪心",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5938
+  },
+  {
+    "questionId": 763,
+    "questionSlug": "partition-labels",
+    "title": "划分字母区间",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2806706",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "本质是合并区间，简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/partition-labels/solutions/2806706/ben-zhi-shi-he-bing-qu-jian-jian-ji-xie-ygsn8/",
+          "articleId": 2806706,
+          "articleSlug": "ben-zhi-shi-he-bing-qu-jian-jian-ji-xie-ygsn8",
+          "questionSlug": "partition-labels",
+          "questionId": 763,
+          "tags": [
+            "贪心",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2699
+  },
+  {
+    "questionId": 70,
+    "questionSlug": "climbing-stairs",
+    "title": "爬楼梯",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2560716",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "教你一步步思考动态规划：从记忆化搜索到递推到矩阵快速幂（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/climbing-stairs/solutions/2560716/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-7zm1/",
+          "articleId": 2560716,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-7zm1",
+          "questionSlug": "climbing-stairs",
+          "questionId": 70,
+          "tags": [
+            "记忆化",
+            "动态规划",
+            "矩阵",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361764",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "70. 爬楼梯（动态规划，清晰图解）",
+          "url": "https://leetcode.cn/problems/climbing-stairs/solutions/2361764/70-pa-lou-ti-dong-tai-gui-hua-qing-xi-tu-ruwa/",
+          "articleId": 2361764,
+          "articleSlug": "70-pa-lou-ti-dong-tai-gui-hua-qing-xi-tu-ruwa",
+          "questionSlug": "climbing-stairs",
+          "questionId": 70,
+          "tags": [
+            "动态规划",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 9390
+  },
+  {
+    "questionId": 118,
+    "questionSlug": "pascals-triangle",
+    "title": "杨辉三角",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2784222",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "简单题，简单做（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/pascals-triangle/solutions/2784222/jian-dan-ti-jian-dan-zuo-pythonjavaccgoj-z596/",
+          "articleId": 2784222,
+          "articleSlug": "jian-dan-ti-jian-dan-zuo-pythonjavaccgoj-z596",
+          "questionSlug": "pascals-triangle",
+          "questionId": 118,
+          "tags": [
+            "数学",
+            "动态规划",
+            "组合数学",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4517
+  },
+  {
+    "questionId": 198,
+    "questionSlug": "house-robber",
+    "title": "打家劫舍",
+    "authors": {
+      "endlesscheng": [],
+      "jyd": [
+        {
+          "id": "jyd-28242",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "打家劫舍（动态规划，结构化思路，清晰图解）",
+          "url": "https://leetcode.cn/problems/house-robber/solutions/28242/da-jia-jie-she-dong-tai-gui-hua-jie-gou-hua-si-lu-/",
+          "articleId": 28242,
+          "articleSlug": "da-jia-jie-she-dong-tai-gui-hua-jie-gou-hua-si-lu-",
+          "questionSlug": "house-robber",
+          "questionId": 198,
+          "tags": [
+            "动态规划",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 120,
+    "totalArticles": 7176
+  },
+  {
+    "questionId": 279,
+    "questionSlug": "perfect-squares",
+    "title": "完全平方数",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2830762",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：完全背包 / BFS 最短路（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/perfect-squares/solutions/2830762/dong-tai-gui-hua-cong-ji-yi-hua-sou-suo-3kz1g/",
+          "articleId": 2830762,
+          "articleSlug": "dong-tai-gui-hua-cong-ji-yi-hua-sou-suo-3kz1g",
+          "questionSlug": "perfect-squares",
+          "questionId": 279,
+          "tags": [
+            "广度优先搜索",
+            "记忆化",
+            "动态规划",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3177
+  },
+  {
+    "questionId": 322,
+    "questionSlug": "coin-change",
+    "title": "零钱兑换",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2119065",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：完全背包 / BFS 最短路（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/coin-change/solutions/2119065/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-21m5/",
+          "articleId": 2119065,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-21m5",
+          "questionSlug": "coin-change",
+          "questionId": 322,
+          "tags": [
+            "广度优先搜索",
+            "递归",
+            "记忆化",
+            "动态规划",
+            "图论",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5064
+  },
+  {
+    "questionId": 139,
+    "questionSlug": "word-break",
+    "title": "单词拆分",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2968135",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "教你一步步思考 DP：从记忆化搜索到递推（Python/Java/C++/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/word-break/solutions/2968135/jiao-ni-yi-bu-bu-si-kao-dpcong-ji-yi-hua-chrs/",
+          "articleId": 2968135,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dpcong-ji-yi-hua-chrs",
+          "questionSlug": "word-break",
+          "questionId": 139,
+          "tags": [
+            "递归",
+            "记忆化",
+            "动态规划",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4033
+  },
+  {
+    "questionId": 300,
+    "questionSlug": "longest-increasing-subsequence",
+    "title": "最长递增子序列",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2147040",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】三种方法：记忆化搜索/递推/二分查找（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/longest-increasing-subsequence/solutions/2147040/jiao-ni-yi-bu-bu-si-kao-dpfu-o1-kong-jia-4zma/",
+          "articleId": 2147040,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dpfu-o1-kong-jia-4zma",
+          "questionSlug": "longest-increasing-subsequence",
+          "questionId": 300,
+          "tags": [
+            "贪心",
+            "递归",
+            "记忆化",
+            "二分查找",
+            "动态规划",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-24173",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "300. 最长递增子序列（动态规划 + 二分查找，清晰图解）",
+          "url": "https://leetcode.cn/problems/longest-increasing-subsequence/solutions/24173/zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2/",
+          "articleId": 24173,
+          "articleSlug": "zui-chang-shang-sheng-zi-xu-lie-dong-tai-gui-hua-2",
+          "questionSlug": "longest-increasing-subsequence",
+          "questionId": 300,
+          "tags": [
+            "二分查找",
+            "动态规划",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5946
+  },
+  {
+    "questionId": 152,
+    "questionSlug": "maximum-product-subarray",
+    "title": "乘积最大子数组",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2968916",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "动态规划，简洁高效！（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/maximum-product-subarray/solutions/2968916/dong-tai-gui-hua-jian-ji-gao-xiao-python-i778/",
+          "articleId": 2968916,
+          "articleSlug": "dong-tai-gui-hua-jian-ji-gao-xiao-python-i778",
+          "questionSlug": "maximum-product-subarray",
+          "questionId": 152,
+          "tags": [
+            "动态规划",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3150
+  },
+  {
+    "questionId": 416,
+    "questionSlug": "partition-equal-subset-sum",
+    "title": "分割等和子集",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2785266",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "三种写法：记忆化搜索 / 递推 / bitset 优化（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/partition-equal-subset-sum/solutions/2785266/0-1-bei-bao-cong-ji-yi-hua-sou-suo-dao-d-ev76/",
+          "articleId": 2785266,
+          "articleSlug": "0-1-bei-bao-cong-ji-yi-hua-sou-suo-dao-d-ev76",
+          "questionSlug": "partition-equal-subset-sum",
+          "questionId": 416,
+          "tags": [
+            "位运算",
+            "记忆化",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3302
+  },
+  {
+    "questionId": 32,
+    "questionSlug": "longest-valid-parentheses",
+    "title": "最长有效括号",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3843096",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "栈 + 配对标记 + O(1) 空间优化（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/longest-valid-parentheses/solutions/3843096/on-chai-zha-dan-tong-guo-li-zi-fa-ming-s-lb5s/",
+          "articleId": 3843096,
+          "articleSlug": "on-chai-zha-dan-tong-guo-li-zi-fa-ming-s-lb5s",
+          "questionSlug": "longest-valid-parentheses",
+          "questionId": 32,
+          "tags": [
+            "栈",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 3389
+  },
+  {
+    "questionId": 62,
+    "questionSlug": "unique-paths",
+    "title": "不同路径",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3062432",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：动态规划 / 组合数学（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/unique-paths/solutions/3062432/liang-chong-fang-fa-dong-tai-gui-hua-zu-o5k32/",
+          "articleId": 3062432,
+          "articleSlug": "liang-chong-fang-fa-dong-tai-gui-hua-zu-o5k32",
+          "questionSlug": "unique-paths",
+          "questionId": 62,
+          "tags": [
+            "递归",
+            "记忆化",
+            "数学",
+            "动态规划",
+            "组合数学",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6007
+  },
+  {
+    "questionId": 64,
+    "questionSlug": "minimum-path-sum",
+    "title": "最小路径和",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3045828",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "教你一步步思考 DP：从记忆化搜索到递推到空间优化！（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/minimum-path-sum/solutions/3045828/jiao-ni-yi-bu-bu-si-kao-dpcong-ji-yi-hua-zfb2/",
+          "articleId": 3045828,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dpcong-ji-yi-hua-zfb2",
+          "questionSlug": "minimum-path-sum",
+          "questionId": 64,
+          "tags": [
+            "递归",
+            "记忆化",
+            "动态规划",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-25943",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "最小路径和 （动态规划，规范流程，清晰图解）",
+          "url": "https://leetcode.cn/problems/minimum-path-sum/solutions/25943/zui-xiao-lu-jing-he-dong-tai-gui-hua-gui-fan-liu-c/",
+          "articleId": 25943,
+          "articleSlug": "zui-xiao-lu-jing-he-dong-tai-gui-hua-gui-fan-liu-c",
+          "questionSlug": "minimum-path-sum",
+          "questionId": 64,
+          "tags": [
+            "动态规划",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4733
+  },
+  {
+    "questionId": 5,
+    "questionSlug": "longest-palindromic-substring",
+    "title": "最长回文子串",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2958179",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "两种方法：中心扩展法 / Manacher 算法（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/longest-palindromic-substring/solutions/2958179/mo-ban-on-manacher-suan-fa-pythonjavacgo-t6cx/",
+          "articleId": 2958179,
+          "articleSlug": "mo-ban-on-manacher-suan-fa-pythonjavacgo-t6cx",
+          "questionSlug": "longest-palindromic-substring",
+          "questionId": 5,
+          "tags": [
+            "双指针",
+            "字符串",
+            "枚举",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 10595
+  },
+  {
+    "questionId": 1143,
+    "questionSlug": "longest-common-subsequence",
+    "title": "最长公共子序列",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2133188",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "教你一步步思考动态规划：从记忆化搜索到递推（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/longest-common-subsequence/solutions/2133188/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-lbz5/",
+          "articleId": 2133188,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-lbz5",
+          "questionSlug": "longest-common-subsequence",
+          "questionId": 1143,
+          "tags": [
+            "递归",
+            "记忆化",
+            "动态规划",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3",
+            "递推"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2796
+  },
+  {
+    "questionId": 72,
+    "questionSlug": "edit-distance",
+    "title": "编辑距离",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2133222",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "【视频】教你一步步思考动态规划，从记忆化搜索到递推到空间优化！（Python/Java/C++/Go）",
+          "url": "https://leetcode.cn/problems/edit-distance/solutions/2133222/jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-uo5q/",
+          "articleId": 2133222,
+          "articleSlug": "jiao-ni-yi-bu-bu-si-kao-dong-tai-gui-hua-uo5q",
+          "questionSlug": "edit-distance",
+          "questionId": 72,
+          "tags": [
+            "记忆化",
+            "动态规划",
+            "C++",
+            "Go",
+            "Java",
+            "Python",
+            "Python3",
+            "递推"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4273
+  },
+  {
+    "questionId": 136,
+    "questionSlug": "single-number",
+    "title": "只出现一次的数字",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-2481594",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "O(n) 一次遍历，附相似题目（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/single-number/solutions/2481594/li-yong-yi-huo-de-xing-zhi-fu-ti-dan-pyt-oizc/",
+          "articleId": 2481594,
+          "articleSlug": "li-yong-yi-huo-de-xing-zhi-fu-ti-dan-pyt-oizc",
+          "questionSlug": "single-number",
+          "questionId": 136,
+          "tags": [
+            "位运算",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2361995",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "136. 只出现一次的数字（位运算，清晰图解）",
+          "url": "https://leetcode.cn/problems/single-number/solutions/2361995/136-zhi-chu-xian-yi-ci-de-shu-zi-wei-yun-iyd0/",
+          "articleId": 2361995,
+          "articleSlug": "136-zhi-chu-xian-yi-ci-de-shu-zi-wei-yun-iyd0",
+          "questionSlug": "single-number",
+          "questionId": 136,
+          "tags": [
+            "位运算",
+            "数组",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5737
+  },
+  {
+    "questionId": 169,
+    "questionSlug": "majority-element",
+    "title": "多数元素",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3744717",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "O(n) 武林大会打擂台，严谨证明（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/majority-element/solutions/3744717/on-mo-er-tou-piao-fa-yan-jin-zheng-ming-ww1zv/",
+          "articleId": 3744717,
+          "articleSlug": "on-mo-er-tou-piao-fa-yan-jin-zheng-ming-ww1zv",
+          "questionSlug": "majority-element",
+          "questionId": 169,
+          "tags": [
+            "数学",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": [
+        {
+          "id": "jyd-2362000",
+          "author": "Krahets",
+          "authorSlug": "jyd",
+          "authorUrl": "https://leetcode.cn/u/jyd/",
+          "title": "169. 多数元素（摩尔投票，清晰图解）",
+          "url": "https://leetcode.cn/problems/majority-element/solutions/2362000/169-duo-shu-yuan-su-mo-er-tou-piao-qing-ledrh/",
+          "articleId": 2362000,
+          "articleSlug": "169-duo-shu-yuan-su-mo-er-tou-piao-qing-ledrh",
+          "questionSlug": "majority-element",
+          "questionId": 169,
+          "tags": [
+            "计数",
+            "C++",
+            "Java",
+            "Python3"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ]
+    },
+    "checkedArticles": 20,
+    "totalArticles": 6450
+  },
+  {
+    "questionId": 75,
+    "questionSlug": "sort-colors",
+    "title": "颜色分类",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3679069",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "O(n) 插入排序，简洁写法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/sort-colors/solutions/3679069/on-cha-ru-pai-xu-jian-ji-xie-fa-pythonja-zk60/",
+          "articleId": 3679069,
+          "articleSlug": "on-cha-ru-pai-xu-jian-ji-xie-fa-pythonja-zk60",
+          "questionSlug": "sort-colors",
+          "questionId": 75,
+          "tags": [
+            "双指针",
+            "排序",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 5275
+  },
+  {
+    "questionId": 31,
+    "questionSlug": "next-permutation",
+    "title": "下一个排列",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3621022",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "带你发明下一个排列算法（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/next-permutation/solutions/3621022/jiao-ni-cong-ling-kai-shi-si-kao-zhe-ti-9qfrq/",
+          "articleId": 3621022,
+          "articleSlug": "jiao-ni-cong-ling-kai-shi-si-kao-zhe-ti-9qfrq",
+          "questionSlug": "next-permutation",
+          "questionId": 31,
+          "tags": [
+            "数组",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust",
+            "遍历"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 4382
+  },
+  {
+    "questionId": 287,
+    "questionSlug": "find-the-duplicate-number",
+    "title": "寻找重复数",
+    "authors": {
+      "endlesscheng": [
+        {
+          "id": "endlesscheng-3797843",
+          "author": "灵茶山艾府",
+          "authorSlug": "endlesscheng",
+          "authorUrl": "https://leetcode.cn/u/endlesscheng/",
+          "title": "用基环树理解，做法同 142. 环形链表 II（Python/Java/C++/C/Go/JS/Rust）",
+          "url": "https://leetcode.cn/problems/find-the-duplicate-number/solutions/3797843/yong-ji-huan-shu-li-jie-zuo-fa-tong-142-tkoc2/",
+          "articleId": 3797843,
+          "articleSlug": "yong-ji-huan-shu-li-jie-zuo-fa-tong-142-tkoc2",
+          "questionSlug": "find-the-duplicate-number",
+          "questionId": 287,
+          "tags": [
+            "链表",
+            "双指针",
+            "C",
+            "C++",
+            "Go",
+            "Java",
+            "JavaScript",
+            "Python",
+            "Python3",
+            "Rust"
+          ],
+          "kind": "external",
+          "verifiedAt": "2026-11-02"
+        }
+      ],
+      "jyd": []
+    },
+    "checkedArticles": 20,
+    "totalArticles": 2999
+  }
+]

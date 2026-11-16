@@ -1,0 +1,30 @@
+{
+  "passed": 25,
+  "checks": [
+    "Service identity",
+    "No cross-origin data reads",
+    "Reject external Origin",
+    "Reject unapproved Host",
+    "Same-origin session",
+    "Malformed JSON structure rejected",
+    "Reject writes without token",
+    "Atomic first write",
+    "Reject stale revision instead of overwriting",
+    "Atomic update",
+    "Previous version backup retained",
+    "No temporary files after commit",
+    "Static Python wasm served offline",
+    "Static Monaco served offline",
+    "Data not exposed as static file",
+    "Browser runtime connections restricted to same origin",
+    "Repeated launches reuse identity-checked service",
+    "Explicit service shutdown",
+    "Progress survives server restart",
+    "Corrupt main data restores valid backup",
+    "Corrupt file preserved for recovery",
+    "Recovered data can be saved again",
+    "Both damaged files are preserved and reported",
+    "New save does not replace damaged backup",
+    "Port conflict never opens unrelated service"
+  ]
+}

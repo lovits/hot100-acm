@@ -1,0 +1,74 @@
+"""Double-click launcher: verify identity, start quietly, open default browser."""
+from pathlib import Path
+import ctypes
+import json
+import os
+import socket
+import subprocess
+import sys
+import time
+import urllib.request
+import webbrowser
+
+ROOT = Path(__file__).resolve().parent
+PORT = 18765
+URL = f'http://127.0.0.1:{PORT}'
+DATA = Path(os.environ.get('LOCALAPPDATA', str(Path.home() / 'AppData/Local'))) / 'Hot100ACM'
+DATA.mkdir(parents=True, exist_ok=True)
+
+
+def identity():
+    try:
+        request = urllib.request.Request(URL + '/api/health')
+        with urllib.request.urlopen(request, timeout=1) as response:
+            return json.load(response).get('app') == 'hot100-acm-local-v2'
+    except Exception:
+        return False
+
+
+def occupied():
+    with socket.socket() as client:
+        client.settimeout(.3)
+        return client.connect_ex(('127.0.0.1', PORT)) == 0
+
+
+def main():
+    # A Windows mutex serializes simultaneous double-clicks, avoiding duplicate launches.
+    kernel = ctypes.windll.kernel32
+    kernel.CreateMutexW.restype = ctypes.c_void_p
+    kernel.WaitForSingleObject.argtypes = [ctypes.c_void_p, ctypes.c_ulong]
+    kernel.ReleaseMutex.argtypes = [ctypes.c_void_p]
+    kernel.CloseHandle.argtypes = [ctypes.c_void_p]
+    handle = kernel.CreateMutexW(None, False, f'Local\\Hot100ACM-{PORT}-Launcher')
+    acquired = kernel.WaitForSingleObject(handle, 15000) in (0, 0x80)
+    try:
+        if not acquired:
+            raise RuntimeError('另一个启动窗口仍在准备，请稍后再试。')
+        if not identity():
+            if occupied():
+                raise RuntimeError('本地端口 18765 已被其他程序使用。请关闭占用该端口的程序后重试。没有打开其他网站。')
+            interpreter = Path(sys.executable).with_name('pythonw.exe')
+            if not interpreter.exists():
+                interpreter = Path(sys.executable)
+            with (DATA / 'launcher.log').open('ab') as log:
+                subprocess.Popen([str(interpreter), str(ROOT / 'local_server.py')], cwd=str(ROOT), stdout=log, stderr=log, creationflags=subprocess.CREATE_NO_WINDOW)
+            for _ in range(60):
+                if identity():
+                    break
+                time.sleep(.2)
+            else:
+                raise RuntimeError('本地服务未能启动。请查看日志：' + str(DATA / 'launcher.log'))
+        webbrowser.open(URL + '/#/studyplan')
+    finally:
+        if acquired:
+            kernel.ReleaseMutex(handle)
+        kernel.CloseHandle(handle)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as error:
+        with (DATA / 'launcher.log').open('a', encoding='utf-8') as log:
+            log.write(time.strftime('%Y-%m-%d %H:%M:%S ') + str(error) + '\n')
+        ctypes.windll.user32.MessageBoxW(None, str(error), 'Hot100 ACM 刷题 · 启动提示', 0x10)
