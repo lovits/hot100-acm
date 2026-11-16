@@ -1,4 +1,4 @@
-name: Publish Windows v1.0.2
+name: Publish Windows v1.0.3
 on:
   workflow_dispatch:
 permissions:
@@ -13,11 +13,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p release-work
-          gh release download v1.0.1 --repo "$GITHUB_REPOSITORY" --pattern Hot100-Windows-x64-release.zip --dir release-work
-          python3 scripts/build_windows.py
+          gh release download v1.0.2 --repo "$GITHUB_REPOSITORY" --pattern Hot100-Windows-x64-release.zip --dir release-work
+          mkdir -p release-work/publish
+          python3 scripts/patch_windows.py
           git archive --format=zip --prefix=hot100-acm/ --output=release-work/publish/hot100-acm-source.zip HEAD
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create v1.0.2 release-work/publish/*.zip --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'Hot100 ACM v1.0.2 — Windows 轻量版与启动修复' --notes-file release-notes-v1.0.2.md
+          gh release create v1.0.3 release-work/publish/*.zip --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'Hot100 ACM v1.0.3 — 进度恢复提示修复' --notes-file release-notes-v1.0.3.md

@@ -136,9 +136,11 @@ def make_server(port=18765, data_dir=DEFAULT_DATA):
             shutil.copy2(settings, settings.with_name('location.unavailable.' + secrets.token_hex(4) + '.json'))
             preferred = Path(data_dir)
             settings.write_text(json.dumps({'directory': str(preferred)}), encoding='utf-8')
-            recovery_warning = '原进度目录不可用，已切换到本机默认目录；原目录配置已备份，可连接原磁盘后导入进度。' + str(error)
+            logging.warning('Progress location unavailable; using %s: %s', preferred, error)
+            if not any((preferred / name).is_file() for name in ('learning.json', 'learning.backup.json')):
+                recovery_warning = '原进度目录不可用，已切换到本机默认目录。原目录配置已备份；如需恢复之前的进度，请在原目录可用后导入进度文件。'
     store = Store(preferred)
-    if recovery_warning:
+    if recovery_warning and not store.recovery_warning:
         store.recovery_warning = recovery_warning
     token = secrets.token_urlsafe(32)
     origin = f'http://127.0.0.1:{port}'
