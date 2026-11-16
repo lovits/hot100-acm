@@ -1,8 +1,11 @@
 """Update the latest per-platform release runtimes with the current app sources."""
 import json
 import plistlib
+import sys
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
+
+VERSION = sys.argv[1] if len(sys.argv) > 1 else '1.0.5'
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / 'release-work'
@@ -34,12 +37,12 @@ for platform in ['macOS-arm64', 'macOS-x64', 'Windows-x64']:
                 data = old.read(item)
             if mac and item.filename == prefix + 'package.json':
                 package = json.loads(data)
-                package['version'] = '1.0.5'
+                package['version'] = VERSION
                 data = json.dumps(package, ensure_ascii=False).encode()
             if mac and item.filename == 'Hot100.app/Contents/Info.plist':
                 info = plistlib.loads(data)
-                info['CFBundleShortVersionString'] = '1.0.5'
-                info['CFBundleVersion'] = '105'
+                info['CFBundleShortVersionString'] = VERSION
+                info['CFBundleVersion'] = VERSION.replace('.', '')
                 data = plistlib.dumps(info)
             new.writestr(item, data)
         for name, data in replacements.items():
@@ -52,4 +55,7 @@ for platform in ['macOS-arm64', 'macOS-x64', 'Windows-x64']:
         rows = json.loads(check.read(prefix + 'dist/training/data/problems.json'))
         assert len(rows) == 100 and sum(len(row['freq']['companies']) for row in rows) == 1399
         assert b'polish.css' in check.read(prefix + 'dist/index.html')
+        assert b'judge-rules.js' in check.read(prefix + 'dist/index.html')
+        main=json.loads(check.read(prefix + 'dist/problems.json'))
+        assert all(row['topicTags'] and all(tag.strip() for tag in row['topicTags']) for row in main)
     print(filename, 'source contents, frequency data and ZIP integrity verified', flush=True)

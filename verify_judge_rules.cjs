@@ -1,0 +1,15 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {compareCoreResult:c,compareACMOutput:a}=require('./dist/judge-rules');
+assert.ok(c('unordered',[1,0],[0,1],[]));
+assert.ok(!c('unordered',[1,1],[0,1],[]));
+assert.ok(c('unordered-nested',[[2,1],[]],[[],[1,2]],[]));
+assert.ok(!c('unordered-nested',[[1,2],[1,2]],[[],[1,2]],[]));
+assert.ok(c('palindrome','aba','bab',['babad']));
+assert.ok(!c('palindrome','bad','bab',['babad']));
+assert.ok(c('balanced-bst',[0,-3,9,-10,null,5],[],[[-10,-3,0,5,9]]));
+assert.ok(!c('balanced-bst',[0,5,-10,-3,null,null,9],[],[[-10,-3,0,5,9]]));
+assert.ok(a('counted-unordered-nested-lines','2\n2 1\nEMPTY','2\nEMPTY\n1 2',''));
+assert.ok(!a('counted-unordered-nested-lines','3\n2 1\nEMPTY','2\nEMPTY\n1 2',''));
+assert.ok(a('unordered-lines','\n','',''));
+console.log('Alternative valid answers accepted; wrong answers and counts rejected');

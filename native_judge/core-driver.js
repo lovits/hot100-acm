@@ -134,6 +134,41 @@ def _build(v):
         return [_build(x) for x in v]
     return v
 
+def _tree_node(root, value):
+    pending = [root]
+    while pending:
+        node = pending.pop()
+        if node is None:
+            continue
+        if node.val == value:
+            return node
+        pending.extend([node.left, node.right])
+    raise ValueError('Target node not found')
+
+def _expected_ref(head, raw, expected, kind):
+    if kind == 'tree':
+        values = json.loads(expected.split(':', 1)[1])
+        return _tree_node(head, values[0]) if values else None
+    spec = json.loads(raw.split(':', 1)[1])
+    index = spec[1] if kind == 'cycle' else spec[2]
+    node = head if index >= 0 else None
+    for _ in range(max(0, index)):
+        node = node.next
+    return node
+
+def _valid_copy(original, copy):
+    originals = set()
+    while original:
+        originals.add(original)
+        original = original.next
+    copies = set()
+    while copy:
+        if copy in originals or copy in copies:
+            return False
+        copies.add(copy)
+        copy = copy.next
+    return all(node.random is None or node.random in copies for node in copies)
+
 def _to_json(v):
     if v is None:
         return None
@@ -232,10 +267,13 @@ def main():
         entry = {'args': c.get('args', [])}
         try:
             args = [_build(a) for a in c['args']]
+            ${(core.nodeParams||[]).map(i=>`args[${i}] = _tree_node(args[0], args[${i}])`).join('\n            ')}
             ${call}
             entry['expected'] = c['expected']
             entry['got'] = _to_json(got)
             entry['ok'] = entry['got'] == _to_json(_build(c['expected']))
+            ${core.resultRef?`entry['ok'] = entry['ok'] and got is _expected_ref(args[0], c['args'][0], c['expected'], ${JSON.stringify(core.resultRef)})`:''}
+            ${core.copyInput!==undefined?`entry['ok'] = entry['ok'] and _valid_copy(args[${core.copyInput}], got)`:''}
         except Exception as e:
             entry.update({'ok': False, 'error': '%s: %s' % (type(e).__name__, e)})
         result.append(entry)
@@ -455,6 +493,28 @@ Node* buildRandom(const vector<JVal>& data) {
     return nodes.empty() ? nullptr : nodes[0];
 }
 
+bool validCopy(Node* original, Node* copy) {
+    unordered_set<Node*> originals, copies;
+    for (auto node=original;node;node=node->next) originals.insert(node);
+    for (auto node=copy;node;node=node->next) {
+        if (originals.count(node)||copies.count(node)) return false;
+        copies.insert(node);
+    }
+    for (auto node:copies) if (node->random&&!copies.count(node->random)) return false;
+    return true;
+}
+
+TreeNode* findTreeNode(TreeNode* root, int value) {
+    vector<TreeNode*> pending{root};
+    while (!pending.empty()) {
+        TreeNode* node = pending.back(); pending.pop_back();
+        if (!node) continue;
+        if (node->val == value) return node;
+        pending.push_back(node->left); pending.push_back(node->right);
+    }
+    throw runtime_error("Target node not found");
+}
+
 ListNode* buildIntersect(const vector<JVal>& la, const vector<JVal>& lb, int sa, int sb) {
     vector<ListNode*> nodesA;
     for (const auto& e : la) nodesA.push_back(new ListNode((int)e.num));
@@ -591,7 +651,7 @@ const CPP_TYPE_CONV = {
   'int[][]': (a) => `[&]{ vector<vector<int>> r; for (const auto& row : ${a}.j.arr) { vector<int> t; for (const auto& e : row.arr) t.push_back((int)e.num); r.push_back(t); } return r; }()`,
   'string[]': (a) => `[&]{ vector<string> r; for (const auto& e : ${a}.j.arr) r.push_back(e.str); return r; }()`,
   'string[][]': (a) => `[&]{ vector<vector<string>> r; for (const auto& row : ${a}.j.arr) { vector<string> t; for (const auto& e : row.arr) t.push_back(e.str); r.push_back(t); } return r; }()`,
-  grid: (a) => `[&]{ vector<vector<char>> r; for (const auto& row : ${a}.j.arr) { vector<char> t; for (char ch : row.str) t.push_back(ch); r.push_back(t); } return r; }()`,
+  grid: (a) => `[&]{ vector<vector<char>> r; for (const auto& row : ${a}.j.arr) { vector<char> t; if (row.t == JVal::ARR) { for (const auto& ch : row.arr) if (!ch.str.empty()) t.push_back(ch.str[0]); } else { for (char ch : row.str) t.push_back(ch); } r.push_back(t); } return r; }()`,
   list: (a) => `${a}.l`,
   listArray: (a) => `${a}.la`,
   tree: (a) => `${a}.t`,
@@ -704,7 +764,7 @@ ${dispatch}
   // function kind
   const mutates = Number(core.mutates ?? -1);
   const paramLines = core.params.map((p, i) => `    Any _a${i} = build(args[${i}]);`).join('\n');
-  const materializeLines = core.params.map((p, i) => `    auto _p${i} = ${CPP_TYPE_CONV[p.type](`_a${i}`)};`).join('\n');
+  const materializeLines = core.params.map((p, i) => `    auto _p${i} = ${(core.nodeParams||[]).includes(i)?`findTreeNode(_p0, (int)_a${i}.j.num)`:CPP_TYPE_CONV[p.type](`_a${i}`)};`).join('\n');
   const callArgs = core.params.map((_, i) => `_p${i}`).join(', ');
   const callExpr = mutates >= 0
     ? `${core.className} _sol; _sol.${core.method}(${callArgs});`
@@ -713,6 +773,9 @@ ${dispatch}
     ? cppReturnCanon(core.params[mutates].type, `_p${mutates}`)
     : cppReturnCanon(core.returns, '_r');
   const expExpr = `canonAny(build(expVal))`;
+  const refKind=core.resultRef;
+  const refExpr=refKind==='tree'?`[&]{auto value=parseStr(expVal.str.substr(5));return value.arr.empty()?(TreeNode*)nullptr:findTreeNode(_p0,(int)value.arr[0].num);}()`
+    :refKind?`[&]{auto spec=parseStr(args[0].str.substr(${refKind==='cycle'?10:14}));int index=(int)spec.arr[${refKind==='cycle'?1:2}].num;auto node=index<0?(ListNode*)nullptr:_p0;for(int i=0;i<index&&node;i++)node=node->next;return node;}()`:null;
 
   parts.push(`
 int main(int argc, char** argv) {
@@ -733,7 +796,7 @@ ${materializeLines}
             ${callExpr}
             Canon _got = ${gotExpr};
             Canon _exp = ${expExpr};
-            cout << "{\\"ok\\":" << (_got == _exp ? "true" : "false") << ",\\"got\\":" << toJson(_got) << "}";
+            cout << "{\\"ok\\":" << (_got == _exp ${refExpr?'&& _r == '+refExpr:''} ${core.copyInput!==undefined?'&& validCopy(_p'+core.copyInput+', _r)':''} ? "true" : "false") << ",\\"got\\":" << toJson(_got) << "}";
         } catch (const exception& ex) {
             Canon error; error.t = Canon::STR; error.str = ex.what();
             cout << "{\\"ok\\":false,\\"error\\":" << toJson(error) << "}";

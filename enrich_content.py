@@ -237,8 +237,8 @@ def enrich():
         p['title'] = official['translatedTitle']
         p['difficulty'] = {'EASY':'简单','MEDIUM':'中等','HARD':'困难'}[official['difficulty']]
         # The study-plan directory displays nameTranslated in this exact order.
-        # Keep untranslated placeholders so its three-tag / N+ grouping also agrees.
-        p['topicTags'] = [tag['nameTranslated'] or '' for tag in official['topicTags']]
+        # Fall back to the official name when a translated label is unavailable.
+        p['topicTags'] = list(dict.fromkeys(label for tag in official['topicTags'] if (label := (tag.get('nameTranslated') or tag.get('name') or '').strip())))
         lesson=lessons[p['id']]; code,mapping=readable(p,lesson)
         lesson=[explain_names(part,mapping) for part in lesson]
         # Trace the same canonical source that copy/download/editor loading use.

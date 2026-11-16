@@ -42,14 +42,7 @@ for i in range(1,len(heights)):
     stack.append(i)
 print(best)
 ''',[('6\n2 1 5 6 2 3','10'),('2\n2 4','4'),('3\n0 0 0','0')], '单调递增栈保存柱子下标，两端补零作为哨兵。|某柱出栈时，当前下标和新栈顶就是其左右更低边界，据此计算面积。','时间 O(n)，空间 O(n)。','1 ≤ n ≤ 10⁵；0 ≤ 高度 ≤ 10⁴。')
-add(215,'数组中的第 K 个最大元素','中等','堆','在可含重复值的整数数组中，输出降序排列后的第 k 个元素。重复值也占据位置。',A+'第三行 k。','输出第 k 大的数。',arr+'''
-import heapq
-k=int(input()); heap=[]
-for x in a:
-    if len(heap)<k: heapq.heappush(heap,x)
-    elif x>heap[0]: heapq.heapreplace(heap,x)
-print(heap[0])
-''',[('6\n3 2 1 5 6 4\n2','5'),('9\n3 2 3 1 2 4 5 5 6\n4','4'),('1\n-1\n1','-1')], '维护一个大小最多 k 的小根堆。|仅保留最大的 k 个值，堆顶就是其中最小的，也就是第 k 大。','时间 O(n log(k+1))，空间 O(k)。','1 ≤ k ≤ n ≤ 10⁵。')
+add(215,'数组中的第K个最大元素','中等','堆','在可含重复值的整数数组中，输出降序排列后的第 k 个元素。重复值也占据位置。','第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行 k。','输出第 k 大的数。',"# 215. 数组中的第K个最大元素 — 按原题有限值域计数\n# 时间 O(n + U)，U = 20001；固定值域下关于 n 为线性时间。\n# 空间 O(U)；不需要排序，也不依赖 k 的大小。\nimport sys\n\ndef findKthLargest(nums, k):\n    # 原题给定 -10000 <= nums[i] <= 10000，可直接使用固定值域计数。\n    counts = [0] * 20001\n    # 重复元素分别计数，第 k 大不是第 k 个不同值。\n    for value in nums:\n        counts[value + 10000] += 1\n    remaining = k\n    # 从最大值向下扫描；remaining 表示还需跳过多少个元素。\n    for index in range(20000, -1, -1):\n        remaining -= counts[index]\n        # 本值覆盖了目标排名时，就找到了第 k 大。\n        if remaining <= 0:\n            return index - 10000\n\n# ACM 模式：按题面格式读取数组长度、数组和 k。\ndef solve():\n    n = int(input())\n    nums = list(map(int, input().split()))\n    k = int(input())\n    print(findKthLargest(nums, k))\n\nif __name__ == '__main__':\n    solve()\n",[('6\n3 2 1 5 6 4\n2', '5'), ('9\n3 2 3 1 2 4 5 5 6\n4', '4')],'利用原题有限值域统计每个数的出现次数。|从大到小扣除出现次数，累计达到 k 时返回当前数。|每次重复出现都占据一个排名。','时间 O(n + U)，空间 O(U)，U = 20001；原题固定值域下关于 n 为线性时间。','1 <= k <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4')
 add(347,'前 K 个高频元素','中等','堆','统计出现频次并选出前 k 个数字。为确定输出，按频次降序、频次相同时数值升序输出。',A+'第三行 k，不超过不同数字个数。',SEQ,arr+'''
 from collections import Counter
 import heapq

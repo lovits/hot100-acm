@@ -4,11 +4,26 @@
     "title": "两数之和",
     "difficulty": "简单",
     "category": "哈希",
-    "statement": "在整数序列中找到两个不同位置，使对应数字之和为 target。保证恰有一组答案，输出较小下标和较大下标，下标从 0 开始。",
+    "statement": "在整数序列中找到两个不同位置，使对应数字之和为 target。保证恰有一组答案，输出这两个下标，顺序不限，下标从 0 开始。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
     "output": "输出两个下标，以空格分隔。",
     "solution": "# 1. 两数之和 — 一次遍历的哈希表\n# 时间 O(n)，空间 O(n)。\n# 核心思想：把 target − 当前值 当成要找的搭档。seen 保存已经走过的值及下标，查询平均只需常数时间。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    nums = list(map(int, sys.stdin.readline().split()))\n    # 读取一个整数，含义与范围见题目输入格式。\n    target = int(input())\n    # 值映射到此前出现的下标；只保存已经经过的位置。\n    seen = {}\n    for i, x in enumerate(nums):\n        # 先查搭档，再记录自己，防止一个元素使用两次。\n        if target - x in seen:\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print(seen[target - x], i)\n            return\n        # 当前值可供后续位置查找。\n        seen[x] = i\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "4\n2 7 11 15\n9",
+        "output": "0 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n3 2 4\n6",
+        "output": "1 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n3 3\n6",
+        "output": "0 1",
+        "source": "leetcode"
+      },
       {
         "input": "4\n2 7 11 15\n9",
         "output": "0 1"
@@ -32,11 +47,11 @@
       "必须先查询再插入，才能正确处理两个相等数字。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "2 ≤ n ≤ 10⁴；恰好存在一组答案。",
+    "constraints": "2 <= nums.length <= 10^4；-10^9 <= nums[i] <= 10^9；-10^9 <= target <= 10^9；只会存在一个有效答案",
     "order": 1,
     "template": "import sys\n\n\ndef solve():\n    n = int(input())\n    nums = list(map(int, input().split()))\n    target = int(input())\n\n    # 在这里实现你的算法\n    # 输出两个下标，用空格分隔\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "unordered-tokens",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "哈希表"
@@ -46,10 +61,10 @@
         "id": "recommended",
         "title": "一次遍历的哈希表",
         "summary": "把 target − 当前值 当成要找的搭档。seen 保存已经走过的值及下标，查询平均只需常数时间。",
-        "meaning": "在整数序列中找到两个不同位置，使对应数字之和为 target。保证恰有一组答案，输出较小下标和较大下标，下标从 0 开始。",
+        "meaning": "在整数序列中找到两个不同位置，使对应数字之和为 target。保证恰有一组答案，输出这两个下标，顺序不限，下标从 0 开始。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
         "outputExplanation": "输出两个下标，以空格分隔。",
-        "constraints": "2 ≤ n ≤ 10⁴；恰好存在一组答案。",
+        "constraints": "2 <= nums.length <= 10^4；-10^9 <= nums[i] <= 10^9；-10^9 <= target <= 10^9；只会存在一个有效答案",
         "naive": "枚举 i < j 的所有下标对，检查和，时间 O(n²)。重复劳动是每读到一个数，都重新寻找它的搭档。",
         "insight": "把 target − 当前值 当成要找的搭档。seen 保存已经走过的值及下标，查询平均只需常数时间。",
         "variables": [
@@ -140,11 +155,26 @@
     "title": "字母异位词分组",
     "difficulty": "中等",
     "category": "哈希",
-    "statement": "将只含小写字母的单词按字母组成分组；各组内单词排序，各组按排序后的单词序列排序。空单词写作 -。",
-    "input": "第一行 n；后续 n 行，每行一个单词。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "statement": "将只含小写字母的单词按字母组成分组；各组及组内单词均可按任意顺序输出。空单词写作 -。",
+    "input": "第一行 n；后续 n 行，每行一个单词，空单词用 - 表示。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 49. 字母异位词分组 — 排序签名分组\n# 时间 O(nk log k + nk log n)，空间 O(nk)；k 为最长单词长度。\n# 核心思想：字母排序后得到不受原顺序影响的签名。例如 eat 和 tea 都变成 aet。用签名直接找到分组。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    from collections import defaultdict\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    groups = defaultdict(list)\n    for _ in range(n):\n        # 读取本题约定的一行文本，随后按题面规则处理。\n        word = input().strip()\n        # 排序结果相同就属于同组，不需要逐组比较。\n        groups[''.join(sorted(word))].append(word)\n    # ACM 版本要求确定的输出顺序，组内和组间都排序。\n    answer = sorted((sorted(g) for g in groups.values()))\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for g in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*g)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "6\neat\ntea\ntan\nate\nnat\nbat",
+        "output": "3\nbat\nnat tan\nate eat tea",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n-",
+        "output": "1\n-",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\na",
+        "output": "1\na",
+        "source": "leetcode"
+      },
       {
         "input": "6\neat\ntea\ntan\nate\nnat\nbat",
         "output": "3\nate eat tea\nbat\nnat tan"
@@ -163,11 +193,11 @@
       "相同键的单词进入同一组；最后排序，以满足本题的确定输出格式。"
     ],
     "complexity": "时间 O(nk log k + nk log n)，空间 O(nk)；k 为最长单词长度。",
-    "constraints": "1 ≤ n ≤ 10⁴；每个单词长度 ≤ 100。",
+    "constraints": "1 <= strs.length <= 10^4；0 <= strs[i].length <= 100；strs[i] 仅包含小写字母",
     "order": 2,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "counted-unordered-nested-lines",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "哈希表",
@@ -179,10 +209,10 @@
         "id": "recommended",
         "title": "排序签名分组",
         "summary": "字母排序后得到不受原顺序影响的签名。例如 eat 和 tea 都变成 aet。用签名直接找到分组。",
-        "meaning": "将只含小写字母的单词按字母组成分组；各组内单词排序，各组按排序后的单词序列排序。空单词写作 -。",
-        "inputExplanation": "第一行 n；后续 n 行，每行一个单词。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "1 ≤ n ≤ 10⁴；每个单词长度 ≤ 100。",
+        "meaning": "将只含小写字母的单词按字母组成分组；各组及组内单词均可按任意顺序输出。空单词写作 -。",
+        "inputExplanation": "第一行 n；后续 n 行，每行一个单词，空单词用 - 表示。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "1 <= strs.length <= 10^4；0 <= strs[i].length <= 100；strs[i] 仅包含小写字母",
         "naive": "把每个单词与已有组逐个比较字母计数，最坏要比较 O(n²) 对单词。",
         "insight": "字母排序后得到不受原顺序影响的签名。例如 eat 和 tea 都变成 aet。用签名直接找到分组。",
         "variables": [
@@ -317,6 +347,21 @@
     "tests": [
       {
         "input": "6\n100 4 200 1 3 2",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "10\n0 3 7 2 5 8 4 6 0 1",
+        "output": "9",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 0 1 2",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n100 4 200 1 3 2",
         "output": "4"
       },
       {
@@ -333,11 +378,11 @@
       "只有前驱 x − 1 不在集合时，才从 x 开始向后计数，避免重复扫描。"
     ],
     "complexity": "期望时间 O(n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "0 <= nums.length <= 10^5；-10^9 <= nums[i] <= 10^9",
     "order": 3,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "并查集",
       "数组",
@@ -351,7 +396,7 @@
         "meaning": "求数组中由连续整数构成的最长序列长度。数字在原数组中不必相邻，重复数字不重复计数。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最长长度。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "0 <= nums.length <= 10^5；-10^9 <= nums[i] <= 10^9",
         "naive": "先排序再扫描是 O(n log n)。若从每个数字都向后找连续数，[1,2,…,n] 会反复扫描，达到 O(n²)。",
         "insight": "数字 x 只有在 x−1 不存在时才是某段起点；由起点一路找到第一个缺失数字。集合同时负责去重和查找。",
         "variables": [
@@ -483,6 +528,16 @@
     "tests": [
       {
         "input": "5\n0 1 0 3 12",
+        "output": "1 3 12 0 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n0",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n0 1 0 3 12",
         "output": "1 3 12 0 0"
       },
       {
@@ -499,7 +554,7 @@
       "读指针遇到非零数时交换到写指针处，然后推进写指针。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 10^4；-2^31 <= nums[i] <= 2^31 - 1",
     "order": 4,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -516,7 +571,7 @@
         "meaning": "将所有 0 移到数组末尾，保持其他数字的相对顺序。要求在原数组中修改。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 10^4；-2^31 <= nums[i] <= 2^31 - 1",
         "naive": "把非零数字拷贝到新数组后补零，时间 O(n) 但需要 O(n) 额外空间。",
         "insight": "write 指向下一个非零值的位置，read 从左到右检查。遇到非零值就交换到 write，再推进 write。",
         "variables": [
@@ -645,6 +700,16 @@
     "tests": [
       {
         "input": "9\n1 8 6 2 5 4 8 3 7",
+        "output": "49",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "9\n1 8 6 2 5 4 8 3 7",
         "output": "49"
       },
       {
@@ -661,7 +726,7 @@
       "移动较短的一侧，才可能在宽度减小时找到更高的短板。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "2 ≤ n ≤ 10⁵；0 ≤ 高度 ≤ 10⁴。",
+    "constraints": "n == height.length；2 <= n <= 10^5；0 <= height[i] <= 10^4",
     "order": 5,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -679,7 +744,7 @@
         "meaning": "数组中的每个值代表该位置竖线的高度。选择两条竖线，容器面积是两线距离乘以较矮高度，求最大面积。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最大面积。",
-        "constraints": "2 ≤ n ≤ 10⁵；0 ≤ 高度 ≤ 10⁴。",
+        "constraints": "n == height.length；2 <= n <= 10^5；0 <= height[i] <= 10^4",
         "naive": "枚举所有两条线计算面积需要 O(n²)。",
         "insight": "宽度缩小时，只有让较短的边变高，才可能获得更大面积。每轮记录当前面积并丢弃短边。",
         "variables": [
@@ -843,11 +908,26 @@
     "title": "三数之和",
     "difficulty": "中等",
     "category": "双指针",
-    "statement": "从数组中选取三个不同位置，使数字之和为 0。输出所有不重复的数值三元组，每组内部升序。",
+    "statement": "从数组中选取三个不同位置，使数字之和为 0。输出所有不重复的数值三元组，三元组及组内元素顺序不限。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 15. 三数之和 — 排序后固定一个数\n# 时间 O(n²)，排序额外空间 O(n)，另计输出。\n# 核心思想：排序后固定第一个数，剩余两数用左右指针：和小了增大左值，和大了减小右值。相同值跳过。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    numbers.sort()\n    answer = []\n    for i in range(n - 2):\n        # 同一个首值只处理一次，避免重复三元组。\n        if i and numbers[i] == numbers[i - 1]:\n            continue\n        left, right = (i + 1, n - 1)\n        while left < right:\n            total = numbers[i] + numbers[left] + numbers[right]\n            # 和偏小时必须让左侧变大；偏大时让右侧变小。\n            if total < 0:\n                left += 1\n            elif total > 0:\n                right -= 1\n            else:\n                answer.append((numbers[i], numbers[left], numbers[right]))\n                left += 1\n                right -= 1\n                # 跳过刚刚使用过的重复值，但不能让指针越界。\n                while left < right and numbers[left] == numbers[left - 1]:\n                    left += 1\n                # 跳过刚刚使用过的重复值，但不能让指针越界。\n                while left < right and numbers[right] == numbers[right + 1]:\n                    right -= 1\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for row in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*row)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "6\n-1 0 1 2 -1 -4",
+        "output": "2\n-1 -1 2\n-1 0 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n0 1 1",
+        "output": "0\n",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n0 0 0",
+        "output": "1\n0 0 0",
+        "source": "leetcode"
+      },
       {
         "input": "6\n-1 0 1 2 -1 -4",
         "output": "2\n-1 -1 2\n-1 0 1"
@@ -866,11 +946,11 @@
       "剩下两个数字用双指针逼近目标；枚举和指针移动时都跳过重复值。"
     ],
     "complexity": "时间 O(n²)，排序额外空间 O(n)，另计输出。",
-    "constraints": "3 ≤ n ≤ 3000。",
+    "constraints": "3 <= nums.length <= 3000；-10^5 <= nums[i] <= 10^5",
     "order": 6,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "counted-unordered-nested-lines",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "双指针",
@@ -881,10 +961,10 @@
         "id": "recommended",
         "title": "排序后固定一个数",
         "summary": "排序后固定第一个数，剩余两数用左右指针：和小了增大左值，和大了减小右值。相同值跳过。",
-        "meaning": "从数组中选取三个不同位置，使数字之和为 0。输出所有不重复的数值三元组，每组内部升序。",
+        "meaning": "从数组中选取三个不同位置，使数字之和为 0。输出所有不重复的数值三元组，三元组及组内元素顺序不限。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "3 ≤ n ≤ 3000。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "3 <= nums.length <= 3000；-10^5 <= nums[i] <= 10^5",
         "naive": "枚举三元组需要 O(n³)，还要额外去重。",
         "insight": "排序后固定第一个数，剩余两数用左右指针：和小了增大左值，和大了减小右值。相同值跳过。",
         "variables": [
@@ -1063,6 +1143,16 @@
     "tests": [
       {
         "input": "12\n0 1 0 2 1 0 1 3 2 1 2 1",
+        "output": "6",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n4 2 0 3 2 5",
+        "output": "9",
+        "source": "leetcode"
+      },
+      {
+        "input": "12\n0 1 0 2 1 0 1 3 2 1 2 1",
         "output": "6"
       },
       {
@@ -1079,7 +1169,7 @@
       "较小的一侧决定该侧当前位置的蓄水上界，累计高度差并向内移动。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 2×10⁴；高度非负。",
+    "constraints": "n == height.length；1 <= n <= 2 * 10^4；0 <= height[i] <= 10^5",
     "order": 7,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -1099,7 +1189,7 @@
         "meaning": "非负整数数组表示宽度均为 1 的柱子高度。下雨后，求柱子之间能积存的雨水总量。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出总水量。",
-        "constraints": "1 ≤ n ≤ 2×10⁴；高度非负。",
+        "constraints": "n == height.length；1 <= n <= 2 * 10^4；0 <= height[i] <= 10^5",
         "naive": "对每个位置分别扫描左、右最高墙，再取较小者减当前位置，时间 O(n²)。",
         "insight": "维护已扫描两侧最高墙 left_max、right_max。处理较低最高墙这一侧，因为另一侧已有足够高的墙作为保证。",
         "variables": [
@@ -1264,10 +1354,25 @@
     "difficulty": "中等",
     "category": "滑动窗口",
     "statement": "找出字符串中不含重复字符的最长连续片段，输出它的长度。",
-    "input": "输入一行字符串；用单个 - 表示空字符串。",
+    "input": "输入一行字符串，保留其中的空格和符号；空行表示空字符串。",
     "output": "输出最大长度。",
-    "solution": "# 3. 无重复字符的最长子串 — 记录最近位置的滑动窗口\n# 时间 O(n)，空间 O(字符集大小)。\n# 核心思想：right 加入新字符时，只可能与它上次出现的位置冲突。把 left 移到冲突位置之后，同时绝不向左退。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    if text == '-':\n        text = ''\n    else:\n        text = text\n    last = {}\n    left = best = 0\n    for right, ch in enumerate(text):\n        # 只向右移动到重复字符之后；max 防止左界倒退。\n        left = max(left, last.get(ch, -1) + 1)\n        # 此时窗口无重复，用包含两端的长度更新答案。\n        best = max(best, right - left + 1)\n        # 记录最近出现位置，供后续重复字符直接跳转。\n        last[ch] = right\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
+    "solution": "# 3. 无重复字符的最长子串 — 记录最近位置的滑动窗口\n# 时间 O(n)，空间 O(字符集大小)。\n# 核心思想：right 加入新字符时，只可能与它上次出现的位置冲突。把 left 移到冲突位置之后，同时绝不向左退。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = sys.stdin.readline().rstrip('\\r\\n')\n    last = {}\n    left = best = 0\n    for right, ch in enumerate(text):\n        # 只向右移动到重复字符之后；max 防止左界倒退。\n        left = max(left, last.get(ch, -1) + 1)\n        # 此时窗口无重复，用包含两端的长度更新答案。\n        best = max(best, right - left + 1)\n        # 记录最近出现位置，供后续重复字符直接跳转。\n        last[ch] = right\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "abcabcbb",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "bbbbb",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "pwwkew",
+        "output": "3",
+        "source": "leetcode"
+      },
       {
         "input": "abcabcbb",
         "output": "3"
@@ -1277,8 +1382,16 @@
         "output": "1"
       },
       {
-        "input": "-",
+        "input": "\n",
         "output": "0"
+      },
+      {
+        "input": "-",
+        "output": "1"
+      },
+      {
+        "input": " a b ",
+        "output": "3"
       }
     ],
     "idea": [
@@ -1286,11 +1399,11 @@
       "记录字符最近出现位置，遇到重复时将左端移到上次出现位置之后。"
     ],
     "complexity": "时间 O(n)，空间 O(字符集大小)。",
-    "constraints": "0 ≤ 字符串长度 ≤ 5×10⁴；字符为英文字母和数字。",
+    "constraints": "0 <= s.length <= 10^5；s 由英文字母、数字、符号和空格组成",
     "order": 8,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "哈希表",
       "字符串",
@@ -1302,9 +1415,9 @@
         "title": "记录最近位置的滑动窗口",
         "summary": "right 加入新字符时，只可能与它上次出现的位置冲突。把 left 移到冲突位置之后，同时绝不向左退。",
         "meaning": "找出字符串中不含重复字符的最长连续片段，输出它的长度。",
-        "inputExplanation": "输入一行字符串；用单个 - 表示空字符串。",
+        "inputExplanation": "输入一行字符串，保留其中的空格和符号；空行表示空字符串。",
         "outputExplanation": "输出最大长度。",
-        "constraints": "0 ≤ 字符串长度 ≤ 5×10⁴；字符为英文字母和数字。",
+        "constraints": "0 <= s.length <= 10^5；s 由英文字母、数字、符号和空格组成",
         "naive": "枚举所有子串并逐个检查是否重复是 O(n³)；逐个起点维护集合可降到 O(n²)。",
         "insight": "right 加入新字符时，只可能与它上次出现的位置冲突。把 left 移到冲突位置之后，同时绝不向左退。",
         "variables": [
@@ -1452,7 +1565,7 @@
           "abba 到最后一个 a 时，last[a]+1=1 小于当前 left=2，必须取 max，否则会把 bb 再放回窗口。"
         ],
         "structure": [],
-        "code": "# 3. 无重复字符的最长子串 — 记录最近位置的滑动窗口\n# 时间 O(n)，空间 O(字符集大小)。\n# 核心思想：right 加入新字符时，只可能与它上次出现的位置冲突。把 left 移到冲突位置之后，同时绝不向左退。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    if text == '-':\n        text = ''\n    else:\n        text = text\n    last = {}\n    left = best = 0\n    for right, ch in enumerate(text):\n        # 只向右移动到重复字符之后；max 防止左界倒退。\n        left = max(left, last.get(ch, -1) + 1)\n        # 此时窗口无重复，用包含两端的长度更新答案。\n        best = max(best, right - left + 1)\n        # 记录最近出现位置，供后续重复字符直接跳转。\n        last[ch] = right\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
+        "code": "# 3. 无重复字符的最长子串 — 记录最近位置的滑动窗口\n# 时间 O(n)，空间 O(字符集大小)。\n# 核心思想：right 加入新字符时，只可能与它上次出现的位置冲突。把 left 移到冲突位置之后，同时绝不向左退。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = sys.stdin.readline().rstrip('\\r\\n')\n    last = {}\n    left = best = 0\n    for right, ch in enumerate(text):\n        # 只向右移动到重复字符之后；max 防止左界倒退。\n        left = max(left, last.get(ch, -1) + 1)\n        # 此时窗口无重复，用包含两端的长度更新答案。\n        best = max(best, right - left + 1)\n        # 记录最近出现位置，供后续重复字符直接跳转。\n        last[ch] = right\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
         "references": [
           {
             "title": "力扣原题：无重复字符的最长子串",
@@ -1483,6 +1596,16 @@
     "tests": [
       {
         "input": "cbaebabacd\nabc",
+        "output": "0 6",
+        "source": "leetcode"
+      },
+      {
+        "input": "abab\nab",
+        "output": "0 1 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "cbaebabacd\nabc",
         "output": "0 6"
       },
       {
@@ -1499,10 +1622,10 @@
       "窗口右移时加入新字符、移除旧字符；频次一致则记录左端。"
     ],
     "complexity": "时间 O(26n)，空间 O(26)。",
-    "constraints": "1 ≤ |s|, |p| ≤ 3×10⁴；仅小写字母。",
+    "constraints": "1 <= s.length, p.length <= 3 * 10^4；s 和 p 仅包含小写字母",
     "order": 9,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "unordered-tokens",
     "sampleCount": 2,
     "topicTags": [
       "哈希表",
@@ -1517,7 +1640,7 @@
         "meaning": "在 s 中寻找所有与 p 字母组成相同的连续片段，输出起点下标，从 0 开始。",
         "inputExplanation": "两行分别是非空小写字符串 s 和 p。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ |s|, |p| ≤ 3×10⁴；仅小写字母。",
+        "constraints": "1 <= s.length, p.length <= 3 * 10^4；s 和 p 仅包含小写字母",
         "naive": "对每个长度为 len(pattern) 的子串重新排序或计数，会重复处理相邻窗口的公共部分。",
         "insight": "异位词长度相同、各字母次数相同。右边加一个字母，窗口超长时左边删一个，只比较两张计数表。",
         "variables": [
@@ -1688,6 +1811,16 @@
     "tests": [
       {
         "input": "3\n1 1 1\n2",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n1 2 3\n3",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n1 1 1\n2",
         "output": "2"
       },
       {
@@ -1704,7 +1837,7 @@
       "统计当前前缀和减 k 在过去出现的次数；初始前缀和 0 的次数是 1。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 2 * 10^4；-1000 <= nums[i] <= 1000；-10^7 <= k <= 10^7",
     "order": 10,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -1722,7 +1855,7 @@
         "meaning": "统计和恰好等于 k 的非空连续子数组数量。数组可以包含负数。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是 k。",
         "outputExplanation": "输出子数组个数。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 2 * 10^4；-1000 <= nums[i] <= 1000；-10^7 <= k <= 10^7",
         "naive": "枚举起点，再累加各终点，时间 O(n²)。存在负数，普通“和太大就缩小”的滑窗不成立。",
         "insight": "若当前前缀和为 total，之前前缀和为 total−k，则它们之间的连续子数组和为 k。字典必须存次数。",
         "variables": [
@@ -1844,6 +1977,16 @@
     "tests": [
       {
         "input": "8\n1 3 -1 -3 5 3 6 7\n3",
+        "output": "3 3 5 5 6 7",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "8\n1 3 -1 -3 5 3 6 7\n3",
         "output": "3 3 5 5 6 7"
       },
       {
@@ -1860,7 +2003,7 @@
       "删除过期队首与不可能再成为最大值的队尾，队首就是当前答案。"
     ],
     "complexity": "时间 O(n)，空间 O(k)。",
-    "constraints": "1 ≤ k ≤ n ≤ 10⁵。",
+    "constraints": "1 <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4；1 <= k <= nums.length",
     "order": 11,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -1871,7 +2014,7 @@
       "滑动窗口",
       "单调队列",
       "堆（优先队列）",
-      ""
+      "区间最值查询"
     ],
     "solutions": [
       {
@@ -1881,7 +2024,7 @@
         "meaning": "长度为 k 的窗口从数组左端逐格滑到右端。依次输出每个窗口中的最大值。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是窗口长度 k。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ k ≤ n ≤ 10⁵。",
+        "constraints": "1 <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4；1 <= k <= nums.length",
         "naive": "对每个窗口用 max 扫描 k 个数，时间 O(nk)。",
         "insight": "队列保存尚有机会成为最大值的下标，所对应数值从队首到队尾递减。过期下标从头删除，被新值压过的旧值从尾删除。",
         "variables": [
@@ -2045,11 +2188,26 @@
     "title": "最小覆盖子串",
     "difficulty": "困难",
     "category": "子串",
-    "statement": "求 s 中包含 t 全部字符及其出现次数的最短连续片段。并列时取起点最小者；不存在则输出 EMPTY。",
+    "statement": "求 s 中包含 t 全部字符及其出现次数的最短连续片段。不存在则输出 EMPTY。测例保证答案唯一。",
     "input": "两行分别为非空字符串 s 和 t。",
     "output": "输出最短片段或 EMPTY。",
     "solution": "# 76. 最小覆盖子串 — 带缺额计数的伸缩窗口\n# 时间 O(|s|+|t|)，空间 O(字符集大小)。\n# 核心思想：need 表示仍缺的字符次数，负数表示富余。右扩直到 missing=0，再不断左缩并记录最短合法窗口。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    from collections import Counter\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text, t = (input().strip(), input().strip())\n    need = Counter(t)\n    missing, left = (len(t), 0)\n    best = (len(text) + 1, 0)\n    for right, ch in enumerate(text):\n        # 只有补上原本缺少的字符，缺额才会减少。\n        if need[ch] > 0:\n            missing -= 1\n        need[ch] -= 1\n        # 窗口已覆盖目标，持续缩左界尝试获得更短答案。\n        while missing == 0:\n            if right - left + 1 < best[0]:\n                best = (right - left + 1, left)\n            need[text[left]] += 1\n            # 移走一个必需字符后，窗口不再完整覆盖目标。\n            if need[text[left]] > 0:\n                missing += 1\n            left += 1\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(text[best[1]:best[1] + best[0]] if best[0] <= len(text) else 'EMPTY')\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "ADOBECODEBANC\nABC",
+        "output": "BANC",
+        "source": "leetcode"
+      },
+      {
+        "input": "a\na",
+        "output": "a",
+        "source": "leetcode"
+      },
+      {
+        "input": "a\naa",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
       {
         "input": "ADOBECODEBANC\nABC",
         "output": "BANC"
@@ -2068,11 +2226,11 @@
       "右端扩展至覆盖全部字符，再尽量收缩左端并更新最短答案。"
     ],
     "complexity": "时间 O(|s|+|t|)，空间 O(字符集大小)。",
-    "constraints": "1 ≤ |s|, |t| ≤ 10⁵；英文字母，区分大小写。",
+    "constraints": "m == s.length；n == t.length；1 <= m, n <= 10^5；s 和 t 由英文字母组成",
     "order": 12,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "哈希表",
       "字符串",
@@ -2083,10 +2241,10 @@
         "id": "recommended",
         "title": "带缺额计数的伸缩窗口",
         "summary": "need 表示仍缺的字符次数，负数表示富余。右扩直到 missing=0，再不断左缩并记录最短合法窗口。",
-        "meaning": "求 s 中包含 t 全部字符及其出现次数的最短连续片段。并列时取起点最小者；不存在则输出 EMPTY。",
+        "meaning": "求 s 中包含 t 全部字符及其出现次数的最短连续片段。不存在则输出 EMPTY。测例保证答案唯一。",
         "inputExplanation": "两行分别为非空字符串 s 和 t。",
         "outputExplanation": "输出最短片段或 EMPTY。",
-        "constraints": "1 ≤ |s|, |t| ≤ 10⁵；英文字母，区分大小写。",
+        "constraints": "m == s.length；n == t.length；1 <= m, n <= 10^5；s 和 t 由英文字母组成",
         "naive": "枚举所有子串再判断是否覆盖 t，时间至少 O(n²)。",
         "insight": "need 表示仍缺的字符次数，负数表示富余。右扩直到 missing=0，再不断左缩并记录最短合法窗口。",
         "variables": [
@@ -2265,6 +2423,21 @@
     "tests": [
       {
         "input": "9\n-2 1 -3 4 -1 2 1 -5 4",
+        "output": "6",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n5 4 -1 7 8",
+        "output": "23",
+        "source": "leetcode"
+      },
+      {
+        "input": "9\n-2 1 -3 4 -1 2 1 -5 4",
         "output": "6"
       },
       {
@@ -2281,11 +2454,11 @@
       "若接上前一段反而更差，就从当前位置重新开始。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4",
     "order": 13,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "分治",
@@ -2299,7 +2472,7 @@
         "meaning": "在整数数组中选择一个非空连续子数组，使元素和最大。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最大和。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4",
         "naive": "枚举所有连续段并累加是 O(n²)。",
         "insight": "ending_best 只表示“必须以当前位置结尾”的最大和。新数只能接在旧段之后，或从自己重新开段。best 保存所有结尾中的最大值。",
         "variables": [
@@ -2435,6 +2608,21 @@
     "tests": [
       {
         "input": "4\n1 3\n2 6\n8 10\n15 18",
+        "output": "3\n1 6\n8 10\n15 18",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 4\n4 5",
+        "output": "1\n1 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n4 7\n1 4",
+        "output": "1\n1 7",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 3\n2 6\n8 10\n15 18",
         "output": "3\n1 6\n8 10\n15 18"
       },
       {
@@ -2451,15 +2639,15 @@
       "能相接就扩展当前右端点，否则开始一个新区间。"
     ],
     "complexity": "时间 O(n log n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= intervals.length <= 10^4；intervals[i].length == 2；0 <= start_i <= end_i <= 10^4",
     "order": 14,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "counted-unordered-lines",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "排序",
-      ""
+      "快速排序"
     ],
     "solutions": [
       {
@@ -2469,7 +2657,7 @@
         "meaning": "合并所有有交集的闭区间，包括端点相接的区间。结果按左端点升序输出。",
         "inputExplanation": "第一行 n；随后 n 行，每行两个整数 l r，满足 l ≤ r。",
         "outputExplanation": "第一行是合并后的区间数；随后每行一个区间。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= intervals.length <= 10^4；intervals[i].length == 2；0 <= start_i <= end_i <= 10^4",
         "naive": "反复寻找任意相交区间并合并，比较次数可能达到平方级。",
         "insight": "排序后，后来的区间只可能与最后一个已合并区间相连。重叠就扩展右端，不重叠就开启新段。",
         "variables": [
@@ -2609,6 +2797,16 @@
     "tests": [
       {
         "input": "7\n1 2 3 4 5 6 7\n3",
+        "output": "5 6 7 1 2 3 4",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n-1 -100 3 99\n2",
+        "output": "3 99 -1 -100",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\n1 2 3 4 5 6 7\n3",
         "output": "5 6 7 1 2 3 4"
       },
       {
@@ -2625,7 +2823,7 @@
       "反转整个数组，再分别反转前 k 个和后 n−k 个元素。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 10^5；-2^31 <= nums[i] <= 2^31 - 1；0 <= k <= 10^5",
     "order": 15,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -2643,7 +2841,7 @@
         "meaning": "将数组向右循环移动 k 个位置，要求原地完成。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是非负整数 k。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 10^5；-2^31 <= nums[i] <= 2^31 - 1；0 <= k <= 10^5",
         "naive": "每次右移一位，重复 k 次需要 O(nk)；切片拼接简单但需要新数组。",
         "insight": "把数组写成 A+B，其中 B 是最后 k 个数。全体反转得到 reverse(B)+reverse(A)，再分别反转两段就得到 B+A。",
         "variables": [
@@ -2765,6 +2963,16 @@
     "tests": [
       {
         "input": "4\n1 2 3 4",
+        "output": "24 12 8 6",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n-1 1 0 -3 3",
+        "output": "0 0 9 0 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 2 3 4",
         "output": "24 12 8 6"
       },
       {
@@ -2781,7 +2989,7 @@
       "第一次遍历写入前缀积，第二次逆向遍历乘上后缀积，零值也能自然处理。"
     ],
     "complexity": "时间 O(n)，除输出外空间 O(1)。",
-    "constraints": "2 ≤ n ≤ 10⁴；各前缀、后缀及答案乘积在 32 位有符号整数范围内。",
+    "constraints": "2 <= nums.length <= 10^5；-30 <= nums[i] <= 30；输入 保证 数组 answer[i] 在 32 位 整数范围内",
     "order": 16,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -2798,7 +3006,7 @@
         "meaning": "对每个位置，求数组中除了该位置以外所有数字的乘积。不允许使用除法。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "2 ≤ n ≤ 10⁴；各前缀、后缀及答案乘积在 32 位有符号整数范围内。",
+        "constraints": "2 <= nums.length <= 10^5；-30 <= nums[i] <= 30；输入 保证 数组 answer[i] 在 32 位 整数范围内",
         "naive": "对每个位置把其他 n−1 个数相乘，时间 O(n²)。总乘积除自身会在零处失效，也不符合无除法要求。",
         "insight": "先把每个位置左侧乘积写入 answer；从右向左维护右侧乘积 suffix 并乘进去。两侧均不含自己。",
         "variables": [
@@ -2930,6 +3138,21 @@
     "solution": "# 41. 缺失的第一个正数 — 把正数放回对应下标\n# 时间 O(n)，额外空间 O(1)。\n# 核心思想：长度 n 的数组答案一定在 1…n+1。尝试让数值 x 占据下标 x−1，把数组本身当成存在标记。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    for i in range(n):\n        # 只安置合法正数；目标已是同值时停止，避免重复数死循环。\n        while 1 <= numbers[i] <= n and numbers[numbers[i] - 1] != numbers[i]:\n            # 先保存目标下标，再交换，避免下标依赖被交换改变。\n            j = numbers[i] - 1\n            numbers[i], numbers[j] = (numbers[j], numbers[i])\n    for i in range(n):\n        # 第一个不在正确位置的下标，就是最小缺失正数。\n        if numbers[i] != i + 1:\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print(i + 1)\n            return\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(n + 1)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "3\n1 2 0",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n3 4 -1 1",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n7 8 9 11 12",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
         "input": "4\n3 4 -1 1",
         "output": "2"
       },
@@ -2947,11 +3170,11 @@
       "把范围内的数字 x 交换到下标 x−1 的位置；首次不匹配的位置即答案。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 10^5；-2^31 <= nums[i] <= 2^31 - 1",
     "order": 17,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "哈希表"
@@ -2964,7 +3187,7 @@
         "meaning": "找出数组中没有出现的最小正整数。要求线性时间和常数额外空间。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最小缺失正整数。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 10^5；-2^31 <= nums[i] <= 2^31 - 1",
         "naive": "排序再找缺失值需 O(n log n)，集合可线性查找但空间 O(n)。",
         "insight": "长度 n 的数组答案一定在 1…n+1。尝试让数值 x 占据下标 x−1，把数组本身当成存在标记。",
         "variables": [
@@ -3113,6 +3336,16 @@
     "tests": [
       {
         "input": "3 3\n1 1 1\n1 0 1\n1 1 1",
+        "output": "1 0 1\n0 0 0\n1 0 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 4\n0 1 2 0\n3 4 5 2\n1 3 1 5",
+        "output": "0 0 0 0\n0 4 5 0\n0 3 1 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n1 1 1\n1 0 1\n1 1 1",
         "output": "1 0 1\n0 0 0\n1 0 1"
       },
       {
@@ -3129,7 +3362,7 @@
       "先保存首行首列原本是否有零，最后再处理它们，避免标记污染。"
     ],
     "complexity": "时间 O(mn)，额外空间 O(1)。",
-    "constraints": "1 ≤ m,n ≤ 200。",
+    "constraints": "m == matrix.length；n == matrix[0].length；1 <= m, n <= 200；-2^31 <= matrix[i][j] <= 2^31 - 1",
     "order": 18,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -3147,7 +3380,7 @@
         "meaning": "若矩阵某位置原本为 0，则将它所在的整行、整列全部改为 0。要求原地修改。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。",
         "outputExplanation": "按原尺寸输出矩阵，每行一行。",
-        "constraints": "1 ≤ m,n ≤ 200。",
+        "constraints": "m == matrix.length；n == matrix[0].length；1 <= m, n <= 200；-2^31 <= matrix[i][j] <= 2^31 - 1",
         "naive": "额外记录所有含零的行列，空间 O(m+n)。",
         "insight": "用第一列标记整行，用第一行标记整列；两个布尔值另记第一行、第一列原本是否含零。",
         "variables": [
@@ -3315,6 +3548,16 @@
     "tests": [
       {
         "input": "3 3\n1 2 3\n4 5 6\n7 8 9",
+        "output": "1 2 3 6 9 8 7 4 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 4\n1 2 3 4\n5 6 7 8\n9 10 11 12",
+        "output": "1 2 3 4 8 12 11 10 9 5 6 7",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n1 2 3\n4 5 6\n7 8 9",
         "output": "1 2 3 6 9 8 7 4 5"
       },
       {
@@ -3331,7 +3574,7 @@
       "每走完一条边就收缩边界，走下边和左边前检查是否仍有元素。"
     ],
     "complexity": "时间 O(mn)，除输出外空间 O(1)。",
-    "constraints": "1 ≤ m,n ≤ 100。",
+    "constraints": "m == matrix.length；n == matrix[i].length；1 <= m, n <= 10；-100 <= matrix[i][j] <= 100",
     "order": 19,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -3349,7 +3592,7 @@
         "meaning": "从矩阵左上角出发，按顺时针螺旋顺序访问所有元素。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ m,n ≤ 100。",
+        "constraints": "m == matrix.length；n == matrix[i].length；1 <= m, n <= 10；-100 <= matrix[i][j] <= 100",
         "naive": "可以用 visited 矩阵模拟转向，但需要 O(mn) 标记空间。",
         "insight": "用 top、bottom、left、right 围住未访问区域，依次走上边、右边、下边、左边，走完一边缩进边界。",
         "variables": [
@@ -3496,6 +3739,16 @@
     "tests": [
       {
         "input": "3\n1 2 3\n4 5 6\n7 8 9",
+        "output": "7 4 1\n8 5 2\n9 6 3",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n5 1 9 11\n2 4 8 10\n13 3 6 7\n15 14 12 16",
+        "output": "15 13 2 5\n14 3 4 1\n12 6 8 9\n16 7 10 11",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n1 2 3\n4 5 6\n7 8 9",
         "output": "7 4 1\n8 5 2\n9 6 3"
       },
       {
@@ -3512,7 +3765,7 @@
       "再反转每一行，就完成顺时针旋转。"
     ],
     "complexity": "时间 O(n²)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 100。",
+    "constraints": "n == matrix.length == matrix[i].length；1 <= n <= 20；-1000 <= matrix[i][j] <= 1000",
     "order": 20,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -3530,7 +3783,7 @@
         "meaning": "把 n×n 的方阵原地顺时针旋转 90 度。",
         "inputExplanation": "第一行 n；随后 n 行，每行 n 个整数。",
         "outputExplanation": "输出旋转后的 n 行矩阵。",
-        "constraints": "1 ≤ n ≤ 100。",
+        "constraints": "n == matrix.length == matrix[i].length；1 <= n <= 20；-1000 <= matrix[i][j] <= 1000",
         "naive": "新建矩阵，把 (i,j) 放到 (j,n−1−i)，需要 O(n²) 新空间。",
         "insight": "先沿主对角线转置，使 (i,j) 到 (j,i)；再反转每行，使其到 (j,n−1−i)。",
         "variables": [
@@ -3682,6 +3935,16 @@
     "solution": "# 240. 搜索二维矩阵 II — 从右上角排除行列\n# 时间 O(m+n)，额外空间 O(1)。\n# 核心思想：右上角是当前行最大、当前列最小：大于 target 就删去这一列，小于 target 就删去这一行。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    m, n = map(int, input().split())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    matrix = [list(map(int, sys.stdin.readline().split())) for _ in range(m)]\n    # 读取一个整数，含义与范围见题目输入格式。\n    target = int(input())\n    row, col = (0, n - 1)\n    while row < m and col >= 0:\n        if matrix[row][col] == target:\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print('true')\n            return\n        # 当前数太大可排除整列；太小可排除整行。\n        if matrix[row][col] > target:\n            col -= 1\n        else:\n            row += 1\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print('false')\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n5",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n20",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
         "input": "3 3\n1 4 7\n2 5 8\n3 6 9\n6",
         "output": "true"
       },
@@ -3699,7 +3962,7 @@
       "过大则左移排除一列，过小则下移排除一行。"
     ],
     "complexity": "时间 O(m+n)，额外空间 O(1)。",
-    "constraints": "1 ≤ m,n ≤ 300。",
+    "constraints": "m == matrix.length；n == matrix[i].length；1 <= n, m <= 300；-10^9 <= matrix[i][j] <= 10^9；每行的所有元素从左到右升序排列；每列的所有元素从上到下升序排列；-10^9 <= target <= 10^9",
     "order": 21,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -3718,7 +3981,7 @@
         "meaning": "矩阵各行从左到右、各列从上到下均非递减。判断 target 是否存在。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。最后一行是 target。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ m,n ≤ 300。",
+        "constraints": "m == matrix.length；n == matrix[i].length；1 <= n, m <= 300；-10^9 <= matrix[i][j] <= 10^9；每行的所有元素从左到右升序排列；每列的所有元素从上到下升序排列；-10^9 <= target <= 10^9",
         "naive": "逐格查找需要 O(mn)。不能把该矩阵直接当成整体有序数组。",
         "insight": "右上角是当前行最大、当前列最小：大于 target 就删去这一列，小于 target 就删去这一行。",
         "variables": [
@@ -3829,6 +4092,21 @@
     "tests": [
       {
         "input": "2 3 3\n4 1\n5 6 1\n8 4 5",
+        "output": "8",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 1 2\n1 9 1\n3\n2 4",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 2 0\n2 6 4\n1 5\n",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 3 3\n4 1\n5 6 1\n8 4 5",
         "output": "8"
       },
       {
@@ -3845,11 +4123,11 @@
       "两个指针走到末尾后转向另一条链表，走过相同总路程后会在交点或空节点相遇。"
     ],
     "complexity": "算法时间 O(n+m+c)，额外空间 O(1)，另计输入建链。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "listA 中节点数目为 m；listB 中节点数目为 n；1 <= m, n <= 3 * 10^4；1 <= Node.val <= 10^5；0 <= skipA <= m；0 <= skipB <= n；如果 listA 和 listB 没有交点，intersectVal 为 0；如果 listA 和 listB 有交点，intersectVal == listA[skipA] == listB[skipB]",
     "order": 22,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "哈希表",
       "链表",
@@ -3863,7 +4141,7 @@
         "meaning": "两条无环链表可能共享同一段尾链表。判断它们是否相交，若相交输出交点的值，否则输出 -1。相交指节点对象相同，而非数值相同。",
         "inputExplanation": "第一行 n m c，分别为 A 独有段、B 独有段、共享尾段的长度；接下来三行依次给出三段数值，空段留空。",
         "outputExplanation": "输出交点值，或 -1。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "listA 中节点数目为 m；listB 中节点数目为 n；1 <= m, n <= 3 * 10^4；1 <= Node.val <= 10^5；0 <= skipA <= m；0 <= skipB <= n；如果 listA 和 listB 没有交点，intersectVal 为 0；如果 listA 和 listB 有交点，intersectVal == listA[skipA] == listB[skipB]",
         "naive": "用集合记录一条链表所有节点，再扫描另一条，空间 O(n)。",
         "insight": "指针分别走 A 再 B、B 再 A，走到末尾就换头；两条路线总长相同，可抵消独有前缀的长度差。",
         "variables": [
@@ -4022,6 +4300,21 @@
     "tests": [
       {
         "input": "5\n1 2 3 4 5",
+        "output": "5 4 3 2 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 2",
+        "output": "2 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "0\n",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n1 2 3 4 5",
         "output": "5 4 3 2 1"
       },
       {
@@ -4038,11 +4331,11 @@
       "让当前节点指向前驱，再同时向原后继推进。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "链表中节点的数目范围是 [0, 5000]；-5000 <= Node.val <= 5000",
     "order": 23,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "递归",
       "链表"
@@ -4055,7 +4348,7 @@
         "meaning": "将单向链表的连接方向全部反转，并输出新的链表。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "链表中节点的数目范围是 [0, 5000]；-5000 <= Node.val <= 5000",
         "naive": "把节点值装入数组逆序输出需要 O(n) 空间，而且并未改变链表指向。",
         "insight": "prev 是已经反转段的头，head 是还未处理段的头。先记下 head.next，再让它指向 prev，最后两指针前进。",
         "variables": [
@@ -4236,6 +4529,16 @@
     "tests": [
       {
         "input": "4\n1 2 2 1",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 2",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 2 2 1",
         "output": "true"
       },
       {
@@ -4252,7 +4555,7 @@
       "反转后半段并与前半段逐个比较；本程序不再使用原链表，因此无需恢复。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "链表中节点数目在范围[1, 10^5] 内；0 <= Node.val <= 9",
     "order": 24,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -4271,7 +4574,7 @@
         "meaning": "判断链表从前向后与从后向前读出的数值是否一致。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "链表中节点数目在范围[1, 10^5] 内；0 <= Node.val <= 9",
         "naive": "拷贝所有值后判断数组回文，时间 O(n)、空间 O(n)。",
         "insight": "快指针一次两步，慢指针一次一步找到中部；反转后半段，再从两端对应比较值。",
         "variables": [
@@ -4418,6 +4721,21 @@
     "tests": [
       {
         "input": "4\n3 2 0 -4\n1",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 2\n0",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n-1",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n3 2 0 -4\n1",
         "output": "true"
       },
       {
@@ -4434,16 +4752,16 @@
       "有环时会在环中相遇；快指针到空节点则无环。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "链表中节点的数目范围是 [0, 10^4]；-10^5 <= Node.val <= 10^5；pos 为 -1 或者链表中的一个 有效索引 。",
     "order": 25,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "哈希表",
       "链表",
       "双指针",
-      ""
+      "Floyd 判圈算法"
     ],
     "solutions": [
       {
@@ -4453,7 +4771,7 @@
         "meaning": "判断单向链表中是否存在环。读取 pos 后应先构造链表，再使用快慢指针检测。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。第三行 pos：尾节点连接的下标，-1 表示无环。下标从 0 开始。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "链表中节点的数目范围是 [0, 10^4]；-10^5 <= Node.val <= 10^5；pos 为 -1 或者链表中的一个 有效索引 。",
         "naive": "用集合记录访问过的节点，重复即有环，但空间 O(n)。",
         "insight": "slow 每次一步，fast 每次两步；若有环，进入环后相对距离每次缩短一格，最终相遇。",
         "variables": [
@@ -4585,6 +4903,21 @@
     "tests": [
       {
         "input": "4\n3 2 0 -4\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 2\n0",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n-1",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n3 2 0 -4\n1",
         "output": "1"
       },
       {
@@ -4601,16 +4934,16 @@
       "另一个指针从头出发，两者每次都走一步，再次相遇即入口。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "链表中节点的数目范围在范围 [0, 10^4] 内；-10^5 <= Node.val <= 10^5；pos 的值为 -1 或者链表中的一个有效索引",
     "order": 26,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "哈希表",
       "链表",
       "双指针",
-      ""
+      "Floyd 判圈算法"
     ],
     "solutions": [
       {
@@ -4620,7 +4953,7 @@
         "meaning": "找到链表环的入口，输出入口在原输入序列中的下标。无环输出 -1。先构造链表，再检测入口。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。第三行 pos：尾节点连接的下标，-1 表示无环。下标从 0 开始。",
         "outputExplanation": "输出入口下标或 -1。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "链表中节点的数目范围在范围 [0, 10^4] 内；-10^5 <= Node.val <= 10^5；pos 的值为 -1 或者链表中的一个有效索引",
         "naive": "保存每个节点及首次下标可找到入口，空间 O(n)。",
         "insight": "先快慢相遇，再让一指针回头部，两指针都一次一步；再次相遇就是入口，同时累加入口下标。",
         "variables": [
@@ -4731,6 +5064,21 @@
     "tests": [
       {
         "input": "3 3\n1 2 4\n1 3 4",
+        "output": "1 1 2 3 4 4",
+        "source": "leetcode"
+      },
+      {
+        "input": "0 0\n\n",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "0 1\n\n0",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n1 2 4\n1 3 4",
         "output": "1 1 2 3 4 4"
       },
       {
@@ -4747,11 +5095,11 @@
       "每次连接较小头节点，最后把未耗尽的一条直接接上。"
     ],
     "complexity": "时间 O(n+m)，算法额外空间 O(1)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "两个链表的节点数目范围是 [0, 50]；-100 <= Node.val <= 100；l1 和 l2 均按 非递减顺序 排列",
     "order": 27,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "递归",
       "链表"
@@ -4764,7 +5112,7 @@
         "meaning": "将两个非递减链表合并为一个非递减链表，复用原节点。",
         "inputExplanation": "第一行 n m；第二行是第一条链表的 n 个值；第三行是第二条链表的 m 个值。空链表行留空。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "两个链表的节点数目范围是 [0, 50]；-100 <= Node.val <= 100；l1 和 l2 均按 非递减顺序 排列",
         "naive": "把两条链表值收集后排序，时间 O((n+m) log(n+m))。",
         "insight": "每次从两个当前头节点中选较小者接到 tail 后；dummy 统一了“第一次接节点”的情况。",
         "variables": [
@@ -4902,6 +5250,21 @@
     "tests": [
       {
         "input": "3 3\n2 4 3\n5 6 4",
+        "output": "7 0 8",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 1\n0\n0",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "7 4\n9 9 9 9 9 9 9\n9 9 9 9",
+        "output": "8 9 9 9 0 0 0 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n2 4 3\n5 6 4",
         "output": "7 0 8"
       },
       {
@@ -4918,11 +5281,11 @@
       "两条链表都结束后，也要处理最后一次进位。"
     ],
     "complexity": "时间 O(max(n,m))，输出空间 O(max(n,m))。",
-    "constraints": "1 ≤ n,m ≤ 100；节点值为 0 到 9。",
+    "constraints": "每个链表中的节点数在范围 [1, 100] 内；0 <= Node.val <= 9；题目数据保证列表表示的数字不含前导零",
     "order": 28,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "递归",
       "链表",
@@ -4936,7 +5299,7 @@
         "meaning": "两条非空链表以低位在前的顺序表示非负整数。把两个数相加，以同样顺序输出结果链表。",
         "inputExplanation": "第一行 n m；第二行是第一条链表的 n 个值；第三行是第二条链表的 m 个值。空链表行留空。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n,m ≤ 100；节点值为 0 到 9。",
+        "constraints": "每个链表中的节点数在范围 [1, 100] 内；0 <= Node.val <= 9；题目数据保证列表表示的数字不含前导零",
         "naive": "把链表转换成巨大整数再相加，掩盖进位过程，也依赖语言大整数能力。",
         "insight": "输入已低位在前，直接从头相加：当前位总和为两位数字加 carry，用 divmod(total,10) 得到新进位和本位。",
         "variables": [
@@ -5071,6 +5434,21 @@
     "tests": [
       {
         "input": "5\n1 2 3 4 5\n2",
+        "output": "1 2 3 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n1",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 2\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n1 2 3 4 5\n2",
         "output": "1 2 3 5"
       },
       {
@@ -5087,11 +5465,11 @@
       "同步前进，快指针到尾部时，慢指针指向待删节点的前驱。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "1 ≤ k ≤ n ≤ 10⁴。",
+    "constraints": "链表中结点的数目为 sz；1 <= sz <= 30；0 <= Node.val <= 100；1 <= n <= sz",
     "order": 29,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "链表",
       "双指针"
@@ -5104,7 +5482,7 @@
         "meaning": "删除链表倒数第 k 个节点，输出删除后的链表。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。第三行是 k，保证 1 ≤ k ≤ n。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ k ≤ n ≤ 10⁴。",
+        "constraints": "链表中结点的数目为 sz；1 <= sz <= 30；0 <= Node.val <= 100；1 <= n <= sz",
         "naive": "先数长度，再从头走到删除处，需要两遍扫描，已是线性时间。双指针把定位合在一遍中。",
         "insight": "从 dummy 出发，让 fast 先走 k 步；之后同步前进，fast 到末节点时，slow 是待删除节点的前驱。",
         "variables": [
@@ -5222,6 +5600,21 @@
     "tests": [
       {
         "input": "4\n1 2 3 4",
+        "output": "2 1 4 3",
+        "source": "leetcode"
+      },
+      {
+        "input": "0\n",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 2 3 4",
         "output": "2 1 4 3"
       },
       {
@@ -5238,11 +5631,11 @@
       "依次调整两节点与前后链段的连接，再将前驱移到交换后的后一个节点。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "链表中节点的数目在范围 [0, 100] 内；0 <= Node.val <= 100",
     "order": 30,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "递归",
       "链表"
@@ -5255,7 +5648,7 @@
         "meaning": "交换链表中每一对相邻节点的位置。若节点总数为奇数，最后一个节点不动；不能只交换数值。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "链表中节点的数目在范围 [0, 100] 内；0 <= Node.val <= 100",
         "naive": "交换每对节点的值可以得到相同数列，但题目要求交换节点关系。",
         "insight": "每轮保存 first、second，把前驱接 second，second 接 first，first 接下一段，再把前驱移到 first。",
         "variables": [
@@ -5376,6 +5769,16 @@
     "tests": [
       {
         "input": "5\n1 2 3 4 5\n2",
+        "output": "2 1 4 3 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n1 2 3 4 5\n3",
+        "output": "3 2 1 4 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n1 2 3 4 5\n2",
         "output": "2 1 4 3 5"
       },
       {
@@ -5392,7 +5795,7 @@
       "组内反转后，把原头作为下一组前驱，注意保留组后节点。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)。",
-    "constraints": "1 ≤ k ≤ n ≤ 5000。",
+    "constraints": "链表中的节点数目为 n；1 <= k <= n <= 5000；0 <= Node.val <= 1000",
     "order": 31,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -5409,7 +5812,7 @@
         "meaning": "每连续 k 个节点为一组反转。末尾不足 k 个节点时保持原顺序，不能只交换数值。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。第三行是正整数 k。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ k ≤ n ≤ 5000。",
+        "constraints": "链表中的节点数目为 n；1 <= k <= n <= 5000；0 <= Node.val <= 1000",
         "naive": "把节点装数组、按块逆序重连需要 O(n) 存储。",
         "insight": "before 是本组前驱；先向后数 k 个，确认完整。记住 after，用常规链表反转直到 after，再连接前后两段。",
         "variables": [
@@ -5593,6 +5996,21 @@
     "solution": "# 138. 随机链表的复制 — 旧节点到新节点的映射\n# 时间 O(n)，额外空间 O(n)。\n# 核心思想：第一遍给每个旧节点创建唯一新节点；第二遍用映射翻译 next 与 random 的目标。\n\nimport sys\nsys.setrecursionlimit(100000)\n\n# 一个节点保存数值以及指向其他节点的引用；引用不同于数值本身。\nclass Node:\n\n    def __init__(self, val=0, next=None):\n        self.val, self.next = (val, next)\n\n# 按输入顺序尾插建链。虚拟头不输出，返回第一个真实节点。\ndef build(values):\n    dummy = tail = Node()\n    for v in values:\n        tail.next = Node(v)\n        tail = tail.next\n    return dummy.next\n\n# 沿 next 取值输出；仅用于无环链表，空链输出 EMPTY。\ndef show(head):\n    values = []\n    while head:\n        values.append(head.val)\n        head = head.next\n    if values:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*values)\n    else:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print('EMPTY')\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    rows = [list(map(int, sys.stdin.readline().split())) for _ in range(n)]\n    nodes = [Node(v) for v, _ in rows]\n    for i, (_, right) in enumerate(rows):\n        if i + 1 < n:\n            nodes[i].next = nodes[i + 1]\n        else:\n            nodes[i].next = None\n        if right >= 0:\n            nodes[i].random = nodes[right]\n        else:\n            nodes[i].random = None\n    # 先建齐全部新节点，支持 random 指向尚未访问的后方节点。\n    clones = {node: Node(node.val) for node in nodes}\n    for node in nodes:\n        # 用旧→新映射翻译指针，不能保留指向旧链表的边。\n        clones[node].next = clones.get(node.next)\n        clones[node].random = clones.get(node.random)\n    copied = [clones[node] for node in nodes]\n    # 输出格式用下标表达 random，不打印对象地址。\n    index = {node: i for i, node in enumerate(copied)}\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(n)\n    for node in copied:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(node.val, index.get(node.random, -1))\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "5\n7 -1\n13 0\n11 4\n10 2\n1 0",
+        "output": "5\n7 -1\n13 0\n11 4\n10 2\n1 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 1\n2 1",
+        "output": "2\n1 1\n2 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n3 -1\n3 0\n3 -1",
+        "output": "3\n3 -1\n3 0\n3 -1",
+        "source": "leetcode"
+      },
+      {
         "input": "3\n7 -1\n13 0\n11 1",
         "output": "3\n7 -1\n13 0\n11 1"
       },
@@ -5610,11 +6028,11 @@
       "第二轮通过映射连接 next 与 random。标准输出只能检查结构，节点独立性需对照代码检查。"
     ],
     "complexity": "时间 O(n)，额外空间 O(n)。",
-    "constraints": "0 ≤ n ≤ 1000；randomIndex 为 -1 或有效下标。",
+    "constraints": "0 <= n <= 1000；-10^4 <= Node.val <= 10^4；Node.random 为 null 或指向链表中的节点。",
     "order": 32,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "哈希表",
       "链表"
@@ -5627,7 +6045,7 @@
         "meaning": "每个节点除 next 外还有一个 random 指针。创建不与原链表共享任何节点的深拷贝，并输出拷贝的结构。",
         "inputExplanation": "第一行 n；随后 n 行为 value randomIndex，randomIndex 为 0 起始下标，-1 表示空指针。",
         "outputExplanation": "第一行 n；后续每行输出拷贝节点的 value randomIndex。",
-        "constraints": "0 ≤ n ≤ 1000；randomIndex 为 -1 或有效下标。",
+        "constraints": "0 <= n <= 1000；-10^4 <= Node.val <= 10^4；Node.random 为 null 或指向链表中的节点。",
         "naive": "只复制值和 next 会丢失 random；直接复制 random 指针会仍指向旧链表。",
         "insight": "第一遍给每个旧节点创建唯一新节点；第二遍用映射翻译 next 与 random 的目标。",
         "variables": [
@@ -5808,6 +6226,21 @@
     "tests": [
       {
         "input": "4\n4 2 1 3",
+        "output": "1 2 3 4",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n-1 5 3 4 0",
+        "output": "-1 0 3 4 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "0\n",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n4 2 1 3",
         "output": "1 2 3 4"
       },
       {
@@ -5824,11 +6257,11 @@
       "分别归并排序左右两段，再通过指针合并。"
     ],
     "complexity": "时间 O(n log n)，递归空间 O(log n)。",
-    "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+    "constraints": "链表中节点的数目在范围 [0, 5 * 10^4] 内；-10^5 <= Node.val <= 10^5",
     "order": 33,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "链表",
       "双指针",
@@ -5844,7 +6277,7 @@
         "meaning": "将无环链表按节点值非递减排序，要求 O(n log n) 时间复杂度。",
         "inputExplanation": "第一行 n；第二行是链表从头到尾的 n 个整数（n=0 时留空）。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 链表长度 ≤ 10⁴；空链表的数值行留空。",
+        "constraints": "链表中节点的数目在范围 [0, 5 * 10^4] 内；-10^5 <= Node.val <= 10^5",
         "naive": "反复选最小节点或插入排序，最坏 O(n²)。",
         "insight": "快慢指针切成两半，递归排好各半，再像 21 题一样合并两个有序链表。",
         "variables": [
@@ -6022,6 +6455,21 @@
     "tests": [
       {
         "input": "3\n3 1 4 5\n3 1 3 4\n2 2 6",
+        "output": "1 1 2 3 4 4 5 6",
+        "source": "leetcode"
+      },
+      {
+        "input": "0\n",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n0",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n3 1 4 5\n3 1 3 4\n2 2 6",
         "output": "1 1 2 3 4 4 5 6"
       },
       {
@@ -6038,17 +6486,17 @@
       "弹出最小节点后，把它的后继放回堆；链表编号用于解决数值相等时的比较。"
     ],
     "complexity": "时间 O(N log(k+1))，堆空间 O(k)；N 为总节点数。",
-    "constraints": "0 ≤ k ≤ 10⁴；总节点数 ≤ 10⁴。",
+    "constraints": "k == lists.length；0 <= k <= 10^4；0 <= lists[i].length <= 500；-10^4 <= lists[i][j] <= 10^4；lists[i] 按 升序 排列；lists[i].length 的总和不超过 10^4",
     "order": 34,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "链表",
       "分治",
       "堆（优先队列）",
       "归并排序",
-      ""
+      "锦标赛排序"
     ],
     "solutions": [
       {
@@ -6058,7 +6506,7 @@
         "meaning": "将 k 条非递减链表合并成一条非递减链表。",
         "inputExplanation": "第一行 k；随后 k 行，每行先给出长度，再给出该链表的各个值。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ k ≤ 10⁴；总节点数 ≤ 10⁴。",
+        "constraints": "k == lists.length；0 <= k <= 10^4；0 <= lists[i].length <= 500；-10^4 <= lists[i][j] <= 10^4；lists[i] 按 升序 排列；lists[i].length 的总和不超过 10^4",
         "naive": "每次扫描 k 条链表头选择最小，需要 O(Nk)。",
         "insight": "堆只放每条非空链表的当前头。弹出全局最小节点后，把它的后继放回堆。",
         "variables": [
@@ -6242,6 +6690,11 @@
     "solution": "# 146. LRU 缓存 — 有序字典维护最近使用次序\n# 每次操作期望 O(1)，空间 O(capacity)。\n# 核心思想：OrderedDict 同时支持键查询与顺序移动。左端最久未用，右端最近访问；get 命中和 put 都移动到右端。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    from collections import OrderedDict\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    capacity, operation_count = map(int, input().split())\n    cache = OrderedDict()\n    for _ in range(operation_count):\n        # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n        op = input().split()\n        key = int(op[1])\n        if op[0] == 'get':\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print(cache.get(key, -1))\n            if key in cache:\n                # 命中或更新也算最近使用，把键移到右端。\n                cache.move_to_end(key)\n        else:\n            cache[key] = int(op[2])\n            # 命中或更新也算最近使用，把键移到右端。\n            cache.move_to_end(key)\n            # 超容量淘汰最左端，即最久未使用项。\n            if len(cache) > capacity:\n                cache.popitem(last=False)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "2 9\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4",
+        "output": "1\n-1\n-1\n3\n4",
+        "source": "leetcode"
+      },
+      {
         "input": "2 6\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nget 3",
         "output": "1\n-1\n3"
       },
@@ -6259,11 +6712,11 @@
       "每次访问移到末尾，超出容量时从头部淘汰。"
     ],
     "complexity": "每次操作期望 O(1)，空间 O(capacity)。",
-    "constraints": "1 ≤ capacity,q ≤ 10⁴；至少有一次 get。",
+    "constraints": "1 <= capacity <= 3000；0 <= key <= 10000；0 <= value <= 10^5；最多调用 2 * 10^5 次 get 和 put",
     "order": 35,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 1,
     "topicTags": [
       "设计",
       "哈希表",
@@ -6278,7 +6731,7 @@
         "meaning": "实现容量有限的最近最少使用缓存。get 读取并更新最近使用顺序；put 插入或修改，超容量时淘汰最久未访问的键。",
         "inputExplanation": "第一行 capacity q；随后 q 行为 get key 或 put key value。",
         "outputExplanation": "对每次 get 输出一行结果；不存在时输出 -1。",
-        "constraints": "1 ≤ capacity,q ≤ 10⁴；至少有一次 get。",
+        "constraints": "1 <= capacity <= 3000；0 <= key <= 10000；0 <= value <= 10^5；最多调用 2 * 10^5 次 get 和 put",
         "naive": "普通数组存键并在每次访问时移动位置，操作需要 O(capacity)。",
         "insight": "OrderedDict 同时支持键查询与顺序移动。左端最久未用，右端最近访问；get 命中和 put 都移动到右端。",
         "variables": [
@@ -6396,6 +6849,21 @@
     "tests": [
       {
         "input": "1 null 2 3",
+        "output": "1 3 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "null",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 null 2 3",
         "output": "1 3 2"
       },
       {
@@ -6412,11 +6880,11 @@
       "没有左孩子时弹出节点访问，再转到右子树。"
     ],
     "complexity": "时间 O(n)，空间 O(h)；h 为树高。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点数目在范围 [0, 100] 内；-100 <= Node.val <= 100",
     "order": 36,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "栈",
       "树",
@@ -6431,7 +6899,7 @@
         "meaning": "按照左子树、当前节点、右子树的顺序输出树中的节点。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点数目在范围 [0, 100] 内；-100 <= Node.val <= 100",
         "naive": "递归“左、根、右”本来已经是 O(n)，这里改为显式栈，便于看到递归暂停在哪。",
         "insight": "一路把左链压栈；走不动时弹出一个节点访问，然后处理它的右子树。栈保存尚未访问的祖先。",
         "variables": [
@@ -6574,6 +7042,16 @@
     "tests": [
       {
         "input": "3 9 20 null null 15 7",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 null 2",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 9 20 null null 15 7",
         "output": "3"
       },
       {
@@ -6590,7 +7068,7 @@
       "非空节点的深度是左右子树深度最大值加 1。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点的数量在 [0, 10^4] 区间内。；-100 <= Node.val <= 100",
     "order": 37,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -6609,7 +7087,7 @@
         "meaning": "树的深度是从根到叶子的最长路径包含的节点数。空树深度为 0。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出最大深度。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点的数量在 [0, 10^4] 区间内。；-100 <= Node.val <= 100",
         "naive": "从根遍历每条路径也可以线性求深度，不需要强行增加更复杂的优化。",
         "insight": "depth(node) 返回以 node 为根的最大层数。空树为 0，非空树是左右子树较大深度加 1。",
         "variables": [
@@ -6790,6 +7268,21 @@
     "tests": [
       {
         "input": "4 2 7 1 3 6 9",
+        "output": "4 7 2 9 6 3 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 1 3",
+        "output": "2 3 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "null",
+        "output": "null",
+        "source": "leetcode"
+      },
+      {
+        "input": "4 2 7 1 3 6 9",
         "output": "4 7 2 9 6 3 1"
       },
       {
@@ -6806,11 +7299,11 @@
       "递归地对两个子树执行相同操作。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点数目范围在 [0, 100] 内；-100 <= Node.val <= 100",
     "order": 38,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "树",
       "深度优先搜索",
@@ -6825,7 +7318,7 @@
         "meaning": "交换每个节点的左右子树，得到原树的镜像。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出层序序列，空节点为 null，省略末尾多余的 null；空树输出 null。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点数目范围在 [0, 100] 内；-100 <= Node.val <= 100",
         "naive": "借助层序队列逐个交换也能线性完成；递归写法直接对应树的定义。",
         "insight": "对当前节点交换 left、right，再分别翻转两个子树。空节点无需处理。",
         "variables": [
@@ -6950,6 +7443,16 @@
     "tests": [
       {
         "input": "1 2 2 3 4 4 3",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2 2 null 3 null 3",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2 2 3 4 4 3",
         "output": "true"
       },
       {
@@ -6966,7 +7469,7 @@
       "值相同、外侧子树对称、内侧子树对称，三项都成立才对称。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点数目在范围 [1, 1000] 内；-100 <= Node.val <= 100",
     "order": 39,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -6985,7 +7488,7 @@
         "meaning": "判断二叉树是否关于根节点左右镜像对称。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点数目在范围 [1, 1000] 内；-100 <= Node.val <= 100",
         "naive": "只比较每一层数值是否回文可能忽略空节点位置，例如左右缺孩子的结构不能被丢弃。",
         "insight": "mirror(left_node,right_node) 同时检查外侧 left_node.left/right_node.right 和内侧 left_node.right/right_node.left，节点值也要相等。",
         "variables": [
@@ -7131,6 +7634,16 @@
     "tests": [
       {
         "input": "1 2 3 4 5",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2 3 4 5",
         "output": "3"
       },
       {
@@ -7147,7 +7660,7 @@
       "经过该节点的最长路径有 leftDepth + rightDepth 条边，取全局最大值。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点数目在范围 [1, 10^4] 内；-100 <= Node.val <= 100",
     "order": 40,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -7156,7 +7669,7 @@
       "树",
       "深度优先搜索",
       "二叉树",
-      ""
+      "树形 DP"
     ],
     "solutions": [
       {
@@ -7166,7 +7679,7 @@
         "meaning": "直径是任意两个节点之间最长路径的边数，路径不要求经过根。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出直径；空树输出 0。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点数目在范围 [1, 10^4] 内；-100 <= Node.val <= 100",
         "naive": "以每个节点为中心重新计算左右高度，最坏 O(n²)。",
         "insight": "后序递归一次返回深度，同时用 left_depth+right_depth 更新经过当前节点的最长路径边数。",
         "variables": [
@@ -7316,6 +7829,21 @@
     "tests": [
       {
         "input": "3 9 20 null null 15 7",
+        "output": "3\n3\n9 20\n15 7",
+        "source": "leetcode"
+      },
+      {
+        "input": "1",
+        "output": "1\n1",
+        "source": "leetcode"
+      },
+      {
+        "input": "null",
+        "output": "0\n",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 9 20 null null 15 7",
         "output": "3\n3\n9 20\n15 7"
       },
       {
@@ -7332,11 +7860,11 @@
       "每轮固定当前队列长度，只处理这一层，然后开始下一层。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点数目在范围 [0, 2000] 内；-1000 <= Node.val <= 1000",
     "order": 41,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "树",
       "广度优先搜索",
@@ -7350,7 +7878,7 @@
         "meaning": "从上到下逐层访问二叉树，每层从左到右。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "先输出层数；随后每层一行，值用空格分隔。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点数目在范围 [0, 2000] 内；-1000 <= Node.val <= 1000",
         "naive": "递归并携带层号也可以完成；队列让访问顺序自然按从浅到深展开。",
         "insight": "队列开头装根。每轮先固定 len(queue)，只弹出这些当前层节点，把孩子排到队尾作为下一层。",
         "variables": [
@@ -7479,11 +8007,21 @@
     "title": "将有序数组转换为二叉搜索树",
     "difficulty": "简单",
     "category": "二叉树",
-    "statement": "将严格递增数组构造成高度平衡的二叉搜索树。为得到唯一输出，每段必须选择中间偏左的元素作为根。",
+    "statement": "将严格递增数组构造成高度平衡的二叉搜索树。若存在多种高度平衡的二叉搜索树，可返回任意一种。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
     "output": "输出层序序列，空节点为 null，省略末尾多余的 null；空树输出 null。",
     "solution": "# 108. 将有序数组转换为二叉搜索树 — 用区间中点递归建树\n# 时间 O(n)，递归空间 O(log n)，另计树存储。\n# 核心思想：每次选当前闭区间中点为根，左区间建左子树，右区间建右子树。两边节点数相差最多 1。\n\nimport sys\nfrom collections import deque\nsys.setrecursionlimit(100000)\n\n# 一个节点保存数值以及指向其他节点的引用；引用不同于数值本身。\nclass Node:\n\n    def __init__(self, val):\n        self.val = val\n        self.left = self.right = None\n\n# 按层序读取；null 表示没有节点，队列只为真实节点分配左右孩子。\ndef read_tree():\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    values = input().split()\n    if not values or values[0] == 'null':\n        return None\n    root = Node(int(values[0]))\n    queue, i = (deque([root]), 1)\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in ('left', 'right'):\n            if i < len(values) and values[i] != 'null':\n                child = Node(int(values[i]))\n                setattr(node, side, child)\n                queue.append(child)\n            i += 1\n    return root\n\n# 层序序列化保留内部 null；只移除末尾多余空节点占位。\ndef show_tree(root):\n    queue, answer = (deque([root]), [])\n    while queue:\n        node = queue.popleft()\n        if node is None:\n            answer.append('null')\n        else:\n            answer.append(str(node.val))\n            queue.extend((node.left, node.right))\n    while len(answer) > 1 and answer[-1] == 'null':\n        answer.pop()\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(' '.join(answer))\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n\n    def make(left, right):\n        # 空区间对应空节点。\n        if left > right:\n            return None\n        # 固定取下中点，使 ACM 版建树结果确定。\n        mid = (left + right) // 2\n        node = Node(numbers[mid])\n        node.left, node.right = (make(left, mid - 1), make(mid + 1, right))\n        return node\n    show_tree(make(0, n - 1))\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "5\n-10 -3 0 5 9",
+        "output": "0 -3 9 -10 null 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n1 3",
+        "output": "3 1",
+        "source": "leetcode"
+      },
       {
         "input": "5\n-10 -3 0 5 9",
         "output": "0 -10 5 null -3 null 9"
@@ -7502,10 +8040,10 @@
       "对左右子数组递归建树。"
     ],
     "complexity": "时间 O(n)，递归空间 O(log n)，另计树存储。",
-    "constraints": "1 ≤ n ≤ 1000；数组严格递增。",
+    "constraints": "1 <= nums.length <= 10^4；-10^4 <= nums[i] <= 10^4；nums 按 严格递增 顺序排列",
     "order": 42,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "balanced-bst",
     "sampleCount": 2,
     "topicTags": [
       "树",
@@ -7519,10 +8057,10 @@
         "id": "recommended",
         "title": "用区间中点递归建树",
         "summary": "每次选当前闭区间中点为根，左区间建左子树，右区间建右子树。两边节点数相差最多 1。",
-        "meaning": "将严格递增数组构造成高度平衡的二叉搜索树。为得到唯一输出，每段必须选择中间偏左的元素作为根。",
+        "meaning": "将严格递增数组构造成高度平衡的二叉搜索树。若存在多种高度平衡的二叉搜索树，可返回任意一种。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出层序序列，空节点为 null，省略末尾多余的 null；空树输出 null。",
-        "constraints": "1 ≤ n ≤ 1000；数组严格递增。",
+        "constraints": "1 <= nums.length <= 10^4；-10^4 <= nums[i] <= 10^4；nums 按 严格递增 顺序排列",
         "naive": "依次把有序值插进搜索树会退化成链，树高 O(n)。",
         "insight": "每次选当前闭区间中点为根，左区间建左子树，右区间建右子树。两边节点数相差最多 1。",
         "variables": [
@@ -7711,6 +8249,16 @@
     "tests": [
       {
         "input": "2 1 3",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "5 1 4 null null 3 6",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 1 3",
         "output": "true"
       },
       {
@@ -7727,7 +8275,7 @@
       "左子树更新上界，右子树更新下界；不能只比较父子值。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中节点数目范围在[1, 10^4] 内；-2^31 <= Node.val <= 2^31 - 1",
     "order": 43,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -7746,7 +8294,7 @@
         "meaning": "验证每个节点的左子树所有值都严格小于它，右子树所有值都严格大于它。重复值不合法。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中节点数目范围在[1, 10^4] 内；-2^31 <= Node.val <= 2^31 - 1",
         "naive": "只比较每个节点与左右孩子不足够，右子树里的深层节点仍可能小于根。",
         "insight": "递归带上开区间 (lower_bound,upper_bound)。当前值必须严格落在区间内，再收紧左右孩子的边界。",
         "variables": [
@@ -7843,6 +8391,16 @@
     "tests": [
       {
         "input": "3 1 4 null 2\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "5 3 6 2 4 null null 1\n3",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 1 4 null 2\n1",
         "output": "1"
       },
       {
@@ -7859,7 +8417,7 @@
       "迭代中序遍历到第 k 个节点即可停止。"
     ],
     "complexity": "时间 O(h+k)，空间 O(h)。",
-    "constraints": "1 ≤ k ≤ 节点数 ≤ 1000。",
+    "constraints": "树中的节点数为 n 。；1 <= k <= n <= 10^4；0 <= Node.val <= 10^4",
     "order": 44,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -7878,7 +8436,7 @@
         "meaning": "给定合法、无重复值的二叉搜索树，输出第 k 小的节点值，k 从 1 开始。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。第二行是 k。",
         "outputExplanation": "输出节点值。",
-        "constraints": "1 ≤ k ≤ 节点数 ≤ 1000。",
+        "constraints": "树中的节点数为 n 。；1 <= k <= n <= 10^4；0 <= Node.val <= 10^4",
         "naive": "收集所有中序值再取第 k 个需要 O(n) 结果空间；排序所有节点更慢。",
         "insight": "搜索树的中序序列严格递增。用栈按中序访问，每弹出一个节点让 k 减一，减到零时返回。",
         "variables": [
@@ -7972,6 +8530,26 @@
     "tests": [
       {
         "input": "1 2 3 null 5 null 4",
+        "output": "1 3 4",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2 3 4 null null null 5",
+        "output": "1 3 4 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 null 3",
+        "output": "1 3",
+        "source": "leetcode"
+      },
+      {
+        "input": "null",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2 3 null 5 null 4",
         "output": "1 3 4"
       },
       {
@@ -7988,11 +8566,11 @@
       "每层最后一个出队节点就是右侧可见节点。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "二叉树的节点个数的范围是 [0,100]；-100 <= Node.val <= 100",
     "order": 45,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 4,
     "topicTags": [
       "树",
       "深度优先搜索",
@@ -8007,7 +8585,7 @@
         "meaning": "站在树的右侧，从上到下输出每层最右边可见的节点。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "二叉树的节点个数的范围是 [0,100]；-100 <= Node.val <= 100",
         "naive": "深度优先先右后左也能求解，这里采用容易观察的层序方法。",
         "insight": "队列按左到右访问一层，只把该层最后一个节点的值加入答案。",
         "variables": [
@@ -8139,6 +8717,21 @@
     "tests": [
       {
         "input": "1 2 5 3 4 null 6",
+        "output": "1 2 3 4 5 6",
+        "source": "leetcode"
+      },
+      {
+        "input": "null",
+        "output": "EMPTY",
+        "source": "leetcode"
+      },
+      {
+        "input": "0",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2 5 3 4 null 6",
         "output": "1 2 3 4 5 6"
       },
       {
@@ -8155,11 +8748,11 @@
       "将左子树整体挪到右侧，继续向右处理。"
     ],
     "complexity": "时间 O(n)，算法额外空间 O(1)，另计输出。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "树中结点数在范围 [0, 2000] 内；-100 <= Node.val <= 100",
     "order": 46,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "栈",
       "树",
@@ -8175,7 +8768,7 @@
         "meaning": "原地把二叉树改成仅使用 right 指针的链表；所有 left 为空，顺序与原树前序遍历一致。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "树中结点数在范围 [0, 2000] 内；-100 <= Node.val <= 100",
         "naive": "先记录前序节点数组再逐个重连，时间 O(n)、额外空间 O(n)。",
         "insight": "当前有左子树时，找到左子树最右节点，把原右子树接过去；左子树移到右侧，left 置空，然后沿 right 继续。",
         "variables": [
@@ -8304,6 +8897,16 @@
     "tests": [
       {
         "input": "5\n3 9 20 15 7\n9 3 15 20 7",
+        "output": "3 9 20 null null 15 7",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n-1\n-1",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n3 9 20 15 7\n9 3 15 20 7",
         "output": "3 9 20 null null 15 7"
       },
       {
@@ -8320,7 +8923,7 @@
       "通过中序下标划分左右范围，递归构造；哈希表避免反复查找。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 1000；保证输入对应合法树。",
+    "constraints": "1 <= preorder.length <= 3000；inorder.length == preorder.length；-3000 <= preorder[i], inorder[i] <= 3000；preorder 和 inorder 均 无重复 元素；inorder 均出现在 preorder；preorder 保证 为二叉树的前序遍历序列；inorder 保证 为二叉树的中序遍历序列",
     "order": 47,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -8340,7 +8943,7 @@
         "meaning": "给出同一棵树的前序、中序序列，所有值互不相同。重建并输出二叉树。",
         "inputExplanation": "第一行 n；第二行前序；第三行中序。",
         "outputExplanation": "输出层序序列，空节点为 null，省略末尾多余的 null；空树输出 null。",
-        "constraints": "1 ≤ n ≤ 1000；保证输入对应合法树。",
+        "constraints": "1 <= preorder.length <= 3000；inorder.length == preorder.length；-3000 <= preorder[i], inorder[i] <= 3000；preorder 和 inorder 均 无重复 元素；inorder 均出现在 preorder；preorder 保证 为二叉树的前序遍历序列；inorder 保证 为二叉树的中序遍历序列",
         "naive": "每次在中序数组线性寻找根并切片，最坏 O(n²) 且产生多份数组。",
         "insight": "前序游标 cursor 指向下一棵子树根；position 字典定位根在中序的位置，把当前区间分成左右两部分。",
         "variables": [
@@ -8533,6 +9136,16 @@
     "tests": [
       {
         "input": "10 5 -3 3 2 null 11 3 -2 null 1\n8",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "5 4 8 11 null 13 4 7 2 null null 5 1\n22",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "10 5 -3 3 2 null 11 3 -2 null 1\n8",
         "output": "3"
       },
       {
@@ -8549,7 +9162,7 @@
       "用当前和减 target 查询起点；返回父节点时撤销频次，防止跨分支计数。"
     ],
     "complexity": "时间 O(n)，空间 O(h)。",
-    "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+    "constraints": "二叉树的节点个数的范围是 [0,1000]；-10^9 <= Node.val <= 10^9；-1000 <= targetSum <= 1000",
     "order": 48,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -8567,7 +9180,7 @@
         "meaning": "统计节点值之和为 target 的非空路径数量。路径只能从父节点向子节点延伸，但不要求从根开始或在叶子结束。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。第二行 target。",
         "outputExplanation": "输出路径数。",
-        "constraints": "0 ≤ 节点数 ≤ 1000；节点值为整数。",
+        "constraints": "二叉树的节点个数的范围是 [0,1000]；-10^9 <= Node.val <= 10^9；-1000 <= targetSum <= 1000",
         "naive": "从每个节点出发向下枚举路径，最坏 O(n²)。",
         "insight": "DFS 到当前节点时，prefix 是根到当前和。沿当前祖先链出现过 prefix−target 的次数，就是以当前节点结尾的目标路径数。",
         "variables": [
@@ -8756,6 +9369,21 @@
     "tests": [
       {
         "input": "3 5 1 6 2 0 8 null null 7 4\n5 1",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 5 1 6 2 0 8 null null 7 4\n5 4",
+        "output": "5",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2\n1 2",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 5 1 6 2 0 8 null null 7 4\n5 1",
         "output": "3"
       },
       {
@@ -8772,17 +9400,17 @@
       "若左右子树分别找到目标，当前节点即最近祖先；否则上传非空的一侧。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "2 ≤ 节点数 ≤ 1000；节点值唯一。",
+    "constraints": "树中节点数目在范围 [2, 10^5] 内。；-10^9 <= Node.val <= 10^9；所有 Node.val 互不相同 。；p != q；p 和 q 均存在于给定的二叉树中。",
     "order": 49,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "树",
       "深度优先搜索",
       "二叉树",
-      "",
-      ""
+      "最近公共祖先",
+      "Binary Lifting"
     ],
     "solutions": [
       {
@@ -8792,7 +9420,7 @@
         "meaning": "给定树中两个不同节点 p、q，求它们最深的公共祖先。一个节点可以是它自己的祖先，节点值唯一。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。第二行 p q，均保证存在。",
         "outputExplanation": "输出最近公共祖先的值。",
-        "constraints": "2 ≤ 节点数 ≤ 1000；节点值唯一。",
+        "constraints": "树中节点数目在范围 [2, 10^5] 内。；-10^9 <= Node.val <= 10^9；所有 Node.val 互不相同 。；p != q；p 和 q 均存在于给定的二叉树中。",
         "naive": "先保存每个节点到根的路径再比较，也能线性求解，但需额外父表或路径。",
         "insight": "lca 返回当前子树里发现的目标或已经确定的祖先。左右都非空时，当前节点正好把两个目标分开；否则向上返回非空侧。",
         "variables": [
@@ -8895,6 +9523,16 @@
     "solution": "# 124. 二叉树中的最大路径和 — 单支贡献与双支答案\n# 时间 O(n)，递归空间 O(h)。\n# 核心思想：gain 返回能接到父节点的一条向下最大贡献；负贡献丢弃。全局 best 则允许左右两支经过当前节点连接。\n\nimport sys\nfrom collections import deque\nsys.setrecursionlimit(100000)\n\n# 一个节点保存数值以及指向其他节点的引用；引用不同于数值本身。\nclass Node:\n\n    def __init__(self, val):\n        self.val = val\n        self.left = self.right = None\n\n# 按层序读取；null 表示没有节点，队列只为真实节点分配左右孩子。\ndef read_tree():\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    values = input().split()\n    if not values or values[0] == 'null':\n        return None\n    root = Node(int(values[0]))\n    queue, i = (deque([root]), 1)\n    while queue and i < len(values):\n        node = queue.popleft()\n        for side in ('left', 'right'):\n            if i < len(values) and values[i] != 'null':\n                child = Node(int(values[i]))\n                setattr(node, side, child)\n                queue.append(child)\n            i += 1\n    return root\n\n# 层序序列化保留内部 null；只移除末尾多余空节点占位。\ndef show_tree(root):\n    queue, answer = (deque([root]), [])\n    while queue:\n        node = queue.popleft()\n        if node is None:\n            answer.append('null')\n        else:\n            answer.append(str(node.val))\n            queue.extend((node.left, node.right))\n    while len(answer) > 1 and answer[-1] == 'null':\n        answer.pop()\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(' '.join(answer))\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    root = read_tree()\n    # 答案必须非空，负数树不能以 0 作为初始最优。\n    best = float('-inf')\n\n    def gain(node):\n        nonlocal best\n        if not node:\n            return 0\n        # 负贡献只会拖累路径，舍弃时按 0 计算。\n        left, right = (max(0, gain(node.left)), max(0, gain(node.right)))\n        best = max(best, node.val + left + right)\n        # 返回给父节点的路径只能挑一条支路。\n        return node.val + max(left, right)\n    gain(root)\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "1 2 3",
+        "output": "6",
+        "source": "leetcode"
+      },
+      {
+        "input": "-10 9 20 null null 15 7",
+        "output": "42",
+        "source": "leetcode"
+      },
+      {
         "input": "-10 9 20 null null 15 7",
         "output": "42"
       },
@@ -8912,7 +9550,7 @@
       "在每个节点将两边正贡献连接，更新全局答案；全负数时仍要选一个节点。"
     ],
     "complexity": "时间 O(n)，递归空间 O(h)。",
-    "constraints": "1 ≤ 节点数 ≤ 1000。",
+    "constraints": "树中节点数目范围是 [1, 3 * 10^4]；-1000 <= Node.val <= 1000",
     "order": 50,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -8922,7 +9560,7 @@
       "深度优先搜索",
       "动态规划",
       "二叉树",
-      ""
+      "树形 DP"
     ],
     "solutions": [
       {
@@ -8932,7 +9570,7 @@
         "meaning": "任意选择一条非空简单路径，每个节点最多经过一次，路径可以先向上再向下。求路径上的最大节点值之和。",
         "inputExplanation": "第一行是二叉树的层序序列，空节点写作 null，末尾的 null 可省略；仅 null 表示空树。序列按非空节点依次填写左右孩子，不是完全二叉树下标。",
         "outputExplanation": "输出最大路径和。",
-        "constraints": "1 ≤ 节点数 ≤ 1000。",
+        "constraints": "树中节点数目范围是 [1, 3 * 10^4]；-1000 <= Node.val <= 1000",
         "naive": "枚举所有节点对并计算路径，至少平方级。",
         "insight": "gain 返回能接到父节点的一条向下最大贡献；负贡献丢弃。全局 best 则允许左右两支经过当前节点连接。",
         "variables": [
@@ -9096,6 +9734,16 @@
     "solution": "# 200. 岛屿数量 — 遇到新陆地就淹没整个岛\n# 时间 O(mn)，空间 O(mn)。\n# 核心思想：扫描遇到 1 时开启一次 DFS，用栈访问四邻接陆地并改成 0，整块连通陆地只贡献一个岛。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    m, n = map(int, input().split())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    grid = [list(map(int, sys.stdin.readline().split())) for _ in range(m)]\n    answer = 0\n    for i in range(m):\n        for j in range(n):\n            if grid[i][j] != 1:\n                continue\n            # 尚未标记的陆地代表一个新连通块。\n            answer += 1\n            stack = [(i, j)]\n            grid[i][j] = 0\n            while stack:\n                x, y = stack.pop()\n                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                    nx, ny = (x + dx, y + dy)\n                    if 0 <= nx < m and 0 <= ny < n and (grid[nx][ny] == 1):\n                        # 入栈即标记，避免相邻格重复把同一格压栈。\n                        grid[nx][ny] = 0\n                        stack.append((nx, ny))\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(answer)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "4 5\n1 1 1 1 0\n1 1 0 1 0\n1 1 0 0 0\n0 0 0 0 0",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "4 5\n1 1 0 0 0\n1 1 0 0 0\n0 0 1 0 0\n0 0 0 1 1",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
         "input": "4 5\n1 1 0 0 0\n1 1 0 0 0\n0 0 1 0 0\n0 0 0 1 1",
         "output": "3"
       },
@@ -9113,7 +9761,7 @@
       "使用栈遍历整个连通块并置零，避免重复计算。"
     ],
     "complexity": "时间 O(mn)，空间 O(mn)。",
-    "constraints": "1 ≤ m,n ≤ 300；网格值为 0 或 1。",
+    "constraints": "m == grid.length；n == grid[i].length；1 <= m, n <= 300；grid[i][j] 的值为 '0' 或 '1'",
     "order": 51,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -9133,7 +9781,7 @@
         "meaning": "网格中 1 表示陆地，0 表示水。上下左右相邻的陆地属于同一座岛，统计岛屿数。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。",
         "outputExplanation": "输出岛屿数量。",
-        "constraints": "1 ≤ m,n ≤ 300；网格值为 0 或 1。",
+        "constraints": "m == grid.length；n == grid[i].length；1 <= m, n <= 300；grid[i][j] 的值为 '0' 或 '1'",
         "naive": "逐格遇到陆地就加一会把同一个岛重复计数。",
         "insight": "扫描遇到 1 时开启一次 DFS，用栈访问四邻接陆地并改成 0，整块连通陆地只贡献一个岛。",
         "variables": [
@@ -9279,6 +9927,21 @@
     "tests": [
       {
         "input": "3 3\n2 1 1\n1 1 0\n0 1 1",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n2 1 1\n0 1 1\n1 0 1",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1 2\n0 2",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n2 1 1\n1 1 0\n0 1 1",
         "output": "4"
       },
       {
@@ -9295,11 +9958,11 @@
       "入队时立即标记腐烂；队列耗尽后若仍有新鲜橘子则无法完成。"
     ],
     "complexity": "时间 O(mn)，空间 O(mn)。",
-    "constraints": "1 ≤ m,n ≤ 100；值为 0、1 或 2。",
+    "constraints": "m == grid.length；n == grid[i].length；1 <= m, n <= 10；grid[i][j] 仅为 0、1 或 2",
     "order": 52,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "广度优先搜索",
       "数组",
@@ -9313,7 +9976,7 @@
         "meaning": "网格中 0 是空格，1 是新鲜橘子，2 是腐烂橘子。每分钟，腐烂橘子使四邻的新鲜橘子腐烂。求全部腐烂的最少分钟数，不能全部腐烂则输出 -1。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。",
         "outputExplanation": "输出分钟数或 -1；没有新鲜橘子时输出 0。",
-        "constraints": "1 ≤ m,n ≤ 100；值为 0、1 或 2。",
+        "constraints": "m == grid.length；n == grid[i].length；1 <= m, n <= 10；grid[i][j] 仅为 0、1 或 2",
         "naive": "每分钟重新扫描整个网格，最多要扫描很多轮；逐个源独立扩散也重复工作。",
         "insight": "把初始所有腐烂橘子作为时间 0 入队，按队列层次把新鲜邻居标记腐烂，并记录时间加一。",
         "variables": [
@@ -9480,6 +10143,16 @@
     "tests": [
       {
         "input": "2 1\n1 0",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 2\n1 0\n0 1",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 1\n1 0",
         "output": "true"
       },
       {
@@ -9496,7 +10169,7 @@
       "通过入度为 0 的节点做拓扑排序，能移除全部课程时才可行。"
     ],
     "complexity": "时间 O(n+m)，空间 O(n+m)。",
-    "constraints": "1 ≤ n ≤ 2000；0 ≤ m ≤ 5000。",
+    "constraints": "1 <= numCourses <= 2000；0 <= prerequisites.length <= 5000；prerequisites[i].length == 2；0 <= a_i, b_i < numCourses；prerequisites[i] 中的所有课程对 互不相同",
     "order": 53,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -9506,7 +10179,7 @@
       "广度优先搜索",
       "图",
       "拓扑排序",
-      ""
+      "有向无环图"
     ],
     "solutions": [
       {
@@ -9516,7 +10189,7 @@
         "meaning": "课程编号为 0 到 n−1。每条依赖 a b 表示学 a 前必须学 b，判断能否完成全部课程。",
         "inputExplanation": "第一行 n m；随后 m 行为 a b。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ n ≤ 2000；0 ≤ m ≤ 5000。",
+        "constraints": "1 <= numCourses <= 2000；0 <= prerequisites.length <= 5000；prerequisites[i].length == 2；0 <= a_i, b_i < numCourses；prerequisites[i] 中的所有课程对 互不相同",
         "naive": "尝试所有学习顺序需要阶乘数量；直接反复寻找可学课又可能反复扫描。",
         "insight": "边 prerequisite→course 表示 prerequisite 学完才能学 course。degree 是剩余前置数量，先学所有入度为零的课，逐条解除后续依赖。",
         "variables": [
@@ -9616,6 +10289,11 @@
     "solution": "# 208. 实现 Trie (前缀树) — 字典嵌套的前缀树\n# 每次操作 O(L)，总空间 O(插入字符总数)。\n# 核心思想：每个节点是一张字符→子节点字典。沿字符走路径，结束处用 # 标记一个完整单词；startsWith 不要求结束标记。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    root = {}\n    # 读取一个整数，含义与范围见题目输入格式。\n    operation_count = int(input())\n    for _ in range(operation_count):\n        # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n        op, word = input().split()\n        node = root\n        if op == 'insert':\n            for ch in word:\n                node = node.setdefault(ch, {})\n            # 路径终点增加完整单词标记，区别于仅有前缀。\n            node['#'] = True\n        else:\n            for ch in word:\n                if ch not in node:\n                    node = None\n                    break\n                node = node[ch]\n            # 前缀查询只需路径存在，整词查询还需结束标记。\n            found = node is not None and (op == 'startsWith' or '#' in node)\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print(str(found).lower())\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "6\ninsert apple\nsearch apple\nsearch app\nstartsWith app\ninsert app\nsearch app",
+        "output": "true\nfalse\ntrue\ntrue",
+        "source": "leetcode"
+      },
+      {
         "input": "5\ninsert apple\nsearch apple\nsearch app\nstartsWith app\nsearch banana",
         "output": "true\nfalse\ntrue\nfalse"
       },
@@ -9633,11 +10311,11 @@
       "插入末尾加结束标记，完整查询必须检查该标记，前缀查询不需要。"
     ],
     "complexity": "每次操作 O(L)，总空间 O(插入字符总数)。",
-    "constraints": "1 ≤ q ≤ 10⁴；单词长度 ≤ 100；至少一次查询。",
+    "constraints": "1 <= word.length, prefix.length <= 2000；word 和 prefix 仅由小写英文字母组成；insert、search 和 startsWith 调用次数 总计 不超过 3 * 10^4 次",
     "order": 54,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 1,
     "topicTags": [
       "设计",
       "字典树",
@@ -9652,7 +10330,7 @@
         "meaning": "实现 insert、search 和 startsWith。search 判断完整单词是否存在，startsWith 判断是否存在某个单词以给定前缀开始。",
         "inputExplanation": "第一行 q；随后 q 行为操作名和非空小写字符串。",
         "outputExplanation": "每次 search 或 startsWith 输出 true 或 false。",
-        "constraints": "1 ≤ q ≤ 10⁴；单词长度 ≤ 100；至少一次查询。",
+        "constraints": "1 <= word.length, prefix.length <= 2000；word 和 prefix 仅由小写英文字母组成；insert、search 和 startsWith 调用次数 总计 不超过 3 * 10^4 次",
         "naive": "存所有完整单词能快速查整个词，但前缀查询可能要扫描全部单词。",
         "insight": "每个节点是一张字符→子节点字典。沿字符走路径，结束处用 # 标记一个完整单词；startsWith 不要求结束标记。",
         "variables": [
@@ -9742,11 +10420,26 @@
     "title": "全排列",
     "difficulty": "中等",
     "category": "回溯",
-    "statement": "输出互不相同整数的所有排列，按字典序排列。",
+    "statement": "输出互不相同整数的所有排列，顺序不限。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 46. 全排列 — 选择、递归、撤销的全排列\n# 时间 O(n·n!)，递归空间 O(n)，另计输出。\n# 核心思想：path 是当前排列前缀，used 标记位置是否已选。每层只选未使用的位置，选满 n 个就复制答案。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    numbers.sort()\n    answer = []\n    used = [False] * n\n\n    def dfs(path):\n        # 填满一份排列后保存副本，避免后续回溯修改答案。\n        if len(path) == n:\n            answer.append(path.copy())\n            return\n        for i in range(n):\n            if not used[i]:\n                # 先占用当前下标并加入路径，再探索后续位置。\n                used[i] = True\n                path.append(numbers[i])\n                dfs(path)\n                # 撤销本层选择，保证下一个候选从相同状态开始。\n                path.pop()\n                used[i] = False\n    dfs([])\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for row in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*row)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "3\n1 2 3",
+        "output": "6\n1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n0 1",
+        "output": "2\n0 1\n1 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1",
+        "output": "1\n1",
+        "source": "leetcode"
+      },
       {
         "input": "3\n1 2 3",
         "output": "6\n1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1"
@@ -9765,11 +10458,11 @@
       "递归返回后撤销选择；先排序使搜索顺序就是字典序。"
     ],
     "complexity": "时间 O(n·n!)，递归空间 O(n)，另计输出。",
-    "constraints": "1 ≤ n ≤ 8；数字互不相同。",
+    "constraints": "1 <= nums.length <= 6；-10 <= nums[i] <= 10；nums 中的所有整数 互不相同",
     "order": 55,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "counted-unordered-lines",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "回溯"
@@ -9779,10 +10472,10 @@
         "id": "recommended",
         "title": "选择、递归、撤销的全排列",
         "summary": "path 是当前排列前缀，used 标记位置是否已选。每层只选未使用的位置，选满 n 个就复制答案。",
-        "meaning": "输出互不相同整数的所有排列，按字典序排列。",
+        "meaning": "输出互不相同整数的所有排列，顺序不限。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "1 ≤ n ≤ 8；数字互不相同。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "1 <= nums.length <= 6；-10 <= nums[i] <= 10；nums 中的所有整数 互不相同",
         "naive": "枚举 nⁿ 个长度 n 序列后去掉重复位置会产生大量无效候选。",
         "insight": "path 是当前排列前缀，used 标记位置是否已选。每层只选未使用的位置，选满 n 个就复制答案。",
         "variables": [
@@ -9950,11 +10643,21 @@
     "title": "子集",
     "difficulty": "中等",
     "category": "回溯",
-    "statement": "输出互不相同整数数组的所有子集。每个子集内升序，子集按字典序输出，空集排第一。",
+    "statement": "输出互不相同整数数组的所有子集。子集及子集内的元素顺序均不限。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 78. 子集 — 只向后选元素的子集树\n# 时间 O(n·2ⁿ)，递归空间 O(n)，另计输出。\n# 核心思想：当前 path 本身就是一个子集。下一次只从 start 及之后选择，让下标严格递增，避免同一集合换顺序重复。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    numbers.sort()\n    answer = []\n\n    def dfs(start, path):\n        # 每个递归节点本身就是一个子集，含根处空集。\n        answer.append(path.copy())\n        for i in range(start, n):\n            path.append(numbers[i])\n            # 下一层只选更后位置，避免重复与重新使用当前元素。\n            dfs(i + 1, path)\n            # 撤销本层选择，使下一个分支从相同状态开始。\n            path.pop()\n    dfs(0, [])\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for row in answer:\n        if row:\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print(*row)\n        else:\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print('EMPTY')\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "3\n1 2 3",
+        "output": "8\nEMPTY\n1\n2\n1 2\n3\n1 3\n2 3\n1 2 3",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n0",
+        "output": "2\nEMPTY\n0",
+        "source": "leetcode"
+      },
       {
         "input": "2\n1 2",
         "output": "4\nEMPTY\n1\n1 2\n2"
@@ -9973,10 +10676,10 @@
       "仅从后续位置选择元素，防止生成同一子集的不同排列。"
     ],
     "complexity": "时间 O(n·2ⁿ)，递归空间 O(n)，另计输出。",
-    "constraints": "1 ≤ n ≤ 12；数字互不相同。",
+    "constraints": "1 <= nums.length <= 10；-10 <= nums[i] <= 10；nums 中的所有元素 互不相同",
     "order": 56,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "counted-unordered-nested-lines",
     "sampleCount": 2,
     "topicTags": [
       "位运算",
@@ -9988,10 +10691,10 @@
         "id": "recommended",
         "title": "只向后选元素的子集树",
         "summary": "当前 path 本身就是一个子集。下一次只从 start 及之后选择，让下标严格递增，避免同一集合换顺序重复。",
-        "meaning": "输出互不相同整数数组的所有子集。每个子集内升序，子集按字典序输出，空集排第一。",
+        "meaning": "输出互不相同整数数组的所有子集。子集及子集内的元素顺序均不限。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "1 ≤ n ≤ 12；数字互不相同。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "1 <= nums.length <= 10；-10 <= nums[i] <= 10；nums 中的所有元素 互不相同",
         "naive": "枚举每个元素选/不选本身已是合适方法，所有 2ⁿ 个子集都必须输出。",
         "insight": "当前 path 本身就是一个子集。下一次只从 start 及之后选择，让下标严格递增，避免同一集合换顺序重复。",
         "variables": [
@@ -10129,9 +10832,19 @@
     "category": "回溯",
     "statement": "按电话键盘映射 2:abc、3:def、4:ghi、5:jkl、6:mno、7:pqrs、8:tuv、9:wxyz，为数字串生成所有字母组合。",
     "input": "输入一行字符串；用单个 - 表示空字符串。",
-    "output": "第一行是组合数量；之后每行一个字符串，按字典序输出。空输入输出 0。",
+    "output": "第一行是组合数量；之后每行一个字符串，顺序不限。空输入输出 0。",
     "solution": "# 17. 电话号码的字母组合 — 逐位扩展所有前缀\n# 时间与输出长度成正比，最多 O(k·4ᵏ)；空间 O(k·4ᵏ)。\n# 核心思想：从空前缀开始，每读一个数字，将已有每个前缀分别接上该数字对应的所有字母。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    if text == '-':\n        text = ''\n    else:\n        text = text\n    mapping = dict(zip('23456789', ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqrs', 'tuv', 'wxyz']))\n    if text:\n        # 非空输入从空前缀开始扩展，空输入没有方案。\n        answer = ['']\n    else:\n        answer = []\n    for digit in text:\n        # 每个已有前缀都与当前数字的每个字母组合。\n        answer = [prefix + ch for prefix in answer for ch in mapping[digit]]\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for word in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(word)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "23",
+        "output": "9\nad\nae\naf\nbd\nbe\nbf\ncd\nce\ncf",
+        "source": "leetcode"
+      },
+      {
+        "input": "2",
+        "output": "3\na\nb\nc",
+        "source": "leetcode"
+      },
       {
         "input": "23",
         "output": "9\nad\nae\naf\nbd\nbe\nbf\ncd\nce\ncf"
@@ -10150,10 +10863,10 @@
       "依次拼接当前数字对应的每一个字母，形成下一层所有前缀。"
     ],
     "complexity": "时间与输出长度成正比，最多 O(k·4ᵏ)；空间 O(k·4ᵏ)。",
-    "constraints": "0 ≤ 数字串长度 ≤ 6；仅包含 2 到 9。",
+    "constraints": "1 <= digits.length <= 4；digits[i] 是范围 ['2', '9'] 的一个数字。",
     "order": 57,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "counted-unordered-lines",
     "sampleCount": 2,
     "topicTags": [
       "哈希表",
@@ -10167,8 +10880,8 @@
         "summary": "从空前缀开始，每读一个数字，将已有每个前缀分别接上该数字对应的所有字母。",
         "meaning": "按电话键盘映射 2:abc、3:def、4:ghi、5:jkl、6:mno、7:pqrs、8:tuv、9:wxyz，为数字串生成所有字母组合。",
         "inputExplanation": "输入一行字符串；用单个 - 表示空字符串。",
-        "outputExplanation": "第一行是组合数量；之后每行一个字符串，按字典序输出。空输入输出 0。",
-        "constraints": "0 ≤ 数字串长度 ≤ 6；仅包含 2 到 9。",
+        "outputExplanation": "第一行是组合数量；之后每行一个字符串，顺序不限。空输入输出 0。",
+        "constraints": "1 <= digits.length <= 4；digits[i] 是范围 ['2', '9'] 的一个数字。",
         "naive": "需要列出所有组合，输出规模本身就是指数级，不存在只靠线性扫描就输出全部的算法。",
         "insight": "从空前缀开始，每读一个数字，将已有每个前缀分别接上该数字对应的所有字母。",
         "variables": [
@@ -10328,11 +11041,26 @@
     "title": "组合总和",
     "difficulty": "中等",
     "category": "回溯",
-    "statement": "候选数组由不同正整数组成，每个数可使用多次。输出和为 target 的所有组合；组内非递减，组合按字典序排列。",
+    "statement": "候选数组由不同正整数组成，每个数可使用多次。输出和为 target 的所有组合；组合及组内元素顺序不限。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 39. 组合总和 — 限定起点的重复选择回溯\n# 最坏时间 O(n^(T/min(a)+1))，递归空间 O(T/min(a))，另计输出。\n# 核心思想：先排序，只从当前起点以后选择。允许重复用当前数，所以递归仍传 i；超过剩余值时因后面更大可直接停。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    # 读取一个整数，含义与范围见题目输入格式。\n    target = int(input())\n    numbers.sort()\n    answer = []\n\n    def dfs(start, remain, path):\n        if remain == 0:\n            answer.append(path.copy())\n            return\n        for i in range(start, n):\n            # 已排序，当前值过大则后面更大，可整段剪枝。\n            if numbers[i] > remain:\n                break\n            path.append(numbers[i])\n            # 仍传当前 i，允许重复选择这个正数。\n            dfs(i, remain - numbers[i], path)\n            # 当前分支返回后撤销，探索下一个候选。\n            path.pop()\n    dfs(0, target, [])\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for row in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*row)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "4\n2 3 6 7\n7",
+        "output": "2\n2 2 3\n7",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n2 3 5\n8",
+        "output": "3\n2 2 2 2\n2 3 3\n3 5",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n2\n1",
+        "output": "0\n",
+        "source": "leetcode"
+      },
       {
         "input": "4\n2 3 6 7\n7",
         "output": "2\n2 2 3\n7"
@@ -10351,11 +11079,11 @@
       "下一层仍可从当前下标选择；超过剩余和时停止扩展。"
     ],
     "complexity": "最坏时间 O(n^(T/min(a)+1))，递归空间 O(T/min(a))，另计输出。",
-    "constraints": "1 ≤ n ≤ 20；候选值 2 到 40；1 ≤ target ≤ 40。",
+    "constraints": "1 <= candidates.length <= 30；2 <= candidates[i] <= 40；candidates 的所有元素 互不相同；1 <= target <= 40",
     "order": 58,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "counted-unordered-nested-lines",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "回溯"
@@ -10365,10 +11093,10 @@
         "id": "recommended",
         "title": "限定起点的重复选择回溯",
         "summary": "先排序，只从当前起点以后选择。允许重复用当前数，所以递归仍传 i；超过剩余值时因后面更大可直接停。",
-        "meaning": "候选数组由不同正整数组成，每个数可使用多次。输出和为 target 的所有组合；组内非递减，组合按字典序排列。",
+        "meaning": "候选数组由不同正整数组成，每个数可使用多次。输出和为 target 的所有组合；组合及组内元素顺序不限。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "1 ≤ n ≤ 20；候选值 2 到 40；1 ≤ target ≤ 40。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "1 <= candidates.length <= 30；2 <= candidates[i] <= 40；candidates 的所有元素 互不相同；1 <= target <= 40",
         "naive": "直接枚举所有有序加法序列，会把 2+2+3 和 3+2+2 重复计算。",
         "insight": "先排序，只从当前起点以后选择。允许重复用当前数，所以递归仍传 i；超过剩余值时因后面更大可直接停。",
         "variables": [
@@ -10534,9 +11262,19 @@
     "category": "回溯",
     "statement": "输出由 n 对括号组成的所有合法括号串。任意前缀中右括号数不能超过左括号数。",
     "input": "输入一个整数 n。",
-    "output": "第一行数量；之后每行一个括号串，按字典序输出。",
+    "output": "第一行数量；之后每行一个括号串，顺序不限。",
     "solution": "# 22. 括号生成 — 只扩展合法括号前缀\n# 时间 O(n·Cₙ)，递归空间 O(n)，另计输出；Cₙ 为第 n 个卡特兰数。\n# 核心思想：left_count 小于 n 时可放左括号；right_count 小于 left_count 时可放右括号，保持前缀永不欠左括号。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    answer = []\n\n    def dfs(text, left_count, right_count):\n        if len(text) == 2 * n:\n            answer.append(text)\n            return\n        # 左括号总数不能超过 n。\n        if left_count < n:\n            dfs(text + '(', left_count + 1, right_count)\n        # 只有存在尚未配对的左括号时才允许右括号。\n        if right_count < left_count:\n            dfs(text + ')', left_count, right_count + 1)\n    dfs('', 0, 0)\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for text in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(text)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "3",
+        "output": "5\n((()))\n(()())\n(())()\n()(())\n()()()",
+        "source": "leetcode"
+      },
+      {
+        "input": "1",
+        "output": "1\n()",
+        "source": "leetcode"
+      },
       {
         "input": "3",
         "output": "5\n((()))\n(()())\n(())()\n()(())\n()()()"
@@ -10555,16 +11293,16 @@
       "只有右括号数小于左括号数时，才允许添加右括号，直接剪掉非法前缀。"
     ],
     "complexity": "时间 O(n·Cₙ)，递归空间 O(n)，另计输出；Cₙ 为第 n 个卡特兰数。",
-    "constraints": "1 ≤ n ≤ 8。",
+    "constraints": "1 <= n <= 8",
     "order": 59,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "counted-unordered-lines",
     "sampleCount": 2,
     "topicTags": [
       "字符串",
       "动态规划",
       "回溯",
-      ""
+      "括号序列"
     ],
     "solutions": [
       {
@@ -10573,8 +11311,8 @@
         "summary": "left_count 小于 n 时可放左括号；right_count 小于 left_count 时可放右括号，保持前缀永不欠左括号。",
         "meaning": "输出由 n 对括号组成的所有合法括号串。任意前缀中右括号数不能超过左括号数。",
         "inputExplanation": "输入一个整数 n。",
-        "outputExplanation": "第一行数量；之后每行一个括号串，按字典序输出。",
-        "constraints": "1 ≤ n ≤ 8。",
+        "outputExplanation": "第一行数量；之后每行一个括号串，顺序不限。",
+        "constraints": "1 <= n <= 8",
         "naive": "枚举全部 2^(2n) 个括号串再检查，会生成大量一开始就不可能合法的前缀。",
         "insight": "left_count 小于 n 时可放左括号；right_count 小于 left_count 时可放右括号，保持前缀永不欠左括号。",
         "variables": [
@@ -10737,6 +11475,21 @@
     "tests": [
       {
         "input": "3 4\nABCE\nSFCS\nADEE\nABCCED",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 4\nABCE\nSFCS\nADEE\nSEE",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 4\nABCE\nSFCS\nADEE\nABCB",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 4\nABCE\nSFCS\nADEE\nABCCED",
         "output": "true"
       },
       {
@@ -10753,11 +11506,11 @@
       "访问格子时临时标记，搜索返回后恢复，确保每条路径内不重复使用。"
     ],
     "complexity": "最坏时间 O(mn·3ᴸ)，递归空间 O(L)。",
-    "constraints": "1 ≤ m,n ≤ 6；1 ≤ 单词长度 ≤ 15。",
+    "constraints": "m == board.length；n = board[i].length；1 <= m, n <= 6；1 <= word.length <= 15；board 和 word 仅由大小写英文字母组成",
     "order": 60,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "深度优先搜索",
       "数组",
@@ -10773,7 +11526,7 @@
         "meaning": "判断能否在字符网格中，通过上下左右移动拼出给定单词。同一次搜索中，每个格子最多使用一次。",
         "inputExplanation": "第一行 m n；随后 m 行，每行一个长度为 n 的字母串；最后一行目标单词。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ m,n ≤ 6；1 ≤ 单词长度 ≤ 15。",
+        "constraints": "m == board.length；n = board[i].length；1 <= m, n <= 6；1 <= word.length <= 15；board 和 word 仅由大小写英文字母组成",
         "naive": "每格尝试任意四邻路径会重复使用同一格，不能满足一个字母格只能用一次。",
         "insight": "dfs(x,y,k) 表示当前格匹配 word[k]；匹配后暂时标成 #，递归找下一字符，返回前恢复原字母。",
         "variables": [
@@ -10931,9 +11684,19 @@
     "category": "回溯",
     "statement": "将非空字符串切分成若干非空片段，每个片段必须是回文串。输出所有分割方案，按片段序列的字典序排列。",
     "input": "输入一个非空小写字符串。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 131. 分割回文串 — 回文预处理与切分回溯\n# 预处理 O(n²)，枚举和排序最坏 O(n²·2ⁿ)；空间 O(n²)，另计输出。\n# 核心思想：is_palindrome[i][j] 表示 text[i:j+1] 是回文，先从短内层推到长外层；然后从 start 枚举回文段末端再递归剩余后缀。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    n = len(text)\n    is_palindrome = [[False] * n for _ in range(n)]\n    for i in range(n - 1, -1, -1):\n        for j in range(i, n):\n            # 端点相同且内部回文；长度 1、2 是无需内部检查的边界。\n            is_palindrome[i][j] = text[i] == text[j] and (j - i < 2 or is_palindrome[i + 1][j - 1])\n    answer = []\n\n    def dfs(start, path):\n        if start == n:\n            answer.append(path.copy())\n            return\n        for end in range(start, n):\n            # 只选择已经验证为回文的非空前缀段。\n            if is_palindrome[start][end]:\n                path.append(text[start:end + 1])\n                dfs(end + 1, path)\n                # 撤销本段，尝试更长或更短的分割。\n                path.pop()\n    dfs(0, [])\n    answer.sort()\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for row in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*row)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "aab",
+        "output": "2\na a b\naa b",
+        "source": "leetcode"
+      },
+      {
+        "input": "a",
+        "output": "1\na",
+        "source": "leetcode"
+      },
       {
         "input": "aab",
         "output": "2\na a b\naa b"
@@ -10952,10 +11715,10 @@
       "枚举下一段终点，只对回文片段继续递归，最终排序。"
     ],
     "complexity": "预处理 O(n²)，枚举和排序最坏 O(n²·2ⁿ)；空间 O(n²)，另计输出。",
-    "constraints": "1 ≤ 字符串长度 ≤ 12。",
+    "constraints": "1 <= s.length <= 16；s 仅由小写英文字母组成",
     "order": 61,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "counted-unordered-lines",
     "sampleCount": 2,
     "topicTags": [
       "字符串",
@@ -10969,8 +11732,8 @@
         "summary": "is_palindrome[i][j] 表示 text[i:j+1] 是回文，先从短内层推到长外层；然后从 start 枚举回文段末端再递归剩余后缀。",
         "meaning": "将非空字符串切分成若干非空片段，每个片段必须是回文串。输出所有分割方案，按片段序列的字典序排列。",
         "inputExplanation": "输入一个非空小写字符串。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "1 ≤ 字符串长度 ≤ 12。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "1 <= s.length <= 16；s 仅由小写英文字母组成",
         "naive": "枚举全部切分再逐段判断会反复检查同一子串。",
         "insight": "is_palindrome[i][j] 表示 text[i:j+1] 是回文，先从短内层推到长外层；然后从 start 枚举回文段末端再递归剩余后缀。",
         "variables": [
@@ -11136,9 +11899,19 @@
     "category": "回溯",
     "statement": "在 n×n 棋盘上放置 n 个皇后，使任意两个不同行、不同列、不在同一对角线上。每个方案用 n 个列号表示，第 i 个数是第 i 行皇后的列号，从 0 开始。",
     "input": "输入整数 n。",
-    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
+    "output": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
     "solution": "# 51. N 皇后 — 按行放皇后并维护冲突集合\n# 搜索时间 O(n!)，递归及标记空间 O(n)，另计输出。\n# 核心思想：每层只处理一行，用 cols、diag1=row−col、diag2=row+col 三个集合判断列与两种斜线是否被占。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    answer = []\n    cols = set()\n    diag1 = set()\n    diag2 = set()\n\n    def dfs(row, path):\n        if row == n:\n            answer.append(path.copy())\n            return\n        for col in range(n):\n            # 列、两种对角线任何一个冲突就剪枝。\n            if col in cols or row - col in diag1 or row + col in diag2:\n                continue\n            # 先登记占用，再递归下一行。\n            cols.add(col)\n            diag1.add(row - col)\n            diag2.add(row + col)\n            path.append(col)\n            dfs(row + 1, path)\n            # 逐项撤销本层新增的状态，保持兄弟分支独立。\n            path.pop()\n            cols.remove(col)\n            diag1.remove(row - col)\n            diag2.remove(row + col)\n    dfs(0, [])\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(len(answer))\n    for row in answer:\n        # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n        print(*row)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "4",
+        "output": "2\n1 3 0 2\n2 0 3 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1",
+        "output": "1\n0",
+        "source": "leetcode"
+      },
       {
         "input": "4",
         "output": "2\n1 3 0 2\n2 0 3 1"
@@ -11157,15 +11930,15 @@
       "用集合记录已用列号、行减列、行加列，快速排除列与对角线冲突。"
     ],
     "complexity": "搜索时间 O(n!)，递归及标记空间 O(n)，另计输出。",
-    "constraints": "1 ≤ n ≤ 9。",
+    "constraints": "1 <= n <= 9",
     "order": 62,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "counted-unordered-lines",
     "sampleCount": 2,
     "topicTags": [
       "数组",
       "回溯",
-      ""
+      "X 算法"
     ],
     "solutions": [
       {
@@ -11174,8 +11947,8 @@
         "summary": "每层只处理一行，用 cols、diag1=row−col、diag2=row+col 三个集合判断列与两种斜线是否被占。",
         "meaning": "在 n×n 棋盘上放置 n 个皇后，使任意两个不同行、不同列、不在同一对角线上。每个方案用 n 个列号表示，第 i 个数是第 i 行皇后的列号，从 0 开始。",
         "inputExplanation": "输入整数 n。",
-        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案按字典序排列。",
-        "constraints": "1 ≤ n ≤ 9。",
+        "outputExplanation": "第一行输出方案数；后续每行一个方案，元素以空格分隔，空方案输出 EMPTY。方案顺序不限。",
+        "constraints": "1 <= n <= 9",
         "naive": "在 n² 格中枚举 n 个皇后再检查会产生大量同行冲突。",
         "insight": "每层只处理一行，用 cols、diag1=row−col、diag2=row+col 三个集合判断列与两种斜线是否被占。",
         "variables": [
@@ -11342,6 +12115,21 @@
     "tests": [
       {
         "input": "4\n1 3 5 6\n5",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 3 5 6\n2",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 3 5 6\n7",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 3 5 6\n5",
         "output": "2"
       },
       {
@@ -11358,11 +12146,11 @@
       "使用左闭右开区间 [l,r)，r 可以取 n 表示插入末尾。"
     ],
     "complexity": "时间 O(log n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 10^4；-10^4 <= nums[i] <= 10^4；nums 为 无重复元素 的 升序 排列数组；-10^4 <= target <= 10^4",
     "order": 63,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "二分查找"
@@ -11375,7 +12163,7 @@
         "meaning": "在严格递增数组中查找 target，存在则输出下标，否则输出保持有序时应插入的下标。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
         "outputExplanation": "输出从 0 开始的下标。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 10^4；-10^4 <= nums[i] <= 10^4；nums 为 无重复元素 的 升序 排列数组；-10^4 <= target <= 10^4",
         "naive": "从头扫描直到值≥target 即可 O(n)，有序性允许每次删除一半候选。",
         "insight": "使用左闭右开区间 [left,right)。若中点小于目标，它及左侧都不合适；否则保留中点并收缩右界。",
         "variables": [
@@ -11486,6 +12274,16 @@
     "solution": "# 74. 搜索二维矩阵 — 把矩阵当作虚拟有序数组\n# 时间 O(log(mn))，额外空间 O(1)。\n# 核心思想：题目保证整行接续有序，因此按行展开是有序数组。虚拟下标 mid 对应矩阵[mid//n][mid%n]。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    m, n = map(int, input().split())\n    # 按本题输入格式读取这一行；split 按空白分隔，整数用 int 转换。\n    matrix = [list(map(int, input().split())) for _ in range(m)]\n    # 读取一个整数，含义与范围见题目输入格式。\n    target = int(input())\n    left, right = (0, m * n)\n    while left < right:\n        mid = (left + right) // 2\n        # 虚拟一维下标用整除、取模映射回行列。\n        if matrix[mid // n][mid % n] < target:\n            left = mid + 1\n        else:\n            right = mid\n    # 答案可能越过末尾，先判界再取值。\n    print(str(left < m * n and matrix[left // n][left % n] == target).lower())\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "3 4\n1 3 5 7\n10 11 16 20\n23 30 34 60\n3",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 4\n1 3 5 7\n10 11 16 20\n23 30 34 60\n13",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
         "input": "2 3\n1 3 5\n7 9 11\n9",
         "output": "true"
       },
@@ -11503,7 +12301,7 @@
       "一维下标 mid 对应行 mid//n、列 mid%n，直接做二分查找。"
     ],
     "complexity": "时间 O(log(mn))，额外空间 O(1)。",
-    "constraints": "1 ≤ m,n ≤ 100。",
+    "constraints": "m == matrix.length；n == matrix[i].length；1 <= m, n <= 100；-10^4 <= matrix[i][j], target <= 10^4",
     "order": 64,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -11521,7 +12319,7 @@
         "meaning": "每行非递减，并且下一行首元素大于上一行末元素。判断 target 是否存在。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。最后一行 target。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ m,n ≤ 100。",
+        "constraints": "m == matrix.length；n == matrix[i].length；1 <= m, n <= 100；-10^4 <= matrix[i][j], target <= 10^4",
         "naive": "逐行二分需要 O(m log n)，逐格扫 O(mn)。",
         "insight": "题目保证整行接续有序，因此按行展开是有序数组。虚拟下标 mid 对应矩阵[mid//n][mid%n]。",
         "variables": [
@@ -11612,6 +12410,21 @@
     "tests": [
       {
         "input": "6\n5 7 7 8 8 10\n8",
+        "output": "3 4",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n5 7 7 8 8 10\n6",
+        "output": "-1 -1",
+        "source": "leetcode"
+      },
+      {
+        "input": "0\n\n0",
+        "output": "-1 -1",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n5 7 7 8 8 10\n8",
         "output": "3 4"
       },
       {
@@ -11628,11 +12441,11 @@
       "第二次定位第一个大于 target 的位置，减一就是右端点。"
     ],
     "complexity": "时间 O(log n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "0 <= nums.length <= 10^5；-10^9 <= nums[i] <= 10^9；nums 是一个非递减数组；-10^9 <= target <= 10^9",
     "order": 65,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "二分查找"
@@ -11645,7 +12458,7 @@
         "meaning": "给定非递减数组，输出 target 的首次和末次出现位置；不存在时输出 -1 -1。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
         "outputExplanation": "输出两个从 0 开始的下标。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "0 <= nums.length <= 10^5；-10^9 <= nums[i] <= 10^9；nums 是一个非递减数组；-10^9 <= target <= 10^9",
         "naive": "先找到一个目标再向两侧扫描，全部相等时退化为 O(n)。",
         "insight": "bisect_left 得到首个≥target 的位置，bisect_right 得到首个>target 的位置，后者减一就是末次出现。",
         "variables": [
@@ -11721,6 +12534,21 @@
     "tests": [
       {
         "input": "7\n4 5 6 7 0 1 2\n0",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\n4 5 6 7 0 1 2\n3",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n0",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\n4 5 6 7 0 1 2\n0",
         "output": "4"
       },
       {
@@ -11737,11 +12565,11 @@
       "判断目标是否在有序的一半里，据此保留对应区间。"
     ],
     "complexity": "时间 O(log n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 5000；-10^4 <= nums[i] <= 10^4；nums 中的每个值都 独一无二；题目数据保证 nums 在预先未知的某个下标上进行了旋转；-10^4 <= target <= 10^4",
     "order": 66,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "二分查找"
@@ -11754,7 +12582,7 @@
         "meaning": "严格递增数组经过某次循环旋转，找到 target 的下标，不存在输出 -1。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行是整数 target。",
         "outputExplanation": "输出下标或 -1。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 5000；-10^4 <= nums[i] <= 10^4；nums 中的每个值都 独一无二；题目数据保证 nums 在预先未知的某个下标上进行了旋转；-10^4 <= target <= 10^4",
         "naive": "线性找 target 当然正确但 O(n)；旋转后整段不能直接使用普通二分比较。",
         "insight": "无重复数保证中点一侧必有序。先判断哪半有序，再看 target 是否落在该半数值范围内，决定保留哪半。",
         "variables": [
@@ -11845,6 +12673,21 @@
     "tests": [
       {
         "input": "5\n3 4 5 1 2",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\n4 5 6 7 0 1 2",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n11 13 15 17",
+        "output": "11",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n3 4 5 1 2",
         "output": "1"
       },
       {
@@ -11861,11 +12704,11 @@
       "中点较大说明旋转断点在右侧，否则最小值在左侧或就是中点。"
     ],
     "complexity": "时间 O(log n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "n == nums.length；1 <= n <= 5000；-5000 <= nums[i] <= 5000；nums 中的所有整数 互不相同；nums 原来是一个升序排序的数组，并进行了 1 至 n 次旋转",
     "order": 67,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "二分查找"
@@ -11878,7 +12721,7 @@
         "meaning": "严格递增数组经过循环旋转，输出其中最小值。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最小值。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "n == nums.length；1 <= n <= 5000；-5000 <= nums[i] <= 5000；nums 中的所有整数 互不相同；nums 原来是一个升序排序的数组，并进行了 1 至 n 次旋转",
         "naive": "线性求 min 是 O(n)，没有利用旋转排序性质。",
         "insight": "中点大于右端，说明断点在中点右侧；否则中点位于后面的递增段，最小值在中点或左侧。",
         "variables": [
@@ -11976,6 +12819,16 @@
     "tests": [
       {
         "input": "2 1\n1 3\n2",
+        "output": "2.0",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 2\n1 2\n3 4",
+        "output": "2.5",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 1\n1 3\n2",
         "output": "2"
       },
       {
@@ -11992,7 +12845,7 @@
       "当左右交叉边界均有序时，中位数由左侧最大值和右侧最小值确定。"
     ],
     "complexity": "时间 O(log(min(n,m)+1))，额外空间 O(1)。",
-    "constraints": "0 ≤ n,m ≤ 1000；n+m ≥ 1。",
+    "constraints": "nums1.length == m；nums2.length == n；0 <= m <= 1000；0 <= n <= 1000；1 <= m + n <= 2000；-10^6 <= nums1[i], nums2[i] <= 10^6",
     "order": 68,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "float",
@@ -12010,7 +12863,7 @@
         "meaning": "两个数组各自非递减，求合并后序列的中位数，不实际合并数组。",
         "inputExplanation": "第一行 n m；第二行第一个数组；第三行第二个数组。空数组行留空。",
         "outputExplanation": "输出中位数，允许整数或小数，误差不超过 10⁻⁶。",
-        "constraints": "0 ≤ n,m ≤ 1000；n+m ≥ 1。",
+        "constraints": "nums1.length == m；nums2.length == n；0 <= m <= 1000；0 <= n <= 1000；1 <= m + n <= 2000；-10^6 <= nums1[i], nums2[i] <= 10^6",
         "naive": "完整合并两个数组再取中位数，时间空间 O(n+m)。",
         "insight": "左右两部分数量固定，让左边有 ceil((n+m)/2) 个数。二分短数组分到左边的个数 i，另一数组个数 j 自动确定。",
         "variables": [
@@ -12120,6 +12973,31 @@
     "solution": "# 20. 有效的括号 — 栈保存尚未闭合的括号\n# 时间 O(n)，空间 O(n)。\n# 核心思想：左括号入栈，右括号必须匹配最近一个尚未闭合的左括号，所以检查并弹出栈顶。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    if text == '-':\n        text = ''\n    else:\n        text = text\n    stack = []\n    pairs = {')': '(', ']': '[', '}': '{'}\n    for ch in text:\n        # 左括号暂存，等待后续最先闭合的右括号。\n        if ch in '([{':\n            stack.append(ch)\n        # 先判空再弹栈，右括号必须与最近未闭合左括号匹配。\n        elif not stack or stack.pop() != pairs[ch]:\n            # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n            print('false')\n            return\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(str(not stack).lower())\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "()",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "()[]{}",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "(]",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "([])",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "([)]",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
         "input": "()[]{}",
         "output": "true"
       },
@@ -12137,15 +13015,15 @@
       "扫描结束后栈必须为空，未闭合的左括号也不合法。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "0 ≤ 长度 ≤ 10⁴；只含六种括号。",
+    "constraints": "1 <= s.length <= 10^4；s 仅由括号 '()[]{}' 组成",
     "order": 69,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 5,
     "topicTags": [
       "栈",
       "字符串",
-      ""
+      "括号序列"
     ],
     "solutions": [
       {
@@ -12155,7 +13033,7 @@
         "meaning": "字符串只包含 ()[]{}。判断所有括号是否类型匹配、顺序正确且全部闭合。",
         "inputExplanation": "输入一行字符串；用单个 - 表示空字符串。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "0 ≤ 长度 ≤ 10⁴；只含六种括号。",
+        "constraints": "1 <= s.length <= 10^4；s 仅由括号 '()[]{}' 组成",
         "naive": "反复删除 ()、[]、{} 直到无法删除，可能多轮扫描，最坏 O(n²)。",
         "insight": "左括号入栈，右括号必须匹配最近一个尚未闭合的左括号，所以检查并弹出栈顶。",
         "variables": [
@@ -12276,6 +13154,11 @@
     "tests": [
       {
         "input": "7\npush -2\npush 0\npush -3\ngetMin\npop\ntop\ngetMin",
+        "output": "-3\n0\n-2",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\npush -2\npush 0\npush -3\ngetMin\npop\ntop\ngetMin",
         "output": "-3\n0\n-2"
       },
       {
@@ -12292,11 +13175,11 @@
       "弹栈时历史最小值自动恢复，无需重新扫描。"
     ],
     "complexity": "每次操作 O(1)，空间 O(q)。",
-    "constraints": "1 ≤ q ≤ 10⁴；至少一次查询。",
+    "constraints": "-2^31 <= val <= 2^31 - 1；pop、top 和 getMin 操作总是在 非空栈 上调用；push, pop, top, and getMin最多被调用 3 * 10^4 次",
     "order": 70,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 1,
     "topicTags": [
       "栈",
       "设计"
@@ -12309,7 +13192,7 @@
         "meaning": "实现 push、pop、top 和 getMin，所有操作均应为常数时间。getMin 返回当前栈中的最小值。",
         "inputExplanation": "第一行 q；之后 q 行为 push x、pop、top 或 getMin。保证查询和 pop 时栈非空。",
         "outputExplanation": "每次 top 或 getMin 输出一个整数。",
-        "constraints": "1 ≤ q ≤ 10⁴；至少一次查询。",
+        "constraints": "-2^31 <= val <= 2^31 - 1；pop、top 和 getMin 操作总是在 非空栈 上调用；push, pop, top, and getMin最多被调用 3 * 10^4 次",
         "naive": "每次 getMin 遍历栈，最坏 O(operation_count)，查询多时总体平方级。",
         "insight": "入栈时保存一对 (当前值, 入栈后最小值)。弹栈后，新栈顶自带之前状态的最小值，无需重新计算。",
         "variables": [
@@ -12437,6 +13320,26 @@
     "tests": [
       {
         "input": "3[a]2[bc]",
+        "output": "aaabcbc",
+        "source": "leetcode"
+      },
+      {
+        "input": "3[a2[c]]",
+        "output": "accaccacc",
+        "source": "leetcode"
+      },
+      {
+        "input": "2[abc]3[cd]ef",
+        "output": "abcabccdcdcdef",
+        "source": "leetcode"
+      },
+      {
+        "input": "abc3[cd]xyz",
+        "output": "abccdcdcdxyz",
+        "source": "leetcode"
+      },
+      {
+        "input": "3[a]2[bc]",
         "output": "aaabcbc"
       },
       {
@@ -12453,11 +13356,11 @@
       "右括号时弹出外层，把解码片段重复并拼回前缀。"
     ],
     "complexity": "该字符串拼接实现最坏 O(nL)，空间 O(n+L)；L 是展开长度。",
-    "constraints": "编码长度 ≤ 100；展开长度 ≤ 10⁴。",
+    "constraints": "1 <= s.length <= 30；s 由小写英文字母、数字和方括号 '[]' 组成；s 保证是一个 有效 的输入。；s 中所有整数的取值范围为 [1, 300]",
     "order": 71,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 4,
     "topicTags": [
       "栈",
       "递归",
@@ -12471,7 +13374,7 @@
         "meaning": "解码 k[片段] 格式的字符串，表示将片段重复 k 次。允许嵌套，例如 2[a3[b]] 表示 abbbabbb。",
         "inputExplanation": "输入一个非空编码字符串；由小写字母、数字和方括号组成，保证合法。",
         "outputExplanation": "输出解码后的字符串。",
-        "constraints": "编码长度 ≤ 100；展开长度 ≤ 10⁴。",
+        "constraints": "1 <= s.length <= 30；s 由小写英文字母、数字和方括号 '[]' 组成；s 保证是一个 有效 的输入。；s 中所有整数的取值范围为 [1, 300]",
         "naive": "反复寻找最内层括号并替换会重复扫描字符串；栈能在一次语法扫描中处理嵌套。",
         "insight": "读到 [ 把外层已解码前缀和重复次数压栈，开始内层；读到 ] 时弹出上下文，用 前缀+内层×次数 恢复外层。",
         "variables": [
@@ -12642,6 +13545,21 @@
     "tests": [
       {
         "input": "8\n73 74 75 71 69 72 76 73",
+        "output": "1 1 4 2 1 1 0 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n30 40 50 60",
+        "output": "1 1 1 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n30 60 90",
+        "output": "1 1 0",
+        "source": "leetcode"
+      },
+      {
+        "input": "8\n73 74 75 71 69 72 76 73",
         "output": "1 1 4 2 1 1 0 0"
       },
       {
@@ -12658,11 +13576,11 @@
       "遇到更高温度就连续弹出较低温度，并填写距离。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁵；温度为整数。",
+    "constraints": "1 <= temperatures.length <= 10^5；30 <= temperatures[i] <= 100",
     "order": 72,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "栈",
       "数组",
@@ -12676,7 +13594,7 @@
         "meaning": "对于每一天，计算还要等待多少天才会遇到更高温度。以后没有更高温度则为 0。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n ≤ 10⁵；温度为整数。",
+        "constraints": "1 <= temperatures.length <= 10^5；30 <= temperatures[i] <= 100",
         "naive": "每一天向后逐日找更暖天，最坏 O(n²)。",
         "insight": "栈存还没等到答案的日期下标，温度从底到顶不升。新温度更高时，连续解决栈顶较冷日期。",
         "variables": [
@@ -12843,6 +13761,16 @@
     "tests": [
       {
         "input": "6\n2 1 5 6 2 3",
+        "output": "10",
+        "source": "leetcode"
+      },
+      {
+        "input": "2\n2 4",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n2 1 5 6 2 3",
         "output": "10"
       },
       {
@@ -12859,7 +13787,7 @@
       "某柱出栈时，当前下标和新栈顶就是其左右更低边界，据此计算面积。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁵；0 ≤ 高度 ≤ 10⁴。",
+    "constraints": "1 <= heights.length <=10^5；0 <= heights[i] <= 10^4",
     "order": 73,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -12868,7 +13796,7 @@
       "栈",
       "数组",
       "单调栈",
-      ""
+      "区间最值查询"
     ],
     "solutions": [
       {
@@ -12878,7 +13806,7 @@
         "meaning": "柱状图每根柱宽为 1，高度非负。求完全落在柱状图内部的最大轴对齐矩形面积。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最大面积。",
-        "constraints": "1 ≤ n ≤ 10⁵；0 ≤ 高度 ≤ 10⁴。",
+        "constraints": "1 <= heights.length <=10^5；0 <= heights[i] <= 10^4",
         "naive": "枚举每个柱子向两边扫描到更矮柱，最坏 O(n²)。",
         "insight": "用不下降高度栈；遇到更矮柱时弹出高柱，当前下标是右边界，弹出后的栈顶是可扩展区间左边界。",
         "variables": [
@@ -13045,8 +13973,18 @@
     "statement": "在可含重复值的整数数组中，输出降序排列后的第 k 个元素。重复值也占据位置。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行 k。",
     "output": "输出第 k 大的数。",
-    "solution": "# 215. 数组中的第K个最大元素 — 只保留最大的 k 个数\n# 时间 O(n log(k+1))，空间 O(k)。\n# 核心思想：用大小至多 k 的最小堆保存当前最大的 k 个数；堆顶是其中最小者，也是第 k 大候选。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    import heapq\n    # 读取一个整数，含义与范围见题目输入格式。\n    k = int(input())\n    heap = []\n    for x in numbers:\n        # 先凑满 k 个候选，再只允许更大的数替换堆顶。\n        if len(heap) < k:\n            heapq.heappush(heap, x)\n        # 堆顶是当前前 k 大中最小的，替换后仍保留前 k 大。\n        elif x > heap[0]:\n            heapq.heapreplace(heap, x)\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(heap[0])\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
+    "solution": "# 215. 数组中的第K个最大元素 — 按原题有限值域计数\n# 时间 O(n + U)，U = 20001；固定值域下关于 n 为线性时间。\n# 空间 O(U)；不需要排序，也不依赖 k 的大小。\nimport sys\n\ndef findKthLargest(nums, k):\n    # 原题给定 -10000 <= nums[i] <= 10000，可直接使用固定值域计数。\n    counts = [0] * 20001\n    # 重复元素分别计数，第 k 大不是第 k 个不同值。\n    for value in nums:\n        counts[value + 10000] += 1\n    remaining = k\n    # 从最大值向下扫描；remaining 表示还需跳过多少个元素。\n    for index in range(20000, -1, -1):\n        remaining -= counts[index]\n        # 本值覆盖了目标排名时，就找到了第 k 大。\n        if remaining <= 0:\n            return index - 10000\n\n# ACM 模式：按题面格式读取数组长度、数组和 k。\ndef solve():\n    n = int(input())\n    nums = list(map(int, input().split()))\n    k = int(input())\n    print(findKthLargest(nums, k))\n\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "6\n3 2 1 5 6 4\n2",
+        "output": "5",
+        "source": "leetcode"
+      },
+      {
+        "input": "9\n3 2 3 1 2 4 5 5 6\n4",
+        "output": "4",
+        "source": "leetcode"
+      },
       {
         "input": "6\n3 2 1 5 6 4\n2",
         "output": "5"
@@ -13061,11 +13999,12 @@
       }
     ],
     "idea": [
-      "维护一个大小最多 k 的小根堆。",
-      "仅保留最大的 k 个值，堆顶就是其中最小的，也就是第 k 大。"
+      "利用原题有限值域统计每个数的出现次数。",
+      "从大到小扣除出现次数，累计达到 k 时返回当前数。",
+      "每次重复出现都占据一个排名。"
     ],
-    "complexity": "时间 O(n log(k+1))，空间 O(k)。",
-    "constraints": "1 ≤ k ≤ n ≤ 10⁵。",
+    "complexity": "时间 O(n + U)，空间 O(U)，U = 20001；原题固定值域下关于 n 为线性时间。",
+    "constraints": "1 <= k <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4",
     "order": 74,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -13080,124 +14019,58 @@
     "solutions": [
       {
         "id": "recommended",
-        "title": "只保留最大的 k 个数",
-        "summary": "用大小至多 k 的最小堆保存当前最大的 k 个数；堆顶是其中最小者，也是第 k 大候选。",
+        "title": "利用原题有限值域计数",
+        "summary": "利用原题有限值域统计每个数的出现次数。",
         "meaning": "在可含重复值的整数数组中，输出降序排列后的第 k 个元素。重复值也占据位置。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行 k。",
         "outputExplanation": "输出第 k 大的数。",
-        "constraints": "1 ≤ k ≤ n ≤ 10⁵。",
-        "naive": "全排序再取倒数第 k 个需要 O(n log n)，我们并不需要所有数字顺序。",
-        "insight": "用大小至多 k 的最小堆保存当前最大的 k 个数；堆顶是其中最小者，也是第 k 大候选。",
+        "constraints": "1 <= k <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4",
+        "naive": "全排序需要 O(n log n)，大小为 k 的堆需要 O(n log k)；利用题目给定的有限值域可避免这些比较操作。",
+        "insight": "利用原题有限值域统计每个数的出现次数。",
         "variables": [
           {
-            "name": "numbers",
-            "meaning": "读入的整数序列；元素含义与允许修改方式以本题题面为准。"
+            "name": "counts",
+            "meaning": "每个值在数组中的出现次数，使用 value+10000 作为下标。"
           },
           {
-            "name": "heap",
-            "meaning": "维护候选值的最小堆，heap[0] 是当前堆中最小值。"
+            "name": "remaining",
+            "meaning": "距第 k 大还需要跨过的元素个数。"
           }
         ],
         "steps": [
-          "维护一个大小最多 k 的小根堆。",
-          "仅保留最大的 k 个值，堆顶就是其中最小的，也就是第 k 大。"
+          "利用原题有限值域统计每个数的出现次数。",
+          "从大到小扣除出现次数，累计达到 k 时返回当前数。",
+          "每次重复出现都占据一个排名。"
         ],
         "walkthrough": {
           "input": "6\n3 2 1 5 6 4\n2",
           "output": "5",
-          "totalSteps": 11,
-          "note": "以下状态来自本页代码实际执行样例 1；显示的是到达该行、尚未执行该行时的局部变量。较长轨迹展示开头 10 步和最后 5 步。",
+          "totalSteps": 2,
+          "note": "样例1中扫描到的非零计数位置；计数为0的位置不改变 remaining，故省略。",
           "rows": [
             {
               "step": 1,
-              "line": 12,
-              "code": "numbers = list(map(int, sys.stdin.readline().split()))",
-              "explanation": "按空白分隔这一行并转成整数；空行可解析为空序列。",
-              "state": "n = 6"
+              "line": 15,
+              "code": "remaining -= counts[index]",
+              "explanation": "先跳过最大值6的一个出现位置。",
+              "state": "index = 10006\nremaining = 2\ncounts[index] = 1"
             },
             {
               "step": 2,
-              "line": 19,
-              "code": "if len(heap) < k:",
-              "explanation": "先凑满 k 个候选，再只允许更大的数替换堆顶。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = []\nx = 3"
-            },
-            {
-              "step": 3,
-              "line": 19,
-              "code": "if len(heap) < k:",
-              "explanation": "先凑满 k 个候选，再只允许更大的数替换堆顶。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [3]\nx = 2"
-            },
-            {
-              "step": 4,
-              "line": 19,
-              "code": "if len(heap) < k:",
-              "explanation": "先凑满 k 个候选，再只允许更大的数替换堆顶。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [2, 3]\nx = 1"
-            },
-            {
-              "step": 5,
-              "line": 22,
-              "code": "elif x > heap[0]:",
-              "explanation": "堆顶是当前前 k 大中最小的，替换后仍保留前 k 大。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [2, 3]\nx = 1"
-            },
-            {
-              "step": 6,
-              "line": 19,
-              "code": "if len(heap) < k:",
-              "explanation": "先凑满 k 个候选，再只允许更大的数替换堆顶。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [2, 3]\nx = 5"
-            },
-            {
-              "step": 7,
-              "line": 22,
-              "code": "elif x > heap[0]:",
-              "explanation": "堆顶是当前前 k 大中最小的，替换后仍保留前 k 大。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [2, 3]\nx = 5"
-            },
-            {
-              "step": 8,
-              "line": 19,
-              "code": "if len(heap) < k:",
-              "explanation": "先凑满 k 个候选，再只允许更大的数替换堆顶。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [3, 5]\nx = 6"
-            },
-            {
-              "step": 9,
-              "line": 22,
-              "code": "elif x > heap[0]:",
-              "explanation": "堆顶是当前前 k 大中最小的，替换后仍保留前 k 大。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [3, 5]\nx = 6"
-            },
-            {
-              "step": 10,
-              "line": 19,
-              "code": "if len(heap) < k:",
-              "explanation": "先凑满 k 个候选，再只允许更大的数替换堆顶。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [5, 6]\nx = 4"
-            },
-            {
-              "step": 11,
-              "line": 22,
-              "code": "elif x > heap[0]:",
-              "explanation": "堆顶是当前前 k 大中最小的，替换后仍保留前 k 大。",
-              "state": "n = 6\nnumbers = [3, 2, 1, 5, 6, 4]\nk = 2\nheap = [5, 6]\nx = 4"
+              "line": 15,
+              "code": "remaining -= counts[index]",
+              "explanation": "值5覆盖剩余的一个排名，返回5。",
+              "state": "index = 10005\nremaining = 1\ncounts[index] = 1"
             }
           ]
         },
-        "correctness": "新数不大于满堆堆顶时不能挤进前 k；更大时替换堆顶，仍保留到目前为止最大的 k 项。",
-        "complexity": {
-          "summary": "时间 O(n log(k+1))，空间 O(k)。",
-          "reason": "每数至多 O(log(k+1)) 堆操作，总 O(n log(k+1))，堆 O(k)。",
-          "scope": "复杂度按核心算法计；ACM 解析所保存的输入、节点构造、输出列表和序列化内存另计。Python 哈希表操作按期望时间分析。"
-        },
+        "correctness": "从大到小扣除每个值的出现次数，首次覆盖第 k 个位置的值即所求，重复元素各自占据一个排名。",
+        "complexity": "时间 O(n + U)，空间 O(U)，U = 20001；原题固定值域下关于 n 为线性时间。",
         "pitfalls": [
           "第 k 大按重复次数计数，不是第 k 个不同值。[3,3,2] 的第 2 大是 3。"
         ],
         "structure": [],
-        "code": "# 215. 数组中的第K个最大元素 — 只保留最大的 k 个数\n# 时间 O(n log(k+1))，空间 O(k)。\n# 核心思想：用大小至多 k 的最小堆保存当前最大的 k 个数；堆顶是其中最小者，也是第 k 大候选。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    import heapq\n    # 读取一个整数，含义与范围见题目输入格式。\n    k = int(input())\n    heap = []\n    for x in numbers:\n        # 先凑满 k 个候选，再只允许更大的数替换堆顶。\n        if len(heap) < k:\n            heapq.heappush(heap, x)\n        # 堆顶是当前前 k 大中最小的，替换后仍保留前 k 大。\n        elif x > heap[0]:\n            heapq.heapreplace(heap, x)\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(heap[0])\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
+        "code": "# 215. 数组中的第K个最大元素 — 按原题有限值域计数\n# 时间 O(n + U)，U = 20001；固定值域下关于 n 为线性时间。\n# 空间 O(U)；不需要排序，也不依赖 k 的大小。\nimport sys\n\ndef findKthLargest(nums, k):\n    # 原题给定 -10000 <= nums[i] <= 10000，可直接使用固定值域计数。\n    counts = [0] * 20001\n    # 重复元素分别计数，第 k 大不是第 k 个不同值。\n    for value in nums:\n        counts[value + 10000] += 1\n    remaining = k\n    # 从最大值向下扫描；remaining 表示还需跳过多少个元素。\n    for index in range(20000, -1, -1):\n        remaining -= counts[index]\n        # 本值覆盖了目标排名时，就找到了第 k 大。\n        if remaining <= 0:\n            return index - 10000\n\n# ACM 模式：按题面格式读取数组长度、数组和 k。\ndef solve():\n    n = int(input())\n    nums = list(map(int, input().split()))\n    k = int(input())\n    print(findKthLargest(nums, k))\n\nif __name__ == '__main__':\n    solve()\n",
         "references": [
           {
             "title": "力扣原题：数组中的第K个最大元素",
@@ -13217,11 +14090,26 @@
     "title": "前 K 个高频元素",
     "difficulty": "中等",
     "category": "堆",
-    "statement": "统计出现频次并选出前 k 个数字。为确定输出，按频次降序、频次相同时数值升序输出。",
+    "statement": "统计出现频次并选出前 k 个数字。可以按任意顺序输出答案。",
     "input": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行 k，不超过不同数字个数。",
     "output": "输出一行空格分隔的整数；空序列输出 EMPTY。",
     "solution": "# 347. 前 K 个高频元素 — 频次统计后选前 k 名\n# 时间 O(n+u log(k+1))，空间 O(u+k)；u 为不同值数量。\n# 核心思想：Counter 计数，按 (-频次, 数值) 作为优先级，用 nsmallest 维护排名最靠前的 k 个键。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    from collections import Counter\n    import heapq\n    # 读取一个整数，含义与范围见题目输入格式。\n    k = int(input())\n    frequencies = Counter(numbers)\n    # 负频次优先、数值作同频平局规则，满足 ACM 确定输出。\n    answer = heapq.nsmallest(k, frequencies, key=lambda x: (-frequencies[x], x))\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(*answer)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "6\n1 1 1 2 2 3\n2",
+        "output": "1 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "10\n1 2 1 2 1 2 3 1 3 2\n2",
+        "output": "1 2",
+        "source": "leetcode"
+      },
       {
         "input": "6\n1 1 1 2 2 3\n2",
         "output": "1 2"
@@ -13240,11 +14128,11 @@
       "按负频次、数值组成排序键，用堆选择前 k 个；本版明确了并列顺序。"
     ],
     "complexity": "时间 O(n+u log(k+1))，空间 O(u+k)；u 为不同值数量。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4；k 的取值范围是 [1, 数组中不相同的元素的个数]；题目数据保证答案唯一，换句话说，数组中前 k 个高频元素的集合是唯一的",
     "order": 75,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
-    "sampleCount": 2,
+    "judge": "unordered-tokens",
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "哈希表",
@@ -13260,10 +14148,10 @@
         "id": "recommended",
         "title": "频次统计后选前 k 名",
         "summary": "Counter 计数，按 (-频次, 数值) 作为优先级，用 nsmallest 维护排名最靠前的 k 个键。",
-        "meaning": "统计出现频次并选出前 k 个数字。为确定输出，按频次降序、频次相同时数值升序输出。",
+        "meaning": "统计出现频次并选出前 k 个数字。可以按任意顺序输出答案。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第三行 k，不超过不同数字个数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 10^5；-10^4 <= nums[i] <= 10^4；k 的取值范围是 [1, 数组中不相同的元素的个数]；题目数据保证答案唯一，换句话说，数组中前 k 个高频元素的集合是唯一的",
         "naive": "统计频次后排序所有不同值需要 O(u log u)，u 是不同数字数量。",
         "insight": "Counter 计数，按 (-频次, 数值) 作为优先级，用 nsmallest 维护排名最靠前的 k 个键。",
         "variables": [
@@ -13360,6 +14248,11 @@
     "tests": [
       {
         "input": "5\nadd 1\nadd 2\nmedian\nadd 3\nmedian",
+        "output": "1.5\n2.0",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\nadd 1\nadd 2\nmedian\nadd 3\nmedian",
         "output": "1.5\n2"
       },
       {
@@ -13376,11 +14269,11 @@
       "调整堆大小，使较小一半最多多一个元素，中位数从堆顶得到。"
     ],
     "complexity": "插入 O(log n)，查询 O(1)，空间 O(n)。",
-    "constraints": "1 ≤ q ≤ 10⁴；至少一次查询。",
+    "constraints": "-10^5 <= num <= 10^5；在调用 findMedian 之前，数据结构中至少有一个元素；最多 5 * 10^4 次调用 addNum 和 findMedian",
     "order": 76,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "float",
-    "sampleCount": 2,
+    "sampleCount": 1,
     "topicTags": [
       "设计",
       "双指针",
@@ -13396,7 +14289,7 @@
         "meaning": "动态插入整数，并随时查询当前所有数据的中位数。",
         "inputExplanation": "第一行 q；随后 q 行为 add x 或 median。保证查询时至少已有一个数。",
         "outputExplanation": "每次 median 输出中位数，误差不超过 10⁻⁶。",
-        "constraints": "1 ≤ q ≤ 10⁴；至少一次查询。",
+        "constraints": "-10^5 <= num <= 10^5；在调用 findMedian 之前，数据结构中至少有一个元素；最多 5 * 10^4 次调用 addNum 和 findMedian",
         "naive": "每加入一个数都排序全部数据，累计代价很高；插入有序数组也要移动 O(n) 元素。",
         "insight": "low 用负数模拟大根堆保存较小半边，high 是小根堆保存较大半边；low 比 high 多一个或一样多。",
         "variables": [
@@ -13535,6 +14428,16 @@
     "tests": [
       {
         "input": "6\n7 1 5 3 6 4",
+        "output": "5",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n7 6 4 3 1",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n7 1 5 3 6 4",
         "output": "5"
       },
       {
@@ -13551,7 +14454,7 @@
       "把今天当成卖出日计算利润，取全局最大值。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁵；股价非负。",
+    "constraints": "1 <= prices.length <= 10^5；0 <= prices[i] <= 10^4",
     "order": 77,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -13568,7 +14471,7 @@
         "meaning": "每天的股价已知，至多完成一次先买后卖，求最大利润。允许不交易。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最大利润。",
-        "constraints": "1 ≤ n ≤ 10⁵；股价非负。",
+        "constraints": "1 <= prices.length <= 10^5；0 <= prices[i] <= 10^4",
         "naive": "枚举每个买入日和之后卖出日，O(n²)。",
         "insight": "扫描到卖出价 price 时，最优买入一定是它之前最低价 low。记录 price−low 的最大值，并更新最低价。",
         "variables": [
@@ -13683,6 +14586,16 @@
     "tests": [
       {
         "input": "5\n2 3 1 1 4",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n3 2 1 0 4",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n2 3 1 1 4",
         "output": "true"
       },
       {
@@ -13699,7 +14612,7 @@
       "若扫描位置超出覆盖范围，则该位置及后续都不可达。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；0 ≤ a[i] ≤ 10⁵。",
+    "constraints": "1 <= nums.length <= 10^4；0 <= nums[i] <= 10^5",
     "order": 78,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -13717,7 +14630,7 @@
         "meaning": "从下标 0 出发，a[i] 表示从该位置最多能向右跳几步。判断能否到达最后一个下标。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ n ≤ 10⁴；0 ≤ a[i] ≤ 10⁵。",
+        "constraints": "1 <= nums.length <= 10^4；0 <= nums[i] <= 10^5",
         "naive": "从每个位置递归尝试所有跳法会重复访问许多位置，可能指数级。",
         "insight": "reach 是目前可达最远下标。只要 i≤reach，就能从 i 继续扩展到 i+numbers[i]；i>reach 就出现不可跨越缺口。",
         "variables": [
@@ -13856,6 +14769,16 @@
     "tests": [
       {
         "input": "5\n2 3 1 1 4",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n2 3 0 1 4",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n2 3 1 1 4",
         "output": "2"
       },
       {
@@ -13872,7 +14795,7 @@
       "扫描完当前层的右边界才增加步数，并将边界扩展到下一层最远位置。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；元素非负且保证可达。",
+    "constraints": "1 <= nums.length <= 10^4；0 <= nums[i] <= 1000；题目保证可以到达 n - 1",
     "order": 79,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -13890,7 +14813,7 @@
         "meaning": "从下标 0 出发，a[i] 是最大向右跳跃步数。保证能到达最后一个位置，求最少跳跃次数。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最少次数。",
-        "constraints": "1 ≤ n ≤ 10⁴；元素非负且保证可达。",
+        "constraints": "1 <= nums.length <= 10^4；0 <= nums[i] <= 1000；题目保证可以到达 n - 1",
         "naive": "动态规划枚举每个位置能跳到哪些点需要 O(n²)。",
         "insight": "end 是当前跳数能覆盖的边界，reach 是本层所有位置下一跳的最远边界。扫描到 end 后才真正增加一次跳数。",
         "variables": [
@@ -14026,6 +14949,16 @@
     "tests": [
       {
         "input": "ababcbacadefegdehijhklij",
+        "output": "9 7 8",
+        "source": "leetcode"
+      },
+      {
+        "input": "eccbbbbdec",
+        "output": "10",
+        "source": "leetcode"
+      },
+      {
+        "input": "ababcbacadefegdehijhklij",
         "output": "9 7 8"
       },
       {
@@ -14042,7 +14975,7 @@
       "当前段必须覆盖段内所有字符的末次位置，扫描到该边界即可切分。"
     ],
     "complexity": "时间 O(n)，空间 O(26)，另计输出。",
-    "constraints": "1 ≤ 长度 ≤ 10⁴。",
+    "constraints": "1 <= s.length <= 500；s 仅由小写英文字母组成",
     "order": 80,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -14061,7 +14994,7 @@
         "meaning": "把小写字符串切分成尽可能多的连续段，要求同一种字母只出现在一个段中。输出各段长度。",
         "inputExplanation": "输入一行非空小写字符串。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ 长度 ≤ 10⁴。",
+        "constraints": "1 <= s.length <= 500；s 仅由小写英文字母组成",
         "naive": "每尝试一个切点都检查两侧是否共享字符，会反复扫描。",
         "insight": "预先记每个字符最后下标。当前段遇到字符时，把段尾 end 延伸到该字符最后位置；i==end 时即可切段。",
         "variables": [
@@ -14231,6 +15164,16 @@
     "solution": "# 70. 爬楼梯 — 相邻两项滚动递推\n# 时间 O(n)，额外空间 O(1)。\n# 核心思想：到第 n 阶最后一步只可能来自 n−1 或 n−2；把两类方案数相加。只需保留相邻两项，无需完整数组。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 同时更新相邻两项，右边使用更新前的状态。\n    ways, next_ways = (1, 1)\n    for _ in range(n):\n        # 同时更新相邻两项，右边使用更新前的状态。\n        ways, next_ways = (next_ways, ways + next_ways)\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(ways)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "2",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
         "input": "3",
         "output": "3"
       },
@@ -14248,7 +15191,7 @@
       "状态转移 f(i)=f(i−1)+f(i−2)，只保留两个前驱。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 45。",
+    "constraints": "1 <= n <= 45",
     "order": 81,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -14266,7 +15209,7 @@
         "meaning": "到达第 n 级台阶，每次可以上 1 级或 2 级。求不同步数组合的数量，顺序不同算不同方案。",
         "inputExplanation": "输入整数 n。",
         "outputExplanation": "输出方案数。",
-        "constraints": "1 ≤ n ≤ 45。",
+        "constraints": "1 <= n <= 45",
         "naive": "直接递归 f(n)=f(n−1)+f(n−2) 会重复计算子问题，指数级。",
         "insight": "到第 n 阶最后一步只可能来自 n−1 或 n−2；把两类方案数相加。只需保留相邻两项，无需完整数组。",
         "variables": [
@@ -14356,6 +15299,16 @@
     "tests": [
       {
         "input": "5",
+        "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "5",
         "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1"
       },
       {
@@ -14372,7 +15325,7 @@
       "内部元素由上一行两个相邻值相加，两端单独放置 1。"
     ],
     "complexity": "时间 O(n²)，额外空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 30。",
+    "constraints": "1 <= numRows <= 30",
     "order": 82,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -14389,7 +15342,7 @@
         "meaning": "生成杨辉三角前 n 行。每行两端为 1，内部位置等于上一行相邻两数之和。",
         "inputExplanation": "输入整数 n。",
         "outputExplanation": "输出 n 行，每行整数以空格分隔。",
-        "constraints": "1 ≤ n ≤ 30。",
+        "constraints": "1 <= numRows <= 30",
         "naive": "每个组合数分别计算阶乘会重复工作；题目本身要求输出 O(n²) 个数字。",
         "insight": "每行首尾为 1，中间位置等于上一行相邻两数之和；输出一行后只保留它作为下一轮输入。",
         "variables": [
@@ -14524,6 +15477,16 @@
     "tests": [
       {
         "input": "4\n1 2 3 1",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n2 7 9 3 1",
+        "output": "12",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 2 3 1",
         "output": "4"
       },
       {
@@ -14540,7 +15503,7 @@
       "要么选择当前金额，加上前两间的最优值；取两者最大。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；金额非负。",
+    "constraints": "1 <= nums.length <= 100；0 <= nums[i] <= 400",
     "order": 83,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -14557,7 +15520,7 @@
         "meaning": "一排房屋各有非负金额，不能选择相邻房屋。求可以取得的最大总金额。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最大金额。",
-        "constraints": "1 ≤ n ≤ 10⁴；金额非负。",
+        "constraints": "1 <= nums.length <= 100；0 <= nums[i] <= 400",
         "naive": "递归枚举每间房偷或不偷，会重复求同一前缀最优值。",
         "insight": "best_previous 是前一间为止的最优，best_two_back 是前两间为止的最优；当前只有“不偷得到 best_previous”或“偷得到 best_two_back+x”两种可能。",
         "variables": [
@@ -14658,6 +15621,16 @@
     "tests": [
       {
         "input": "12",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "13",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "12",
         "output": "3"
       },
       {
@@ -14674,7 +15647,7 @@
       "枚举最后使用的平方数 sq，从 dp[x−sq]+1 转移。"
     ],
     "complexity": "时间 O(n√n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁴。",
+    "constraints": "1 <= n <= 10^4",
     "order": 84,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -14683,8 +15656,8 @@
       "广度优先搜索",
       "数学",
       "动态规划",
-      "",
-      ""
+      "背包问题",
+      "完全背包"
     ],
     "solutions": [
       {
@@ -14694,7 +15667,7 @@
         "meaning": "把正整数 n 表示成若干完全平方数之和，求最少项数。允许重复使用同一平方数。",
         "inputExplanation": "输入整数 n。",
         "outputExplanation": "输出最少项数。",
-        "constraints": "1 ≤ n ≤ 10⁴。",
+        "constraints": "1 <= n <= 10^4",
         "naive": "递归枚举平方数组合会反复遇到相同剩余数。",
         "insight": "dp[total] 表示凑出 total 所需最少平方数个数。枚举最后一个平方数 square，从 dp[total−square]+1 转移。",
         "variables": [
@@ -14857,6 +15830,21 @@
     "tests": [
       {
         "input": "3\n1 2 5\n11",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n2\n3",
+        "output": "-1",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1\n0",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n1 2 5\n11",
         "output": "3"
       },
       {
@@ -14873,17 +15861,17 @@
       "对每个金额尝试最后一枚硬币，取所有可行前驱的最小值加一。"
     ],
     "complexity": "时间 O(n·amount)，空间 O(amount)。",
-    "constraints": "1 ≤ n ≤ 12；面额为正数；0 ≤ amount ≤ 10⁴。",
+    "constraints": "1 <= coins.length <= 12；1 <= coins[i] <= 2^31 - 1；0 <= amount <= 10^4",
     "order": 85,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "广度优先搜索",
       "数组",
       "动态规划",
-      "",
-      ""
+      "背包问题",
+      "完全背包"
     ],
     "solutions": [
       {
@@ -14893,7 +15881,7 @@
         "meaning": "给定若干正整数面额，每种硬币数量不限。凑出 amount 的最少硬币数是多少？无法凑出时输出 -1。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。第二行数组表示面额，第三行 amount。",
         "outputExplanation": "输出最少数量或 -1。",
-        "constraints": "1 ≤ n ≤ 12；面额为正数；0 ≤ amount ≤ 10⁴。",
+        "constraints": "1 <= coins.length <= 12；1 <= coins[i] <= 2^31 - 1；0 <= amount <= 10^4",
         "naive": "每次取最大面额的贪心不普遍正确，例如 [1,3,4] 凑 6，贪心得 4+1+1，而最优是 3+3。",
         "insight": "dp[t] 是凑 t 的最少枚数。若 coin≤t，尝试从 dp[t−coin] 加一枚；金额从小到大计算，允许硬币重复。",
         "variables": [
@@ -15060,6 +16048,21 @@
     "tests": [
       {
         "input": "leetcode\n2\nleet\ncode",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "applepenapple\n2\napple\npen",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "catsandog\n5\ncats\ndog\nsand\nand\ncat",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "leetcode\n2\nleet\ncode",
         "output": "true"
       },
       {
@@ -15076,11 +16079,11 @@
       "枚举字典中出现过的长度，检查最后一段是否在字典中，且前缀可拆分。"
     ],
     "complexity": "时间 O(|s|·Σ不同词长)，空间 O(|s|+字典字符数)。",
-    "constraints": "1 ≤ |s| ≤ 300；1 ≤ n ≤ 1000；词长 ≤ 20。",
+    "constraints": "1 <= s.length <= 300；1 <= wordDict.length <= 1000；1 <= wordDict[i].length <= 20；s 和 wordDict[i] 仅由小写英文字母组成；wordDict 中的所有字符串 互不相同",
     "order": 86,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "字典树",
       "记忆化",
@@ -15088,7 +16091,7 @@
       "哈希表",
       "字符串",
       "动态规划",
-      ""
+      "Brute-Force Search"
     ],
     "solutions": [
       {
@@ -15098,7 +16101,7 @@
         "meaning": "判断字符串能否被拆成字典中的若干单词。每个字典单词可以重复使用，必须覆盖整个字符串。",
         "inputExplanation": "第一行目标字符串 s；第二行字典词数 n；后续 n 行每行一个单词。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ |s| ≤ 300；1 ≤ n ≤ 1000；词长 ≤ 20。",
+        "constraints": "1 <= s.length <= 300；1 <= wordDict.length <= 1000；1 <= wordDict[i].length <= 20；s 和 wordDict[i] 仅由小写英文字母组成；wordDict 中的所有字符串 互不相同",
         "naive": "递归尝试每个切点会反复拆分相同后缀；优先取最长单词的贪心也可能走死路。",
         "insight": "dp[end] 表示 text[:end] 可拆。只尝试字典里出现过的词长，若前缀可拆且最后一段是字典词，就标真。",
         "variables": [
@@ -15216,6 +16219,21 @@
     "tests": [
       {
         "input": "8\n10 9 2 5 3 7 101 18",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n0 1 0 3 2 3",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\n7 7 7 7 7 7 7",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "8\n10 9 2 5 3 7 101 18",
         "output": "4"
       },
       {
@@ -15232,16 +16250,16 @@
       "二分找到第一个不小于当前值的位置并替换，末尾更小更有利于扩展。"
     ],
     "complexity": "时间 O(n log n)，空间 O(n)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 2500；-10^4 <= nums[i] <= 10^4",
     "order": 87,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "二分查找",
       "动态规划",
-      ""
+      "最长上升子序列"
     ],
     "solutions": [
       {
@@ -15251,7 +16269,7 @@
         "meaning": "选择一个保持原相对顺序、但不要求连续的严格递增子序列，求最大长度。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出长度。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 2500；-10^4 <= nums[i] <= 10^4",
         "naive": "dp[i] 枚举前面所有更小值可求 O(n²) 解法。重复劳动在于查找“可延长到多长”。",
         "insight": "tails[k] 表示已扫描数字中，长度 k+1 递增子序列的最小可能末尾。二分找首个≥x 的位置替换或追加。",
         "variables": [
@@ -15404,6 +16422,16 @@
     "tests": [
       {
         "input": "4\n2 3 -2 4",
+        "output": "6",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n-2 0 -1",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n2 3 -2 4",
         "output": "6"
       },
       {
@@ -15420,7 +16448,7 @@
       "同时维护以当前位置结尾的最大、最小乘积，使用旧状态同时更新。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；任何子数组乘积都在 32 位有符号整数范围内。",
+    "constraints": "1 <= nums.length <= 2 * 10^4；-10 <= nums[i] <= 10；nums 的任何子数组的乘积都 保证 是一个 32-位 整数",
     "order": 88,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -15437,7 +16465,7 @@
         "meaning": "在整数数组中选择非空连续子数组，使其元素乘积最大。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出最大乘积。",
-        "constraints": "1 ≤ n ≤ 10⁴；任何子数组乘积都在 32 位有符号整数范围内。",
+        "constraints": "1 <= nums.length <= 2 * 10^4；-10 <= nums[i] <= 10；nums 的任何子数组的乘积都 保证 是一个 32-位 整数",
         "naive": "枚举全部连续子数组并累乘为 O(n²)。只保留最大乘积无法处理负负得正。",
         "insight": "ending_max、ending_min 分别是以前一位置结尾的最大、最小乘积。新位置从 x、旧 ending_max*x、旧 ending_min*x 三种候选同时取最大最小。",
         "variables": [
@@ -15535,6 +16563,16 @@
     "tests": [
       {
         "input": "4\n1 5 11 5",
+        "output": "true",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 2 3 5",
+        "output": "false",
+        "source": "leetcode"
+      },
+      {
+        "input": "4\n1 5 11 5",
         "output": "true"
       },
       {
@@ -15551,7 +16589,7 @@
       "0/1 背包必须倒序更新容量，防止同一个元素被反复使用。"
     ],
     "complexity": "时间 O(n·sum(a))，空间 O(sum(a))。",
-    "constraints": "1 ≤ n ≤ 200；1 ≤ a[i] ≤ 100。",
+    "constraints": "1 <= nums.length <= 200；1 <= nums[i] <= 100",
     "order": 89,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -15559,8 +16597,8 @@
     "topicTags": [
       "数组",
       "动态规划",
-      "",
-      ""
+      "背包问题",
+      "0-1 背包"
     ],
     "solutions": [
       {
@@ -15570,7 +16608,7 @@
         "meaning": "判断能否把正整数数组分成两个子集，使两边元素和相等，每个元素恰好属于一边。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出 true 或 false（小写）。",
-        "constraints": "1 ≤ n ≤ 200；1 ≤ a[i] ≤ 100。",
+        "constraints": "1 <= nums.length <= 200；1 <= nums[i] <= 100",
         "naive": "枚举全部子集检查总和，O(2ⁿ)。",
         "insight": "总和奇数直接失败；否则找是否存在和为一半的子集。dp[j] 表示已处理元素能否恰凑 j，每个数只能选一次。",
         "variables": [
@@ -15736,6 +16774,21 @@
     "solution": "# 32. 最长有效括号 — 以当前位置结尾的有效长度\n# 时间 O(n)，空间 O(n)。\n# 核心思想：仅右括号可能结尾。跳过前一位结尾的合法段后，检查 j=i−dp[i−1]−1 是否为左括号；匹配后把前面的相邻合法段也接上。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    if text == '-':\n        text = ''\n    else:\n        text = text\n    dp = [0] * len(text)\n    best = 0\n    for i in range(1, len(text)):\n        if text[i] == ')':\n            # 跳过上一位置结尾的合法段，寻找可匹配的左括号。\n            j = i - dp[i - 1] - 1\n            # 先防负下标，再判断能否配对。\n            if j >= 0 and text[j] == '(':\n                # 内部长度加新配对的 2，再拼接前面相邻合法段。\n                dp[i] = dp[i - 1] + 2 + (dp[j - 1] if j else 0)\n                best = max(best, dp[i])\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "(()",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": ")()())",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "-",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
         "input": ")()())",
         "output": "4"
       },
@@ -15753,16 +16806,16 @@
       "若当前是右括号，跳过前面的合法段，寻找可配对左括号，再接上更早的合法段。"
     ],
     "complexity": "时间 O(n)，空间 O(n)。",
-    "constraints": "0 ≤ 长度 ≤ 3×10⁴；只含 ( 和 )。",
+    "constraints": "0 <= s.length <= 3 * 10^4；s[i] 为 '(' 或 ')'",
     "order": 90,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "栈",
       "字符串",
       "动态规划",
-      ""
+      "括号序列"
     ],
     "solutions": [
       {
@@ -15772,7 +16825,7 @@
         "meaning": "在只含左右圆括号的字符串中，求最长的连续合法括号片段长度。",
         "inputExplanation": "输入一行字符串；用单个 - 表示空字符串。",
         "outputExplanation": "输出长度。",
-        "constraints": "0 ≤ 长度 ≤ 3×10⁴；只含 ( 和 )。",
+        "constraints": "0 <= s.length <= 3 * 10^4；s[i] 为 '(' 或 ')'",
         "naive": "枚举所有括号子串再用栈验证，需要重复处理大量相同片段。",
         "insight": "仅右括号可能结尾。跳过前一位结尾的合法段后，检查 j=i−dp[i−1]−1 是否为左括号；匹配后把前面的相邻合法段也接上。",
         "variables": [
@@ -15890,6 +16943,26 @@
     "tests": [
       {
         "input": "3 7",
+        "output": "28",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 2",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "7 3",
+        "output": "28",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3",
+        "output": "6",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 7",
         "output": "28"
       },
       {
@@ -15906,11 +16979,11 @@
       "用一维数组滚动更新，更新前的 dp[j] 是上方，已更新的 dp[j−1] 是左方。"
     ],
     "complexity": "时间 O(mn)，空间 O(n)。",
-    "constraints": "1 ≤ m,n ≤ 100。",
+    "constraints": "1 <= m, n <= 100；题目数据保证答案小于等于 2 * 10^9",
     "order": 91,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 4,
     "topicTags": [
       "数学",
       "动态规划",
@@ -15924,7 +16997,7 @@
         "meaning": "机器人从 m×n 网格左上角出发，每次只能向右或向下走一格，求到达右下角的路径数量。",
         "inputExplanation": "输入一行 m n。",
         "outputExplanation": "输出路径数，使用精确整数。",
-        "constraints": "1 ≤ m,n ≤ 100。",
+        "constraints": "1 <= m, n <= 100；题目数据保证答案小于等于 2 * 10^9",
         "naive": "递归分别向右和向下走，会反复到达同一格。",
         "insight": "到当前格只能从上方或左方来，方案数相加。dp[j] 更新前是上方，dp[j−1] 更新后是左方。",
         "variables": [
@@ -16073,6 +17146,16 @@
     "tests": [
       {
         "input": "3 3\n1 3 1\n1 5 1\n4 2 1",
+        "output": "7",
+        "source": "leetcode"
+      },
+      {
+        "input": "2 3\n1 2 3\n4 5 6",
+        "output": "12",
+        "source": "leetcode"
+      },
+      {
+        "input": "3 3\n1 3 1\n1 5 1\n4 2 1",
         "output": "7"
       },
       {
@@ -16089,7 +17172,7 @@
       "取二者较小值再加当前格子值，使用滚动数组。"
     ],
     "complexity": "时间 O(mn)，空间 O(n)。",
-    "constraints": "1 ≤ m,n ≤ 200；格子数值为 0 到 200。",
+    "constraints": "m == grid.length；n == grid[i].length；1 <= m, n <= 200；0 <= grid[i][j] <= 200",
     "order": 92,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -16107,7 +17190,7 @@
         "meaning": "从非负数网格左上角走到右下角，每次只能向右或向下。求经过格子数值总和的最小值，包含起终点。",
         "inputExplanation": "第一行是行数 m 和列数 n；接下来 m 行，每行 n 个整数。",
         "outputExplanation": "输出最小路径和。",
-        "constraints": "1 ≤ m,n ≤ 200；格子数值为 0 到 200。",
+        "constraints": "m == grid.length；n == grid[i].length；1 <= m, n <= 200；0 <= grid[i][j] <= 200",
         "naive": "枚举全部向右向下路径，路径数量可能指数增长。",
         "insight": "dp[j] 表示到当前行 j 列的最小代价；从上方或左方较便宜的一格转移，再加本格值。",
         "variables": [
@@ -16236,11 +17319,21 @@
     "title": "最长回文子串",
     "difficulty": "中等",
     "category": "多维动态规划",
-    "statement": "求字符串中最长的连续回文片段。长度相同时，输出起点最小的那一段。",
+    "statement": "求字符串中最长的连续回文片段。长度相同时，可返回任意一段。",
     "input": "输入一行非空字母或数字字符串。",
     "output": "输出最长回文片段。",
     "solution": "# 5. 最长回文子串 — 枚举中心向两侧扩展\n# 时间 O(n²)，除结果字符串外空间 O(1)。\n# 核心思想：每个回文都有中心：奇数中心在字符，偶数中心在两个字符之间。两端相等就继续扩展，记录最长区间。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取本题约定的一行文本，随后按题面规则处理。\n    text = input().strip()\n    best = ''\n    for center in range(len(text)):\n        # 每个位置分别作为奇数中心和偶数中心左端。\n        for left, right in ((center, center), (center, center + 1)):\n            # 两端都在界内且相同才能继续扩展。\n            while left >= 0 and right < len(text) and (text[left] == text[right]):\n                if right - left + 1 > len(best):\n                    best = text[left:right + 1]\n                left -= 1\n                right += 1\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(best)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
+      {
+        "input": "babad",
+        "output": "bab",
+        "source": "leetcode"
+      },
+      {
+        "input": "cbbd",
+        "output": "bb",
+        "source": "leetcode"
+      },
       {
         "input": "babad",
         "output": "bab"
@@ -16259,26 +17352,26 @@
       "从各中心向外扩展，按从左到右顺序、只在更长时更新，满足并列取最早。"
     ],
     "complexity": "时间 O(n²)，除结果字符串外空间 O(1)。",
-    "constraints": "1 ≤ 长度 ≤ 1000。",
+    "constraints": "1 <= s.length <= 1000；s 仅由数字和英文字母组成",
     "order": 93,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
-    "judge": "tokens",
+    "judge": "palindrome",
     "sampleCount": 2,
     "topicTags": [
       "双指针",
       "字符串",
       "动态规划",
-      ""
+      "Manacher 算法"
     ],
     "solutions": [
       {
         "id": "recommended",
         "title": "枚举中心向两侧扩展",
         "summary": "每个回文都有中心：奇数中心在字符，偶数中心在两个字符之间。两端相等就继续扩展，记录最长区间。",
-        "meaning": "求字符串中最长的连续回文片段。长度相同时，输出起点最小的那一段。",
+        "meaning": "求字符串中最长的连续回文片段。长度相同时，可返回任意一段。",
         "inputExplanation": "输入一行非空字母或数字字符串。",
         "outputExplanation": "输出最长回文片段。",
-        "constraints": "1 ≤ 长度 ≤ 1000。",
+        "constraints": "1 <= s.length <= 1000；s 仅由数字和英文字母组成",
         "naive": "枚举所有子串再检查回文为 O(n³)。",
         "insight": "每个回文都有中心：奇数中心在字符，偶数中心在两个字符之间。两端相等就继续扩展，记录最长区间。",
         "variables": [
@@ -16449,6 +17542,21 @@
     "tests": [
       {
         "input": "abcde\nace",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "abc\nabc",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "abc\ndef",
+        "output": "0",
+        "source": "leetcode"
+      },
+      {
+        "input": "abcde\nace",
         "output": "3"
       },
       {
@@ -16465,15 +17573,15 @@
       "不同字符时，取忽略任意一边末字符的较优结果；滚动时保留左上旧值。"
     ],
     "complexity": "时间 O(mn)，空间 O(n)。",
-    "constraints": "0 ≤ 两串长度 ≤ 1000；仅英文字母。",
+    "constraints": "1 <= text1.length, text2.length <= 1000；text1 和 text2 仅由小写英文字符组成。",
     "order": 94,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "字符串",
       "动态规划",
-      ""
+      "最长公共子序列"
     ],
     "solutions": [
       {
@@ -16483,7 +17591,7 @@
         "meaning": "求两个字符串的最长公共子序列长度。子序列保持相对顺序，但不要求连续。",
         "inputExplanation": "两行字符串；每行用 - 表示空串。",
         "outputExplanation": "输出长度。",
-        "constraints": "0 ≤ 两串长度 ≤ 1000；仅英文字母。",
+        "constraints": "1 <= text1.length, text2.length <= 1000；text1 和 text2 仅由小写英文字符组成。",
         "naive": "枚举一个串的全部子序列再检查另一个，指数级。",
         "insight": "若末字符相同，接在两个更短前缀的 LCS 后加 1；不同则分别丢掉其中一个末字符，取较大值。用 previous_diagonal 保存旧左上角。",
         "variables": [
@@ -16650,6 +17758,16 @@
     "tests": [
       {
         "input": "horse\nros",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "intention\nexecution",
+        "output": "5",
+        "source": "leetcode"
+      },
+      {
+        "input": "horse\nros",
         "output": "3"
       },
       {
@@ -16666,7 +17784,7 @@
       "末字符相同就沿用左上角；否则在替换、删除、插入三种方案中取最小值加一。"
     ],
     "complexity": "时间 O(mn)，空间 O(n)。",
-    "constraints": "0 ≤ 两串长度 ≤ 500；仅小写字母。",
+    "constraints": "0 <= word1.length, word2.length <= 500；word1 和 word2 由小写英文字母组成",
     "order": 95,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -16683,7 +17801,7 @@
         "meaning": "将第一个字符串变成第二个字符串，可插入、删除或替换一个字符，每步代价为 1。求最少步数。",
         "inputExplanation": "两行字符串；每行用 - 表示空串。",
         "outputExplanation": "输出最少操作数。",
-        "constraints": "0 ≤ 两串长度 ≤ 500；仅小写字母。",
+        "constraints": "0 <= word1.length, word2.length <= 500；word1 和 word2 由小写英文字母组成",
         "naive": "枚举编辑操作序列会反复得到相同前缀对，代价极高。",
         "insight": "dp[i][j] 表示前 i 字符变成前 j 字符的最少步数。末尾相同可沿对角免费继承，不同则从删除、插入、替换三种状态加一。",
         "variables": [
@@ -16849,6 +17967,21 @@
     "solution": "# 136. 只出现一次的数字 — 利用异或成对抵消\n# 时间 O(n)，额外空间 O(1)。\n# 核心思想：异或满足 x^x=0、x^0=x，且交换结合不影响结果。把所有值异或，成对值自动消去。\n\nimport sys\n\n# 完整 ACM 入口：读入题面约定的数据，计算答案，再写标准输出。\ndef solve():\n    # 读取一个整数，含义与范围见题目输入格式。\n    n = int(input())\n    # 按空白分隔这一行并转成整数；空行可解析为空序列。\n    numbers = list(map(int, sys.stdin.readline().split()))\n    answer = 0\n    for x in numbers:\n        # 相同数异或为 0，最终只剩出现一次的数。\n        answer ^= x\n    # 只输出题目要求的结果；调试信息请写入 sys.stderr。\n    print(answer)\n# 直接运行此文件时执行 solve；不需要在线判题平台提供 Solution 类。\nif __name__ == '__main__':\n    solve()\n",
     "tests": [
       {
+        "input": "3\n2 2 1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n4 1 2 1 2",
+        "output": "4",
+        "source": "leetcode"
+      },
+      {
+        "input": "1\n1",
+        "output": "1",
+        "source": "leetcode"
+      },
+      {
         "input": "5\n4 1 2 1 2",
         "output": "4"
       },
@@ -16866,11 +17999,11 @@
       "把所有数字异或，两两出现的值抵消，只剩答案。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 3 * 10^4；-3 * 10^4 <= nums[i] <= 3 * 10^4；除了某个元素只出现一次以外，其余每个元素均出现两次。",
     "order": 96,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "位运算",
       "数组"
@@ -16883,7 +18016,7 @@
         "meaning": "数组中恰好一个数字出现一次，其余每个数字都出现两次。找出只出现一次的数字。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出该数字。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 3 * 10^4；-3 * 10^4 <= nums[i] <= 3 * 10^4；除了某个元素只出现一次以外，其余每个元素均出现两次。",
         "naive": "哈希表统计出现次数需要 O(n) 空间；排序可相邻配对但 O(n log n)。",
         "insight": "异或满足 x^x=0、x^0=x，且交换结合不影响结果。把所有值异或，成对值自动消去。",
         "variables": [
@@ -16987,6 +18120,16 @@
     "tests": [
       {
         "input": "3\n3 2 3",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "7\n2 2 1 1 1 2 2",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n3 2 3",
         "output": "3"
       },
       {
@@ -17003,7 +18146,7 @@
       "多数元素超过一半，即使和其他元素抵消，也必然保留为最终候选。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "n == nums.length；1 <= n <= 5 * 10^4；-10^9 <= nums[i] <= 10^9；输入保证数组中一定有一个多数元素。",
     "order": 97,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -17014,7 +18157,7 @@
       "分治",
       "计数",
       "排序",
-      ""
+      "摩尔投票算法"
     ],
     "solutions": [
       {
@@ -17024,7 +18167,7 @@
         "meaning": "保证存在出现次数严格超过数组长度一半的数字，找出它。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出多数元素。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "n == nums.length；1 <= n <= 5 * 10^4；-10^9 <= nums[i] <= 10^9；输入保证数组中一定有一个多数元素。",
         "naive": "统计所有数字频次需 O(n) 空间；排序后取中间需 O(n log n)。",
         "insight": "维护候选和票数。相同值加票，不同值抵消一票；票数归零时重新选择候选。",
         "variables": [
@@ -17135,6 +18278,16 @@
     "tests": [
       {
         "input": "6\n2 0 2 1 1 0",
+        "output": "0 0 1 1 2 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n2 0 1",
+        "output": "0 1 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "6\n2 0 2 1 1 0",
         "output": "0 0 1 1 2 2"
       },
       {
@@ -17151,7 +18304,7 @@
       "遇到 2 时与尾部交换后不能立刻前进，因为换来的元素尚未检查。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；值仅为 0、1、2。",
+    "constraints": "n == nums.length；1 <= n <= 300；nums[i] 为 0、1 或 2",
     "order": 98,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
@@ -17159,9 +18312,9 @@
     "topicTags": [
       "数组",
       "双指针",
-      "",
+      "冒泡排序",
       "排序",
-      ""
+      "快速排序"
     ],
     "solutions": [
       {
@@ -17171,7 +18324,7 @@
         "meaning": "数组只包含 0、1、2，原地将它们按 0、1、2 的顺序排列。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n ≤ 10⁴；值仅为 0、1、2。",
+        "constraints": "n == nums.length；1 <= n <= 300；nums[i] 为 0、1 或 2",
         "naive": "通用排序需要 O(n log n)；三次计数回填也是线性，但这里练习一次扫描的原地交换。",
         "insight": "[0,low) 为 0，[low,mid) 为 1，(high,n) 为 2，中间未处理。mid 遇 0 换向左、遇 2 换向右、遇 1 直接前进。",
         "variables": [
@@ -17318,6 +18471,21 @@
     "tests": [
       {
         "input": "3\n1 2 3",
+        "output": "1 3 2",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n3 2 1",
+        "output": "1 2 3",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n1 1 5",
+        "output": "1 5 1",
+        "source": "leetcode"
+      },
+      {
+        "input": "3\n1 2 3",
         "output": "1 3 2"
       },
       {
@@ -17334,11 +18502,11 @@
       "与后缀中最靠右的大于它的值交换，再反转后缀使其最小。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+    "constraints": "1 <= nums.length <= 100；0 <= nums[i] <= 100",
     "order": 99,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "数组",
       "双指针"
@@ -17351,7 +18519,7 @@
         "meaning": "把数组改为字典序紧接其后的排列；如果已是最大排列，则改成最小排列。允许重复元素。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。",
         "outputExplanation": "输出一行空格分隔的整数；空序列输出 EMPTY。",
-        "constraints": "1 ≤ n ≤ 10⁴；整数绝对值不超过 10⁹。",
+        "constraints": "1 <= nums.length <= 100；0 <= nums[i] <= 100",
         "naive": "生成全部排列再找紧邻的大排列是阶乘级。",
         "insight": "从右向左找首个上升位置 i；右侧已不升。找右侧最小且大于 numbers[i] 的数交换，再把右侧反转成最小升序。",
         "variables": [
@@ -17445,6 +18613,21 @@
     "tests": [
       {
         "input": "5\n1 3 4 2 2",
+        "output": "2",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n3 1 3 4 2",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n3 3 3 3 3",
+        "output": "3",
+        "source": "leetcode"
+      },
+      {
+        "input": "5\n1 3 4 2 2",
         "output": "2"
       },
       {
@@ -17461,18 +18644,18 @@
       "快慢指针先在环内相遇，再从起点与相遇点同步前进，找到入口。"
     ],
     "complexity": "时间 O(n)，额外空间 O(1)。",
-    "constraints": "2 ≤ 实际长度 ≤ 10⁵；值在 1 到实际长度−1 之间。",
+    "constraints": "1 <= n <= 10^5；nums.length == n + 1；1 <= nums[i] <= n；nums 中 只有一个整数 出现 两次或多次 ，其余整数均只出现 一次",
     "order": 100,
     "template": "import sys\n\n\ndef solve():\n    # 按左侧「输入格式」读取数据\n    # 在这里实现你的算法，并将答案输出到标准输出\n    pass\n\n\nif __name__ == \"__main__\":\n    solve()\n",
     "judge": "tokens",
-    "sampleCount": 2,
+    "sampleCount": 3,
     "topicTags": [
       "位运算",
       "数组",
       "双指针",
       "二分查找",
-      "",
-      ""
+      "Floyd 判圈算法",
+      "抽屉原理"
     ],
     "solutions": [
       {
@@ -17482,7 +18665,7 @@
         "meaning": "数组长度 n+1，值都在 1 到 n 之间，只有一种数值重复（可能重复多次）。不修改数组，使用常数额外空间找出重复数。",
         "inputExplanation": "第一行是数组长度 n；第二行是 n 个空格分隔的整数。这里第一行是实际数组长度 n+1。",
         "outputExplanation": "输出重复数字。",
-        "constraints": "2 ≤ 实际长度 ≤ 10⁵；值在 1 到实际长度−1 之间。",
+        "constraints": "1 <= n <= 10^5；nums.length == n + 1；1 <= nums[i] <= n；nums 中 只有一个整数 出现 两次或多次 ，其余整数均只出现 一次",
         "naive": "集合查重需要 O(n) 空间；原地排序会修改输入且需 O(n log n)。",
         "insight": "把下标 i 的后继定义为 numbers[i]。值在 1…n 而有 n+1 项，重复值形成汇入环的入口，用快慢指针找到它。",
         "variables": [

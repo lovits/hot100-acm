@@ -108,6 +108,10 @@
     "output": "0\n"
    },
    {
+    "input": "7\n9 9 9 9 9 9 9\n4\n9 9 9 9\n",
+    "output": "8 9 9 9 0 0 0 1\n"
+   },
+   {
     "input": "1\n9\n1\n9\n",
     "output": "8 1\n"
    },
@@ -134,6 +138,13 @@
      "list:[0]"
     ],
     "expected": "list:[0]"
+   },
+   {
+    "args": [
+     "list:[9,9,9,9,9,9,9]",
+     "list:[9,9,9,9]"
+    ],
+    "expected": "list:[8,9,9,9,0,0,0,1]"
    },
    {
     "args": [
@@ -179,6 +190,14 @@
    {
     "input": "au\n",
     "output": "2\n"
+   },
+   {
+    "input": " a b \n",
+    "output": "3\n"
+   },
+   {
+    "input": "-\n",
+    "output": "1\n"
    }
   ],
   "core": [
@@ -193,6 +212,12 @@
      "bbbbb"
     ],
     "expected": 1
+   },
+   {
+    "args": [
+     "pwwkew"
+    ],
+    "expected": 3
    },
    {
     "args": [
@@ -211,18 +236,34 @@
      "dvdf"
     ],
     "expected": 3
+   },
+   {
+    "args": [
+     " a b "
+    ],
+    "expected": 3
+   },
+   {
+    "args": [
+     "-"
+    ],
+    "expected": 1
    }
   ]
  },
  "4": {
   "acm": [
    {
-    "input": "1 1\n1\n3\n",
+    "input": "2 1\n1 3\n2\n",
     "output": "2.0\n"
    },
    {
     "input": "2 2\n1 2\n3 4\n",
     "output": "2.5\n"
+   },
+   {
+    "input": "1 1\n1\n3\n",
+    "output": "2.0\n"
    },
    {
     "input": "0 1\n\n1\n",
@@ -248,7 +289,7 @@
       2
      ]
     ],
-    "expected": 2
+    "expected": 2.0
    },
    {
     "args": [
@@ -262,6 +303,18 @@
      ]
     ],
     "expected": 2.5
+   },
+   {
+    "args": [
+     [
+      1,
+      3
+     ],
+     [
+      2
+     ]
+    ],
+    "expected": 2
    },
    {
     "args": [
@@ -437,6 +490,10 @@
     "output": "-1 -1 2\n-1 0 1\n"
    },
    {
+    "input": "3\n0 1 1\n",
+    "output": ""
+   },
+   {
     "input": "3\n0 0 0\n",
     "output": "0 0 0\n"
    },
@@ -454,6 +511,56 @@
    }
   ],
   "core": [
+   {
+    "args": [
+     [
+      -1,
+      0,
+      1,
+      2,
+      -1,
+      -4
+     ]
+    ],
+    "expected": [
+     [
+      -1,
+      -1,
+      2
+     ],
+     [
+      -1,
+      0,
+      1
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      0,
+      1,
+      1
+     ]
+    ],
+    "expected": []
+   },
+   {
+    "args": [
+     [
+      0,
+      0,
+      0
+     ]
+    ],
+    "expected": [
+     [
+      0,
+      0,
+      0
+     ]
+    ]
+   },
    {
     "args": [
      [
@@ -475,22 +582,6 @@
       -1,
       0,
       1
-     ]
-    ]
-   },
-   {
-    "args": [
-     [
-      0,
-      0,
-      0
-     ]
-    ],
-    "expected": [
-     [
-      0,
-      0,
-      0
      ]
     ]
    },
@@ -619,6 +710,14 @@
     "output": "1 2 3 5\n"
    },
    {
+    "input": "1 1\n1\n",
+    "output": ""
+   },
+   {
+    "input": "2 1\n1 2\n",
+    "output": "1\n"
+   },
+   {
     "input": "1 1\n7\n",
     "output": "\n"
    },
@@ -653,6 +752,13 @@
    {
     "args": [
      "list:[1,2]",
+     1
+    ],
+    "expected": "list:[1]"
+   },
+   {
+    "args": [
+     "list:[1,2]",
      2
     ],
     "expected": "list:[2]"
@@ -679,6 +785,10 @@
    {
     "input": "(]\n",
     "output": "false\n"
+   },
+   {
+    "input": "([])\n",
+    "output": "true\n"
    },
    {
     "input": "([)]\n",
@@ -710,6 +820,12 @@
    },
    {
     "args": [
+     "([])"
+    ],
+    "expected": true
+   },
+   {
+    "args": [
      "([)]"
     ],
     "expected": false
@@ -733,6 +849,14 @@
    {
     "input": "3\n1 2 4\n3\n1 3 4\n",
     "output": "1 1 2 3 4 4\n"
+   },
+   {
+    "input": "0\n\n0\n",
+    "output": ""
+   },
+   {
+    "input": "0\n\n1\n0\n",
+    "output": "0\n"
    },
    {
     "input": "0\n0\n",
@@ -789,12 +913,12 @@
     "output": "((()))\n(()())\n(())()\n()(())\n()()()\n"
    },
    {
-    "input": "2\n",
-    "output": "(())\n()()\n"
-   },
-   {
     "input": "1\n",
     "output": "()\n"
+   },
+   {
+    "input": "2\n",
+    "output": "(())\n()()\n"
    },
    {
     "input": "4\n",
@@ -816,19 +940,19 @@
    },
    {
     "args": [
+     1
+    ],
+    "expected": [
+     "()"
+    ]
+   },
+   {
+    "args": [
      2
     ],
     "expected": [
      "(())",
      "()()"
-    ]
-   },
-   {
-    "args": [
-     1
-    ],
-    "expected": [
-     "()"
     ]
    },
    {
@@ -861,6 +985,14 @@
     "output": "1 1 2 3 4 4 5 6\n"
    },
    {
+    "input": "0\n",
+    "output": ""
+   },
+   {
+    "input": "1\n0\n",
+    "output": ""
+   },
+   {
     "input": "2\n0\n1 1\n",
     "output": "1\n"
    },
@@ -876,43 +1008,37 @@
   "core": [
    {
     "args": [
-     [
-      "list:[1,4,5]",
-      "list:[1,3,4]",
-      "list:[2,6]"
-     ]
+     "listArray:[[1,4,5],[1,3,4],[2,6]]"
     ],
     "expected": "list:[1,1,2,3,4,4,5,6]"
    },
    {
     "args": [
-     [
-      "list:[1,2,3]"
-     ]
-    ],
-    "expected": "list:[1,2,3]"
-   },
-   {
-    "args": [
-     []
+     "listArray:[]"
     ],
     "expected": "list:[]"
    },
    {
     "args": [
-     [
-      "list:[]",
-      "list:[1]"
-     ]
+     "listArray:[[]]"
+    ],
+    "expected": "list:[]"
+   },
+   {
+    "args": [
+     "listArray:[[1,2,3]]"
+    ],
+    "expected": "list:[1,2,3]"
+   },
+   {
+    "args": [
+     "listArray:[[],[1]]"
     ],
     "expected": "list:[1]"
    },
    {
     "args": [
-     [
-      "list:[1,1,1]",
-      "list:[1,1,1]"
-     ]
+     "listArray:[[1,1,1],[1,1,1]]"
     ],
     "expected": "list:[1,1,1,1,1,1]"
    }
@@ -923,6 +1049,10 @@
    {
     "input": "4\n1 2 3 4\n",
     "output": "2 1 4 3\n"
+   },
+   {
+    "input": "0\n",
+    "output": ""
    },
    {
     "input": "1\n1\n",
@@ -1040,12 +1170,12 @@
     "output": "1 2 3\n"
    },
    {
-    "input": "1\n1\n",
-    "output": "1\n"
-   },
-   {
     "input": "3\n1 1 5\n",
     "output": "1 5 1\n"
+   },
+   {
+    "input": "1\n1\n",
+    "output": "1\n"
    },
    {
     "input": "4\n1 3 5 4\n",
@@ -1084,16 +1214,6 @@
    {
     "args": [
      [
-      1
-     ]
-    ],
-    "expected": [
-     1
-    ]
-   },
-   {
-    "args": [
-     [
       1,
       1,
       5
@@ -1102,6 +1222,16 @@
     "expected": [
      1,
      5,
+     1
+    ]
+   },
+   {
+    "args": [
+     [
+      1
+     ]
+    ],
+    "expected": [
      1
     ]
    },
@@ -1134,12 +1264,12 @@
     "output": "4\n"
    },
    {
-    "input": "((()))\n",
-    "output": "6\n"
-   },
-   {
     "input": "\n",
     "output": "0\n"
+   },
+   {
+    "input": "((()))\n",
+    "output": "6\n"
    },
    {
     "input": ")(\n",
@@ -1147,12 +1277,6 @@
    }
   ],
   "core": [
-   {
-    "args": [
-     ""
-    ],
-    "expected": 0
-   },
    {
     "args": [
      "(()"
@@ -1164,6 +1288,12 @@
      ")()())"
     ],
     "expected": 4
+   },
+   {
+    "args": [
+     ""
+    ],
+    "expected": 0
    },
    {
     "args": [
@@ -1280,6 +1410,10 @@
     "output": "-1 -1\n"
    },
    {
+    "input": "0\n\n0\n",
+    "output": "-1 -1\n"
+   },
+   {
     "input": "6\n5 7 7 8 8 10\n5\n",
     "output": "0 0\n"
    },
@@ -1329,6 +1463,16 @@
    },
    {
     "args": [
+     [],
+     0
+    ],
+    "expected": [
+     -1,
+     -1
+    ]
+   },
+   {
+    "args": [
      [
       5,
       7,
@@ -1354,16 +1498,6 @@
     "expected": [
      0,
      0
-    ]
-   },
-   {
-    "args": [
-     [],
-     0
-    ],
-    "expected": [
-     -1,
-     -1
     ]
    }
   ]
@@ -1460,6 +1594,10 @@
    {
     "input": "3 8\n2 3 5\n",
     "output": "2 2 2 2\n2 3 3\n3 5\n"
+   },
+   {
+    "input": "1 1\n2\n",
+    "output": ""
    },
    {
     "input": "3 1\n2 3 5\n",
@@ -1824,6 +1962,14 @@
     "output": "1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1\n"
    },
    {
+    "input": "2\n0 1\n",
+    "output": "0 1\n1 0\n"
+   },
+   {
+    "input": "1\n1\n",
+    "output": "1\n"
+   },
+   {
     "input": "2\n1 2\n",
     "output": "1 2\n2 1\n"
    },
@@ -1881,18 +2027,18 @@
    {
     "args": [
      [
-      1,
-      2
+      0,
+      1
      ]
     ],
     "expected": [
      [
-      1,
-      2
+      0,
+      1
      ],
      [
-      2,
-      1
+      1,
+      0
      ]
     ]
    },
@@ -1904,6 +2050,24 @@
     ],
     "expected": [
      [
+      1
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      1,
+      2
+     ]
+    ],
+    "expected": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
       1
      ]
     ]
@@ -1925,12 +2089,12 @@
     "output": "7 4 1\n8 5 2\n9 6 3\n"
    },
    {
-    "input": "1\n1\n",
-    "output": "1\n"
-   },
-   {
     "input": "4\n5 1 9 11\n2 4 8 10\n13 3 6 7\n15 14 12 16\n",
     "output": "15 13 2 5\n14 3 4 1\n12 6 8 9\n16 7 10 11\n"
+   },
+   {
+    "input": "1\n1\n",
+    "output": "1\n"
    },
    {
     "input": "2\n1 2\n3 4\n",
@@ -1977,20 +2141,6 @@
       9,
       6,
       3
-     ]
-    ]
-   },
-   {
-    "args": [
-     [
-      [
-       1
-      ]
-     ]
-    ],
-    "expected": [
-     [
-      1
      ]
     ]
    },
@@ -2047,6 +2197,20 @@
       7,
       10,
       11
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      [
+       1
+      ]
+     ]
+    ],
+    "expected": [
+     [
+      1
      ]
     ]
    },
@@ -2118,6 +2282,18 @@
   "acm": [
    {
     "input": "6\neat tea tan ate nat bat\n",
+    "output": "bat\nnat tan\nate eat tea\n"
+   },
+   {
+    "input": "1\n-\n",
+    "output": "-\n"
+   },
+   {
+    "input": "1\na\n",
+    "output": "a\n"
+   },
+   {
+    "input": "6\neat tea tan ate nat bat\n",
     "output": "eat tea ate\ntan nat\nbat\n"
    },
    {
@@ -2151,6 +2327,56 @@
     ],
     "expected": [
      [
+      "bat"
+     ],
+     [
+      "nat",
+      "tan"
+     ],
+     [
+      "ate",
+      "eat",
+      "tea"
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      ""
+     ]
+    ],
+    "expected": [
+     [
+      ""
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      "a"
+     ]
+    ],
+    "expected": [
+     [
+      "a"
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      "eat",
+      "tea",
+      "tan",
+      "ate",
+      "nat",
+      "bat"
+     ]
+    ],
+    "expected": [
+     [
       "eat",
       "tea",
       "ate"
@@ -2161,30 +2387,6 @@
      ],
      [
       "bat"
-     ]
-    ]
-   },
-   {
-    "args": [
-     [
-      ""
-     ]
-    ],
-    "expected": [
-     [
-      ""
-     ]
-    ]
-   },
-   {
-    "args": [
-     [
-      "a"
-     ]
-    ],
-    "expected": [
-     [
-      "a"
      ]
     ]
    },
@@ -2229,12 +2431,12 @@
  "51": {
   "acm": [
    {
-    "input": "1\n",
-    "output": "Q\n"
-   },
-   {
     "input": "4\n",
     "output": ".Q.. ...Q Q... ..Q.\n..Q. Q... ...Q .Q..\n"
+   },
+   {
+    "input": "1\n",
+    "output": "Q\n"
    },
    {
     "input": "2\n",
@@ -2246,16 +2448,6 @@
    }
   ],
   "core": [
-   {
-    "args": [
-     1
-    ],
-    "expected": [
-     [
-      "Q"
-     ]
-    ]
-   },
    {
     "args": [
      4
@@ -2272,6 +2464,16 @@
       "Q...",
       "...Q",
       ".Q.."
+     ]
+    ]
+   },
+   {
+    "args": [
+     1
+    ],
+    "expected": [
+     [
+      "Q"
      ]
     ]
    },
@@ -2296,12 +2498,16 @@
     "output": "6\n"
    },
    {
-    "input": "1\n-1\n",
-    "output": "-1\n"
+    "input": "1\n1\n",
+    "output": "1\n"
    },
    {
     "input": "5\n5 4 -1 7 8\n",
     "output": "23\n"
+   },
+   {
+    "input": "1\n-1\n",
+    "output": "-1\n"
    },
    {
     "input": "6\n-1 -2 -3 -4 -5 -6\n",
@@ -2340,14 +2546,6 @@
    {
     "args": [
      [
-      -1
-     ]
-    ],
-    "expected": -1
-   },
-   {
-    "args": [
-     [
       5,
       4,
       -1,
@@ -2356,6 +2554,14 @@
      ]
     ],
     "expected": 23
+   },
+   {
+    "args": [
+     [
+      -1
+     ]
+    ],
+    "expected": -1
    },
    {
     "args": [
@@ -2608,6 +2814,10 @@
     "output": "1 5\n"
    },
    {
+    "input": "2\n4 7\n1 4\n",
+    "output": "1 7\n"
+   },
+   {
     "input": "3\n1 4\n0 2\n3 5\n",
     "output": "0 5\n"
    },
@@ -2681,6 +2891,26 @@
     "args": [
      [
       [
+       4,
+       7
+      ],
+      [
+       1,
+       4
+      ]
+     ]
+    ],
+    "expected": [
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      [
        1,
        4
       ],
@@ -2736,16 +2966,20 @@
     "output": "3\n"
    },
    {
+    "input": "7 3\n",
+    "output": "28\n"
+   },
+   {
+    "input": "3 3\n",
+    "output": "6\n"
+   },
+   {
     "input": "1 1\n",
     "output": "1\n"
    },
    {
     "input": "2 2\n",
     "output": "2\n"
-   },
-   {
-    "input": "7 3\n",
-    "output": "28\n"
    }
   ],
   "core": [
@@ -2762,6 +2996,20 @@
      2
     ],
     "expected": 3
+   },
+   {
+    "args": [
+     7,
+     3
+    ],
+    "expected": 28
+   },
+   {
+    "args": [
+     3,
+     3
+    ],
+    "expected": 6
    },
    {
     "args": [
@@ -3399,6 +3647,14 @@
     "output": "BANC\n"
    },
    {
+    "input": "a\na\n",
+    "output": "a\n"
+   },
+   {
+    "input": "a\naa\n",
+    "output": ""
+   },
+   {
     "input": "a\naa\n",
     "output": "\n"
    },
@@ -3422,6 +3678,13 @@
      "ABC"
     ],
     "expected": "BANC"
+   },
+   {
+    "args": [
+     "a",
+     "a"
+    ],
+    "expected": "a"
    },
    {
     "args": [
@@ -3457,6 +3720,14 @@
   "acm": [
    {
     "input": "3\n1 2 3\n",
+    "output": "\n1\n2\n1 2\n3\n1 3\n2 3\n1 2 3\n"
+   },
+   {
+    "input": "1\n0\n",
+    "output": "\n0\n"
+   },
+   {
+    "input": "3\n1 2 3\n",
     "output": "\n1\n1 2\n1 2 3\n1 3\n2\n2 3\n3\n"
    },
    {
@@ -3473,6 +3744,57 @@
    }
   ],
   "core": [
+   {
+    "args": [
+     [
+      1,
+      2,
+      3
+     ]
+    ],
+    "expected": [
+     [],
+     [
+      1
+     ],
+     [
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3
+     ]
+    ]
+   },
+   {
+    "args": [
+     [
+      0
+     ]
+    ],
+    "expected": [
+     [],
+     [
+      0
+     ]
+    ]
+   },
    {
     "args": [
      [
@@ -3581,6 +3903,27 @@
   "core": [
    {
     "args": [
+     "grid:[[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]]",
+     "ABCCED"
+    ],
+    "expected": true
+   },
+   {
+    "args": [
+     "grid:[[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]]",
+     "SEE"
+    ],
+    "expected": true
+   },
+   {
+    "args": [
+     "grid:[[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]]",
+     "ABCB"
+    ],
+    "expected": false
+   },
+   {
+    "args": [
      "grid:[\"ABCE\",\"SFCS\",\"ADEE\"]",
      "ABCCED"
     ],
@@ -3623,6 +3966,10 @@
     "output": "10\n"
    },
    {
+    "input": "2\n2 4\n",
+    "output": "4\n"
+   },
+   {
     "input": "1\n2\n",
     "output": "2\n"
    },
@@ -3652,6 +3999,15 @@
      ]
     ],
     "expected": 10
+   },
+   {
+    "args": [
+     [
+      2,
+      4
+     ]
+    ],
+    "expected": 4
    },
    {
     "args": [
@@ -3698,6 +4054,18 @@
  "94": {
   "acm": [
    {
+    "input": "4\n1 null 2 3\n",
+    "output": "1 3 2\n"
+   },
+   {
+    "input": "0\n",
+    "output": ""
+   },
+   {
+    "input": "1\n1\n",
+    "output": "1\n"
+   },
+   {
     "input": "3\n1 null 2 3\n",
     "output": "1 2\n"
    },
@@ -3727,13 +4095,9 @@
    },
    {
     "args": [
-     "tree:[1,2,3]"
+     "tree:[]"
     ],
-    "expected": [
-     2,
-     1,
-     3
-    ]
+    "expected": []
    },
    {
     "args": [
@@ -3745,9 +4109,13 @@
    },
    {
     "args": [
-     "tree:[]"
+     "tree:[1,2,3]"
     ],
-    "expected": []
+    "expected": [
+     2,
+     1,
+     3
+    ]
    },
    {
     "args": [
@@ -3827,6 +4195,10 @@
     "output": "true\n"
    },
    {
+    "input": "7\n1 2 2 null 3 null 3\n",
+    "output": "false\n"
+   },
+   {
     "input": "5\n1 2 2 null 3 null 3\n",
     "output": "false\n"
    },
@@ -3881,6 +4253,10 @@
    {
     "input": "1\n1\n",
     "output": "1\n"
+   },
+   {
+    "input": "0\n",
+    "output": ""
    },
    {
     "input": "0\n",
@@ -3972,6 +4348,10 @@
     "output": "3\n"
    },
    {
+    "input": "3\n1 null 2\n",
+    "output": "2\n"
+   },
+   {
     "input": "2\n1 null 2\n",
     "output": "1\n"
    },
@@ -4024,6 +4404,10 @@
     "output": "3 9 20 null null 15 7\n"
    },
    {
+    "input": "1\n-1\n-1\n",
+    "output": "-1\n"
+   },
+   {
     "input": "1\n1\n1\n",
     "output": "1\n"
    },
@@ -4059,6 +4443,17 @@
      ]
     ],
     "expected": "tree:[3,9,20,null,null,15,7]"
+   },
+   {
+    "args": [
+     [
+      -1
+     ],
+     [
+      -1
+     ]
+    ],
+    "expected": "tree:[-1]"
    },
    {
     "args": [
@@ -4115,6 +4510,14 @@
  "108": {
   "acm": [
    {
+    "input": "5\n-10 -3 0 5 9\n",
+    "output": "0 -3 9 -10 null 5\n"
+   },
+   {
+    "input": "2\n1 3\n",
+    "output": "3 1\n"
+   },
+   {
     "input": "5\n1 2 3 4 5\n",
     "output": "3 1 4 null 2 null 5\n"
    },
@@ -4136,6 +4539,27 @@
    }
   ],
   "core": [
+   {
+    "args": [
+     [
+      -10,
+      -3,
+      0,
+      5,
+      9
+     ]
+    ],
+    "expected": "tree:[0,-3,9,-10,null,5]"
+   },
+   {
+    "args": [
+     [
+      1,
+      3
+     ]
+    ],
+    "expected": "tree:[3,1]"
+   },
    {
     "args": [
      [
@@ -4194,6 +4618,10 @@
     "output": "1 2 3 4 5 6\n"
    },
    {
+    "input": "0\n",
+    "output": ""
+   },
+   {
     "input": "1\n0\n",
     "output": "0\n"
    },
@@ -4219,15 +4647,15 @@
    },
    {
     "args": [
-     "tree:[0]"
-    ],
-    "expected": "tree:[0]"
-   },
-   {
-    "args": [
      "tree:[]"
     ],
     "expected": "tree:[]"
+   },
+   {
+    "args": [
+     "tree:[0]"
+    ],
+    "expected": "tree:[0]"
    },
    {
     "args": [
@@ -4425,6 +4853,10 @@
  "124": {
   "acm": [
    {
+    "input": "3\n1 2 3\n",
+    "output": "6\n"
+   },
+   {
     "input": "7\n-10 9 20 null null 15 7\n",
     "output": "42\n"
    },
@@ -4446,6 +4878,12 @@
    }
   ],
   "core": [
+   {
+    "args": [
+     "tree:[1,2,3]"
+    ],
+    "expected": 6
+   },
    {
     "args": [
      "tree:[-10,9,20,null,null,15,7]"
@@ -4485,12 +4923,16 @@
     "output": "4\n"
    },
    {
-    "input": "3\n1 2 3\n",
+    "input": "10\n0 3 7 2 5 8 4 6 0 1\n",
+    "output": "9\n"
+   },
+   {
+    "input": "4\n1 0 1 2\n",
     "output": "3\n"
    },
    {
-    "input": "10\n0 3 7 2 5 8 4 6 0 1\n",
-    "output": "9\n"
+    "input": "3\n1 2 3\n",
+    "output": "3\n"
    },
    {
     "input": "1\n5\n",
@@ -4531,6 +4973,17 @@
      ]
     ],
     "expected": 9
+   },
+   {
+    "args": [
+     [
+      1,
+      0,
+      1,
+      2
+     ]
+    ],
+    "expected": 3
    },
    {
     "args": [
@@ -4663,6 +5116,10 @@
     "output": "4\n"
    },
    {
+    "input": "1\n1\n",
+    "output": "1\n"
+   },
+   {
     "input": "1\n7\n",
     "output": "7\n"
    },
@@ -4697,6 +5154,14 @@
    {
     "args": [
      [
+      1
+     ]
+    ],
+    "expected": 1
+   },
+   {
+    "args": [
+     [
       7
      ]
     ],
@@ -4727,6 +5192,10 @@
     "output": "1 1\n2 1\n"
    },
    {
+    "input": "3\n3 -1\n3 0\n3 -1\n",
+    "output": "3 -1\n3 0\n3 -1\n"
+   },
+   {
     "input": "1\n1 0\n",
     "output": "1 0\n"
    },
@@ -4747,6 +5216,12 @@
      "randomList:[[1,1],[2,1]]"
     ],
     "expected": "randomList:[[1,1],[2,1]]"
+   },
+   {
+    "args": [
+     "randomList:[[3,-1],[3,0],[3,-1]]"
+    ],
+    "expected": "randomList:[[3,-1],[3,0],[3,-1]]"
    },
    {
     "args": [
@@ -4853,12 +5328,12 @@
     "output": "true\n"
    },
    {
-    "input": "1 -1\n1\n",
-    "output": "false\n"
-   },
-   {
     "input": "2 0\n1 2\n",
     "output": "true\n"
+   },
+   {
+    "input": "1 -1\n1\n",
+    "output": "false\n"
    },
    {
     "input": "0 -1\n",
@@ -4911,6 +5386,10 @@
    {
     "input": "2 0\n1 2\n",
     "output": "0\n"
+   },
+   {
+    "input": "1 -1\n1\n",
+    "output": "-1\n"
    },
    {
     "input": "1 -1\n7\n",
@@ -5215,6 +5694,10 @@
     "output": "-1 0 3 4 5\n"
    },
    {
+    "input": "0\n",
+    "output": ""
+   },
+   {
     "input": "1\n7\n",
     "output": "7\n"
    },
@@ -5238,15 +5721,15 @@
    },
    {
     "args": [
-     "list:[1]"
-    ],
-    "expected": "list:[1]"
-   },
-   {
-    "args": [
      "list:[]"
     ],
     "expected": "list:[]"
+   },
+   {
+    "args": [
+     "list:[1]"
+    ],
+    "expected": "list:[1]"
    },
    {
     "args": [
@@ -5336,12 +5819,20 @@
  "153": {
   "acm": [
    {
-    "input": "3\n3 4 5\n",
-    "output": "3\n"
+    "input": "5\n3 4 5 1 2\n",
+    "output": "1\n"
    },
    {
     "input": "7\n4 5 6 7 0 1 2\n",
     "output": "0\n"
+   },
+   {
+    "input": "4\n11 13 15 17\n",
+    "output": "11\n"
+   },
+   {
+    "input": "3\n3 4 5\n",
+    "output": "3\n"
    },
    {
     "input": "1\n1\n",
@@ -5350,10 +5841,6 @@
    {
     "input": "2\n2 1\n",
     "output": "1\n"
-   },
-   {
-    "input": "4\n11 13 15 17\n",
-    "output": "11\n"
    }
   ],
   "core": [
@@ -5362,10 +5849,12 @@
      [
       3,
       4,
-      5
+      5,
+      1,
+      2
      ]
     ],
-    "expected": 3
+    "expected": 1
    },
    {
     "args": [
@@ -5384,6 +5873,27 @@
    {
     "args": [
      [
+      11,
+      13,
+      15,
+      17
+     ]
+    ],
+    "expected": 11
+   },
+   {
+    "args": [
+     [
+      3,
+      4,
+      5
+     ]
+    ],
+    "expected": 3
+   },
+   {
+    "args": [
+     [
       1
      ]
     ],
@@ -5397,17 +5907,6 @@
      ]
     ],
     "expected": 1
-   },
-   {
-    "args": [
-     [
-      11,
-      13,
-      15,
-      17
-     ]
-    ],
-    "expected": 11
    }
   ]
  },
@@ -5550,6 +6049,18 @@
  "160": {
   "acm": [
    {
+    "input": "5 6\n4 1 8 4 5\n5 6 1 8 4 5\n2 3\n",
+    "output": "8 4 5\n"
+   },
+   {
+    "input": "5 3\n1 9 1 2 4\n3 2 4\n3 1\n",
+    "output": "2 4\n"
+   },
+   {
+    "input": "3 2\n2 6 4\n1 5\n-1 -1\n",
+    "output": "-1\n"
+   },
+   {
     "input": "5 6\n4 1 8 4 5\n5 0 1 8 4 5\n2 3\n",
     "output": "8 4 5\n"
    },
@@ -5571,6 +6082,27 @@
    }
   ],
   "core": [
+   {
+    "args": [
+     "intersectList:[[4,1,8,4,5],[5,6,1,8,4,5],2,3]",
+     "intersectB:"
+    ],
+    "expected": "list:[8,4,5]"
+   },
+   {
+    "args": [
+     "intersectList:[[1,9,1,2,4],[3,2,4],3,1]",
+     "intersectB:"
+    ],
+    "expected": "list:[2,4]"
+   },
+   {
+    "args": [
+     "intersectList:[[2,6,4],[1,5],-1,-1]",
+     "intersectB:"
+    ],
+    "expected": "list:[]"
+   },
    {
     "args": [
      "intersectList:[[4,1,8,4,5],[5,0,1,8,4,5],2,3]",
@@ -5862,16 +6394,24 @@
     "output": "1 3 4\n"
    },
    {
+    "input": "8\n1 2 3 4 null null null 5\n",
+    "output": "1 3 4 5\n"
+   },
+   {
+    "input": "3\n1 null 3\n",
+    "output": "1 3\n"
+   },
+   {
+    "input": "0\n",
+    "output": ""
+   },
+   {
     "input": "3\n1 2 3\n",
     "output": "1 3\n"
    },
    {
     "input": "0\n",
     "output": "\n"
-   },
-   {
-    "input": "3\n1 null 3\n",
-    "output": "1 3\n"
    },
    {
     "input": "5\n1 2 3 4 null\n",
@@ -5891,7 +6431,18 @@
    },
    {
     "args": [
-     "tree:[1,2,3]"
+     "tree:[1,2,3,4,null,null,null,5]"
+    ],
+    "expected": [
+     1,
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "args": [
+     "tree:[1,null,3]"
     ],
     "expected": [
      1,
@@ -5906,7 +6457,7 @@
    },
    {
     "args": [
-     "tree:[1,null,3]"
+     "tree:[1,2,3]"
     ],
     "expected": [
      1,
@@ -5951,6 +6502,18 @@
   "core": [
    {
     "args": [
+     "grid:[[\"1\",\"1\",\"1\",\"1\",\"0\"],[\"1\",\"1\",\"0\",\"1\",\"0\"],[\"1\",\"1\",\"0\",\"0\",\"0\"],[\"0\",\"0\",\"0\",\"0\",\"0\"]]"
+    ],
+    "expected": 1
+   },
+   {
+    "args": [
+     "grid:[[\"1\",\"1\",\"0\",\"0\",\"0\"],[\"1\",\"1\",\"0\",\"0\",\"0\"],[\"0\",\"0\",\"1\",\"0\",\"0\"],[\"0\",\"0\",\"0\",\"1\",\"1\"]]"
+    ],
+    "expected": 3
+   },
+   {
+    "args": [
      "grid:[\"11110\",\"11010\",\"11000\",\"00000\"]"
     ],
     "expected": 1
@@ -5990,6 +6553,10 @@
    {
     "input": "2\n1 2\n",
     "output": "2 1\n"
+   },
+   {
+    "input": "0\n",
+    "output": ""
    },
    {
     "input": "1\n7\n",
@@ -6396,6 +6963,14 @@
     "output": "4 7 2 9 6 3 1\n"
    },
    {
+    "input": "3\n2 1 3\n",
+    "output": "2 3 1\n"
+   },
+   {
+    "input": "0\n",
+    "output": ""
+   },
+   {
     "input": "2\n1 2\n",
     "output": "1 null 2\n"
    },
@@ -6417,6 +6992,18 @@
    },
    {
     "args": [
+     "tree:[2,1,3]"
+    ],
+    "expected": "tree:[2,3,1]"
+   },
+   {
+    "args": [
+     "tree:[]"
+    ],
+    "expected": "tree:[]"
+   },
+   {
+    "args": [
      "tree:[1,2]"
     ],
     "expected": "tree:[1,null,2]"
@@ -6429,12 +7016,6 @@
    },
    {
     "args": [
-     "tree:[]"
-    ],
-    "expected": "tree:[]"
-   },
-   {
-    "args": [
      "tree:[1]"
     ],
     "expected": "tree:[1]"
@@ -6444,12 +7025,16 @@
  "230": {
   "acm": [
    {
-    "input": "5\n3 1 4 null 2\n2\n",
-    "output": "2\n"
+    "input": "5\n3 1 4 null 2\n1\n",
+    "output": "1\n"
    },
    {
     "input": "8\n5 3 6 2 4 null null 1\n3\n",
     "output": "3\n"
+   },
+   {
+    "input": "5\n3 1 4 null 2\n2\n",
+    "output": "2\n"
    },
    {
     "input": "1\n1\n1\n",
@@ -6468,9 +7053,9 @@
    {
     "args": [
      "tree:[3,1,4,null,2]",
-     2
+     1
     ],
-    "expected": 2
+    "expected": 1
    },
    {
     "args": [
@@ -6478,6 +7063,13 @@
      3
     ],
     "expected": 3
+   },
+   {
+    "args": [
+     "tree:[3,1,4,null,2]",
+     2
+    ],
+    "expected": 2
    },
    {
     "args": [
@@ -6507,6 +7099,10 @@
    {
     "input": "4\n1 2 2 1\n",
     "output": "true\n"
+   },
+   {
+    "input": "2\n1 2\n",
+    "output": "false\n"
    },
    {
     "input": "3\n1 2 3\n",
@@ -6561,6 +7157,18 @@
  "236": {
   "acm": [
    {
+    "input": "11\n3 5 1 6 2 0 8 null null 7 4\n5 1\n",
+    "output": "3\n"
+   },
+   {
+    "input": "11\n3 5 1 6 2 0 8 null null 7 4\n5 4\n",
+    "output": "5\n"
+   },
+   {
+    "input": "2\n1 2\n1 2\n",
+    "output": "1\n"
+   },
+   {
     "input": "7\n3 5 1 6 2 0 8\n5 1\n",
     "output": "3\n"
    },
@@ -6584,11 +7192,35 @@
   "core": [
    {
     "args": [
+     "tree:[3,5,1,6,2,0,8,null,null,7,4]",
+     5,
+     1
+    ],
+    "expected": "tree:[3,5,1,6,2,0,8,null,null,7,4]"
+   },
+   {
+    "args": [
+     "tree:[3,5,1,6,2,0,8,null,null,7,4]",
+     5,
+     4
+    ],
+    "expected": "tree:[5,6,2,null,null,7,4]"
+   },
+   {
+    "args": [
+     "tree:[1,2]",
+     1,
+     2
+    ],
+    "expected": "tree:[1,2]"
+   },
+   {
+    "args": [
      "tree:[3,5,1,6,2,0,8]",
      5,
      1
     ],
-    "expected": 3
+    "expected": "tree:[3,5,1,6,2,0,8]"
    },
    {
     "args": [
@@ -6596,7 +7228,7 @@
      5,
      2
     ],
-    "expected": 5
+    "expected": "tree:[5,6,2]"
    },
    {
     "args": [
@@ -6604,15 +7236,7 @@
      2,
      3
     ],
-    "expected": 1
-   },
-   {
-    "args": [
-     "tree:[1]",
-     1,
-     1
-    ],
-    "expected": 1
+    "expected": "tree:[1,2,3]"
    },
    {
     "args": [
@@ -6620,7 +7244,7 @@
      2,
      4
     ],
-    "expected": 3
+    "expected": "tree:[3,1,4,null,2]"
    }
   ]
  },
@@ -7081,6 +7705,10 @@
     "output": "1 3 12 0 0\n"
    },
    {
+    "input": "1\n0\n",
+    "output": "0\n"
+   },
+   {
     "input": "3\n0 0 1\n",
     "output": "1 0 0\n"
    },
@@ -7101,11 +7729,11 @@
    {
     "args": [
      [
-      1,
-      3,
-      12,
       0,
-      0
+      1,
+      0,
+      3,
+      12
      ]
     ],
     "expected": [
@@ -7123,6 +7751,24 @@
      ]
     ],
     "expected": [
+     0
+    ]
+   },
+   {
+    "args": [
+     [
+      1,
+      3,
+      12,
+      0,
+      0
+     ]
+    ],
+    "expected": [
+     1,
+     3,
+     12,
+     0,
      0
     ]
    },
@@ -7164,6 +7810,18 @@
  },
  "287": {
   "acm": [
+   {
+    "input": "4\n1 3 4 2 2\n",
+    "output": "2\n"
+   },
+   {
+    "input": "4\n3 1 3 4 2\n",
+    "output": "3\n"
+   },
+   {
+    "input": "4\n3 3 3 3 3\n",
+    "output": "3\n"
+   },
    {
     "input": "5\n1 3 4 2 2\n",
     "output": "2\n"
@@ -7209,6 +7867,18 @@
    {
     "args": [
      [
+      3,
+      3,
+      3,
+      3,
+      3
+     ]
+    ],
+    "expected": 3
+   },
+   {
+    "args": [
+     [
       1,
       1
      ]
@@ -7232,6 +7902,10 @@
  "295": {
   "acm": [
    {
+    "input": "5\naddNum 1\naddNum 2\nfindMedian\naddNum 3\nfindMedian\n",
+    "output": "1.5\n2.0\n"
+   },
+   {
     "input": "7\naddNum 1\naddNum 2\nfindMedian\naddNum 3\nfindMedian\naddNum 4\nfindMedian\n",
     "output": "1.5\n2\n2.5\n"
    },
@@ -7253,6 +7927,38 @@
    }
   ],
   "core": [
+   {
+    "ops": [
+     "MedianFinder",
+     "addNum",
+     "addNum",
+     "findMedian",
+     "addNum",
+     "findMedian"
+    ],
+    "args": [
+     [],
+     [
+      1
+     ],
+     [
+      2
+     ],
+     [],
+     [
+      3
+     ],
+     []
+    ],
+    "expected": [
+     null,
+     null,
+     null,
+     1.5,
+     null,
+     2.0
+    ]
+   },
    {
     "ops": [
      "MedianFinder",
@@ -7535,6 +8241,14 @@
     "output": "1 2\n"
    },
    {
+    "input": "1 1\n1\n",
+    "output": "1\n"
+   },
+   {
+    "input": "10 2\n1 2 1 2 1 2 3 1 3 2\n",
+    "output": "1 2\n"
+   },
+   {
     "input": "2 2\n1 2\n",
     "output": "1 2\n"
    },
@@ -7561,6 +8275,38 @@
       2,
       2,
       3
+     ],
+     2
+    ],
+    "expected": [
+     1,
+     2
+    ]
+   },
+   {
+    "args": [
+     [
+      1
+     ],
+     1
+    ],
+    "expected": [
+     1
+    ]
+   },
+   {
+    "args": [
+     [
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      3,
+      1,
+      3,
+      2
      ],
      2
     ],
@@ -7677,6 +8423,12 @@
    },
    {
     "args": [
+     "abc3[cd]xyz"
+    ],
+    "expected": "abccdcdcdxyz"
+   },
+   {
+    "args": [
      "a"
     ],
     "expected": "a"
@@ -7767,6 +8519,10 @@
     "output": "3\n"
    },
    {
+    "input": "13\n5 4 8 11 null 13 4 7 2 null null 5 1\n22\n",
+    "output": "3\n"
+   },
+   {
     "input": "1\n1\n1\n",
     "output": "1\n"
    },
@@ -7788,6 +8544,13 @@
     "args": [
      "tree:[10,5,-3,3,2,null,11,3,-2,null,1]",
      8
+    ],
+    "expected": 3
+   },
+   {
+    "args": [
+     "tree:[5,4,8,11,null,13,4,7,2,null,null,5,1]",
+     22
     ],
     "expected": 3
    },
@@ -7898,6 +8661,10 @@
    {
     "input": "5\n1 2 3 4 5\n",
     "output": "3\n"
+   },
+   {
+    "input": "2\n1 2\n",
+    "output": "1\n"
    },
    {
     "input": "7\n1 2 3 4 5 6 7\n",
@@ -8039,6 +8806,14 @@
     "output": "1 1 4 2 1 1 0 0\n"
    },
    {
+    "input": "4\n30 40 50 60\n",
+    "output": "1 1 1 0\n"
+   },
+   {
+    "input": "3\n30 60 90\n",
+    "output": "1 1 0\n"
+   },
+   {
     "input": "1\n30\n",
     "output": "0\n"
    },
@@ -8077,6 +8852,36 @@
      1,
      1,
      0,
+     0
+    ]
+   },
+   {
+    "args": [
+     [
+      30,
+      40,
+      50,
+      60
+     ]
+    ],
+    "expected": [
+     1,
+     1,
+     1,
+     0
+    ]
+   },
+   {
+    "args": [
+     [
+      30,
+      60,
+      90
+     ]
+    ],
+    "expected": [
+     1,
+     1,
      0
     ]
    },
@@ -8226,6 +9031,10 @@
     "output": "-1\n"
    },
    {
+    "input": "1 2\n0 2\n",
+    "output": "0\n"
+   },
+   {
     "input": "1 1\n2\n",
     "output": "0\n"
    },
@@ -8241,31 +9050,98 @@
   "core": [
    {
     "args": [
-     "grid:[\"211\",\"110\",\"011\"]"
+     [
+      [
+       2,
+       1,
+       1
+      ],
+      [
+       1,
+       1,
+       0
+      ],
+      [
+       0,
+       1,
+       1
+      ]
+     ]
     ],
     "expected": 4
    },
    {
     "args": [
-     "grid:[\"211\",\"011\",\"101\"]"
+     [
+      [
+       2,
+       1,
+       1
+      ],
+      [
+       0,
+       1,
+       1
+      ],
+      [
+       1,
+       0,
+       1
+      ]
+     ]
     ],
     "expected": -1
    },
    {
     "args": [
-     "grid:[\"2\"]"
+     [
+      [
+       0,
+       2
+      ]
+     ]
     ],
     "expected": 0
    },
    {
     "args": [
-     "grid:[\"11\",\"11\"]"
+     [
+      [
+       2
+      ]
+     ]
+    ],
+    "expected": 0
+   },
+   {
+    "args": [
+     [
+      [
+       1,
+       1
+      ],
+      [
+       1,
+       1
+      ]
+     ]
     ],
     "expected": -1
    },
    {
     "args": [
-     "grid:[\"221\",\"111\"]"
+     [
+      [
+       2,
+       2,
+       1
+      ],
+      [
+       1,
+       1,
+       1
+      ]
+     ]
     ],
     "expected": 2
    }

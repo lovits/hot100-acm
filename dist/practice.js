@@ -17,7 +17,7 @@ function practiceProblem(p){
   const row=trainingIndex.get(p.id), core=row.core;
   const tests=coreMode()?trainingTests[p.id].core.map(t=>({input:JSON.stringify(t,null,2),output:JSON.stringify(t.expected)})):trainingTests[p.id].acm;
   return {...p,statement:row.desc,tests,sampleCount:Math.min(2,tests.length),
-    input:coreMode()?(core.kind==='ops'?'按模板实现 '+core.className+' 类，评测器会依次调用操作序列。':'按模板实现 '+core.method+'，参数为 '+core.params.map(v=>v.name+' ('+v.type+')').join('、')):row.acm.input,
+    input:coreMode()?(core.kind==='ops'?'按模板实现 '+core.className+' 类，评测器会依次调用操作序列。':'按模板实现 '+core.method+'，参数为 '+core.params.map(v=>v.name+' ('+({list:'ListNode',listArray:'ListNode[]',tree:'TreeNode',grid:'char[][]',randomList:'Node'}[v.type]||v.type)+')').join('、')):row.acm.input,
     output:coreMode()?(core.mutates>=0?'原地修改指定参数，由评测器检查结果。':core.returnsDesc||'评测器对比各次调用结果。'):row.acm.output};
 }
 function syncControls(){

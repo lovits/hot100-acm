@@ -15,7 +15,9 @@ with tempfile.TemporaryDirectory() as temporary:
         archive.extractall(folder)
     app = folder / 'Hot100'
     env = {**os.environ, 'HOT100_NODE': str(app / 'runtime/node.exe'), 'LOCALAPPDATA': str(folder / 'progress')}
-    process = subprocess.Popen([str(app / 'runtime/python/python.exe'), str(app / 'local_server.py')], cwd=app, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    log_path = folder / 'server.log'
+    with log_path.open('wb') as log:
+        process = subprocess.Popen([str(app / 'runtime/python/python.exe'), str(app / 'local_server.py')], cwd=app, env=env, stdout=log, stderr=log)
     origin = 'http://127.0.0.1:18765'
     def read(path, data=None, token=None):
         headers = {'Referer': origin + '/'}
@@ -27,7 +29,7 @@ with tempfile.TemporaryDirectory() as temporary:
     try:
         for attempt in range(60):
             if process.poll() is not None:
-                raise RuntimeError(process.communicate()[1].decode(errors='replace'))
+                raise RuntimeError(log_path.read_text(errors='replace'))
             try:
                 health = read('/api/health')
                 break
@@ -41,7 +43,7 @@ with tempfile.TemporaryDirectory() as temporary:
         problems = read('/training/data/problems.json')
         assert len(problems) == 100
         solutions = read('/training/data/solutions.json')
-        for ident in [142, 160]:
+        for ident in [3, 23, 79, 138, 142, 160, 200, 215, 236, 994]:
             for mode in ['acm', 'core']:
                 result = read('/api/judge', {'problemId': ident, 'mode': mode, 'language': 'python3', 'code': solutions[str(ident)]['python3'][mode]}, token)
                 assert result['ok'] and all(case['ok'] for case in result['results']), result
@@ -50,5 +52,5 @@ with tempfile.TemporaryDirectory() as temporary:
         assert read('/api/session')['state']['notes']['1'] == 'Windows release smoke test'
         print('Packaged Windows startup, data, Python ACM/core judge and progress save passed')
     finally:
-        process.terminate()
+        if process.poll() is None:process.terminate()
         process.communicate(timeout=10)

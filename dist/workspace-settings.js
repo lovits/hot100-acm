@@ -18,7 +18,7 @@ function storageSettings(){
 }
 function installDrawerResize(){
   const drawer=$('#sidebar'), grip=$('#drawer-resizer');
-  let preferred=Number.isFinite(state.drawerWidth)?state.drawerWidth:416;
+  let preferred=Number.isFinite(state.drawerWidth)?state.drawerWidth:560;
   let start=null;
   function bounds(){
     const max=Math.max(1,document.documentElement.clientWidth-12);
@@ -51,7 +51,7 @@ function installDrawerResize(){
     else apply(preferred);
   }
   grip.onpointerup=grip.onpointercancel=grip.onlostpointercapture=finish;
-  grip.ondblclick=()=>apply(416,true);
+  grip.ondblclick=()=>apply(560,true);
   grip.onkeydown=event=>{
     const {min,max}=bounds();
     const widths={ArrowLeft:drawer.offsetWidth-16,ArrowRight:drawer.offsetWidth+16,Home:min,End:max};

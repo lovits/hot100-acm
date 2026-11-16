@@ -11,10 +11,12 @@ const path = require('path');
 const { runProcess, commandExists, DEFAULT_TIMEOUT_MS } = require('./runner');
 const { buildPythonDriver, buildCppDriver } = require('./core-driver');
 
+const { compareCoreResult, compareACMOutput } = require('../dist/judge-rules');
 const CORE_TIMEOUT_MS = 8000;
 
 /** 输出对比：先精确匹配（trim 每行），再尝试整行浮点容差匹配。 */
 function outputsEqual(expectedRaw, gotRaw) {
+  if(!String(expectedRaw||'').trim()&&!String(gotRaw||'').trim())return true;
   const norm = (s) => String(s || '').replace(/\r\n/g, '\n').split('\n').map((l) => l.trimEnd());
   const e = norm(expectedRaw).filter((l, i, a) => !(i === a.length - 1 && l === ''));
   const g = norm(gotRaw).filter((l, i, a) => !(i === a.length - 1 && l === ''));
@@ -31,7 +33,7 @@ function outputsEqual(expectedRaw, gotRaw) {
   return false;
 }
 
-async function judgeACM({ language, code, tests }) {
+async function judgeACM({ language, code, tests, judge }) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'hot100-acm-judge-'));
   try {
     // 编译一次，逐用例运行（Python 直接运行）
@@ -75,7 +77,7 @@ async function judgeACM({ language, code, tests }) {
       };
       if (run.code === 0 && !run.timedOut) {
         entry.got = run.stdout;
-        entry.ok = t.output == null || outputsEqual(t.output, run.stdout);
+        entry.ok = t.output == null || (judge ? compareACMOutput(judge, run.stdout, t.output, t.input) : outputsEqual(t.output, run.stdout));
         entry.stderr = run.stderr;
         if (!entry.ok) {
           entry.error = `输出不一致\n期望:\n${t.output}\n实际:\n${run.stdout}`;
@@ -115,7 +117,7 @@ async function judgeCore({ language, code, core, tests }) {
       if (run.code !== 0 || run.timedOut) {
         return { error: run.timedOut ? `运行超时 ${run.ms}ms` : (run.stderr || run.error || `退出码 ${run.code}`), phase: 'run' };
       }
-      return {...parseCoreResults(run.stdout),elapsed:run.ms};
+      return {...parseCoreResults(run.stdout, core, cases),elapsed:run.ms};
     }
 
     if (language === 'cpp') {
@@ -134,7 +136,7 @@ async function judgeCore({ language, code, core, tests }) {
       const run = await runProcess(binary, [casesFile], { cwd: tmp, timeout: CORE_TIMEOUT_MS });
       if (run.timedOut) return { error: `运行超时 ${run.ms}ms`, phase: 'run' };
       if (run.code !== 0) return { error: run.stderr || run.error || `退出码 ${run.code}`, phase: 'run' };
-      return {...parseCoreResults(run.stdout),elapsed:run.ms};
+      return {...parseCoreResults(run.stdout, core, cases),elapsed:run.ms};
     }
 
     return { error: '核心代码模式暂不支持该语言' };
@@ -147,7 +149,7 @@ async function judgeCore({ language, code, core, tests }) {
  * 解析驱动输出。驱动对每个用例输出 {"ok":true} 或 {"ok":false,"expected":..,"got":..,"error":..}。
  * expected/got 为 JSON 字符串形式的 Canon 序列化。
  */
-function parseCoreResults(stdout) {
+function parseCoreResults(stdout, core, cases) {
   let arr;
   try {
     arr = JSON.parse(stdout);
@@ -155,6 +157,14 @@ function parseCoreResults(stdout) {
     return { error: '评测驱动输出异常', phase: 'run', raw: stdout.slice(0, 2000) };
   }
   if (!Array.isArray(arr)) return { error: '评测驱动输出异常', phase: 'run' };
+  if(core.comparison){
+    for(let i=0;i<arr.length;i++){
+      const result=arr[i], test=cases[i];
+      if(result.error||!test)continue;
+      try{result.ok=compareCoreResult(core.comparison,result.got,test.expected,test.args);}
+      catch(error){result.ok=false;result.error='结果校验失败：'+error.message;}
+    }
+  }
   return { results: arr };
 }
 

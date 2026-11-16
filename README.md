@@ -35,3 +35,11 @@ Python 练习开箱可用。C/C++ 用户额外下载 `Hot100-Windows-C-Cpp-addon
 
 macOS 用户继续使用 v1.0.1。本版没有重建 macOS 应用。
 
+
+## v1.0.6 逐题核对与性能
+
+以力扣官方 Hot100 的 100 道题、248 个官网示例为核对基线，标签无中文译名时使用官方原名，消除空标签；约束与核心接口对齐原题，ACM 输入输出格式保留明确的本地序列化说明。逐题差异与验证记录见 `reference/leetcode-per-question-audit.json`，官网示例数据及各语言结果见 `reference/leetcode-official-*.json` 和 `reference/official-*-check-*.json`。
+
+五个筛选项保持单行，窄抽屉可横向滑动。编辑器保留最近 8 份模型及其撤销历史，更早草稿的文字、光标继续保存在原学习数据中。本机性能对照见 `reference/performance-check.json`。
+
+复核入口：`node verify_official.cjs python3`、`node verify_official.cjs cpp`、`node verify_official_acm.cjs`、`node verify_judge_rules.cjs`。这些检查不等于力扣的全部隐藏测试。

@@ -1,0 +1,24 @@
+{
+  "environment": "本机同一浏览器与隔离进度目录，连续同步路由切换100题；JS堆为强制GC后的页面指标，不等于整个应用进程内存。",
+  "before": {
+    "beforeHeap": 26816352,
+    "afterHeap": 37419400,
+    "totalSwitchMs": 1078.0000004768372,
+    "medianSwitchMs": 10.699999809265137,
+    "models": 100,
+    "codes": 100
+  },
+  "after": {
+    "beforeHeap": 27091600,
+    "afterHeap": 32398976,
+    "totalSwitchMs": 538.3999991416931,
+    "medianSwitchMs": 5.200000286102295,
+    "models": 8,
+    "codes": 100
+  },
+  "heapReductionPercent": 13.4,
+  "medianSwitchReductionPercent": 51.4,
+  "draftRetention": "驱逐旧编辑器模型后恢复草稿与光标通过",
+  "cachePolicy": "保留最近8份编辑器模型及其撤销历史；更早草稿的文本与光标保存在原有学习数据中，切回时重建模型。",
+  "startupChange": "会话、训练数据、可选作者索引与主题库并行请求；未承诺跨电脑统一启动耗时。"
+}

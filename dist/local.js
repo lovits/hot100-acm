@@ -99,7 +99,10 @@ async function createEditor(){
       const model=monaco.editor.createModel(value,lang==='python3'?'python':lang,monaco.Uri.parse('inmemory://hot100/'+key.replaceAll(':','/')+'/main.'+ext));
       model.updateOptions({tabSize:4,insertSpaces:true});models.set(key,model);
     }
-    instance.setModel(models.get(key));if(state.editorViews[key])instance.restoreViewState(state.editorViews[key]);
+    const model=models.get(key);models.delete(key);models.set(key,model);
+    instance.setModel(model);if(state.editorViews[key])instance.restoreViewState(state.editorViews[key]);
+    // Text and cursor positions live in state; retain undo models for eight recent drafts.
+    while(models.size>8){const oldest=models.keys().next().value;models.get(oldest).dispose();models.delete(oldest);}
   }};
   return adapter;
 }
@@ -155,7 +158,7 @@ pickProblem=function(id){
   renderList();renderContent();renderTest();$('#result-dot').textContent='';$('#runtime-state').innerHTML='<i></i> 准备就绪';persist();
 };
 function closeDrawer(){document.body.classList.remove('sidebar-open');$('#sidebar').inert=true;$('#nav-problems').setAttribute('aria-expanded','false');if(lastFocus)lastFocus.focus();}
-function openDrawer(){lastFocus=document.activeElement;$('#sidebar').inert=false;document.body.classList.add('sidebar-open');$('#nav-problems').setAttribute('aria-expanded','true');$('#search').focus();}
+function openDrawer(){lastFocus=document.activeElement;$('#sidebar').inert=false;document.body.classList.add('sidebar-open');renderList();$('#nav-problems').setAttribute('aria-expanded','true');$('#search').focus();}
 function codeHTML(code){return `<pre class="code-block annotated-code">${esc(code)}</pre>`;}
 const annotatedCodeSources=new WeakMap();
 function difficultyBadge(problem){return `<span class="difficulty-badge ${difficultyClass(problem.difficulty)}" aria-label="难度：${esc(problem.difficulty)}">${esc(problem.difficulty)}</span>`;}
@@ -163,7 +166,7 @@ paths.company='<rect x="3" y="5" width="10" height="8" rx="1.5"/><path d="M6 5V3
 function relatedMetadata(p){
   const freq=trainingIndex.get(p.id)?.freq;
   const companies=freq?.companies||[];
-  const chips=(items)=>items.map(v=>`<span class="topic-chip">${esc(v)}</span>`).join('');
+  const chips=(items)=>items.filter(v=>typeof v==='string'&&v.trim()).map(v=>`<span class="topic-chip">${esc(v)}</span>`).join('');
   return `<div class="problem-meta"><div class="tags">${difficultyBadge(p)}
     ${freq?`<span class="tag" title="CodeTop 最近考察：${esc(freq.lastAsked||'未知')}">🔥 考察 ${esc(freq.value)} 次</span>`:''}
     <button type="button" class="tag meta-button" data-meta="topics" aria-expanded="false">${icon('tag')}相关标签</button>
@@ -268,7 +271,7 @@ const oldRun=runCode;
 runCode=function(submit=false){document.body.classList.remove('tests-collapsed');state.testsCollapsed=false;if(classic())oldRun(submit);else nativeAction(submit?'judge':'run');};
 
 function topicTagsHTML(problem,withNumber=true){
-  const tags=problem.topicTags||[];
+  const tags=[...new Set((problem.topicTags||[]).filter(tag=>typeof tag==='string'&&tag.trim()))];
   const freq=trainingIndex.get(problem.id)?.freq,company=$('#drawer-company').value;
   const count=company?freq?.companies.find(c=>c.name===company)?.value:freq?.value;
   return `<span class="topic-tags">${withNumber?`<span class="topic-chip"># ${problem.id}</span>`:''}${count!=null?`<span class="topic-chip frequency-chip" title="CodeTop${company?' · '+esc(company):' · 全部公司'}">${company?esc(company)+' · ':''}考察 ${esc(count)} 次</span>`:''}${tags.slice(0,3).map(tag=>`<span class="topic-chip">${esc(tag)}</span>`).join('')}${tags.length>3?`<span class="topic-chip topic-overflow" tabindex="0" title="${esc(tags.slice(3).join('、'))}">${tags.length-3}+<span class="topic-popover">${tags.slice(3).map(tag=>`<span class="topic-chip">${esc(tag)}</span>`).join('')}</span></span>`:''}</span>`;
@@ -297,6 +300,7 @@ function catalogRow(problem,directory=false){
   return directory?`<button class="problem-row directory-row ${selected?'selected':''}" data-problem="${problem.id}" ${selected?'aria-current="true"':''}>${inside}</button>`:`<a class="catalog-row" href="#/problems/${problem.id}/description">${inside}</a>`;
 }
 renderList=function(){
+  if(!document.body.classList.contains('sidebar-open'))return;
   const filtered=problems.filter(p=>(!$('#drawer-company').value||trainingIndex.get(p.id)?.freq?.companies?.some(c=>c.name===$('#drawer-company').value))&&(!query||`${p.title} ${p.id} ${p.category} ${(p.topicTags||[]).join(' ')}`.toLowerCase().includes(query.toLowerCase()))&&(!filterDifficulty||p.difficulty===filterDifficulty)&&(!categoryFilter||p.category===categoryFilter)&&(!filterStatus||(filterStatus==='done'?state.accepted.includes(p.id):filterStatus==='todo'?!state.accepted.includes(p.id):state.favorites.includes(p.id))));
   $('#list-label').innerHTML=`${esc(categoryFilter||'全部题目')} <b>${filtered.length}</b>`;
   $('#clear-filter').hidden=!(query||filterDifficulty||filterStatus||categoryFilter||$('#drawer-company').value||$('#drawer-sort').value!=='topic');
@@ -341,7 +345,7 @@ progress=function(){
 };
 
 async function boot(){
-  await loadSession();await loadTrainingIndex();await loadAuthorLibrary();await init();bindPractice();mergeTrainingProgress();
+  const [problemResponse]=await Promise.all([fetch('problems.json'),loadSession(),loadTrainingIndex(),loadAuthorLibrary()]);await init(problemResponse);bindPractice();mergeTrainingProgress();
   for(const category of new Set(problems.map(p=>p.category)))$('#drawer-category').add(new Option(category,category));
   for(const company of [...new Set([...trainingIndex.values()].flatMap(p=>(p.freq?.companies||[]).map(c=>c.name)))].sort((a,b)=>a.localeCompare(b,'zh-CN')))$('#drawer-company').add(new Option(company,company));
   $('#drawer-category').onchange=e=>{categoryFilter=e.target.value;renderList();};

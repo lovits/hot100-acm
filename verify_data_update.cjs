@@ -10,7 +10,7 @@ assert.equal(new Set(problems.map(p=>p.id)).size,100);
 assert.deepEqual(problems.map(p=>p.id).sort((a,b)=>a-b),main.map(p=>p.id).sort((a,b)=>a-b));
 assert.equal(new Set(problems.flatMap(p=>p.freq.companies.map(c=>c.name))).size,22);
 assert.equal(problems.reduce((n,p)=>n+p.freq.companies.length,0),1399);
-for(const p of problems){assert.equal(p.title,main.find(q=>q.id===p.id).title);assert.ok(p.freq.value>=0);assert.equal(new Set(p.freq.companies.map(c=>c.name)).size,p.freq.companies.length);}
+for(const p of problems){assert.equal(p.title,main.find(q=>q.id===p.id).title);assert.ok(p.topicTags.length&&p.topicTags.every(t=>typeof t==='string'&&t.trim()));assert.deepEqual(p.topicTags,main.find(q=>q.id===p.id).topicTags);assert.ok(p.freq.value>=0);assert.equal(new Set(p.freq.companies.map(c=>c.name)).size,p.freq.companies.length);}
 (async()=>{let passed=0;for(const id of [142,160])for(const language of ['python3','cpp'])for(const mode of ['acm','core']){
  const p=problems.find(p=>p.id===id);
  const args={language,code:solutions[id][language][mode],tests:tests[id][mode],core:p.core};

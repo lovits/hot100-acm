@@ -55,7 +55,7 @@ async function handleApi(req, res, body) {
     // acm
     const caseList = payload.samples || (tests[problemId] && tests[problemId].acm) || [];
     if (!caseList.length) return sendJson(res, 400, { ok: false, error: '该题目暂无 ACM 测试用例' });
-    const outcome = await judgeACM({ language, code, tests: caseList });
+    const outcome = await judgeACM({ language, code, tests: caseList, judge: problem.acm.judge });
     if (outcome.error) {
       return sendJson(res, 200, { ok: false, phase: outcome.phase || 'run', error: outcome.error });
     }

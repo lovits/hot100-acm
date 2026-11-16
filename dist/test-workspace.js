@@ -41,7 +41,8 @@ function loadCases(){
 }
 function caseTest(row){
   if(!coreMode()){
-    const match=current.tests.find(t=>t.input.trim()===row[0].trim());
+    const normalize=value=>value.replace(/\r\n/g,'\n').replace(/\n$/,'');
+    const match=current.tests.find(t=>normalize(t.input)===normalize(row[0]));
     return {input:row[0],output:match?.output??null};
   }
   const args=row.map((value,i)=>{

@@ -7,3 +7,6 @@ learning.backup.json
 *.log
 *.tmp
 *.corrupt.*.json
+
+reference/official-acm-results.json
+reference/official-native-acm-results.json

@@ -1,0 +1,1194 @@
+{
+ "1": [
+  {
+   "input": "4\n2 7 11 15\n9\n",
+   "output": "0 1\n"
+  },
+  {
+   "input": "3\n3 2 4\n6\n",
+   "output": "1 2\n"
+  },
+  {
+   "input": "2\n3 3\n6\n",
+   "output": "0 1\n"
+  }
+ ],
+ "2": [
+  {
+   "input": "3\n2 4 3\n3\n5 6 4\n",
+   "output": "7 0 8\n"
+  },
+  {
+   "input": "1\n0\n1\n0\n",
+   "output": "0\n"
+  },
+  {
+   "input": "7\n9 9 9 9 9 9 9\n4\n9 9 9 9\n",
+   "output": "8 9 9 9 0 0 0 1\n"
+  }
+ ],
+ "3": [
+  {
+   "input": "abcabcbb\n",
+   "output": "3\n"
+  },
+  {
+   "input": "bbbbb\n",
+   "output": "1\n"
+  },
+  {
+   "input": "pwwkew\n",
+   "output": "3\n"
+  }
+ ],
+ "4": [
+  {
+   "input": "2 1\n1 3\n2\n",
+   "output": "2.0\n"
+  },
+  {
+   "input": "2 2\n1 2\n3 4\n",
+   "output": "2.5\n"
+  }
+ ],
+ "5": [
+  {
+   "input": "babad\n",
+   "output": "bab\n"
+  },
+  {
+   "input": "cbbd\n",
+   "output": "bb\n"
+  }
+ ],
+ "11": [
+  {
+   "input": "9\n1 8 6 2 5 4 8 3 7\n",
+   "output": "49\n"
+  },
+  {
+   "input": "2\n1 1\n",
+   "output": "1\n"
+  }
+ ],
+ "15": [
+  {
+   "input": "6\n-1 0 1 2 -1 -4\n",
+   "output": "-1 -1 2\n-1 0 1\n"
+  },
+  {
+   "input": "3\n0 1 1\n",
+   "output": ""
+  },
+  {
+   "input": "3\n0 0 0\n",
+   "output": "0 0 0\n"
+  }
+ ],
+ "17": [
+  {
+   "input": "23\n",
+   "output": "ad\nae\naf\nbd\nbe\nbf\ncd\nce\ncf\n"
+  },
+  {
+   "input": "2\n",
+   "output": "a\nb\nc\n"
+  }
+ ],
+ "19": [
+  {
+   "input": "5 2\n1 2 3 4 5\n",
+   "output": "1 2 3 5\n"
+  },
+  {
+   "input": "1 1\n1\n",
+   "output": ""
+  },
+  {
+   "input": "2 1\n1 2\n",
+   "output": "1\n"
+  }
+ ],
+ "20": [
+  {
+   "input": "()\n",
+   "output": "true\n"
+  },
+  {
+   "input": "()[]{}\n",
+   "output": "true\n"
+  },
+  {
+   "input": "(]\n",
+   "output": "false\n"
+  },
+  {
+   "input": "([])\n",
+   "output": "true\n"
+  },
+  {
+   "input": "([)]\n",
+   "output": "false\n"
+  }
+ ],
+ "21": [
+  {
+   "input": "3\n1 2 4\n3\n1 3 4\n",
+   "output": "1 1 2 3 4 4\n"
+  },
+  {
+   "input": "0\n\n0\n",
+   "output": ""
+  },
+  {
+   "input": "0\n\n1\n0\n",
+   "output": "0\n"
+  }
+ ],
+ "22": [
+  {
+   "input": "3\n",
+   "output": "((()))\n(()())\n(())()\n()(())\n()()()\n"
+  },
+  {
+   "input": "1\n",
+   "output": "()\n"
+  }
+ ],
+ "23": [
+  {
+   "input": "3\n3 1 4 5\n3 1 3 4\n2 2 6\n",
+   "output": "1 1 2 3 4 4 5 6\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  },
+  {
+   "input": "1\n0\n",
+   "output": ""
+  }
+ ],
+ "24": [
+  {
+   "input": "4\n1 2 3 4\n",
+   "output": "2 1 4 3\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  },
+  {
+   "input": "1\n1\n",
+   "output": "1\n"
+  }
+ ],
+ "25": [
+  {
+   "input": "5 2\n1 2 3 4 5\n",
+   "output": "2 1 4 3 5\n"
+  },
+  {
+   "input": "5 3\n1 2 3 4 5\n",
+   "output": "3 2 1 4 5\n"
+  }
+ ],
+ "31": [
+  {
+   "input": "3\n1 2 3\n",
+   "output": "1 3 2\n"
+  },
+  {
+   "input": "3\n3 2 1\n",
+   "output": "1 2 3\n"
+  },
+  {
+   "input": "3\n1 1 5\n",
+   "output": "1 5 1\n"
+  }
+ ],
+ "32": [
+  {
+   "input": "(()\n",
+   "output": "2\n"
+  },
+  {
+   "input": ")()())\n",
+   "output": "4\n"
+  },
+  {
+   "input": "\n",
+   "output": "0\n"
+  }
+ ],
+ "33": [
+  {
+   "input": "7\n4 5 6 7 0 1 2\n0\n",
+   "output": "4\n"
+  },
+  {
+   "input": "7\n4 5 6 7 0 1 2\n3\n",
+   "output": "-1\n"
+  },
+  {
+   "input": "1\n1\n0\n",
+   "output": "-1\n"
+  }
+ ],
+ "34": [
+  {
+   "input": "6\n5 7 7 8 8 10\n8\n",
+   "output": "3 4\n"
+  },
+  {
+   "input": "6\n5 7 7 8 8 10\n6\n",
+   "output": "-1 -1\n"
+  },
+  {
+   "input": "0\n\n0\n",
+   "output": "-1 -1\n"
+  }
+ ],
+ "35": [
+  {
+   "input": "4\n1 3 5 6\n5\n",
+   "output": "2\n"
+  },
+  {
+   "input": "4\n1 3 5 6\n2\n",
+   "output": "1\n"
+  },
+  {
+   "input": "4\n1 3 5 6\n7\n",
+   "output": "4\n"
+  }
+ ],
+ "39": [
+  {
+   "input": "4 7\n2 3 6 7\n",
+   "output": "2 2 3\n7\n"
+  },
+  {
+   "input": "3 8\n2 3 5\n",
+   "output": "2 2 2 2\n2 3 3\n3 5\n"
+  },
+  {
+   "input": "1 1\n2\n",
+   "output": ""
+  }
+ ],
+ "41": [
+  {
+   "input": "3\n1 2 0\n",
+   "output": "3\n"
+  },
+  {
+   "input": "4\n3 4 -1 1\n",
+   "output": "2\n"
+  },
+  {
+   "input": "5\n7 8 9 11 12\n",
+   "output": "1\n"
+  }
+ ],
+ "42": [
+  {
+   "input": "12\n0 1 0 2 1 0 1 3 2 1 2 1\n",
+   "output": "6\n"
+  },
+  {
+   "input": "6\n4 2 0 3 2 5\n",
+   "output": "9\n"
+  }
+ ],
+ "45": [
+  {
+   "input": "5\n2 3 1 1 4\n",
+   "output": "2\n"
+  },
+  {
+   "input": "5\n2 3 0 1 4\n",
+   "output": "2\n"
+  }
+ ],
+ "46": [
+  {
+   "input": "3\n1 2 3\n",
+   "output": "1 2 3\n1 3 2\n2 1 3\n2 3 1\n3 1 2\n3 2 1\n"
+  },
+  {
+   "input": "2\n0 1\n",
+   "output": "0 1\n1 0\n"
+  },
+  {
+   "input": "1\n1\n",
+   "output": "1\n"
+  }
+ ],
+ "48": [
+  {
+   "input": "3\n1 2 3\n4 5 6\n7 8 9\n",
+   "output": "7 4 1\n8 5 2\n9 6 3\n"
+  },
+  {
+   "input": "4\n5 1 9 11\n2 4 8 10\n13 3 6 7\n15 14 12 16\n",
+   "output": "15 13 2 5\n14 3 4 1\n12 6 8 9\n16 7 10 11\n"
+  }
+ ],
+ "49": [
+  {
+   "input": "6\neat tea tan ate nat bat\n",
+   "output": "bat\nnat tan\nate eat tea\n"
+  },
+  {
+   "input": "1\n-\n",
+   "output": "-\n"
+  },
+  {
+   "input": "1\na\n",
+   "output": "a\n"
+  }
+ ],
+ "51": [
+  {
+   "input": "4\n",
+   "output": ".Q.. ...Q Q... ..Q.\n..Q. Q... ...Q .Q..\n"
+  },
+  {
+   "input": "1\n",
+   "output": "Q\n"
+  }
+ ],
+ "53": [
+  {
+   "input": "9\n-2 1 -3 4 -1 2 1 -5 4\n",
+   "output": "6\n"
+  },
+  {
+   "input": "1\n1\n",
+   "output": "1\n"
+  },
+  {
+   "input": "5\n5 4 -1 7 8\n",
+   "output": "23\n"
+  }
+ ],
+ "54": [
+  {
+   "input": "3 3\n1 2 3\n4 5 6\n7 8 9\n",
+   "output": "1 2 3 6 9 8 7 4 5\n"
+  },
+  {
+   "input": "3 4\n1 2 3 4\n5 6 7 8\n9 10 11 12\n",
+   "output": "1 2 3 4 8 12 11 10 9 5 6 7\n"
+  }
+ ],
+ "55": [
+  {
+   "input": "5\n2 3 1 1 4\n",
+   "output": "true\n"
+  },
+  {
+   "input": "5\n3 2 1 0 4\n",
+   "output": "false\n"
+  }
+ ],
+ "56": [
+  {
+   "input": "4\n1 3\n2 6\n8 10\n15 18\n",
+   "output": "1 6\n8 10\n15 18\n"
+  },
+  {
+   "input": "2\n1 4\n4 5\n",
+   "output": "1 5\n"
+  },
+  {
+   "input": "2\n4 7\n1 4\n",
+   "output": "1 7\n"
+  }
+ ],
+ "62": [
+  {
+   "input": "3 7\n",
+   "output": "28\n"
+  },
+  {
+   "input": "3 2\n",
+   "output": "3\n"
+  },
+  {
+   "input": "7 3\n",
+   "output": "28\n"
+  },
+  {
+   "input": "3 3\n",
+   "output": "6\n"
+  }
+ ],
+ "64": [
+  {
+   "input": "3 3\n1 3 1\n1 5 1\n4 2 1\n",
+   "output": "7\n"
+  },
+  {
+   "input": "2 3\n1 2 3\n4 5 6\n",
+   "output": "12\n"
+  }
+ ],
+ "70": [
+  {
+   "input": "2\n",
+   "output": "2\n"
+  },
+  {
+   "input": "3\n",
+   "output": "3\n"
+  }
+ ],
+ "72": [
+  {
+   "input": "horse\nros\n",
+   "output": "3\n"
+  },
+  {
+   "input": "intention\nexecution\n",
+   "output": "5\n"
+  }
+ ],
+ "73": [
+  {
+   "input": "3 3\n1 1 1\n1 0 1\n1 1 1\n",
+   "output": "1 0 1\n0 0 0\n1 0 1\n"
+  },
+  {
+   "input": "3 4\n0 1 2 0\n3 4 5 2\n1 3 1 5\n",
+   "output": "0 0 0 0\n0 4 5 0\n0 3 1 0\n"
+  }
+ ],
+ "74": [
+  {
+   "input": "3 4\n1 3 5 7\n10 11 16 20\n23 30 34 60\n3\n",
+   "output": "true\n"
+  },
+  {
+   "input": "3 4\n1 3 5 7\n10 11 16 20\n23 30 34 60\n13\n",
+   "output": "false\n"
+  }
+ ],
+ "75": [
+  {
+   "input": "6\n2 0 2 1 1 0\n",
+   "output": "0 0 1 1 2 2\n"
+  },
+  {
+   "input": "3\n2 0 1\n",
+   "output": "0 1 2\n"
+  }
+ ],
+ "76": [
+  {
+   "input": "ADOBECODEBANC\nABC\n",
+   "output": "BANC\n"
+  },
+  {
+   "input": "a\na\n",
+   "output": "a\n"
+  },
+  {
+   "input": "a\naa\n",
+   "output": ""
+  }
+ ],
+ "78": [
+  {
+   "input": "3\n1 2 3\n",
+   "output": "\n1\n2\n1 2\n3\n1 3\n2 3\n1 2 3\n"
+  },
+  {
+   "input": "1\n0\n",
+   "output": "\n0\n"
+  }
+ ],
+ "79": [
+  {
+   "input": "3 4\nABCE\nSFCS\nADEE\nABCCED\n",
+   "output": "true\n"
+  },
+  {
+   "input": "3 4\nABCE\nSFCS\nADEE\nSEE\n",
+   "output": "true\n"
+  },
+  {
+   "input": "3 4\nABCE\nSFCS\nADEE\nABCB\n",
+   "output": "false\n"
+  }
+ ],
+ "84": [
+  {
+   "input": "6\n2 1 5 6 2 3\n",
+   "output": "10\n"
+  },
+  {
+   "input": "2\n2 4\n",
+   "output": "4\n"
+  }
+ ],
+ "94": [
+  {
+   "input": "4\n1 null 2 3\n",
+   "output": "1 3 2\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  },
+  {
+   "input": "1\n1\n",
+   "output": "1\n"
+  }
+ ],
+ "98": [
+  {
+   "input": "3\n2 1 3\n",
+   "output": "true\n"
+  },
+  {
+   "input": "7\n5 1 4 null null 3 6\n",
+   "output": "false\n"
+  }
+ ],
+ "101": [
+  {
+   "input": "7\n1 2 2 3 4 4 3\n",
+   "output": "true\n"
+  },
+  {
+   "input": "7\n1 2 2 null 3 null 3\n",
+   "output": "false\n"
+  }
+ ],
+ "102": [
+  {
+   "input": "7\n3 9 20 null null 15 7\n",
+   "output": "3\n9 20\n15 7\n"
+  },
+  {
+   "input": "1\n1\n",
+   "output": "1\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  }
+ ],
+ "104": [
+  {
+   "input": "7\n3 9 20 null null 15 7\n",
+   "output": "3\n"
+  },
+  {
+   "input": "3\n1 null 2\n",
+   "output": "2\n"
+  }
+ ],
+ "105": [
+  {
+   "input": "5\n3 9 20 15 7\n9 3 15 20 7\n",
+   "output": "3 9 20 null null 15 7\n"
+  },
+  {
+   "input": "1\n-1\n-1\n",
+   "output": "-1\n"
+  }
+ ],
+ "108": [
+  {
+   "input": "5\n-10 -3 0 5 9\n",
+   "output": "0 -3 9 -10 null 5\n"
+  },
+  {
+   "input": "2\n1 3\n",
+   "output": "3 1\n"
+  }
+ ],
+ "114": [
+  {
+   "input": "7\n1 2 5 3 4 null 6\n",
+   "output": "1 2 3 4 5 6\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  },
+  {
+   "input": "1\n0\n",
+   "output": "0\n"
+  }
+ ],
+ "118": [
+  {
+   "input": "5\n",
+   "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n"
+  },
+  {
+   "input": "1\n",
+   "output": "1\n"
+  }
+ ],
+ "121": [
+  {
+   "input": "6\n7 1 5 3 6 4\n",
+   "output": "5\n"
+  },
+  {
+   "input": "5\n7 6 4 3 1\n",
+   "output": "0\n"
+  }
+ ],
+ "124": [
+  {
+   "input": "3\n1 2 3\n",
+   "output": "6\n"
+  },
+  {
+   "input": "7\n-10 9 20 null null 15 7\n",
+   "output": "42\n"
+  }
+ ],
+ "128": [
+  {
+   "input": "6\n100 4 200 1 3 2\n",
+   "output": "4\n"
+  },
+  {
+   "input": "10\n0 3 7 2 5 8 4 6 0 1\n",
+   "output": "9\n"
+  },
+  {
+   "input": "4\n1 0 1 2\n",
+   "output": "3\n"
+  }
+ ],
+ "131": [
+  {
+   "input": "aab\n",
+   "output": "a a b\naa b\n"
+  },
+  {
+   "input": "a\n",
+   "output": "a\n"
+  }
+ ],
+ "136": [
+  {
+   "input": "3\n2 2 1\n",
+   "output": "1\n"
+  },
+  {
+   "input": "5\n4 1 2 1 2\n",
+   "output": "4\n"
+  },
+  {
+   "input": "1\n1\n",
+   "output": "1\n"
+  }
+ ],
+ "138": [
+  {
+   "input": "5\n7 -1\n13 0\n11 4\n10 2\n1 0\n",
+   "output": "7 -1\n13 0\n11 4\n10 2\n1 0\n"
+  },
+  {
+   "input": "2\n1 1\n2 1\n",
+   "output": "1 1\n2 1\n"
+  },
+  {
+   "input": "3\n3 -1\n3 0\n3 -1\n",
+   "output": "3 -1\n3 0\n3 -1\n"
+  }
+ ],
+ "139": [
+  {
+   "input": "leetcode\n2\nleet code\n",
+   "output": "true\n"
+  },
+  {
+   "input": "applepenapple\n2\napple pen\n",
+   "output": "true\n"
+  },
+  {
+   "input": "catsandog\n5\ncats dog sand and cat\n",
+   "output": "false\n"
+  }
+ ],
+ "141": [
+  {
+   "input": "4 1\n3 2 0 -4\n",
+   "output": "true\n"
+  },
+  {
+   "input": "2 0\n1 2\n",
+   "output": "true\n"
+  },
+  {
+   "input": "1 -1\n1\n",
+   "output": "false\n"
+  }
+ ],
+ "142": [
+  {
+   "input": "4 1\n3 2 0 -4\n",
+   "output": "1\n"
+  },
+  {
+   "input": "2 0\n1 2\n",
+   "output": "0\n"
+  },
+  {
+   "input": "1 -1\n1\n",
+   "output": "-1\n"
+  }
+ ],
+ "146": [
+  {
+   "input": "2 9\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\n",
+   "output": "1\n-1\n-1\n3\n4\n"
+  }
+ ],
+ "148": [
+  {
+   "input": "4\n4 2 1 3\n",
+   "output": "1 2 3 4\n"
+  },
+  {
+   "input": "5\n-1 5 3 4 0\n",
+   "output": "-1 0 3 4 5\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  }
+ ],
+ "152": [
+  {
+   "input": "4\n2 3 -2 4\n",
+   "output": "6\n"
+  },
+  {
+   "input": "3\n-2 0 -1\n",
+   "output": "0\n"
+  }
+ ],
+ "153": [
+  {
+   "input": "5\n3 4 5 1 2\n",
+   "output": "1\n"
+  },
+  {
+   "input": "7\n4 5 6 7 0 1 2\n",
+   "output": "0\n"
+  },
+  {
+   "input": "4\n11 13 15 17\n",
+   "output": "11\n"
+  }
+ ],
+ "155": [
+  {
+   "input": "7\npush -2\npush 0\npush -3\ngetMin\npop\ntop\ngetMin\n",
+   "output": "-3\n0\n-2\n"
+  }
+ ],
+ "160": [
+  {
+   "input": "5 6\n4 1 8 4 5\n5 6 1 8 4 5\n2 3\n",
+   "output": "8 4 5\n"
+  },
+  {
+   "input": "5 3\n1 9 1 2 4\n3 2 4\n3 1\n",
+   "output": "2 4\n"
+  },
+  {
+   "input": "3 2\n2 6 4\n1 5\n-1 -1\n",
+   "output": "-1\n"
+  }
+ ],
+ "169": [
+  {
+   "input": "3\n3 2 3\n",
+   "output": "3\n"
+  },
+  {
+   "input": "7\n2 2 1 1 1 2 2\n",
+   "output": "2\n"
+  }
+ ],
+ "189": [
+  {
+   "input": "7 3\n1 2 3 4 5 6 7\n",
+   "output": "5 6 7 1 2 3 4\n"
+  },
+  {
+   "input": "4 2\n-1 -100 3 99\n",
+   "output": "3 99 -1 -100\n"
+  }
+ ],
+ "198": [
+  {
+   "input": "4\n1 2 3 1\n",
+   "output": "4\n"
+  },
+  {
+   "input": "5\n2 7 9 3 1\n",
+   "output": "12\n"
+  }
+ ],
+ "199": [
+  {
+   "input": "7\n1 2 3 null 5 null 4\n",
+   "output": "1 3 4\n"
+  },
+  {
+   "input": "8\n1 2 3 4 null null null 5\n",
+   "output": "1 3 4 5\n"
+  },
+  {
+   "input": "3\n1 null 3\n",
+   "output": "1 3\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  }
+ ],
+ "200": [
+  {
+   "input": "4 5\n11110\n11010\n11000\n00000\n",
+   "output": "1\n"
+  },
+  {
+   "input": "4 5\n11000\n11000\n00100\n00011\n",
+   "output": "3\n"
+  }
+ ],
+ "206": [
+  {
+   "input": "5\n1 2 3 4 5\n",
+   "output": "5 4 3 2 1\n"
+  },
+  {
+   "input": "2\n1 2\n",
+   "output": "2 1\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  }
+ ],
+ "207": [
+  {
+   "input": "2 1\n1 0\n",
+   "output": "true\n"
+  },
+  {
+   "input": "2 2\n1 0\n0 1\n",
+   "output": "false\n"
+  }
+ ],
+ "208": [
+  {
+   "input": "6\ninsert apple\nsearch apple\nsearch app\nstartsWith app\ninsert app\nsearch app\n",
+   "output": "true\nfalse\ntrue\ntrue\n"
+  }
+ ],
+ "215": [
+  {
+   "input": "6 2\n3 2 1 5 6 4\n",
+   "output": "5\n"
+  },
+  {
+   "input": "9 4\n3 2 3 1 2 4 5 5 6\n",
+   "output": "4\n"
+  }
+ ],
+ "226": [
+  {
+   "input": "7\n4 2 7 1 3 6 9\n",
+   "output": "4 7 2 9 6 3 1\n"
+  },
+  {
+   "input": "3\n2 1 3\n",
+   "output": "2 3 1\n"
+  },
+  {
+   "input": "0\n",
+   "output": ""
+  }
+ ],
+ "230": [
+  {
+   "input": "5\n3 1 4 null 2\n1\n",
+   "output": "1\n"
+  },
+  {
+   "input": "8\n5 3 6 2 4 null null 1\n3\n",
+   "output": "3\n"
+  }
+ ],
+ "234": [
+  {
+   "input": "4\n1 2 2 1\n",
+   "output": "true\n"
+  },
+  {
+   "input": "2\n1 2\n",
+   "output": "false\n"
+  }
+ ],
+ "236": [
+  {
+   "input": "11\n3 5 1 6 2 0 8 null null 7 4\n5 1\n",
+   "output": "3\n"
+  },
+  {
+   "input": "11\n3 5 1 6 2 0 8 null null 7 4\n5 4\n",
+   "output": "5\n"
+  },
+  {
+   "input": "2\n1 2\n1 2\n",
+   "output": "1\n"
+  }
+ ],
+ "238": [
+  {
+   "input": "4\n1 2 3 4\n",
+   "output": "24 12 8 6\n"
+  },
+  {
+   "input": "5\n-1 1 0 -3 3\n",
+   "output": "0 0 9 0 0\n"
+  }
+ ],
+ "239": [
+  {
+   "input": "8 3\n1 3 -1 -3 5 3 6 7\n",
+   "output": "3 3 5 5 6 7\n"
+  },
+  {
+   "input": "1 1\n1\n",
+   "output": "1\n"
+  }
+ ],
+ "240": [
+  {
+   "input": "5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n5\n",
+   "output": "true\n"
+  },
+  {
+   "input": "5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n20\n",
+   "output": "false\n"
+  }
+ ],
+ "279": [
+  {
+   "input": "12\n",
+   "output": "3\n"
+  },
+  {
+   "input": "13\n",
+   "output": "2\n"
+  }
+ ],
+ "283": [
+  {
+   "input": "5\n0 1 0 3 12\n",
+   "output": "1 3 12 0 0\n"
+  },
+  {
+   "input": "1\n0\n",
+   "output": "0\n"
+  }
+ ],
+ "287": [
+  {
+   "input": "4\n1 3 4 2 2\n",
+   "output": "2\n"
+  },
+  {
+   "input": "4\n3 1 3 4 2\n",
+   "output": "3\n"
+  },
+  {
+   "input": "4\n3 3 3 3 3\n",
+   "output": "3\n"
+  }
+ ],
+ "295": [
+  {
+   "input": "5\naddNum 1\naddNum 2\nfindMedian\naddNum 3\nfindMedian\n",
+   "output": "1.5\n2.0\n"
+  }
+ ],
+ "300": [
+  {
+   "input": "8\n10 9 2 5 3 7 101 18\n",
+   "output": "4\n"
+  },
+  {
+   "input": "6\n0 1 0 3 2 3\n",
+   "output": "4\n"
+  },
+  {
+   "input": "7\n7 7 7 7 7 7 7\n",
+   "output": "1\n"
+  }
+ ],
+ "322": [
+  {
+   "input": "3 11\n1 2 5\n",
+   "output": "3\n"
+  },
+  {
+   "input": "1 3\n2\n",
+   "output": "-1\n"
+  },
+  {
+   "input": "1 0\n1\n",
+   "output": "0\n"
+  }
+ ],
+ "347": [
+  {
+   "input": "6 2\n1 1 1 2 2 3\n",
+   "output": "1 2\n"
+  },
+  {
+   "input": "1 1\n1\n",
+   "output": "1\n"
+  },
+  {
+   "input": "10 2\n1 2 1 2 1 2 3 1 3 2\n",
+   "output": "1 2\n"
+  }
+ ],
+ "394": [
+  {
+   "input": "3[a]2[bc]\n",
+   "output": "aaabcbc\n"
+  },
+  {
+   "input": "3[a2[c]]\n",
+   "output": "accaccacc\n"
+  },
+  {
+   "input": "2[abc]3[cd]ef\n",
+   "output": "abcabccdcdcdef\n"
+  },
+  {
+   "input": "abc3[cd]xyz\n",
+   "output": "abccdcdcdxyz\n"
+  }
+ ],
+ "416": [
+  {
+   "input": "4\n1 5 11 5\n",
+   "output": "true\n"
+  },
+  {
+   "input": "4\n1 2 3 5\n",
+   "output": "false\n"
+  }
+ ],
+ "437": [
+  {
+   "input": "11\n10 5 -3 3 2 null 11 3 -2 null 1\n8\n",
+   "output": "3\n"
+  },
+  {
+   "input": "13\n5 4 8 11 null 13 4 7 2 null null 5 1\n22\n",
+   "output": "3\n"
+  }
+ ],
+ "438": [
+  {
+   "input": "cbaebabacd\nabc\n",
+   "output": "0 6\n"
+  },
+  {
+   "input": "abab\nab\n",
+   "output": "0 1 2\n"
+  }
+ ],
+ "543": [
+  {
+   "input": "5\n1 2 3 4 5\n",
+   "output": "3\n"
+  },
+  {
+   "input": "2\n1 2\n",
+   "output": "1\n"
+  }
+ ],
+ "560": [
+  {
+   "input": "3\n1 1 1\n2\n",
+   "output": "2\n"
+  },
+  {
+   "input": "3\n1 2 3\n3\n",
+   "output": "2\n"
+  }
+ ],
+ "739": [
+  {
+   "input": "8\n73 74 75 71 69 72 76 73\n",
+   "output": "1 1 4 2 1 1 0 0\n"
+  },
+  {
+   "input": "4\n30 40 50 60\n",
+   "output": "1 1 1 0\n"
+  },
+  {
+   "input": "3\n30 60 90\n",
+   "output": "1 1 0\n"
+  }
+ ],
+ "763": [
+  {
+   "input": "ababcbacadefegdehijhklij\n",
+   "output": "9 7 8\n"
+  },
+  {
+   "input": "eccbbbbdec\n",
+   "output": "10\n"
+  }
+ ],
+ "994": [
+  {
+   "input": "3 3\n2 1 1\n1 1 0\n0 1 1\n",
+   "output": "4\n"
+  },
+  {
+   "input": "3 3\n2 1 1\n0 1 1\n1 0 1\n",
+   "output": "-1\n"
+  },
+  {
+   "input": "1 2\n0 2\n",
+   "output": "0\n"
+  }
+ ],
+ "1143": [
+  {
+   "input": "abcde\nace\n",
+   "output": "3\n"
+  },
+  {
+   "input": "abc\nabc\n",
+   "output": "3\n"
+  },
+  {
+   "input": "abc\ndef\n",
+   "output": "0\n"
+  }
+ ]
+}

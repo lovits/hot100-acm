@@ -67,7 +67,7 @@ function renderTest(){
   renderCases();renderResults();
 }
 function saveCode(){if(current&&editor&&!loadingCode){state.codes[draftKey(current.id)]=editor.getValue();persist();}}
-function equalOutput(actual,expected,judge){const a=actual.trim().split(/\s+/).filter(Boolean),b=expected.trim().split(/\s+/).filter(Boolean);if(a.length!==b.length)return false;return a.every((x,i)=>judge==='float'?Number.isFinite(Number(x))&&Math.abs(Number(x)-Number(b[i]))<=1e-6:x===b[i]);}
+function equalOutput(actual,expected,judge,input){if(judge&&!['tokens','float'].includes(judge))return Hot100Judge.compareACMOutput(judge,actual,expected,input);const a=actual.trim().split(/\s+/).filter(Boolean),b=expected.trim().split(/\s+/).filter(Boolean);if(a.length!==b.length)return false;return a.every((x,i)=>judge==='float'?Number.isFinite(Number(x))&&Math.abs(Number(x)-Number(b[i]))<=1e-6:x===b[i]);}
 function setBusy(on){$('#run').disabled=on;$('#submit').disabled=on;$('#stop').hidden=!on;$('#reset-code').disabled=on;}
 function armTimeout(ms,message){clearTimeout(watchdog);watchdog=setTimeout(()=>{
   if(!activeJob)return;const job=activeJob;
@@ -93,7 +93,7 @@ function handleWorker({data}){
   }
   if(data.type==='case-result'){
     clearTimeout(watchdog);const test=activeJob.tests[data.index];
-    activeJob.items.push({...data,input:test.input,expected:test.output,pass:!data.error&&(test.output==null||equalOutput(data.output,test.output,activeJob.problem.judge))});
+    activeJob.items.push({...data,input:test.input,expected:test.output,pass:!data.error&&(test.output==null||equalOutput(data.output,test.output,activeJob.problem.judge,test.input))});
     armTimeout(10000,'执行环境没有响应，请重新运行。');
   }
   if(data.type==='failure'){
@@ -138,9 +138,9 @@ function progress(){
   $('#import-file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>10000000)throw Error('文件超过 10 MB');const b=JSON.parse(await file.text());if(b.app!==KEY)throw Error('不是本站导出的备份');const ids=new Set(problems.map(p=>p.id));for(const k of ['accepted','favorites']){if(!Array.isArray(b[k]))throw Error('备份格式不完整');state[k]=[...new Set([...state[k],...b[k].filter(id=>ids.has(id))])];}for(const k of ['codes','notes'])for(const [id,val] of Object.entries(b[k]||{})){if(ids.has(+id)&&typeof val==='string')state[k][id]=val;}for(const [id,rows] of Object.entries(b.history||{}))if(ids.has(+id)&&Array.isArray(rows))state.history[id]=rows.filter(r=>typeof r.code==='string'&&typeof r.verdict==='string'&&Number.isFinite(r.time)&&Number.isInteger(r.passed)&&Number.isInteger(r.total)).slice(0,20);persist();loadingCode=true;editor.setValue(state.codes[current.id]??current.template);loadingCode=false;renderList();renderContent();closeModal();notify('备份已导入');}catch(err){notify('导入失败：'+err.message);}};
 }
 
-async function init(){
+async function init(problemResponse){
   icons();applyTheme();
-  const response=await fetch('problems.json');if(!response.ok)throw Error('题库加载失败');problems=await response.json();
+  const response=problemResponse||await fetch('problems.json');if(!response.ok)throw Error('题库加载失败');problems=await response.json();
   const validIds=new Set(problems.map(p=>p.id));state.accepted=state.accepted.filter(id=>validIds.has(id));state.favorites=state.favorites.filter(id=>validIds.has(id));
   editor=await createEditor();
   editor.on('change',()=>{if(loadingCode||!current)return;state.codes[draftKey(current.id)]=editor.getValue();persist();});
