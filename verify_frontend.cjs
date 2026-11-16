@@ -40,7 +40,7 @@ test('Legacy submission receives a stable detail route id', result.history['1'][
     persist();
     return await flushDisk();
   })()`, context);
-  test('An open tab renews its session after server restart and merges disk data', requests.length === 3 && writes === 2 && badge.textContent === '已保存到电脑');
+  test('An open tab renews its session after server restart and merges disk data', requests.length === 3 && writes === 2 && badge.textContent === '已存储');
   test('Successful retry clears pending save and records the new revision', vm.runInContext('pendingSave===false && session.revision===3', context));
   const report = {passed: checks.length, checks};
   fs.writeFileSync('reference/frontend-check.json', JSON.stringify(report, null, 2));
