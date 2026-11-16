@@ -3,8 +3,12 @@ let authorLibrary=[],solutionAuthor='all';
 const authorBodyCache=new Map();
 async function loadAuthorLibrary(){
   const response=await fetch('authors/index.json');
-  if(!response.ok)throw Error('本地作者题解库缺失，请重新安装完整程序。');
-  authorLibrary=await response.json();
+  // Third-party full-text articles are an optional, separately imported library.
+  if(response.status===404){authorLibrary=[];return;}
+  if(!response.ok)throw Error('作者扩展题解读取失败，请刷新页面重试。');
+  const articles=await response.json();
+  if(!Array.isArray(articles))throw Error('作者扩展题解索引格式无效。');
+  authorLibrary=articles;
 }
 function authorArticles(problem){return authorLibrary.filter(article=>article.problemId===problem.id);}
 function availableSolutions(){return [...authorArticles(current),...current.solutions];}

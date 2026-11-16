@@ -1,4 +1,4 @@
-name: Publish Windows v1.0.3
+name: Publish Windows v1.0.4
 on:
   workflow_dispatch:
 permissions:
@@ -21,4 +21,4 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create v1.0.3 release-work/publish/*.zip --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'Hot100 ACM v1.0.3 — 进度恢复提示修复' --notes-file release-notes-v1.0.3.md
+          gh release create v1.0.4 release-work/publish/*.zip --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'Hot100 ACM v1.0.4 — 修复缺少作者扩展库时网页无法启动' --notes-file release-notes-v1.0.4.md

@@ -4,13 +4,14 @@ from zipfile import ZipFile, ZIP_DEFLATED
 root = Path(__file__).resolve().parent.parent
 work = root / 'release-work'
 output = work / 'publish/Hot100-Windows-x64-release.zip'
-replacement = (root / 'local_server.py').read_bytes()
+replacements = {'Hot100/' + name: (root / name).read_bytes() for name in ('local_server.py', 'dist/authors.js', 'dist/local.js')}
 with ZipFile(work / output.name) as old, ZipFile(output, 'w', ZIP_DEFLATED, compresslevel=9) as new:
-    assert 'Hot100/local_server.py' in old.namelist()
+    assert replacements.keys() <= set(old.namelist())
     for item in old.infolist():
-        data = replacement if item.filename == 'Hot100/local_server.py' else old.read(item)
+        data = replacements.get(item.filename) if item.filename in replacements else old.read(item)
         new.writestr(item.filename, data)
 with ZipFile(output) as archive:
-    assert archive.read('Hot100/local_server.py') == replacement
+    for name, data in replacements.items():
+        assert archive.read(name) == data
     assert archive.testzip() is None
 print('Portable Windows archive patched and verified:', output.stat().st_size)
