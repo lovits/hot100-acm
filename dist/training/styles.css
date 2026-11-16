@@ -789,3 +789,17 @@ textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent
 .company-tag { border-color: transparent; }
 .sol-explain-head { background: var(--panel-3); color: var(--text); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Match the desktop workspace's readable type hierarchy. */
+body{font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.company-tag,.pill,.chip{font-size:12px;line-height:20px;font-weight:500}
+.company-tag{max-width:100%;white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+#problemDesc{font-size:15px;line-height:1.85;overflow-wrap:anywhere}
+.p-title{font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.toolbar{flex-wrap:wrap;gap:8px}
+select{min-height:34px}
+pre{max-width:100%;overflow:auto;line-height:1.7}
+@media(max-width:680px){#problemDesc{font-size:14px}.company-tags{gap:6px}.toolbar select{max-width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}

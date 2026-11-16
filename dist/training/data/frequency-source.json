@@ -1,0 +1,12 @@
+{
+  "capturedAt": "2026-11-16T19:24:01+00:00",
+  "source": "https://codetop.cc/api/questions/",
+  "ordering": "-frequency",
+  "globalCount": 1159,
+  "companyCount": 22,
+  "hot100Count": 100,
+  "companyRecordCount": 1399,
+  "dateTimezone": "Asia/Shanghai",
+  "rankingScope": "CodeTop 全部题目，按考察次数降序",
+  "companiesSource": "https://codetop.cc/api/companies/"
+}

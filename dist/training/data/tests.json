@@ -4906,11 +4906,11 @@
   "acm": [
    {
     "input": "4 1\n3 2 0 -4\n",
-    "output": "2\n"
+    "output": "1\n"
    },
    {
     "input": "2 0\n1 2\n",
-    "output": "1\n"
+    "output": "0\n"
    },
    {
     "input": "1 -1\n7\n",
@@ -4918,11 +4918,15 @@
    },
    {
     "input": "5 2\n5 3 8 1 9\n",
-    "output": "8\n"
+    "output": "2\n"
    },
    {
     "input": "0 -1\n",
     "output": "-1\n"
+   },
+   {
+    "input": "5 2\n5 3 3 1 9\n",
+    "output": "2\n"
    }
   ],
   "core": [
@@ -4930,31 +4934,37 @@
     "args": [
      "cycleList:[[3,2,0,-4],1]"
     ],
-    "expected": 2
+    "expected": "list:[2,0,-4]"
    },
    {
     "args": [
      "cycleList:[[1,2],0]"
     ],
-    "expected": 1
+    "expected": "list:[1,2]"
    },
    {
     "args": [
      "cycleList:[[1],-1]"
     ],
-    "expected": -1
+    "expected": "list:[]"
    },
    {
     "args": [
      "cycleList:[[5,3,8,1,9],2]"
     ],
-    "expected": 8
+    "expected": "list:[8,1,9]"
    },
    {
     "args": [
      "cycleList:[[7],0]"
     ],
-    "expected": 7
+    "expected": "list:[7]"
+   },
+   {
+    "args": [
+     "cycleList:[[5,3,3,1,9],2]"
+    ],
+    "expected": "list:[3,1,9]"
    }
   ]
  },
@@ -5554,6 +5564,10 @@
    {
     "input": "3 4\n2 4 6\n8 2 4 6\n0 1\n",
     "output": "2 4 6\n"
+   },
+   {
+    "input": "2 2\n1 2\n1 2\n-1 -1\n",
+    "output": "-1\n"
    }
   ],
   "core": [
@@ -5584,6 +5598,13 @@
      "intersectB:"
     ],
     "expected": "list:[2,4,6]"
+   },
+   {
+    "args": [
+     "intersectList:[[1,2],[1,2],-1,-1]",
+     "intersectB:"
+    ],
+    "expected": "list:[]"
    }
   ]
  },

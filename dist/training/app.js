@@ -171,7 +171,8 @@ function filteredProblems() {
       && (!onlyStar || state.starred[p.id]);
   });
   if (sort === 'hot') {
-    list.sort((a, b) => (a.freq ? a.freq.rank : 1e9) - (b.freq ? b.freq.rank : 1e9));
+    const rank = (p) => company === '全部' ? (p.freq?.rank ?? 1e9) : -(p.freq?.companies?.find((c) => c.name === company)?.value || 0);
+    list.sort((a, b) => rank(a) - rank(b) || a.id - b.id);
   } else if (sort === 'difficulty') {
     const order = { 简单: 0, 中等: 1, 困难: 2 };
     list.sort((a, b) => (order[a.difficulty] ?? 9) - (order[b.difficulty] ?? 9) || a.id - b.id);
@@ -240,8 +241,8 @@ function renderProblem() {
   const compsEl = $('problemCompanies');
   if (freq && freq.companies && freq.companies.length) {
     compsEl.hidden = false;
-    compsEl.innerHTML = freq.companies.slice(0, 6).map((c) =>
-      `<span class="company-tag" title="${esc(c.name)} · 出现 ${c.value} 次 · 最近 ${c.lastAsked || '未知'}">${esc(c.name)}</span>`).join('');
+    compsEl.innerHTML = freq.companies.map((c) =>
+      `<span class="company-tag" title="${esc(c.name)} · 出现 ${c.value} 次 · 最近 ${c.lastAsked || '未知'}">${esc(c.name)} · ${c.value} 次</span>`).join('');
   } else {
     compsEl.hidden = true;
   }

@@ -43,7 +43,9 @@ with tempfile.TemporaryDirectory() as tmp:
         thread.join()
 
 launcher = SourceFileLoader('startup_launcher', str(Path(__file__).with_name('launch.pyw'))).load_module()
-with patch.object(launcher, 'identity', return_value=False), patch.object(launcher, 'occupied', return_value=False), patch.object(launcher.subprocess, 'Popen') as spawn, patch.object(launcher.time, 'sleep') as sleep:
+windows = MagicMock()
+windows.kernel32.WaitForSingleObject.return_value = 0
+with patch.object(launcher.ctypes, 'windll', windows, create=True), patch.object(launcher.subprocess, 'CREATE_NO_WINDOW', 0, create=True), patch.object(launcher, 'identity', return_value=False), patch.object(launcher, 'occupied', return_value=False), patch.object(launcher.subprocess, 'Popen') as spawn, patch.object(launcher.time, 'sleep') as sleep:
     spawn.return_value.poll.return_value = 1
     try:
         launcher.main()

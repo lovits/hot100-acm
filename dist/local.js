@@ -161,15 +161,17 @@ const annotatedCodeSources=new WeakMap();
 function difficultyBadge(problem){return `<span class="difficulty-badge ${difficultyClass(problem.difficulty)}" aria-label="难度：${esc(problem.difficulty)}">${esc(problem.difficulty)}</span>`;}
 paths.company='<rect x="3" y="5" width="10" height="8" rx="1.5"/><path d="M6 5V3h4v2M3 8h10M7 8v2h2V8"/>';
 function relatedMetadata(p){
-  const companies=trainingIndex.get(p.id)?.freq?.companies||[];
+  const freq=trainingIndex.get(p.id)?.freq;
+  const companies=freq?.companies||[];
   const chips=(items)=>items.map(v=>`<span class="topic-chip">${esc(v)}</span>`).join('');
   return `<div class="problem-meta"><div class="tags">${difficultyBadge(p)}
+    ${freq?`<span class="tag" title="CodeTop 最近考察：${esc(freq.lastAsked||'未知')}">🔥 考察 ${esc(freq.value)} 次</span>`:''}
     <button type="button" class="tag meta-button" data-meta="topics" aria-expanded="false">${icon('tag')}相关标签</button>
     <button type="button" class="tag meta-button companies" data-meta="companies" aria-expanded="false">${icon('company')}相关企业</button>
     <button class="tag hint-link" data-show-hint>${icon('bulb')}提示</button>
     <a class="tag source-link" href="${esc(p.sourceUrl)}" target="_blank" rel="noopener">${icon('link')}查看力扣原题</a></div>
     <div class="meta-values" data-values="topics" hidden aria-label="算法标签">${chips(p.topicTags||[])||'暂无标签'}</div>
-    <div class="meta-values" data-values="companies" hidden aria-label="相关企业">${chips(companies.map(c=>c.name))||'暂无企业记录'}</div></div>`;
+    <div class="meta-values" data-values="companies" hidden aria-label="相关企业">${companies.map(c=>`<span class="topic-chip" title="最近考察：${esc(c.lastAsked||'未知')}">${esc(c.name)} · ${esc(c.value)} 次</span>`).join('')||'暂无企业记录'}</div></div>`;
 }
 document.addEventListener('click',e=>{
   const button=e.target.closest('[data-meta]');if(!button)return;
@@ -267,7 +269,9 @@ runCode=function(submit=false){document.body.classList.remove('tests-collapsed')
 
 function topicTagsHTML(problem,withNumber=true){
   const tags=problem.topicTags||[];
-  return `<span class="topic-tags">${withNumber?`<span class="topic-chip"># ${problem.id}</span>`:''}${tags.slice(0,3).map(tag=>`<span class="topic-chip">${esc(tag)}</span>`).join('')}${tags.length>3?`<span class="topic-chip topic-overflow" tabindex="0" title="${esc(tags.slice(3).join('、'))}">${tags.length-3}+<span class="topic-popover">${tags.slice(3).map(tag=>`<span class="topic-chip">${esc(tag)}</span>`).join('')}</span></span>`:''}</span>`;
+  const freq=trainingIndex.get(problem.id)?.freq,company=$('#drawer-company').value;
+  const count=company?freq?.companies.find(c=>c.name===company)?.value:freq?.value;
+  return `<span class="topic-tags">${withNumber?`<span class="topic-chip"># ${problem.id}</span>`:''}${count!=null?`<span class="topic-chip frequency-chip" title="CodeTop${company?' · '+esc(company):' · 全部公司'}">${company?esc(company)+' · ':''}考察 ${esc(count)} 次</span>`:''}${tags.slice(0,3).map(tag=>`<span class="topic-chip">${esc(tag)}</span>`).join('')}${tags.length>3?`<span class="topic-chip topic-overflow" tabindex="0" title="${esc(tags.slice(3).join('、'))}">${tags.length-3}+<span class="topic-popover">${tags.slice(3).map(tag=>`<span class="topic-chip">${esc(tag)}</span>`).join('')}</span></span>`:''}</span>`;
 }
 const trainingIndex = new Map();
 async function loadTrainingIndex(){
@@ -311,7 +315,8 @@ function setTopicTags(show){
 }
 function sortedProblems(rows,sort){
   const levels=['简单','中等','困难'];
-  const rank=p=>trainingIndex.get(p.id)?.freq?.rank??Infinity;
+  const company=$('#drawer-company').value;
+  const rank=p=>company?-(trainingIndex.get(p.id)?.freq?.companies.find(c=>c.name===company)?.value||0):(trainingIndex.get(p.id)?.freq?.rank??Infinity);
   return rows.slice().sort((a,b)=>(sort==='hot'?rank(a)-rank(b):sort==='difficulty'?levels.indexOf(a.difficulty)-levels.indexOf(b.difficulty):0)||a.id-b.id);
 }
 progress=function(){

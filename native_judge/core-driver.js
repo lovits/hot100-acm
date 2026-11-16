@@ -102,14 +102,12 @@ def _build(v):
             nodesA = [ListNode(x) for x in la]
             for i in range(len(nodesA) - 1):
                 nodesA[i].next = nodesA[i + 1]
-            if not nodesA:
-                return None
             headB = cur = ListNode()
-            prefix = [ListNode(x) for x in lb[:sb]]
+            prefix = [ListNode(x) for x in (lb if sa < 0 or sb < 0 else lb[:sb])]
             for x in prefix:
                 cur.next = x
                 cur = cur.next
-            cur.next = nodesA[sa] if sa < len(nodesA) else None
+            cur.next = nodesA[sa] if sb >= 0 and 0 <= sa < len(nodesA) else None
             _sharedB = headB.next
             return nodesA[0] if nodesA else None
         if v.startswith('tree:'):
@@ -461,18 +459,15 @@ ListNode* buildIntersect(const vector<JVal>& la, const vector<JVal>& lb, int sa,
     vector<ListNode*> nodesA;
     for (const auto& e : la) nodesA.push_back(new ListNode((int)e.num));
     for (size_t i = 0; i + 1 < nodesA.size(); i++) nodesA[i]->next = nodesA[i + 1];
-    if (nodesA.empty()) return nullptr;
     vector<ListNode*> prefix;
-    for (const auto& e : lb) prefix.push_back(new ListNode((int)e.num));
+    size_t prefixSize = sa < 0 || sb < 0 ? lb.size() : (size_t)sb;
+    for (size_t i = 0; i < prefixSize; i++) prefix.push_back(new ListNode((int)lb[i].num));
     for (size_t i = 0; i + 1 < prefix.size(); i++) prefix[i]->next = prefix[i + 1];
     ListNode* headB = prefix.empty() ? nullptr : prefix[0];
-    if (!prefix.empty()) {
-        prefix.back()->next = (sa >= 0 && sa < (int)nodesA.size()) ? nodesA[sa] : nullptr;
-        g_sharedB = headB;
-    } else {
-        g_sharedB = nullptr;
-    }
-    return nodesA[0];
+    ListNode* shared = sb >= 0 && sa >= 0 && sa < (int)nodesA.size() ? nodesA[sa] : nullptr;
+    if (!prefix.empty()) prefix.back()->next = shared;
+    g_sharedB = prefix.empty() ? shared : headB;
+    return nodesA.empty() ? nullptr : nodesA[0];
 }
 
 TreeNode* buildTree(const vector<JVal>& arr) {

@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-11-16T19:22:43+00:00",
+  "officialStudyPlan": "https://leetcode.cn/studyplan/top-100-liked/",
+  "metadataChecked": 100,
+  "missingQuestionIds": [],
+  "extraQuestionIds": [],
+  "frequencySource": "https://codetop.cc/",
+  "companyCount": 22,
+  "companyRecordCount": 1399,
+  "frequencyIncreasedCount": 67,
+  "classicReferenceAndBoundaryChecks": 1695,
+  "chainReferenceChecks": 44,
+  "fixes": [
+    {
+      "id": 208,
+      "fix": "标题统一为力扣官网名称"
+    },
+    {
+      "id": 215,
+      "fix": "标题统一为力扣官网名称"
+    },
+    {
+      "id": 238,
+      "fix": "标题统一为力扣官网名称"
+    },
+    {
+      "id": 45,
+      "fix": "起点为下标 0，而非 nums[0] 的值"
+    },
+    {
+      "id": 74,
+      "fix": "每行允许相等元素，按非严格递增描述"
+    },
+    {
+      "id": 148,
+      "fix": "递归归并有 O(log n) 栈空间，修正原说明"
+    },
+    {
+      "id": 142,
+      "fix": "核心模式返回入口节点；ACM 输出入口下标，支持重复节点值"
+    },
+    {
+      "id": 160,
+      "fix": "支持不相交；修正 Python/C++ 共享尾链表构造"
+    }
+  ],
+  "limits": "核对了全部题目的官网题号、标题、难度、原题链接及官方题单归属，并针对列明的题意问题做了测试；未证明所有解法在全部合法输入上正确。",
+  "baseRelease": "v1.0.4",
+  "uiReview": {
+    "widths": [
+      390,
+      760,
+      1320
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "surfaces": [
+      "题库侧栏与公司排序",
+      "题目正文与频次标签",
+      "题解列表与正文",
+      "编辑区",
+      "测试用例与结果",
+      "提交记录",
+      "进度备份弹窗",
+      "training页面"
+    ],
+    "horizontalPageOverflow": false
+  }
+}
