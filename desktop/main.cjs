@@ -18,11 +18,11 @@ async function launch(){
     const env={...process.env,HOT100_NODE:process.execPath,ELECTRON_RUN_AS_NODE:'1',PYTHONDONTWRITEBYTECODE:'1'};
     if(!mac)env.HOT100_COMPILER_DIR=path.join(runtime,'mingw64','bin');
     child=spawn(python,[path.join(root,'local_server.py')],{env,windowsHide:true,stdio:['ignore','ignore','pipe']});
-    let error='';
-    child.on('error',e=>{error=e.message});
+    let error='',spawnError='';
+    child.on('error',e=>{spawnError=e.message});
     child.stderr.on('data',b=>{error=(error+b).slice(-1500)});
     for(let i=0;i<50&&!await live();i++){
-      if(child.exitCode!==null||error)throw Error(error||'本地服务未启动，请检查 18765 端口。');
+      if(child.exitCode!==null||spawnError)throw Error(spawnError||error||'本地服务未启动，请检查 18765 端口。');
       await delay(120);
     }
     if(!await live())throw Error('连接本地服务超时。');

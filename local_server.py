@@ -124,11 +124,22 @@ class Store:
 
 def make_server(port=18765, data_dir=DEFAULT_DATA):
     settings = Path(data_dir) / 'location.json'
-    preferred = Path(json.loads(settings.read_text(encoding='utf-8'))['directory']) if settings.exists() else Path(data_dir)
-    if settings.exists() and not (preferred / 'learning.json').is_file():
-        if not (preferred / 'learning.backup.json').is_file():
-            raise OSError('进度目录不可用，请连接对应磁盘：' + str(preferred))
+    preferred = Path(data_dir)
+    recovery_warning = ''
+    if settings.exists():
+        try:
+            preferred = Path(json.loads(settings.read_text(encoding='utf-8'))['directory'])
+            if preferred.resolve() != Path(data_dir).resolve() and not (preferred / 'learning.json').is_file() and not (preferred / 'learning.backup.json').is_file():
+                raise OSError('Saved progress directory is unavailable: ' + str(preferred))
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            # Preserve the previous location so users can recover data from a disconnected disk.
+            shutil.copy2(settings, settings.with_name('location.unavailable.' + secrets.token_hex(4) + '.json'))
+            preferred = Path(data_dir)
+            settings.write_text(json.dumps({'directory': str(preferred)}), encoding='utf-8')
+            recovery_warning = '原进度目录不可用，已切换到本机默认目录；原目录配置已备份，可连接原磁盘后导入进度。' + str(error)
     store = Store(preferred)
+    if recovery_warning:
+        store.recovery_warning = recovery_warning
     token = secrets.token_urlsafe(32)
     origin = f'http://127.0.0.1:{port}'
 

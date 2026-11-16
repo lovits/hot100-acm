@@ -20,7 +20,7 @@ DATA.mkdir(parents=True, exist_ok=True)
 def identity():
     try:
         request = urllib.request.Request(URL + '/api/health')
-        with urllib.request.urlopen(request, timeout=1) as response:
+        with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request, timeout=.2) as response:
             return json.load(response).get('app') == 'hot100-acm-local-v2'
     except Exception:
         return False
@@ -50,12 +50,20 @@ def main():
             interpreter = Path(sys.executable).with_name('pythonw.exe')
             if not interpreter.exists():
                 interpreter = Path(sys.executable)
+            env = os.environ.copy()
+            runtime = ROOT / 'runtime'
+            if (runtime / 'node.exe').is_file():
+                env['HOT100_NODE'] = str(runtime / 'node.exe')
+            if (runtime / 'mingw64/bin').is_dir():
+                env['HOT100_COMPILER_DIR'] = str(runtime / 'mingw64/bin')
             with (DATA / 'launcher.log').open('ab') as log:
-                subprocess.Popen([str(interpreter), str(ROOT / 'local_server.py')], cwd=str(ROOT), stdout=log, stderr=log, creationflags=subprocess.CREATE_NO_WINDOW)
+                process = subprocess.Popen([str(interpreter), str(ROOT / 'local_server.py')], cwd=str(ROOT), stdout=log, stderr=log, env=env, creationflags=subprocess.CREATE_NO_WINDOW)
             for _ in range(60):
                 if identity():
                     break
-                time.sleep(.2)
+                if process.poll() is not None:
+                    raise RuntimeError('本地服务启动失败。请查看日志：' + str(DATA / 'launcher.log'))
+                time.sleep(.1)
             else:
                 raise RuntimeError('本地服务未能启动。请查看日志：' + str(DATA / 'launcher.log'))
         webbrowser.open(URL + '/')
