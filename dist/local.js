@@ -1,7 +1,7 @@
 'use strict';
 // Local persistence is independent of browser origin storage and application updates.
 let session={token:null,revision:0,base:{},directory:''},pendingSave=false,saving=null,diskTimer;
-let route={path:'',kind:'studyplan',detail:''}, routeEpoch=0;
+let route={path:'',kind:'description',detail:''}, routeEpoch=0;
 let models=new Map(), lastFocus=null,restoringReading=false,serviceStopped=false;
 const clone=x=>JSON.parse(JSON.stringify(x));
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
@@ -113,7 +113,7 @@ paths.sort='<path d="M4 2v12m-2-2 2 2 2-2M9 3h5M9 7h4M9 11h3"/>';
 const oldTheme=applyTheme;
 applyTheme=function(){oldTheme();if(window.monaco&&editor)monaco.editor.setTheme(state.theme==='dark'?'hot100-dark':'vs');};
 function readingViewport(kind=route.kind){
-  const ids={studyplan:'#studyplan',solutions:'#solution-content',submissions:'#history-content'};
+  const ids={solutions:'#solution-content',submissions:'#history-content'};
   return $(ids[kind]||'#problem-content');
 }
 let detailProblem, solutionDetailId='', historyDetailId='';
@@ -124,24 +124,24 @@ go=function(id){if(id)navigate(`#/problems/${id}/description`);closeDrawer();};
 function rememberReading(){if(!route.path||restoringReading)return;state.reading[route.path]=readingViewport().scrollTop;}
 function routePage(){
   rememberReading();const epoch=++routeEpoch;
-  let path=location.hash||'#/studyplan';
-  const legacy=path.match(/^#problem\/(\d+)/);if(legacy){path=`#/problems/${legacy[1]}/description`;history.replaceState(null,'',path);}
+  let path=location.hash||`#/problems/${state.last||1}/description`;
+  const legacy=path.match(/^#problem\/(\d+)/);if(legacy)path=`#/problems/${legacy[1]}/description`;
   const match=path.match(/^#\/problems\/(\d+)\/(description|solutions|submissions)(?:\/([^/]+))?$/);
-  const desiredReading=state.reading[path]||0;restoringReading=true;
-  if(!match){route={path:'#/studyplan',kind:'studyplan',detail:''};document.body.classList.add('catalog-mode');renderCatalog();document.title='Hot 100 · 本地 ACM 刷题';if(!current)pickProblem(state.last||1);}
-  else{
-    const id=+match[1];if(!problems.some(p=>p.id===id)){history.replaceState(null,'','#/studyplan');return routePage();}
-    route={path,kind:match[2],detail:match[3]||''};document.body.classList.remove('catalog-mode');
-    mainTab={description:'description',solutions:'solution',submissions:'history'}[route.kind];
-    if(detailProblem!==id){detailProblem=id;solutionDetailId=historyDetailId='';}
-    if(route.kind==='solutions')solutionDetailId=route.detail;
-    if(route.kind==='submissions')historyDetailId=route.detail;
-    if(current?.id!==id)pickProblem(id);else renderContent();
-    document.dispatchEvent(new CustomEvent('show-reading-pane',{detail:mainTab}));
-    $('#studyplan').hidden=true;document.title=`${current.id}. ${current.title} · Hot100 ACM`;
+  if(!match||!problems.some(p=>p.id===+match[1])){
+    const fallback=problems.find(p=>p.id===state.last)||problems[0];
+    history.replaceState(null,'',`#/problems/${fallback.id}/description`);
+    return routePage();
   }
-  const exitLabel=route.kind==='studyplan'?(window.practiceDesktop?'退出刷题台':'退出本地服务'):'返回学习计划';
-  $('.brand').setAttribute('aria-label',exitLabel);$('.brand').title=exitLabel;
+  if(location.hash!==path)history.replaceState(null,'',path);
+  const desiredReading=state.reading[path]||0;restoringReading=true;
+  const id=+match[1];route={path,kind:match[2],detail:match[3]||''};
+  mainTab={description:'description',solutions:'solution',submissions:'history'}[route.kind];
+  if(detailProblem!==id){detailProblem=id;solutionDetailId=historyDetailId='';}
+  if(route.kind==='solutions')solutionDetailId=route.detail;
+  if(route.kind==='submissions')historyDetailId=route.detail;
+  if(current?.id!==id)pickProblem(id);else renderContent();
+  document.dispatchEvent(new CustomEvent('show-reading-pane',{detail:mainTab}));
+  document.title=`${current.id}. ${current.title} · Hot100 ACM`;
   requestAnimationFrame(()=>{if(epoch!==routeEpoch)return;const target=readingViewport();target.scrollTop=desiredReading;restoringReading=false;editor.refresh();});
 }
 pickProblem=function(id){
@@ -307,7 +307,6 @@ renderList=function(){
 function setTopicTags(show){
   state.showTopicTags=show;
   renderList();
-  if(route.kind==='studyplan')renderCatalog();
   persist();
 }
 function sortedProblems(rows,sort){
@@ -315,42 +314,6 @@ function sortedProblems(rows,sort){
   const rank=p=>trainingIndex.get(p.id)?.freq?.rank??Infinity;
   return rows.slice().sort((a,b)=>(sort==='hot'?rank(a)-rank(b):sort==='difficulty'?levels.indexOf(a.difficulty)-levels.indexOf(b.difficulty):0)||a.id-b.id);
 }
-function renderCatalog(){
-  $('#studyplan').hidden=false;
-  const categories=[...new Set(problems.map(p=>p.category))];
-  const filters=state.catalogFilters||{};
-  const filtered=problems.filter(p=>(!filters.company||trainingIndex.get(p.id)?.freq?.companies?.some(c=>c.name===filters.company))&&(!filters.query||`${p.id} ${p.title} ${p.category} ${(p.topicTags||[]).join(' ')}`.includes(filters.query))&&(!filters.difficulty||p.difficulty===filters.difficulty)&&(!filters.category||p.category===filters.category)&&(!filters.status||(filters.status==='done'?state.accepted.includes(p.id):filters.status==='star'?state.favorites.includes(p.id):!state.accepted.includes(p.id))));
-  const companies=[...new Set([...trainingIndex.values()].flatMap(p=>(p.freq?.companies||[]).map(c=>c.name)))].sort((a,b)=>a.localeCompare(b,'zh-CN'));
-  const next=problems.find(p=>p.id===state.last)||problems[0];
-  let groups=categories.filter(category=>filtered.some(p=>p.category===category)).map(category=>`<section class="catalog-group"><h3>${esc(category)}</h3>${filtered.filter(p=>p.category===category).map(p=>catalogRow(p)).join('')}</section>`).join('');
-  const sort=filters.sort||'topic';
-  if(sort!=='topic'){
-    groups=sortedProblems(filtered,sort).map(p=>catalogRow(p)).join('');
-  }
-  $('#studyplan').innerHTML=`<div class="study-layout">
-    <nav class="study-nav"><a class="selected" href="#/studyplan">${icon('book')} 学习计划</a><button data-open-progress>${icon('chart')} 我的进度</button></nav>
-    <section class="study-hero"><div class="hot-emblem"><svg viewBox="0 0 160 160" aria-hidden="true"><defs><linearGradient id="heart-gradient" x2="0" y2="1"><stop stop-color="#f052ed"/><stop offset="1" stop-color="#a635e5"/></linearGradient></defs><path d="M134 117a67 67 0 1 0-27 23l33 10-6-33Z" fill="none" stroke="url(#heart-gradient)" stroke-width="8"/><path d="M80 110C35 84 39 48 62 50c9 0 14 5 18 11 4-6 9-11 18-11 23-2 27 34-18 60Z" fill="url(#heart-gradient)"/></svg></div><div><p>精选 100 道经典算法题 · 从理解到独立解题</p><h1>LeetCode 热题 100</h1><button class="button hero-start" data-problem="${next.id}">${icon('play')} ${Object.keys(state.codes).length?'继续刷题':'开始'}</button><span class="hero-caption">${next.id}. ${esc(next.title)}</span></div></section>
-    <aside class="plan-card"><div class="plan-progress"><strong>${state.accepted.length}<small>/ 100</small></strong><span>已通过练习评测</span><div class="progress-track"><div style="width:${state.accepted.length}%"></div></div></div><a class="text-btn" href="https://leetcode.cn/studyplan/top-100-liked/" target="_blank" rel="noopener">参考力扣 Hot 100 ${icon('arrow')}</a></aside>
-    <section class="study-content"><div class="catalog-filters"><label class="search-box">${icon('search')}<input aria-label="搜索题单" id="catalog-search" placeholder="搜索题目 / 编号 / 标签" value="${esc(filters.query||'')}"></label><select id="catalog-difficulty" aria-label="题单难度"><option value="">全部难度</option>${['简单','中等','困难'].map(d=>`<option ${filters.difficulty===d?'selected':''}>${d}</option>`).join('')}</select><select id="catalog-status" aria-label="题单状态">${[['','全部状态'],['todo','未通过'],['done','已通过'],['star','已收藏']].map(([value,title])=>`<option value="${value}" ${filters.status===value?'selected':''}>${title}</option>`).join('')}</select><select id="catalog-category" aria-label="题单专题"><option value="">全部专题</option>${categories.map(category=>`<option ${filters.category===category?'selected':''}>${esc(category)}</option>`).join('')}</select><select id="catalog-company" aria-label="按公司筛选"><option value="">全部公司</option>${companies.map(c=>`<option ${filters.company===c?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
-    <div class="catalog-toolbar"><span class="catalog-count">${filtered.length} 道题目</span><select id="catalog-sort" aria-label="排序">${[['topic','专题顺序'],['id','题号升序'],['hot','高频优先'],['difficulty','难度升序']].map(([k,v])=>`<option value="${k}" ${sort===k?'selected':''}>${v}</option>`).join('')}</select><button class="text-btn" id="random-filtered" ${filtered.length?'':'disabled'}>${icon('shuffle')} 随机练习</button><label class="tag-toggle"><input id="catalog-show-tags" type="checkbox" role="switch" ${state.showTopicTags!==false?'checked':''}>显示标签</label></div>
-    <div id="catalog-groups">${groups||'<div class="empty-state">没有匹配的题目，试试其他筛选条件。</div>'}</div><footer class="catalog-footer">独立 ACM 练习站 · 题号对应力扣 Hot 100</footer></section></div>`;
-  $('[data-open-progress]').onclick=progress;
-  $('#catalog-show-tags').onchange=e=>setTopicTags(e.target.checked);
-  function change(key,value,focus){
-    state.catalogFilters={...filters,[key]:value};
-    const position=$('#studyplan').scrollTop;
-    renderCatalog();$('#studyplan').scrollTop=position;
-    if(focus){$('#catalog-search').focus();$('#catalog-search').setSelectionRange(value.length,value.length);}
-    persist();
-  }
-  $('#random-filtered').onclick=()=>go(filtered[Math.floor(Math.random()*filtered.length)].id);
-  $('#catalog-sort').onchange=e=>change('sort',e.target.value,false);
-  $('#catalog-company').onchange=e=>change('company',e.target.value,false);
-  $('#catalog-search').oninput=e=>change('query',e.target.value,true);
-  for(const key of ['difficulty','status','category'])$('#catalog-'+key).onchange=e=>change(key,e.target.value,false);
-}
-
-
 progress=function(){
   saveCode();
   modal('学习进度与本地备份',`<div class="stats-grid"><div class="stat"><b>${state.accepted.length}</b><span>已通过 / 100</span></div><div class="stat"><b>${state.favorites.length}</b><span>已收藏</span></div><div class="stat"><b>${Object.values(state.history).flat().length}</b><span>提交记录</span></div></div><p>代码、进度、笔记和记录自动保存到电脑。更新网站文件不会覆盖这些数据。</p><p class="data-path">进度文件　<code>${esc(session.directory)}${session.directory.includes('\\')?'\\':'/'}learning.json</code></p><div class="solution-actions"><button class="button" id="change-directory">更改保存位置</button><button class="button submit" id="export-v2">导出完整备份</button><button class="button" id="import-v2">导入旧版 / 本地备份</button></div><input id="import-file-v2" type="file" accept=".json" hidden><p class="small muted">在线版记录需先在原网址导出 JSON，再在此导入。导入会合并提交记录，原有同题代码保留恢复副本。</p><details><summary>代码恢复副本（${state.conflicts.length}）</summary>${state.conflicts.slice().reverse().map((c,i)=>`<div class="recovery-row"><span>${c.id} · ${c.key==='notes'?'笔记':'代码'} · ${new Date(c.time).toLocaleString('zh-CN')}</span><button class="text-btn" data-recovery="${state.conflicts.length-1-i}">下载副本</button></div>`).join('')||'<p class="muted">暂无副本</p>'}</details>`);
@@ -368,12 +331,12 @@ progress=function(){
     for(const [id,model] of models){const value=state.codes[id];if(typeof value==='string'&&value!==model.getValue()){loadingCode=true;model.setValue(value);loadingCode=false;}}
     applyTheme();editor.instance.updateOptions({fontSize:state.fontSize});
     document.body.classList.toggle('tests-collapsed',!!state.testsCollapsed);
-    persist();await flushDisk();renderList();renderContent();if(route.kind==='studyplan')renderCatalog();closeModal();notify('备份已导入，原有代码副本已保留');
+    persist();await flushDisk();renderList();renderContent();closeModal();notify('备份已导入，原有代码副本已保留');
   }catch(error){notify('导入失败：'+error.message);}};
 };
 
 async function boot(){
-  await loadSession();await loadTrainingIndex();await loadAuthorLibrary();await init();bindPractice();installWorkspaceControls();mergeTrainingProgress();
+  await loadSession();await loadTrainingIndex();await loadAuthorLibrary();await init();bindPractice();mergeTrainingProgress();
   for(const category of new Set(problems.map(p=>p.category)))$('#drawer-category').add(new Option(category,category));
   for(const company of [...new Set([...trainingIndex.values()].flatMap(p=>(p.freq?.companies||[]).map(c=>c.name)))].sort((a,b)=>a.localeCompare(b,'zh-CN')))$('#drawer-company').add(new Option(company,company));
   $('#drawer-category').onchange=e=>{categoryFilter=e.target.value;renderList();};
@@ -402,9 +365,9 @@ async function boot(){
     new MutationObserver(()=>{const value=el.style.getPropertyValue(variable);if(value&&state[key]!==value){state[key]=value;persist();}}).observe(el,{attributes:true,attributeFilter:['style']});
   }
 
-  for(const selector of ['#problem-content','#solution-content','#history-content','#studyplan'])$(selector).addEventListener('scroll',e=>{
+  for(const selector of ['#problem-content','#solution-content','#history-content'])$(selector).addEventListener('scroll',e=>{
     if(!current||restoringReading||!e.target.clientHeight)return;
-    const path={'#studyplan':'#/studyplan','#problem-content':tabPath('description'),
+    const path={'#problem-content':tabPath('description'),
       '#solution-content':tabPath('solution')+(solutionDetailId?'/'+solutionDetailId:''),
       '#history-content':tabPath('history')+(historyDetailId?'/'+historyDetailId:'')}[selector];
     state.reading[path]=e.target.scrollTop;persist();

@@ -45,7 +45,7 @@ async function launch(){
     win.destroy();
   });
   Menu.setApplicationMenu(process.platform==='darwin'?Menu.buildFromTemplate([{role:'appMenu'},{role:'editMenu'},{role:'viewMenu'},{role:'windowMenu'}]):null);
-  await win.loadURL(base+'/#/studyplan');
+  await win.loadURL(base+'/');
   win.show();
 }
 ipcMain.handle('practice:folder',async event=>{

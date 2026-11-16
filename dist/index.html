@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="docking.css"></head>
 <body class="leetcode-layout">
 <header class="topbar">
-  <div class="top-left"><a class="brand return-arrow" href="#/studyplan" aria-label="返回学习计划" title="返回学习计划"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg></a><span class="top-divider"></span><button class="problem-menu" id="nav-problems"><span class="studyplan-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 15a8 8 0 1 0-3 2l4 1-1-3Z"/><path d="M10 13C3 9 6 5 8 7l2 1 2-1c3-2 5 2-2 6Z" fill="currentColor" stroke="none"/></svg></span><strong>LeetCode 热题 100</strong></button><div class="prev-next"><button class="icon-btn" id="prev" title="上一题" aria-label="上一题" data-icon="left"></button><button class="icon-btn" id="next" title="下一题" aria-label="下一题" data-icon="right"></button><button class="icon-btn" id="random" title="随机一题" aria-label="随机一题" data-icon="shuffle"></button></div></div>
+  <div class="top-left"><button class="problem-menu" id="nav-problems"><span class="studyplan-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 15a8 8 0 1 0-3 2l4 1-1-3Z"/><path d="M10 13C3 9 6 5 8 7l2 1 2-1c3-2 5 2-2 6Z" fill="currentColor" stroke="none"/></svg></span><strong>LeetCode 热题 100</strong></button><div class="prev-next"><button class="icon-btn" id="prev" title="上一题" aria-label="上一题" data-icon="left"></button><button class="icon-btn" id="next" title="下一题" aria-label="下一题" data-icon="right"></button><button class="icon-btn" id="random" title="随机一题" aria-label="随机一题" data-icon="shuffle"></button></div></div>
   <div class="work-actions"><button class="button run" id="run" aria-label="运行" title="Ctrl + Enter"><span data-icon="play"></span><span>运行</span></button><button class="button submit" id="submit"><span data-icon="upload"></span><span>提交</span></button><button class="button stop" id="stop" hidden><span data-icon="stop"></span>停止</button><button class="timer" id="timer" title="开始 / 暂停计时"><span data-icon="timer"></span><span id="timer-text">00:00</span></button></div>
   <div class="top-right"><button class="icon-btn" id="nav-progress" title="我的进度" aria-label="我的进度" data-icon="chart"></button><button class="icon-btn" id="theme-btn" title="切换深浅主题" aria-label="切换深浅主题"></button><button class="icon-btn" id="shutdown" title="退出本地服务" aria-label="退出本地服务" data-icon="stop"></button></div>
 </header>
@@ -24,7 +24,7 @@
     <div class="sidebar-footer"><span data-icon="terminal"></span><span>本地练习</span><span id="category-label">哈希</span></div>
     <div id="drawer-resizer" role="separator" aria-label="调整题库宽度" aria-orientation="vertical" aria-controls="sidebar" tabindex="0" title="拖动调整题库宽度，双击恢复默认宽度"></div>
   </aside>
-  <main id="studyplan" hidden></main><main class="main-area">
+  <main class="main-area">
     <div class="workspace">
       <div class="vertical-splitter" id="vertical-splitter" role="separator" aria-orientation="vertical" aria-label="调整题目与代码区宽度" tabindex="0"></div>
       <div class="reading-column"><section class="problem-panel panel">

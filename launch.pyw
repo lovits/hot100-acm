@@ -58,7 +58,7 @@ def main():
                 time.sleep(.2)
             else:
                 raise RuntimeError('本地服务未能启动。请查看日志：' + str(DATA / 'launcher.log'))
-        webbrowser.open(URL + '/#/studyplan')
+        webbrowser.open(URL + '/')
     finally:
         if acquired:
             kernel.ReleaseMutex(handle)

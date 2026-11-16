@@ -16,15 +16,6 @@ function storageSettings(){
     }catch(error){$('#directory-error').textContent=error.message;}finally{button.disabled=false;}
   };
 }
-function installWorkspaceControls(){
-  $('.brand').onclick=async event=>{
-    event.preventDefault();
-    if(!document.body.classList.contains('catalog-mode')){navigate('#/studyplan');return;}
-    if(window.practiceDesktop){saveCode();if(await flushDisk())window.practiceDesktop.exit();return;}
-    $('#shutdown').click();
-  };
-}
-
 function installDrawerResize(){
   const drawer=$('#sidebar'), grip=$('#drawer-resizer');
   let preferred=Number.isFinite(state.drawerWidth)?state.drawerWidth:416;
