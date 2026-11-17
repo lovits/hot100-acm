@@ -12,9 +12,17 @@ button:disabled{cursor:default}
 .sidebar .collection-intro p,.sidebar .progress-label,.sidebar .list-label{font-size:13px;line-height:20px}
 .sidebar .search-box{height:38px;border-radius:10px;padding-inline:12px}
 .sidebar .search-box input{font-size:14px;min-width:0}
-.sidebar .list-tools .filters{display:flex;flex-wrap:nowrap;gap:6px;margin:12px 0;overflow-x:auto;scrollbar-width:thin;padding-bottom:3px}
+.sidebar .list-tools{container-type:inline-size;container-name:drawer-tools}
+.sidebar .list-tools .filters{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
 .sidebar .list-tools .filters select{appearance:none;field-sizing:content;flex:0 0 auto;width:auto;min-width:0;max-width:13em;height:34px;padding:5px 30px 5px 10px;font-size:13px;line-height:20px;border-radius:7px;text-overflow:ellipsis;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m2 4 4 4 4-4' fill='none' stroke='%23777777' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:12px 12px}
 .dark .sidebar .list-tools .filters select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m2 4 4 4 4-4' fill='none' stroke='%23b9b9c1' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+/* Native selects may match :focus-visible after a pointer selection. */
+.sidebar .list-tools .filters select:focus{outline:none}
+.keyboard-navigation .sidebar .list-tools .filters select:focus{outline:2px solid var(--ui-focus);outline-offset:2px}
+@container drawer-tools (max-width:490px){
+  .sidebar .list-tools .filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .sidebar .list-tools .filters select{field-sizing:fixed;width:100%;max-width:none;padding-inline:8px 28px}
+}
 .sidebar .list-label{min-height:28px;align-items:center;gap:8px}
 .sidebar .list-label b{font-weight:500;font-variant-numeric:tabular-nums}
 .sidebar .drawer-tag-toggle{font-size:13px;line-height:20px;margin:4px 0 12px;gap:8px}

@@ -345,6 +345,9 @@ progress=function(){
 };
 
 async function boot(){
+  document.addEventListener('keydown',e=>{if(e.key==='Tab'||e.key.startsWith('Arrow'))document.body.classList.add('keyboard-navigation');});
+  document.addEventListener('pointerdown',()=>document.body.classList.remove('keyboard-navigation'));
+
   const [problemResponse]=await Promise.all([fetch('problems.json'),loadSession(),loadTrainingIndex(),loadAuthorLibrary()]);await init(problemResponse);bindPractice();mergeTrainingProgress();
   for(const category of new Set(problems.map(p=>p.category)))$('#drawer-category').add(new Option(category,category));
   for(const company of [...new Set([...trainingIndex.values()].flatMap(p=>(p.freq?.companies||[]).map(c=>c.name)))].sort((a,b)=>a.localeCompare(b,'zh-CN')))$('#drawer-company').add(new Option(company,company));
