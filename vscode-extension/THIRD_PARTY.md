@@ -7,3 +7,5 @@
 - 本地 Python/C++ 评测复用本项目 native_judge，许可随 runtime/native_judge/LICENSE 分发。
 - HTML 清理使用 sanitize-html，随依赖分发其许可证。
 - 仅测试使用的部分 C 参考解来自 https://github.com/begeekmyfriend/leetcode （Leo Ma，MIT），经接口适配及修正；版本见 test/c-source.json，许可证见 test/C-REFERENCE-LICENSE。测试目录不包含在 VSIX 内。
+
+v0.2.0 基于 LeetCode Hot100 Pro v0.1.17（ShiZiMiao/LeetCode-Hot100-VSCode，9f5f10c；原始项目 Imzhou-tju/Hot100-for-VSCode）。上游 package.json 声明 MIT，原源码及署名出处见 UPSTREAM.md 和 UPSTREAM-README.md。沿用的 vendor 资源保留各自许可证。编译器及解释器不包含在 VSIX 中。

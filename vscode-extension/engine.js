@@ -22,7 +22,8 @@ async function judgeC(p,code,tests){
   }return{results};
  }finally{fs.rmSync(tmp,{recursive:true,force:true});}
 }
-async function evaluate(p,language,mode,code,tests){
+async function evaluate(p,language,mode,code,tests,tools){
+ if(tools)return require('./runtime/native_judge/toolchain').withToolchain(tools,()=>evaluate(p,language,mode,code,tests));
  if(mode==='core'&&language==='c')return judgeC(p,code,tests);
  return(mode==='core'?judgeCore:judgeACM)({language,code,core:p.core,judge:p.acm.judge,tests});
 }

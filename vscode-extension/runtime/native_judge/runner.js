@@ -14,6 +14,8 @@ const DEFAULT_MEM_KB = 524288;     // 地址空间上限（KB，即 512MB）
 const MAX_OUTPUT = 64 * 1024;      // stdout/stderr 各自上限
 
 function commandExists(command) {
+  const configured=require('./toolchain').configuredCommand(command);
+  if(configured)return Promise.resolve(configured);
   return new Promise((resolve) => {
     if(command==='python3' && process.env.HOT100_PYTHON) return resolve(process.env.HOT100_PYTHON);
     if (process.platform === 'win32') {
@@ -41,6 +43,9 @@ function runProcess(command, args, options = {}) {
     const cpuSec = options.cpuSeconds || (isCompile ? COMPILE_CPU_SEC : DEFAULT_CPU_SEC);
     const timeout = options.timeout || (isCompile ? COMPILE_TIMEOUT_MS : DEFAULT_TIMEOUT_MS);
     if(process.platform==='darwin' && ['g++','clang++'].includes(require('path').basename(command))) args=['-I',require('path').join(__dirname,'include'),...args];
+    if(options.phase==='compile' && args[0]?.endsWith('.cpp') && !/cl(?:\.exe)?$/i.test(command)) args=['-x','c++',...args];
+    if(options.phase==='compile' && args[0]?.endsWith('.c') && !/cl(?:\.exe)?$/i.test(command)) args=['-x','c',...args];
+    if(isCompile)args=require('./compiler-command').compilerArgs(command,args);
     const realArgs = limit
       ? ['-c', `ulimit -t ${cpuSec} 2>/dev/null; ulimit -v ${DEFAULT_MEM_KB} 2>/dev/null; exec "$@"`, 'runner', command, ...args]
       : args;

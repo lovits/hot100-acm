@@ -1,9 +1,47 @@
-node_modules/@vscode/**
-node_modules/.bin/**
-test/**
-scripts/**
-package-lock.json
-**/*.vsix
 .vscode/**
-.openai/**
+.vscode-test/**
+src/**
+.gitignore
+.npmrc
+.yarnrc
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+**/node_modules/**
+pnpm-lock.yaml
+pnpm-workspace.yaml
+*.vsix
+README.md
+# README_pkg.md 已废弃（商店详情走 MARKETPLACE.md）
+**/*.pyc
+__pycache__/
+resources/leetcode.png
+# 扩展在本仓库刷题生成的练习文件（不进发布包）
+leetcode/
+# 纯逻辑单测编译产物（本地/CI 用 node --test 跑，不进发布包）
+out/unit/**
+.github/**
+scripts/**
+.zcode/**
+ROADMAP.md
+AGENTS.md
+# vscode-test 脚手架编译产物（本地/CI 用，不进发布包）
+out/test/**
+.idea/**
+*.log
+**/.DS_Store
+**/Thumbs.db
+dist/**
+
+# 发版前审查遗留项文档（内部记录，不进发布包）
+REVIEW-REMAINING.md
+# 发版前人工冒烟测试文档（内部记录，不进发布包）
+TESTING.md
+
+test/**
+package-lock.json
 PUBLISHING.md
+UPSTREAM-README.md

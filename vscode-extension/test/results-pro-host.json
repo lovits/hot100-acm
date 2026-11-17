@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "language": "python3",
+      "mode": "acm",
+      "cases": 5
+    },
+    {
+      "language": "python3",
+      "mode": "core",
+      "cases": 5
+    },
+    {
+      "language": "cpp",
+      "mode": "acm",
+      "cases": 5
+    },
+    {
+      "language": "cpp",
+      "mode": "core",
+      "cases": 5
+    },
+    {
+      "language": "c",
+      "mode": "acm",
+      "cases": 5
+    },
+    {
+      "language": "c",
+      "mode": "core",
+      "cases": 5
+    }
+  ],
+  "defaultACM": true,
+  "modeDraftRestore": true,
+  "combinedFilters": true,
+  "editableGoal": true,
+  "reviewPlanOpened": true,
+  "newQuestionDeduplicated": true
+}

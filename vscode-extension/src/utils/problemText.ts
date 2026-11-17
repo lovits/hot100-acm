@@ -1,0 +1,243 @@
+/**
+ * 题面/文件名解析的纯逻辑（无 vscode 依赖，可直接单测）。
+ * 从 extension.ts 抽出：示例输入/期望输出提取、题解文件名身份解析。
+ */
+
+const entityMap: Record<string, string> = {
+    '&quot;': '"',
+    '&#34;': '"',
+    '&gt;': '>',
+    '&lt;': '<',
+    '&amp;': '&',
+    '&#39;': "'",
+    '&nbsp;': ' ',
+    '&thinsp;': ' ',
+    '&#160;': ' '
+};
+
+/**
+ * 题面示例有两种排版：<pre> 块或 <div class="example-block"> + 段落；
+ * 剥离标签后按「示例 N / Example N」切段，段内取第一个「输入」原文段与第一个「输出」值。
+ * 值以 解释/输入/输出/提示/Constraints 等为边界（有些示例没有解释，末尾会跟提示/进阶）。
+ * 只保留能取到输出的段（与历史 extractExpectedOutputs 的口径一致）。
+ */
+export function extractExamples(html: string): { input: string; output: string }[] {
+    if (!html) {
+        return [];
+    }
+    const text = html
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&quot;|&#34;|&gt;|&lt;|&amp;|&#39;|&nbsp;|&thinsp;|&#160;/g, (m) => entityMap[m] ?? m);
+    const exampleRe = /(?:示例|Example)\s*\d/gi;
+    const segments: string[] = [];
+    let cursor = 0;
+    let exampleMatch: RegExpExecArray | null;
+    while ((exampleMatch = exampleRe.exec(text)) !== null) {
+        segments.push(text.slice(cursor, exampleMatch.index));
+        cursor = exampleRe.lastIndex;
+    }
+    segments.push(text.slice(cursor));
+    const outputRe = /(?:输出|Output)\s*[：:]\s*([\s\S]*?)(?=\s*(?:解释|Explanation|输入|Input|示例|Example|提示|Constraints|进阶|Follow-up|说明)\s*[：:]?|$)/i;
+    const inputRe = /(?:输入|Input)\s*[：:]\s*([\s\S]*?)(?=\s*(?:输出|Output|解释|Explanation|示例|Example|提示|Constraints|进阶|Follow-up|说明)\s*[：:]?|$)/i;
+    const entries: { input: string; output: string }[] = [];
+    // 有「示例 N」标题时，首段是示例 1 之前的题面正文——说明里的 输入/输出 排版
+    // 会产出伪条目令期望与示例整列错位；无标题（裸输入/输出排版）时才解析整段
+    const bodySegments = segments.length > 1 ? segments.slice(1) : segments;
+    for (const segment of bodySegments) {
+        const out = outputRe.exec(segment);
+        if (out && out[1].trim()) {
+            const inp = inputRe.exec(segment);
+            entries.push({ input: inp ? inp[1].trim() : '', output: out[1].trim() });
+        }
+    }
+    return entries;
+}
+
+/**
+ * 从题目 HTML（translatedContent/content）中按顺序提取各示例的期望输出。
+ * 示例格式：<pre>… 输入：… \n 输出：value \n 解释：… </pre>
+ */
+export function extractExpectedOutputs(html: string): string[] {
+    return extractExamples(html).map((e) => e.output);
+}
+
+/**
+ * Python 风格单引号字符串归一为双引号（引号/转义感知，不跨字符串边界替换）：
+ * 双引号串原样带过（内含撇号不动），单引号串转为双引号串（\' 解除转义、内部 " 转义）。
+ * 出现未闭合引号时原样返回，交给 JSON.parse 判失败。
+ */
+function normalizePythonQuotes(raw: string): string {
+    let out = '';
+    let i = 0;
+    while (i < raw.length) {
+        const ch = raw[i];
+        if (ch === '"') {
+            out += ch;
+            i++;
+            while (i < raw.length) {
+                out += raw[i];
+                if (raw[i] === '\\') {
+                    i++;
+                    if (i < raw.length) {
+                        out += raw[i];
+                    }
+                } else if (raw[i] === '"') {
+                    i++;
+                    break;
+                }
+                i++;
+            }
+            continue;
+        }
+        if (ch === "'") {
+            let body = '';
+            let closed = false;
+            i++;
+            while (i < raw.length) {
+                if (raw[i] === '\\') {
+                    body += raw[i + 1] === "'" ? "'" : raw[i] + (raw[i + 1] ?? '');
+                    i += 2;
+                    continue;
+                }
+                if (raw[i] === "'") {
+                    i++;
+                    closed = true;
+                    break;
+                }
+                body += raw[i];
+                i++;
+            }
+            if (!closed) {
+                return raw;
+            }
+            out += '"' + body.replace(/"/g, '\\"') + '"';
+            continue;
+        }
+        out += ch;
+        i++;
+    }
+    return out;
+}
+
+/**
+ * 从「名字 = 值, 名字 = 值 / 裸值」的示例输入原文解析出各参数的 JSON 值（原文形式）。
+ * 任何一个值解析失败整体返回 null（调用方退回位置配对，避免错位误判）。
+ */
+function parseInputValues(inputText: string): string[] | null {
+    const out: string[] = [];
+    let i = 0;
+    const s = inputText;
+    while (i < s.length) {
+        while (i < s.length && /[\s,，;；]/.test(s[i])) {
+            i++;
+        }
+        if (i >= s.length) {
+            break;
+        }
+        const nameM = /^[A-Za-z_][A-Za-z0-9_]*\s*=\s*/.exec(s.slice(i));
+        if (nameM) {
+            i += nameM[0].length;
+        }
+        const start = i;
+        const c = s[i];
+        if (c === '[' || c === '{') {
+            let depth = 0;
+            let inStr = false;
+            let esc = false;
+            for (; i < s.length; i++) {
+                const ch = s[i];
+                if (inStr) {
+                    if (esc) {
+                        esc = false;
+                    } else if (ch === '\\') {
+                        esc = true;
+                    } else if (ch === '"') {
+                        inStr = false;
+                    }
+                    continue;
+                }
+                if (ch === '"') {
+                    inStr = true;
+                } else if (ch === '[' || ch === '{') {
+                    depth++;
+                } else if (ch === ']' || ch === '}') {
+                    depth--;
+                    if (depth === 0) {
+                        i++;
+                        break;
+                    }
+                }
+            }
+        } else if (c === '"') {
+            i++;
+            while (i < s.length) {
+                if (s[i] === '\\') {
+                    i += 2;
+                } else if (s[i] === '"') {
+                    i++;
+                    break;
+                } else {
+                    i++;
+                }
+            }
+        } else {
+            while (i < s.length && !/[\s,，;；]/.test(s[i])) {
+                i++;
+            }
+        }
+        const raw = s.slice(start, i).trim();
+        if (!raw) {
+            return null;
+        }
+        // 中文题面示例输入常用 Python 风格单引号（如 [['A','B']]），归一为双引号再解析。
+        // 必须转义感知：混合引号（["it's", 'x']）下朴素正则会跨串替换，产出坏 JSON
+        // 使按值配对整体降级为位置配对
+        const normalized = normalizePythonQuotes(raw);
+        try {
+            JSON.parse(normalized);
+        } catch {
+            return null;
+        }
+        out.push(normalized);
+    }
+    return out.length ? out : null;
+}
+
+/**
+ * 按顺序提取各示例的输入值列表（每示例一个数组，元素为解析后的 JSON 值）。
+ * 官方 exampleTestcases 可能含展示示例之外的附加用例（位置不定），驱动按值把
+ * 用例与示例期望配对时用它做锚点。任一示例输入解析失败时整体返回 []（退回位置配对）。
+ */
+export function extractExampleInputs(html: string): unknown[][] {
+    const entries = extractExamples(html);
+    if (!entries.length) {
+        return [];
+    }
+    const result: unknown[][] = [];
+    for (const e of entries) {
+        const raws = e.input ? parseInputValues(e.input) : null;
+        if (!raws) {
+            return [];
+        }
+        try {
+            result.push(raws.map((r) => JSON.parse(r)));
+        } catch {
+            return [];
+        }
+    }
+    return result;
+}
+
+/**
+ * 从题解/调试文件名解析题目身份：扩展生成的文件名为 {题号}_{slug}.{ext}，
+ * 调试驱动为 {题号}_{slug}_debug.{ext}，跨设备恢复副本为 {题号}_{slug}_restored.{ext}
+ * （副本仍可按同题运行/提交）。解析失败返回 null。
+ */
+export function parseProblemFileName(fileName: string): { questionId: string; titleSlug: string; isDebug: boolean } | null {
+    const m = fileName.match(/^(\d+)_([a-z0-9-]+?)(?:_(?:debug|restored))?\./i);
+    if (!m) {
+        return null;
+    }
+    return { questionId: m[1], titleSlug: m[2], isDebug: /_debug\.[a-z0-9]+$/i.test(fileName) };
+}

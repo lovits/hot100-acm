@@ -1,0 +1,98 @@
+{
+  "version": "0.2.0",
+  "base": "LeetCode Hot100 Pro v0.1.17 / 9f5f10c",
+  "unitTests": 153,
+  "compile": "passed",
+  "lintErrors": 0,
+  "reports": {
+    "results-c-acm": {
+      "questions": 5,
+      "cases": 28,
+      "failures": [],
+      "negativeChecks": [
+        "compile-error",
+        "wrong-answer",
+        "timeout"
+      ]
+    },
+    "results-c-negative": [
+      {
+        "id": 142,
+        "rejectedValueOnlyOrAliasedAnswer": true
+      },
+      {
+        "id": 160,
+        "rejectedValueOnlyOrAliasedAnswer": true
+      },
+      {
+        "id": 138,
+        "rejectedValueOnlyOrAliasedAnswer": true
+      }
+    ],
+    "results-cpp": {
+      "language": "cpp",
+      "questions": 100,
+      "cases": 1083,
+      "failures": []
+    },
+    "results-c-core": {
+      "questions": 100,
+      "cases": 533,
+      "missing": [],
+      "failures": []
+    },
+    "results-official-c": {
+      "language": "c",
+      "questions": 100,
+      "cases": 248,
+      "failures": []
+    },
+    "results-python3": {
+      "language": "python3",
+      "questions": 100,
+      "cases": 1083,
+      "failures": []
+    },
+    "results-pro-host": {
+      "checks": [
+        {
+          "language": "python3",
+          "mode": "acm",
+          "cases": 5
+        },
+        {
+          "language": "python3",
+          "mode": "core",
+          "cases": 5
+        },
+        {
+          "language": "cpp",
+          "mode": "acm",
+          "cases": 5
+        },
+        {
+          "language": "cpp",
+          "mode": "core",
+          "cases": 5
+        },
+        {
+          "language": "c",
+          "mode": "acm",
+          "cases": 5
+        },
+        {
+          "language": "c",
+          "mode": "core",
+          "cases": 5
+        }
+      ],
+      "defaultACM": true,
+      "modeDraftRestore": true,
+      "combinedFilters": true,
+      "editableGoal": true,
+      "reviewPlanOpened": true,
+      "newQuestionDeduplicated": true
+    }
+  },
+  "tools": "VS Code selected local interpreter/compiler; no bundled compiler or interpreter"
+}

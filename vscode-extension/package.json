@@ -1,11 +1,13 @@
 {
   "name": "hot100-practice",
-  "displayName": "Hot100 刷题台",
-  "description": "在 VS Code 中练习力扣 Hot100：Python、C++、C，ACM 与核心代码模式，本地运行与测试。",
-  "version": "0.1.0",
   "publisher": "lovits",
+  "displayName": "LeetCode Hot100 Pro · ACM 增强版",
+  "description": "基于 Hot100 Pro：ACM/核心模式、VS Code 本机工具链、公司高频筛选与可调整的间隔复习计划。",
+  "version": "0.2.0",
+  "icon": "resources/hot100-pro.png",
   "engines": {
-    "vscode": "^1.96.0"
+    "vscode": "^1.107.0",
+    "node": ">=20"
   },
   "categories": [
     "Education",
@@ -13,12 +15,15 @@
   ],
   "keywords": [
     "leetcode",
-    "hot100",
-    "ACM",
-    "C",
-    "Python"
+    "hot-100",
+    "algorithm",
+    "interview",
+    "刷题"
   ],
-  "main": "./extension.js",
+  "galleryBanner": {
+    "color": "#1A1A2E",
+    "theme": "dark"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,71 +34,390 @@
   "bugs": {
     "url": "https://github.com/lovits/hot100-acm/issues"
   },
-  "icon": "media/icon.png",
-  "extensionKind": [
-    "workspace"
-  ],
-  "capabilities": {
-    "untrustedWorkspaces": {
-      "supported": "limited",
-      "description": "可查看题目；执行代码须信任工作区。"
-    }
-  },
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "hot100.open",
-        "title": "Hot100: 打开刷题台"
+        "command": "hot100Pro.login",
+        "title": "LeetCode: 登录",
+        "icon": "$(account)"
       },
       {
-        "command": "hot100.choose",
-        "title": "Hot100: 选择题目"
+        "command": "hot100Pro.logout",
+        "title": "LeetCode: 退出登录"
       },
       {
-        "command": "hot100.run",
-        "title": "Hot100: 运行示例"
+        "command": "hot100Pro.refreshList",
+        "title": "刷新列表",
+        "icon": "$(refresh)"
       },
       {
-        "command": "hot100.submit",
-        "title": "Hot100: 提交测试"
+        "command": "hot100Pro.submit",
+        "title": "LeetCode: 提交代码",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "hot100Pro.test",
+        "title": "LeetCode: 运行测试",
+        "icon": "$(play)"
+      },
+      {
+        "command": "hot100Pro.debug",
+        "title": "LeetCode: 本地调试",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "hot100Pro.runDebug",
+        "title": "LeetCode: 运行当前文件",
+        "icon": "$(run)"
+      },
+      {
+        "command": "hot100Pro.viewSolution",
+        "title": "LeetCode: 查看题解",
+        "icon": "$(book)"
+      },
+      {
+        "command": "hot100Pro.showRawJudge",
+        "title": "LeetCode: 查看最近一次原始判题响应"
+      },
+      {
+        "command": "hot100Pro.debugFailedCase",
+        "title": "LeetCode: 用判题失败用例本地调试"
+      },
+      {
+        "command": "hot100Pro.newSolutionFile",
+        "title": "LeetCode: 用其他语言新建题解文件",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "hot100Pro.customTest",
+        "title": "LeetCode: 用自定义用例测试",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "hot100Pro.setStatusFilter",
+        "title": "侧栏状态筛选：未做/已解决/尝试过"
+      },
+      {
+        "command": "hot100Pro.setGroupBy",
+        "title": "侧栏分组：按分类/按难度",
+        "icon": "$(list-ordered)"
+      },
+      {
+        "command": "hot100Pro.searchProblem",
+        "title": "LeetCode: 搜索题目（题号/标题/分类）",
+        "icon": "$(search)"
+      },
+      {
+        "command": "hot100Pro.randomProblem",
+        "title": "LeetCode: 随机抽题",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "hot100Pro.dailyQuestion",
+        "title": "LeetCode: 每日一题"
+      },
+      {
+        "command": "hot100Pro.viewSubmissions",
+        "title": "LeetCode: 查看提交历史",
+        "description": "查看当前题最近 20 条提交，可把云端提交的代码恢复到本地（跨设备同步）"
+      },
+      {
+        "command": "hot100Pro.nextProblem",
+        "title": "LeetCode: 下一题"
+      },
+      {
+        "command": "hot100Pro.setDailyGoal",
+        "title": "LeetCode: 设置每日刷题目标"
+      },
+      {
+        "command": "hot100Pro.toggleFavorite",
+        "title": "LeetCode: 收藏/取消收藏题目（本地）",
+        "icon": "$(star)"
+      },
+      {
+        "command": "hot100Pro.openNote",
+        "title": "LeetCode: 打开题目笔记",
+        "icon": "$(note)"
+      },
+      {
+        "command": "hot100Pro.reviewWrong",
+        "title": "LeetCode: 复习错题（到期的优先）"
+      },
+      {
+        "command": "hot100Pro.clearWrongQueue",
+        "title": "清空错题回顾队列"
+      },
+      {
+        "command": "hot100Pro.filter",
+        "title": "Hot100 Pro: 筛选题库",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "hot100Pro.clearFilters",
+        "title": "Hot100 Pro: 清空组合筛选"
+      },
+      {
+        "command": "hot100Pro.studyPlan",
+        "title": "Hot100 Pro: 学习计划与复习表"
+      },
+      {
+        "command": "hot100Pro.configurePlan",
+        "title": "Hot100 Pro: 修改学习目标与间隔"
+      },
+      {
+        "command": "hot100Pro.localRun",
+        "title": "Hot100 Pro: 本机运行示例",
+        "icon": "$(play)"
+      },
+      {
+        "command": "hot100Pro.localSubmit",
+        "title": "Hot100 Pro: 本机评测全部用例",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "hot100Pro.confirmReview",
+        "title": "Hot100 Pro: 确认复习完成"
+      },
+      {
+        "command": "hot100Pro.open",
+        "title": "Hot100 Pro: 打开刷题台"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "hot100",
-          "title": "Hot100",
-          "icon": "media/activity.svg"
+          "id": "hot100-pro-enhanced",
+          "title": "Hot100 Pro 增强版",
+          "icon": "$(code)"
         }
       ]
     },
     "views": {
-      "hot100": [
+      "hot100-pro-enhanced": [
         {
-          "id": "hot100.questions",
-          "name": "Leetcode 热题 100"
+          "id": "hot100-pro-questions",
+          "name": "Hot 100",
+          "contextualTitle": "Hot 100 Questions",
+          "icon": "resources/leetcode.svg"
         }
       ]
     },
     "menus": {
       "view/title": [
         {
-          "command": "hot100.choose",
-          "when": "view == hot100.questions",
-          "group": "navigation"
+          "command": "hot100Pro.filter",
+          "when": "view == hot100-pro-questions",
+          "group": "navigation@0"
+        },
+        {
+          "command": "hot100Pro.login",
+          "group": "navigation@1",
+          "when": "view == hot100-pro-questions"
+        },
+        {
+          "command": "hot100Pro.refreshList",
+          "group": "navigation@2",
+          "when": "view == hot100-pro-questions"
+        },
+        {
+          "command": "hot100Pro.setGroupBy",
+          "group": "navigation@3",
+          "when": "view == hot100-pro-questions"
+        },
+        {
+          "command": "hot100Pro.searchProblem",
+          "group": "navigation@4",
+          "when": "view == hot100-pro-questions"
+        },
+        {
+          "command": "hot100Pro.randomProblem",
+          "group": "navigation@5",
+          "when": "view == hot100-pro-questions"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "hot100Pro.openNote",
+          "group": "inline@1",
+          "when": "view == hot100-pro-questions && viewItem == question"
+        },
+        {
+          "command": "hot100Pro.toggleFavorite",
+          "group": "inline@2",
+          "when": "view == hot100-pro-questions && viewItem == question"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "hot100Pro.localSubmit",
+          "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/)",
+          "group": "navigation@0"
+        },
+        {
+          "command": "hot100Pro.runDebug",
+          "group": "navigation@0",
+          "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/)"
+        },
+        {
+          "command": "hot100Pro.debug",
+          "group": "navigation@1",
+          "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/) && !hot100Pro.acmActive"
+        },
+        {
+          "command": "hot100Pro.test",
+          "group": "navigation@2",
+          "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/)"
+        },
+        {
+          "command": "hot100Pro.submit",
+          "group": "navigation@3",
+          "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/) && !hot100Pro.acmActive"
+        },
+        {
+          "command": "hot100Pro.customTest",
+          "group": "navigation@4",
+          "when": "resourcePath =~ /customcase_/"
         }
       ]
-    }
+    },
+    "configuration": {
+      "title": "LeetCode Hot100 Pro",
+      "properties": {
+        "hot100Pro.dailyGoal": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "每日刷题目标（每天提交通过的题数），侧栏刷题统计中展示今日进度"
+        },
+        "hot100Pro.reviewLimit": {
+          "type": "integer",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "每日复习数量上限，未完成任务继续保留。"
+        },
+        "hot100Pro.reviewIntervals": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "default": [
+            1,
+            2,
+            4,
+            7,
+            15,
+            30
+          ],
+          "description": "首次完成后的复习日期（天），递增；逾期完成后顺延后续阶段。"
+        },
+        "hot100Pro.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "留空时读取 VS Code 当前环境或编译配置，最后回退系统 PATH。"
+        },
+        "hot100Pro.cCompilerPath": {
+          "type": "string",
+          "default": "",
+          "description": "留空时读取 VS Code 当前环境或编译配置，最后回退系统 PATH。"
+        },
+        "hot100Pro.cppCompilerPath": {
+          "type": "string",
+          "default": "",
+          "description": "留空时读取 VS Code 当前环境或编译配置，最后回退系统 PATH。"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "hot100Pro.test",
+        "key": "ctrl+alt+t",
+        "mac": "cmd+alt+t",
+        "when": "editorTextFocus && resourcePath =~ /leetcode/"
+      },
+      {
+        "command": "hot100Pro.submit",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s",
+        "when": "editorTextFocus && resourcePath =~ /leetcode/"
+      },
+      {
+        "command": "hot100Pro.nextProblem",
+        "key": "ctrl+alt+right",
+        "mac": "cmd+alt+right",
+        "when": "editorTextFocus && resourcePath =~ /leetcode/"
+      },
+      {
+        "command": "hot100Pro.searchProblem",
+        "key": "ctrl+alt+f",
+        "mac": "cmd+alt+f"
+      },
+      {
+        "command": "hot100Pro.dailyQuestion",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d"
+      },
+      {
+        "command": "hot100Pro.randomProblem",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r"
+      },
+      {
+        "command": "hot100Pro.reviewWrong",
+        "key": "ctrl+alt+w",
+        "mac": "cmd+alt+w"
+      },
+      {
+        "command": "hot100Pro.openNote",
+        "key": "ctrl+alt+n",
+        "mac": "cmd+alt+n",
+        "when": "editorTextFocus && resourcePath =~ /leetcode/"
+      },
+      {
+        "command": "hot100Pro.toggleFavorite",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "editorTextFocus && resourcePath =~ /leetcode/"
+      }
+    ]
   },
   "scripts": {
-    "test": "node test/engine-test.js python3 && node test/engine-test.js cpp && node test/c-core-test.js && node test/c-acm-test.js",
-    "package": "vsce package --allow-missing-repository"
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "test:unit": "node --test \"out/unit/*.unit.test.js\"",
+    "release": "node scripts/release.mjs",
+    "test:judge": "node test/engine-test.js python3 && node test/engine-test.js cpp && node test/c-core-test.js && node test/c-acm-test.js && node test/c-negative-test.js",
+    "package": "npx @vscode/vsce@3.7.0 package --no-dependencies --readme-path MARKETPLACE.md"
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.107.0",
+    "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
-    "@vscode/vsce": "^3.7.0"
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
   },
   "dependencies": {
-    "sanitize-html": "^2.18.2"
-  }
+    "playwright-core": "1.63.0"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "可查看题目；执行代码须信任工作区。"
+    }
+  },
+  "extensionKind": [
+    "workspace"
+  ]
 }
