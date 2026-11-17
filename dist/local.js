@@ -6,7 +6,7 @@ let models=new Map(), lastFocus=null,restoringReading=false,serviceStopped=false
 const clone=x=>JSON.parse(JSON.stringify(x));
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function normalizeState(value={}){
-  const next={codes:{},notes:{},accepted:[],favorites:[],history:{},editorViews:{},reading:{},testInputs:{},conflicts:[],theme:'light',fontSize:14,last:1,testsCollapsed:true,...value};
+  const next={codes:{},notes:{},accepted:[],favorites:[],history:{},editorViews:{},reading:{},testInputs:{},conflicts:[],theme:'light',fontSize:14,last:1,testsCollapsed:false,...value};
   for(const k of ['codes','notes','history','editorViews','reading','testInputs','testWorkspaces','codeBookmarks'])if(!next[k]||typeof next[k]!=='object'||Array.isArray(next[k]))next[k]={};
   for(const k of ['accepted','favorites','conflicts'])if(!Array.isArray(next[k]))next[k]=[];
   for(const [id,rows] of Object.entries(next.history))next.history[id]=(Array.isArray(rows)?rows:[]).filter(r=>r&&typeof r.code==='string').map((r,i)=>({...r,id:r.id||`legacy-${r.time}-${i}`}));

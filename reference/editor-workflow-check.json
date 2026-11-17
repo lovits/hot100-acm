@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-17",
+  "isolation": "Independent local server and test-only progress directory; user drafts were not used for test submissions",
+  "checks": [
+    "Fresh startup opens question, editor and test inputs together",
+    "Editor text input including Chinese comments persists",
+    "Undo and redo restore editor content",
+    "Python and C++ formatting work; formatting can be undone",
+    "Python ACM/core and C++ ACM/core drafts remain isolated across switches",
+    "Reloading restores language, mode and draft",
+    "After switching through ten questions, evicted draft and cursor (line 2 column 4) restore; model cache stays at eight",
+    "Code bookmark save and restore preserves replaced draft in recovery data",
+    "Python ACM and core UI Run and Submit pass for two-sum",
+    "C++ ACM and core UI Run and Submit pass for two-sum",
+    "Invalid core JSON identifies the case and parameter without starting a job",
+    "Wrong answer, syntax error and runtime exception show matching feedback",
+    "Correcting code after errors allows the next run to pass"
+  ]
+}

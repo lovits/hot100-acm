@@ -13,7 +13,7 @@ function installDocking(){
   const contentBeforeNotes=renderContent;renderContent=function(){contentBeforeNotes();guideContent();if(current)pad.value=state.notes[current.id]||'';};
   const group=(...tabs)=>({tabs,active:tabs[0]});
   const split=(axis,a,b,ratio=.5)=>({axis,a,b,ratio});
-  const standard=()=>split('x',group('problem','reading','history','notes','leet'),split('y',group('code'),Object.assign(group('test','result'),{compact:true}),.67));
+  const standard=()=>split('x',group('problem','reading','history','notes','leet'),split('y',group('code'),group('test','result'),.67));
   function valid(tree){
     const ids=[];
     function visit(n,depth){
