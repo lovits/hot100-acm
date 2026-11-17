@@ -44,3 +44,9 @@ test('topic/company/difficulty/status-independent tags compose as an intersectio
  assert.ok(!matches(p,{...defaultFilters,difficulty:'困难'}));assert.ok(!matches(p,{...defaultFilters,company:'不存在的公司'}));
  assert.equal(frequency(p,'字节跳动'),127);assert.equal(frequency(p),306);assert.equal(catalog.length,100);
 });
+test('legacy solved problems without dates start review, never inflate new-question goals',()=>{
+ const state=recordResult(emptyPlan(),'1',true,'2026-11-17',defaultIntervals,'test',true);
+ assert.equal(state.events[0].kind,'review');assert.equal(state.learned['1'].due,'2026-11-18');
+ const tasks=dayTasks(state,'2026-11-17',['2','3','4','5','6'],5,20);
+ assert.equal(tasks.newDone.length,0);assert.equal(tasks.reviewDone.length,1);assert.equal(tasks.newIds.length,5);
+});

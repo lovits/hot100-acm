@@ -52,7 +52,7 @@ export class Enhancements {
         const language=['python3','cpp','c'].includes(preferred)?preferred:'python3';
         const ext=({python3:'py',cpp:'cpp',c:'c'} as Record<string,string>)[language];if(!ext)return undefined;
         const folder=vscode.Uri.file(path.join(root,'leetcode',mode==='acm'?'acm':''));await vscode.workspace.fs.createDirectory(folder);
-        const uri=vscode.Uri.joinPath(folder,`${id}_${q.titleSlug}.${ext}`);
+        const uri=vscode.Uri.joinPath(folder,`${id}_${p.url.split('/').filter(Boolean).at(-1)}.${ext}`);
         try{await vscode.workspace.fs.stat(uri);}catch(e){if(!(e instanceof vscode.FileSystemError && e.code==='FileNotFound'))throw e;
             const text=mode==='core'?(language==='c'?header+'\n':language==='python3'?'from typing import *\n':'')+p.officialTemplates[language]:language==='c'?'#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    // 读取输入，计算并输出结果\n    return 0;\n}\n':p.acm.template[language];
             await vscode.workspace.fs.writeFile(uri,Buffer.from(text));
@@ -79,8 +79,8 @@ export class Enhancements {
         const choice=await vscode.window.showQuickPick([{label:'Python',value:'python3'},{label:'C++',value:'cpp'},{label:'C',value:'c'}],{title:'本机评测语言'});
         if(choice)await this.switchMode(q,this.mode(String(q.questionFrontendId)),choice.value);
     }
-    async record(id:string,ok:boolean,source:'test'|'manual'='test') {
-        await this.context.globalState.update('enhancedPlan',recordResult(this.state,id,ok,localDateStr(),this.intervals,source));
+    async record(id:string,ok:boolean,source:'test'|'manual'='test',alreadySolved=false) {
+        await this.context.globalState.update('enhancedPlan',recordResult(this.state,id,ok,localDateStr(),this.intervals,source,alreadySolved));
         this.provider.rerender();if(this.planPanel)this.showPlan();
     }
     async runLocal(all:boolean,expectedId?:string,customTests?:any[]) {
@@ -102,14 +102,14 @@ export class Enhancements {
         try{
             await doc.save();const tools=await resolveToolchain(language,uri);
             const cases=customTests||this.tests[id!][mode].slice(0,all?undefined:p.acm.examples.length||1);
-            this.output.clear();this.output.show(true);this.output.appendLine(`${p.id}. ${p.title} · ${language} · ${mode==='acm'?'ACM':'核心代码'} · ${all?'全部用例':'示例'}`);
+            this.output.clear();this.output.show(true);this.output.appendLine(`${p.id}. ${p.title} · ${language} · ${mode==='acm'?'ACM':'核心代码'} · ${customTests?'自定义用例':all?'全部用例':'示例'}`);
             this.output.appendLine(`VS Code 工具链：${Object.values(tools).join(', ')||'系统 PATH 中的解释器/编译器'}`);
             const result:any=await vscode.window.withProgress<any>({location:vscode.ProgressLocation.Notification,title:'Hot100 正在使用本机环境运行'},()=>evaluate(p,language,mode,doc.getText(),cases,tools));
             if(result.error){this.output.appendLine(result.error);if(result.compileError)this.output.appendLine(result.compileError);vscode.window.showErrorMessage('本机评测失败，请查看“Hot100 本机评测”输出。');return result;}
             const passed=result.results.filter((r:any)=>r.ok).length;
             this.output.appendLine(`${passed}/${result.results.length} 通过`);
             result.results.forEach((r:any,i:number)=>this.output.appendLine(`用例 ${i+1}：${r.ok?'通过':JSON.stringify(r)}`));
-            if(all&&!customTests){const accepted=passed===result.results.length;await this.provider.recordLocalResult(String(p.id),accepted);await this.record(String(p.id),accepted);}
+            if(all&&!customTests){const accepted=passed===result.results.length,alreadySolved=this.provider.isSolved(String(p.id));await this.provider.recordLocalResult(String(p.id),accepted);await this.record(String(p.id),accepted,'test',alreadySolved);}
             vscode.window.showInformationMessage(`Hot100 ${passed}/${result.results.length} 通过`);return result;
         }finally{releaseJudge();}
     }

@@ -1,7 +1,7 @@
 {
   "version": "0.2.0",
   "base": "LeetCode Hot100 Pro v0.1.17 / 9f5f10c",
-  "unitTests": 153,
+  "unitTests": 154,
   "compile": "passed",
   "lintErrors": 0,
   "reports": {
@@ -91,8 +91,29 @@
       "combinedFilters": true,
       "editableGoal": true,
       "reviewPlanOpened": true,
-      "newQuestionDeduplicated": true
+      "newQuestionDeduplicated": true,
+      "customCasesInSixModes": true,
+      "installedVSIXVerified": true,
+      "version": "0.2.0"
     }
   },
-  "tools": "VS Code selected local interpreter/compiler; no bundled compiler or interpreter"
+  "tools": "VS Code selected local interpreter/compiler; no bundled compiler or interpreter",
+  "installedVersion": "0.2.0",
+  "noBundledCompilerOrInterpreter": true,
+  "crossPlatform": {
+    "macOSAndLinux": {
+      "run": "https://github.com/lovits/hot100-acm/actions/runs/44097967728",
+      "jobs": "macos-latest and ubuntu-latest passed"
+    },
+    "windowsPythonCpp": {
+      "run": "https://github.com/lovits/hot100-acm/actions/runs/44099183539",
+      "results": "Python and C++ full dataset passed; initial C compiler startup failure retested separately"
+    },
+    "windowsC": {
+      "run": "https://github.com/lovits/hot100-acm/actions/runs/44103130517",
+      "conclusion": "success"
+    },
+    "packaging": "Platform-neutral VSIX built, installed, and tested on macOS; no interpreter/compiler bundled"
+  },
+  "legacySolvedGoals": "Already solved problems begin review rather than count as new questions when joining the plan"
 }

@@ -11,7 +11,7 @@ export function intervalsOf(value: unknown): number[] {
     return Array.isArray(value) && value.length > 0 && value.length <= 20
         && value.every((n,i)=>Number.isInteger(n) && n>0 && n<=365 && (i===0 || n>value[i-1])) ? [...value] : [...defaultIntervals];
 }
-export function recordResult(state: PlanState, id: string, ok: boolean, date: string, intervals: number[], source: StudyEvent['source'] = 'test'): PlanState {
+export function recordResult(state: PlanState, id: string, ok: boolean, date: string, intervals: number[], source: StudyEvent['source'] = 'test', alreadySolved = false): PlanState {
     const next: PlanState = {learned: {...state.learned},events:[...state.events]}; const entry = next.learned[id];
     if (!ok) {
         if (entry?.due && entry.due<=date) { next.learned[id] = {...entry,due:addDays(date,1)}; }
@@ -20,7 +20,7 @@ export function recordResult(state: PlanState, id: string, ok: boolean, date: st
     if (next.events.some(e=>e.id===id && e.date===date)) { return next; }
     if (!entry) {
         next.learned[id] = {first:date,last:date,stage:0,due:addDays(date,intervals[0])};
-        next.events.push({id,date,kind:'new',source}); return next;
+        next.events.push({id,date,kind:alreadySolved?'review':'new',source}); return next;
     }
     if (!entry.due || entry.due>date) { return next; }
     const stage = entry.stage+1;

@@ -37,5 +37,7 @@
   "editableGoal": true,
   "reviewPlanOpened": true,
   "newQuestionDeduplicated": true,
-  "customCasesInSixModes": true
+  "customCasesInSixModes": true,
+  "installedVSIXVerified": true,
+  "version": "0.2.0"
 }

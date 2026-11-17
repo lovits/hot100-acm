@@ -196,6 +196,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
 	 */
 	recordJudgeResult(titleSlug: string, opts: { solved: boolean; reason?: string; recordWrong?: boolean }): void {
 		const id = SLUG_TO_ID.get(titleSlug);
+        const alreadySolved=id?this.isSolved(id):false;
 		if (id) {
 			const cur = statusOf(this.questionStatusMap.get(id));
 			this.questionStatusMap.set(id, opts.solved ? 'ac' : cur === 'ac' ? 'ac' : 'notac');
@@ -216,7 +217,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
 			this.store?.update(WRONG_STORE_KEY, this.wrongList);
 		}
 		if(opts.solved && opts.recordWrong && id && this.store){
-            void this.store.update('enhancedPlan',recordResult(this.store.get<PlanState>('enhancedPlan',emptyPlan()),id,true,localDateStr(),intervalsOf(vscode.workspace.getConfiguration('hot100Pro').get('reviewIntervals'))));
+            void this.store.update('enhancedPlan',recordResult(this.store.get<PlanState>('enhancedPlan',emptyPlan()),id,true,localDateStr(),intervalsOf(vscode.workspace.getConfiguration('hot100Pro').get('reviewIntervals')),'test',alreadySolved));
         }
 		// 提交通过当日打卡：连续打卡/每日目标进度依赖此集合（仅 Hot 100）
 		if (opts.solved && id) {
