@@ -7,8 +7,8 @@ import * as vscode from 'vscode';
  */
 suite('Extension Smoke Test Suite', () => {
 	test('扩展可激活且核心命令已注册', async () => {
-		const ext = vscode.extensions.getExtension('ShiZiMiao.leetcode');
-		assert.ok(ext, '应能找到 ShiZiMiao.leetcode 扩展');
+		const ext = vscode.extensions.getExtension('lovits.hot100-practice');
+		assert.ok(ext, '应能找到 lovits.hot100-practice 扩展');
 		await ext!.activate();
 
 		const commands = await vscode.commands.getCommands(true);
@@ -20,6 +20,7 @@ suite('Extension Smoke Test Suite', () => {
 			'hot100Pro.debug',
 			'hot100Pro.viewSolution',
 			'hot100Pro.refreshList',
+            'hot100Pro.resetPlan',
 		];
 		for (const cmd of coreCommands) {
 			assert.ok(commands.includes(cmd), `核心命令 ${cmd} 应已注册`);

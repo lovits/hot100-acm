@@ -41,7 +41,7 @@ export class Enhancements {
         }));
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
         command('filter',()=>this.chooseFilter()); command('clearFilters',()=>provider.clearEnhancedFilters());
-        command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
+        command('resetPlan',()=>this.resetPlan());command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
         command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());
         command('open',async()=>{await vscode.commands.executeCommand('workbench.view.extension.hot100-pro-enhanced');const p=catalog[0];return vscode.commands.executeCommand('hot100Pro.openProblem',{frontendQuestionId:String(p.id),titleSlug:p.url.split('/').filter(Boolean).at(-1),title:p.title});});
         command('confirmReview',async(id:string)=>{if(!catalogById.has(String(id)))return;const choice=await vscode.window.showWarningMessage('确认已独立完成这道题的复习？','确认完成');if(choice==='确认完成')await this.record(String(id),true,'manual');});
@@ -175,6 +175,12 @@ export class Enhancements {
         if(interval)await this.context.globalState.update('enhancedPlan',replan(this.state,value as number[]));
         this.provider.rerender();this.showPlan();
     }
+    async resetPlan() {
+        const choice=await vscode.window.showWarningMessage('重置学习计划？将清空全部学习与复习记录、日历和完成进度，从零开始；保留目标设置、题库通过状态、收藏、笔记和代码。此操作无法撤销。',{modal:true},'确认重置');
+        if(choice!=='确认重置')return;
+        await this.context.globalState.update('enhancedPlan',emptyPlan());
+        this.provider.rerender();this.showPlan();
+    }
     async includeSolved() {
         const choices=catalog.filter(p=>this.provider.isSolved(String(p.id))&&!this.state.learned[p.id]).map(p=>({label:`${p.id}. ${p.title}`,id:String(p.id)}));
         if(!choices.length){vscode.window.showInformationMessage('已有通过记录均已纳入计划。');return;}
@@ -184,6 +190,7 @@ export class Enhancements {
     }
     showPlan() {
         if(!this.planPanel){this.planPanel=vscode.window.createWebviewPanel('hot100Pro.studyPlan','Hot100 学习计划',vscode.ViewColumn.Active,{enableScripts:true,localResourceRoots:[]});this.planPanel.onDidDispose(()=>this.planPanel=undefined);this.planPanel.webview.onDidReceiveMessage(async m=>{try{
+            if(m?.type==='reset')await this.resetPlan();
             if(m?.type==='configure')await this.configurePlan();if(m?.type==='include')await this.includeSolved();
             if((m?.type==='open'||m?.type==='manual')&&catalogById.has(String(m.id))){if(m.type==='manual'){const id=String(m.id),today=localDateStr();if(dayTasks(this.state,today,[],0,100).reviewIds.includes(id))await this.record(id,true,'manual');}else await this.openId(String(m.id));}
         }catch(e){vscode.window.showErrorMessage(String(e));}});}

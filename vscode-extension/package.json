@@ -3,7 +3,7 @@
   "publisher": "lovits",
   "displayName": "Hot100 ACM",
   "description": "在 VS Code 中练习 Hot100：ACM 与核心代码模式、题库组合筛选、本机测试、收藏笔记与间隔复习。",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "icon": "resources/hot100-acm.png",
   "engines": {
     "vscode": "^1.107.0",
@@ -160,6 +160,10 @@
       {
         "command": "hot100Pro.studyPlan",
         "title": "Hot100 ACM: 学习计划与日历"
+      },
+      {
+        "command": "hot100Pro.resetPlan",
+        "title": "Hot100 ACM: 重置学习计划"
       },
       {
         "command": "hot100Pro.configurePlan",

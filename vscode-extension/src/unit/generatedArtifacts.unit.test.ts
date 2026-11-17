@@ -34,7 +34,7 @@ const fakeVscode: any = {
     }
 };
 
-function loadProblemPanel(): any {
+function loadProblemPanel(modulePath = '../views/problemPanel'): any {
     // eslint-disable-next-line @typescript-eslint/no-require-imports -- 拦截 Module._load mock vscode 模块，ESM import 无法在加载期替换依赖
     const Module = require('module');
     const origLoad = Module._load;
@@ -46,7 +46,7 @@ function loadProblemPanel(): any {
     };
     try {
         // eslint-disable-next-line @typescript-eslint/no-require-imports -- 依赖上方 Module._load mock 生效后再加载，静态 import 会在 mock 前执行
-        return require('../views/problemPanel');
+        return require(modulePath);
     } finally {
         Module._load = origLoad;
     }
@@ -174,4 +174,27 @@ test('调试驱动产物：Java 类名与文件名一致（含数字开头 slug�
     assert.ok(gen!.content.includes('public class _3sumDebug'), 'public 类名必须与文件名一致且为合法标识符');
     const base = gen!.fileName.replace(/\.java$/, '');
     assert.ok(gen!.content.includes(`class ${base}`), `类名应与文件名一致: ${base}`);
+});
+
+
+test('重置学习计划：取消不写入，确认仅清空计划并刷新', async () => {
+    let choice: string | undefined = undefined;
+    fakeVscode.window = { showWarningMessage: async () => choice, createOutputChannel: () => ({}), createStatusBarItem: () => ({}) };
+    fakeVscode.StatusBarAlignment = {Left: 1};
+    fakeVscode.languages = {createDiagnosticCollection: () => ({})};
+    const { Enhancements } = loadProblemPanel('../enhanced/controller');
+    const writes: unknown[] = [];
+    let refreshes = 0;
+    const target = {
+        context: {globalState: {update: async (...args: unknown[]) => {writes.push(args);}}},
+        provider: {rerender: () => refreshes++},
+        showPlan: () => refreshes++
+    };
+    await Enhancements.prototype.resetPlan.call(target);
+    assert.deepStrictEqual(writes, []);
+    assert.strictEqual(refreshes, 0);
+    choice = '确认重置';
+    await Enhancements.prototype.resetPlan.call(target);
+    assert.deepStrictEqual(writes, [['enhancedPlan', {learned: {}, events: []}]]);
+    assert.strictEqual(refreshes, 2);
 });
