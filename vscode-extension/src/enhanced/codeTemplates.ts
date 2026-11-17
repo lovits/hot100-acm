@@ -22,3 +22,23 @@ export function acmTemplate(language: string): string {
     if(!template)throw Error(`未找到 ${language} 的 ACM 模板。`);
     return template;
 }
+
+
+// Use standard headers so editor diagnostics work with macOS Clang as well as GCC.
+const cppHeaders = ['algorithm','array','bitset','cassert','cctype','climits','cmath','cstddef','cstdint','cstdio','cstdlib','cstring','deque','functional','iomanip','iostream','iterator','limits','list','map','memory','numeric','queue','set','sstream','stack','string','tuple','unordered_map','unordered_set','utility','vector']
+    .map(name=>`#include <${name}>`).join('\n');
+export function cppEditorSource(source: string, core = false): string {
+    let result=source.replace(/^\s*#\s*include\s*[<"]bits\/stdc\+\+\.h[>"][^\r\n]*/gm,cppHeaders);
+    if(!/^\s*#\s*include\s*<vector>/m.test(result))result=cppHeaders+'\n'+result;
+    if(!/^\s*using\s+namespace\s+std\s*;/m.test(result))result=result.replace('#include <vector>','#include <vector>\nusing namespace std;');
+    // LeetCode supplies these types; only the editor needs local declarations.
+    if(core&&!result.includes('// Hot100 editor-only types')) {
+        const types=[
+            /\bListNode\s*\*/.test(source)?'struct ListNode { int val; ListNode *next; ListNode(int x=0):val(x),next(nullptr){} };':'',
+            /\bTreeNode\s*\*/.test(source)?'struct TreeNode { int val; TreeNode *left,*right; TreeNode(int x=0):val(x),left(nullptr),right(nullptr){} };':'',
+            /\bNode\s*\*/.test(source)?'class Node { public: int val; Node *next,*random; Node(int x=0):val(x),next(nullptr),random(nullptr){} };':''
+        ].filter(Boolean).join('\n');
+        if(types)result='#ifdef __INTELLISENSE__\n// Hot100 editor-only types\n'+types+'\n#endif\n'+result;
+    }
+    return result;
+}

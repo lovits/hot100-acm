@@ -10,7 +10,7 @@ import { tryBeginJudge, releaseJudge } from '../judgeFeedback';
 import { resolveToolchain } from './toolchain';
 import { getExtension, langSlugOfExtension, normalizeLangSlug } from '../utils/languageUtils';
 import { selectLanguage } from '../views/languageQuickPick';
-import { acmTemplate } from './codeTemplates';
+import { acmTemplate, cppEditorSource } from './codeTemplates';
 import { renderStudyCalendar } from './studyCalendar';
 // Existing six-mode evaluator; it invokes the selected local executables, with no bundled interpreter/compiler.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -78,6 +78,14 @@ export class Enhancements {
         try{await vscode.workspace.fs.stat(uri);}catch(e){if(!(e instanceof vscode.FileSystemError && e.code==='FileNotFound'))throw e;
             const text=mode==='core'?(language==='c'?header+'\n':language==='python3'?'from typing import *\n':'')+snippet:p.acm.template[language]||acmTemplate(language);
             await vscode.workspace.fs.writeFile(uri,Buffer.from(text));
+        }
+        if(language==='cpp') {
+            const doc=await vscode.workspace.openTextDocument(uri),source=doc.getText(),updated=cppEditorSource(source,mode==='core');
+            if(updated!==source) {
+                const edit=new vscode.WorkspaceEdit();
+                edit.replace(uri,new vscode.Range(doc.positionAt(0),doc.positionAt(source.length)),updated);
+                if(!await vscode.workspace.applyEdit(edit))throw Error('无法补齐 C++ 头文件，请重试。');
+            }
         }
         this.files.set(`${id}:${mode}:${language}`,uri.fsPath);
         return {filePath:uri.fsPath,language,mode};
