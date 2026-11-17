@@ -4,12 +4,14 @@ import * as fs from 'fs';
 import { Hot100Provider } from '../views/hot100Provider';
 import { LeetCodeApi } from '../core/leetcodeApi';
 import { catalog, catalogById, defaultFilters, Filters } from './catalog';
-import { dayTasks, emptyPlan, intervalsOf, recordResult, replan, PlanState, addDays } from './studyPlan';
+import { emptyPlan, intervalsOf, recordResult, replan, PlanState, addDays } from './studyPlan';
 import { localDateStr } from '../utils/studyStats';
-import { escapeHtml } from '../utils/htmlUtil';
 import { tryBeginJudge, releaseJudge } from '../judgeFeedback';
 import { resolveToolchain } from './toolchain';
-import { langSlugOfExtension } from '../utils/languageUtils';
+import { getExtension, langSlugOfExtension, normalizeLangSlug } from '../utils/languageUtils';
+import { selectLanguage } from '../views/languageQuickPick';
+import { acmTemplate } from './codeTemplates';
+import { renderStudyCalendar } from './studyCalendar';
 // Existing six-mode evaluator; it invokes the selected local executables, with no bundled interpreter/compiler.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const {evaluate}=require('../../engine');
@@ -20,17 +22,21 @@ export class Enhancements {
     private planPanel?: vscode.WebviewPanel;
     private tests:Record<string,Record<string,any[]>>;
     private files=new Map<string,string>();
+    private codeColumns=new Map<string,vscode.ViewColumn>();
+    private switching=Promise.resolve();
+    private changingEditor=false;
     readonly changed=new vscode.EventEmitter<string>();
     constructor(private context:vscode.ExtensionContext, private provider:Hot100Provider, private api:LeetCodeApi) {
         this.tests=JSON.parse(fs.readFileSync(path.join(context.extensionPath,'data/tests.json'),'utf8'));
         context.subscriptions.push(this.output,this.changed);
         context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(async editor=>{
-            if(!editor)return;const file=editor.document.uri.fsPath,id=path.basename(file).match(/^(\d+)[_.-]/)?.[1];
+            if(!editor||this.changingEditor)return;const file=editor.document.uri.fsPath,id=path.basename(file).match(/^(\d+)[_.-]/)?.[1];
             const lang=langSlugOfExtension(path.extname(file).slice(1));
             if(!id||!lang||!catalogById.has(id))return;
             const mode=file.replace(/\\/g,'/').includes('/acm/')||path.basename(file).includes('-acm.')?'acm':'core';
-            const different=this.mode(id)!==mode||context.globalState.get('enhancedLanguage','python3')!==lang;
-            if(different){await context.globalState.update('enhancedModes',{...this.modeMap,[id]:mode});await context.globalState.update('enhancedLanguage',lang);this.changed.fire(id);}
+            this.codeColumns.set(id,editor.viewColumn||vscode.ViewColumn.One);
+            const different=this.mode(id)!==mode||this.language(id)!==lang;
+            if(different){await context.globalState.update('enhancedModes',{...this.modeMap,[id]:mode});await this.rememberLanguage(id,lang);this.changed.fire(id);}
             await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
         }));
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
@@ -45,39 +51,62 @@ export class Enhancements {
     mode(id:string):'acm'|'core'{return this.modeMap[id]==='core'?'core':'acm';}
     get state():PlanState{return this.context.globalState.get('enhancedPlan',emptyPlan());}
     get intervals():number[]{return intervalsOf(vscode.workspace.getConfiguration('hot100Pro').get('reviewIntervals'));}
+    language(id:string):string {return this.context.globalState.get<Record<string,string>>('enhancedLanguages',{})[id]||this.context.globalState.get('enhancedLanguage','python3');}
+    private async rememberLanguage(id:string,language:string) {
+        await this.context.globalState.update('enhancedLanguages',{...this.context.globalState.get<Record<string,string>>('enhancedLanguages',{}),[id]:language});
+        await this.context.globalState.update('enhancedLanguage',language);
+    }
+    codeColumn(id:string):vscode.ViewColumn {
+        const prior=this.context.workspaceState.get<any>('currentProblem');
+        const groups=vscode.window.tabGroups.all;
+        const current=groups.find(group=>group.tabs.some(tab=>tab.input instanceof vscode.TabInputText && tab.input.uri.fsPath===prior?.filePath && String(prior.questionFrontendId)===id));
+        if(current)return current.viewColumn;
+        const remembered=this.codeColumns.get(id);
+        if(remembered&&groups.some(g=>g.viewColumn===remembered))return remembered;
+        const match=groups.find(group=>group.tabs.some(tab=>tab.input instanceof vscode.TabInputText && path.basename(tab.input.uri.fsPath).startsWith(id+'_')));
+        const editor=vscode.window.visibleTextEditors.find(e=>e.document.uri.fsPath===prior?.filePath);
+        return match?.viewColumn||editor?.viewColumn||vscode.ViewColumn.One;
+    }
     async prepare(q:any,root:string,forceMode?:'core'|'acm',forceLanguage?:string) {
         const id=String(q.questionFrontendId),p=catalogById.get(id);if(!p)return undefined;
-        const mode=forceMode||this.mode(id);
-        const preferred=forceLanguage||this.context.globalState.get<string>('enhancedLanguage','python3');
-        const language=['python3','cpp','c'].includes(preferred)?preferred:'python3';
-        const ext=({python3:'py',cpp:'cpp',c:'c'} as Record<string,string>)[language];if(!ext)return undefined;
+        const mode=forceMode||this.mode(id),language=normalizeLangSlug(forceLanguage||this.language(id));
+        const ext=getExtension(language);if(ext==='txt')throw Error('请选择题目支持的编程语言。');
+        const snippet=q.codeSnippets?.find((s:any)=>normalizeLangSlug(s.langSlug)===language)?.code||p.officialTemplates[language];
+        if(mode==='core'&&!snippet)throw Error(`该题没有 ${language} 的官方模板，请重新选择语言。`);
         const folder=vscode.Uri.file(path.join(root,'leetcode',mode==='acm'?'acm':''));await vscode.workspace.fs.createDirectory(folder);
         const uri=vscode.Uri.joinPath(folder,`${id}_${p.url.split('/').filter(Boolean).at(-1)}.${ext}`);
         try{await vscode.workspace.fs.stat(uri);}catch(e){if(!(e instanceof vscode.FileSystemError && e.code==='FileNotFound'))throw e;
-            const text=mode==='core'?(language==='c'?header+'\n':language==='python3'?'from typing import *\n':'')+p.officialTemplates[language]:language==='c'?'#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    // 读取输入，计算并输出结果\n    return 0;\n}\n':p.acm.template[language];
+            const text=mode==='core'?(language==='c'?header+'\n':language==='python3'?'from typing import *\n':'')+snippet:p.acm.template[language]||acmTemplate(language);
             await vscode.workspace.fs.writeFile(uri,Buffer.from(text));
         }
         this.files.set(`${id}:${mode}:${language}`,uri.fsPath);
-        await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
         return {filePath:uri.fsPath,language,mode};
     }
-    async switchMode(q:any,mode:'acm'|'core',language?:string) {
-        const prior=this.context.workspaceState.get<any>('currentProblem');
+    switchMode(q:any,mode:'acm'|'core',language?:string,rootFolder?:string) {
+        const next=this.switching.then(()=>this.activateCode(q,mode,language,rootFolder));
+        this.switching=next.then(()=>undefined,()=>undefined);return next;
+    }
+    private async activateCode(q:any,mode:'acm'|'core',language?:string,rootFolder?:string) {
+        const id=String(q.questionFrontendId),prior=this.context.workspaceState.get<any>('currentProblem');
         const root=prior?.filePath?vscode.workspace.getWorkspaceFolder(vscode.Uri.file(prior.filePath))?.uri.fsPath:undefined;
-        const folder=root||vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+        const folder=rootFolder||root||vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
         if(!folder)throw Error('请先打开用于保存代码的工作区文件夹。');
-        const openEditors=vscode.window.visibleTextEditors;const column=openEditors.find(e=>e.document.uri.fsPath===prior?.filePath)?.viewColumn;
-        const selected=await this.prepare(q,folder,mode,language);if(!selected)return;
-        await this.context.globalState.update('enhancedModes',{...this.modeMap,[String(q.questionFrontendId)]:mode});
-        await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
-        if(language)await this.context.globalState.update('enhancedLanguage',language);
-        await this.context.workspaceState.update('currentProblem',{...prior,titleSlug:q.titleSlug,questionId:q.questionId,questionFrontendId:q.questionFrontendId,lang:selected.language,filePath:selected.filePath});
-        const doc=await vscode.workspace.openTextDocument(vscode.Uri.file(selected.filePath));
-        await vscode.window.showTextDocument(doc,{viewColumn:column,preview:false});
+        const column=this.codeColumn(id),selected=await this.prepare(q,folder,mode,language);if(!selected)return;
+        this.changingEditor=true;
+        try {
+            const doc=await vscode.workspace.openTextDocument(vscode.Uri.file(selected.filePath));
+            await vscode.window.showTextDocument(doc,{viewColumn:column,preview:false});
+            this.codeColumns.set(id,column);
+            await this.context.globalState.update('enhancedModes',{...this.modeMap,[id]:mode});
+            await this.rememberLanguage(id,selected.language);
+            await this.context.workspaceState.update('currentProblem',{...prior,titleSlug:q.titleSlug,questionId:q.questionId,questionFrontendId:q.questionFrontendId,lang:selected.language,filePath:selected.filePath,testCases:q.exampleTestcases||q.sampleTestCase});
+            await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
+            this.changed.fire(id);
+        } finally {this.changingEditor=false;}
     }
     async chooseLanguage(q:any){
-        const choice=await vscode.window.showQuickPick([{label:'Python',value:'python3'},{label:'C++',value:'cpp'},{label:'C',value:'c'}],{title:'本机评测语言'});
-        if(choice)await this.switchMode(q,this.mode(String(q.questionFrontendId)),choice.value);
+        const choice=await selectLanguage(q.codeSnippets||[]);
+        if(choice)await this.switchMode(q,this.mode(String(q.questionFrontendId)),choice.langSlug);
     }
     async record(id:string,ok:boolean,source:'test'|'manual'='test',alreadySolved=false) {
         await this.context.globalState.update('enhancedPlan',recordResult(this.state,id,ok,localDateStr(),this.intervals,source,alreadySolved));
@@ -89,7 +118,7 @@ export class Enhancements {
         const active=vscode.window.activeTextEditor;
         const candidate=active?.document.uri.scheme==='file'&&/\.(py|cpp|c)$/.test(active.document.uri.fsPath)&&(!expectedId||path.basename(active.document.uri.fsPath).startsWith(expectedId+'_'))?active:undefined;
         const editor=candidate||vscode.window.visibleTextEditors.find(e=>e.document.uri.fsPath===current?.filePath);
-        const storedFile=expectedId&&String(current?.questionFrontendId)!==expectedId?this.files.get(`${expectedId}:${this.mode(expectedId)}:${this.context.globalState.get('enhancedLanguage','python3')}`):current?.filePath;
+        const storedFile=expectedId&&String(current?.questionFrontendId)!==expectedId?this.files.get(`${expectedId}:${this.mode(expectedId)}:${this.language(expectedId)}`):current?.filePath;
         const uri=(editor&&(!expectedId||path.basename(editor.document.uri.fsPath).startsWith(expectedId+'_'))?editor.document.uri:undefined)||(storedFile?vscode.Uri.file(storedFile):undefined);
         if(!uri)throw Error('请先打开一道题目的代码文件。');
         const doc=editor?.document.uri.toString()===uri.toString()?editor.document:await vscode.workspace.openTextDocument(uri);
@@ -160,11 +189,9 @@ export class Enhancements {
         }catch(e){vscode.window.showErrorMessage(String(e));}});}
         const cfg=vscode.workspace.getConfiguration('hot100Pro'),goal=cfg.get<number>('dailyGoal',5),limit=cfg.get<number>('reviewLimit',20),today=localDateStr();
         const eligible=this.provider.filteredCatalog().filter(p=>!this.provider.isSolved(String(p.id))).map(p=>String(p.id));
-        const task=dayTasks(this.state,today,eligible,goal,limit);const ids=(items:string[],manual=false)=>items.map(id=>`<button data-id="${id}" data-action="open">${escapeHtml(catalogById.get(id)?.title||id)}</button>${manual?` <button data-id="${id}" data-action="manual">确认复习完成</button>`:''}`).join(' ')||'—';
-        let projected=this.state;const rows=[];
-        for(let i=0;i<14;i++){const date=addDays(today,i),t=dayTasks(projected,date,eligible,goal,limit);rows.push(`<tr><td>${date}${i===0?'（今天）':''}</td><td>${t.newDone.length} / ${t.newDone.length+t.newIds.length}</td><td>${t.reviewDone.length} / ${t.reviewIds.length+t.reviewDone.length}</td><td>${t.overdue}</td><td>${ids(t.newIds)}</td><td>${ids(t.reviewIds,i===0)}</td></tr>`);for(const id of [...t.newIds,...t.reviewIds])projected=recordResult(projected,id,true,date,this.intervals);}
-        const nonce=Date.now().toString(36);this.planPanel.webview.html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none';style-src 'nonce-${nonce}';script-src 'nonce-${nonce}'"><meta name="viewport" content="width=device-width,initial-scale=1"><style nonce="${nonce}">body{font-family:var(--vscode-font-family);color:var(--vscode-editor-foreground);background:var(--vscode-editor-background);font-size:var(--vscode-font-size);padding:20px;line-height:1.7}h1{font-size:22px}table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--vscode-panel-border);padding:9px}button{font:inherit;color:var(--vscode-textLink-foreground);background:transparent;border:1px solid var(--vscode-button-border,transparent);border-radius:4px;cursor:pointer;padding:3px 6px}button:focus-visible{outline:1px solid var(--vscode-focusBorder)}.table{overflow:auto}p{color:var(--vscode-descriptionForeground)}</style></head><body><h1>学习计划</h1><button data-action="configure">修改目标与复习间隔</button><button data-action="include">纳入已有通过题目</button><p>今日新题 ${task.newDone.length}/${task.newDone.length+task.newIds.length}（每日目标 ${goal}） · 复习 ${task.reviewDone.length}/${task.reviewIds.length+task.reviewDone.length} · 逾期 ${task.overdue} 道。复习日期：${this.intervals.join('、')} 天。未来安排按当前目标与筛选范围预估，实际完成后更新。</p><div class="table"><table><thead><tr><th>日期</th><th>新题完成/安排</th><th>复习完成/安排</th><th>逾期</th><th>新题</th><th>复习题</th></tr></thead><tbody>${rows.join('')}</tbody></table></div><script nonce="${nonce}">const api=acquireVsCodeApi();document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b)api.postMessage({type:b.dataset.action,id:b.dataset.id});});</script></body></html>`;
+        this.planPanel.webview.html=renderStudyCalendar({state:this.state,today,goal,limit,eligible,intervals:this.intervals,company:this.provider.enhancedFilters.company});
     }
+
     async openId(id:string){const p=catalogById.get(id);if(p)await vscode.commands.executeCommand('hot100Pro.openProblem',{frontendQuestionId:id,titleSlug:p.url.split('/').filter(Boolean).at(-1),title:p.title});}
     async getQuestion(slug:string){
         try{return await this.api.getQuestionContent(slug);}catch(e){const p=catalog.find(p=>p.url.split('/').filter(Boolean).at(-1)===slug);if(!p)throw e;return{data:{question:{questionId:String(p.id),questionFrontendId:String(p.id),title:p.title,translatedTitle:p.title,titleSlug:slug,difficulty:p.difficulty,translatedContent:p.officialHtml,codeSnippets:Object.entries(p.officialTemplates).map(([langSlug,code])=>({langSlug,lang:langSlug,code})),topicTags:p.topicTags.map(name=>({name,translatedName:name}))}}};}

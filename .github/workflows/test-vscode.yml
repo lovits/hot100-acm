@@ -43,7 +43,7 @@ jobs:
       - run: node test/official-test.js c
       # VSIX is platform-neutral; validate packaging on Unix and run judges on every OS.
       - if: runner.os != 'Windows'
-        run: npx --yes @vscode/vsce@3.7.0 package --no-dependencies --readme-path MARKETPLACE.md --out hot100-practice-0.2.0.vsix
+        run: npx --yes @vscode/vsce@3.7.0 package --no-dependencies --readme-path MARKETPLACE.md --out hot100-practice.vsix
       - uses: actions/upload-artifact@v4
         if: always()
         with:

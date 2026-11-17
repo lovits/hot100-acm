@@ -33,11 +33,21 @@
   ],
   "defaultACM": true,
   "modeDraftRestore": true,
+  "modePanelMessages": true,
+  "stableCodeGroup": true,
+  "rapidSwitches": true,
   "combinedFilters": true,
+  "flatFilteredResults": true,
+  "defaultGroupingPreserved": true,
+  "pickerOnEveryClick": true,
+  "cancelPreservesDraft": true,
+  "originalLanguageCount": 14,
+  "javascriptModeDrafts": true,
   "editableGoal": true,
-  "reviewPlanOpened": true,
+  "calendarOpened": true,
+  "calendarTitleOpensProblem": true,
   "newQuestionDeduplicated": true,
   "customCasesInSixModes": true,
   "installedVSIXVerified": true,
-  "version": "0.2.0"
+  "version": "0.2.1"
 }

@@ -285,7 +285,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
             if (this.favoriteIds.size > 0) {
                 nodes.push(new FavoriteItem(this.favoriteIds.size));
             }
-            if (f.sort === 'frequency') {
+            if (f.sort === 'frequency' || f.topic || f.tag || f.company || f.difficulty || f.search || f.due || this.filter !== 'all') {
                 nodes.push(...this.filteredQuestions().map(q=>this.toQuestionItem(q)));
                 return nodes;
             }

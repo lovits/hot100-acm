@@ -1,11 +1,105 @@
 {
-  "version": "0.2.0",
-  "base": "LeetCode Hot100 Pro v0.1.17 / 9f5f10c",
-  "unitTests": 154,
-  "compile": "passed",
-  "lintErrors": 0,
-  "reports": {
-    "results-c-acm": {
+  "version": "0.2.1",
+  "validationDate": "2026-11-18",
+  "unitTests": {
+    "passed": 158,
+    "failed": 0
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 180
+  },
+  "installedVSIX": {
+    "extensionId": "lovits.hot100-practice",
+    "version": "0.2.1",
+    "matchedRuntimeFiles": 89,
+    "existingWindowReloadVerified": false
+  },
+  "host": {
+    "checks": [
+      {
+        "language": "python3",
+        "mode": "acm",
+        "cases": 5
+      },
+      {
+        "language": "python3",
+        "mode": "core",
+        "cases": 5
+      },
+      {
+        "language": "cpp",
+        "mode": "acm",
+        "cases": 5
+      },
+      {
+        "language": "cpp",
+        "mode": "core",
+        "cases": 5
+      },
+      {
+        "language": "c",
+        "mode": "acm",
+        "cases": 5
+      },
+      {
+        "language": "c",
+        "mode": "core",
+        "cases": 5
+      }
+    ],
+    "defaultACM": true,
+    "modeDraftRestore": true,
+    "modePanelMessages": true,
+    "stableCodeGroup": true,
+    "rapidSwitches": true,
+    "combinedFilters": true,
+    "flatFilteredResults": true,
+    "defaultGroupingPreserved": true,
+    "pickerOnEveryClick": true,
+    "cancelPreservesDraft": true,
+    "originalLanguageCount": 14,
+    "javascriptModeDrafts": true,
+    "editableGoal": true,
+    "calendarOpened": true,
+    "calendarTitleOpensProblem": true,
+    "newQuestionDeduplicated": true,
+    "customCasesInSixModes": true,
+    "installedVSIXVerified": true,
+    "version": "0.2.1"
+  },
+  "browser": {
+    "monthNavigation": true,
+    "historicalDaySelection": true,
+    "directTitleMessage": {
+      "type": "open",
+      "id": "15"
+    },
+    "narrowWidth": 480,
+    "horizontalOverflow": false,
+    "completedRowsNotCollapsed": true
+  },
+  "unchangedLanguagePicker": true,
+  "judges": {
+    "python3": {
+      "language": "python3",
+      "questions": 100,
+      "cases": 1083,
+      "failures": []
+    },
+    "cpp": {
+      "language": "cpp",
+      "questions": 100,
+      "cases": 1083,
+      "failures": []
+    },
+    "cCore": {
+      "questions": 100,
+      "cases": 533,
+      "missing": [],
+      "failures": []
+    },
+    "cACM": {
       "questions": 5,
       "cases": 28,
       "failures": [],
@@ -15,7 +109,7 @@
         "timeout"
       ]
     },
-    "results-c-negative": [
+    "cNegative": [
       {
         "id": 142,
         "rejectedValueOnlyOrAliasedAnswer": true
@@ -28,92 +122,6 @@
         "id": 138,
         "rejectedValueOnlyOrAliasedAnswer": true
       }
-    ],
-    "results-cpp": {
-      "language": "cpp",
-      "questions": 100,
-      "cases": 1083,
-      "failures": []
-    },
-    "results-c-core": {
-      "questions": 100,
-      "cases": 533,
-      "missing": [],
-      "failures": []
-    },
-    "results-official-c": {
-      "language": "c",
-      "questions": 100,
-      "cases": 248,
-      "failures": []
-    },
-    "results-python3": {
-      "language": "python3",
-      "questions": 100,
-      "cases": 1083,
-      "failures": []
-    },
-    "results-pro-host": {
-      "checks": [
-        {
-          "language": "python3",
-          "mode": "acm",
-          "cases": 5
-        },
-        {
-          "language": "python3",
-          "mode": "core",
-          "cases": 5
-        },
-        {
-          "language": "cpp",
-          "mode": "acm",
-          "cases": 5
-        },
-        {
-          "language": "cpp",
-          "mode": "core",
-          "cases": 5
-        },
-        {
-          "language": "c",
-          "mode": "acm",
-          "cases": 5
-        },
-        {
-          "language": "c",
-          "mode": "core",
-          "cases": 5
-        }
-      ],
-      "defaultACM": true,
-      "modeDraftRestore": true,
-      "combinedFilters": true,
-      "editableGoal": true,
-      "reviewPlanOpened": true,
-      "newQuestionDeduplicated": true,
-      "customCasesInSixModes": true,
-      "installedVSIXVerified": true,
-      "version": "0.2.0"
-    }
-  },
-  "tools": "VS Code selected local interpreter/compiler; no bundled compiler or interpreter",
-  "installedVersion": "0.2.0",
-  "noBundledCompilerOrInterpreter": true,
-  "crossPlatform": {
-    "macOSAndLinux": {
-      "run": "https://github.com/lovits/hot100-acm/actions/runs/44097967728",
-      "jobs": "macos-latest and ubuntu-latest passed"
-    },
-    "windowsPythonCpp": {
-      "run": "https://github.com/lovits/hot100-acm/actions/runs/44099183539",
-      "results": "Python and C++ full dataset passed; initial C compiler startup failure retested separately"
-    },
-    "windowsC": {
-      "run": "https://github.com/lovits/hot100-acm/actions/runs/44103130517",
-      "conclusion": "success"
-    },
-    "packaging": "Platform-neutral VSIX built, installed, and tested on macOS; no interpreter/compiler bundled"
-  },
-  "legacySolvedGoals": "Already solved problems begin review rather than count as new questions when joining the plan"
+    ]
+  }
 }
