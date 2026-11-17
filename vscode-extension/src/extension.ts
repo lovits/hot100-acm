@@ -1697,6 +1697,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				async function handlePanelMessage(message: PanelToExtensionMessage, panel: vscode.WebviewPanel, q: any) {
                     if(message.type==='localRun'){await enhancements.runLocal(message.all,String(q.questionFrontendId));return;}
                     if(message.type==='setMode' && (message.mode==='acm'||message.mode==='core')){
+                        if(message.mode===enhancements.mode(String(q.questionFrontendId)))return;
                         await enhancements.switchMode(q,message.mode);
                         safeSetHtml(panel,generatePanelHtml(q,title,difficulty,questionContent,context,panel,activeTabRef,solutionHtmlCache.get(q.titleSlug)||''));return;
                     }

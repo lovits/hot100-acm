@@ -9,6 +9,7 @@ import { localDateStr } from '../utils/studyStats';
 import { escapeHtml } from '../utils/htmlUtil';
 import { tryBeginJudge, releaseJudge } from '../judgeFeedback';
 import { resolveToolchain } from './toolchain';
+import { langSlugOfExtension } from '../utils/languageUtils';
 // Existing six-mode evaluator; it invokes the selected local executables, with no bundled interpreter/compiler.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const {evaluate}=require('../../engine');
@@ -25,7 +26,7 @@ export class Enhancements {
         context.subscriptions.push(this.output,this.changed);
         context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(async editor=>{
             if(!editor)return;const file=editor.document.uri.fsPath,id=path.basename(file).match(/^(\d+)[_.-]/)?.[1];
-            const lang=({'.py':'python3','.cpp':'cpp','.c':'c'} as Record<string,string>)[path.extname(file)];
+            const lang=langSlugOfExtension(path.extname(file).slice(1));
             if(!id||!lang||!catalogById.has(id))return;
             const mode=file.replace(/\\/g,'/').includes('/acm/')||path.basename(file).includes('-acm.')?'acm':'core';
             const different=this.mode(id)!==mode||context.globalState.get('enhancedLanguage','python3')!==lang;
@@ -47,7 +48,8 @@ export class Enhancements {
     async prepare(q:any,root:string,forceMode?:'core'|'acm',forceLanguage?:string) {
         const id=String(q.questionFrontendId),p=catalogById.get(id);if(!p)return undefined;
         const mode=forceMode||this.mode(id);
-        const language=forceLanguage||this.context.globalState.get<string>('enhancedLanguage','python3');
+        const preferred=forceLanguage||this.context.globalState.get<string>('enhancedLanguage','python3');
+        const language=['python3','cpp','c'].includes(preferred)?preferred:'python3';
         const ext=({python3:'py',cpp:'cpp',c:'c'} as Record<string,string>)[language];if(!ext)return undefined;
         const folder=vscode.Uri.file(path.join(root,'leetcode',mode==='acm'?'acm':''));await vscode.workspace.fs.createDirectory(folder);
         const uri=vscode.Uri.joinPath(folder,`${id}_${q.titleSlug}.${ext}`);
