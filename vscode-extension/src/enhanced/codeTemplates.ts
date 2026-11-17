@@ -6,7 +6,7 @@ export function acmTemplate(language: string): string {
         python3: 'import sys\n\ndef solve():\n    # 读取输入，计算并输出结果\n    pass\n\nif __name__ == "__main__":\n    solve()\n',
         cpp: '#include <iostream>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    // 读取输入，计算并输出结果\n    return 0;\n}\n',
         c: '#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    // 读取输入，计算并输出结果\n    return 0;\n}\n',
-        java: 'import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        // 读取输入，计算并输出结果\n    }\n}\n',
+        java: 'import java.util.*;\n\nclass Main {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        // 读取输入，计算并输出结果\n    }\n}\n',
         javascript: "const fs = require('fs');\nconst input = fs.readFileSync(0, 'utf8');\n// 读取输入，计算并输出结果\n",
         typescript: "import * as fs from 'fs';\nconst input: string = fs.readFileSync(0, 'utf8');\n// 读取输入，计算并输出结果\n",
         go: 'package main\n\nimport (\n    "bufio"\n    "os"\n)\n\nfunc main() {\n    in := bufio.NewReader(os.Stdin)\n    _ = in\n    // 读取输入，计算并输出结果\n}\n',
