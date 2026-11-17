@@ -4,9 +4,9 @@
 
 ## VS Code 插件
 
-新增 [Hot100 VS Code 插件](vscode-extension/README.md)，使用原生编辑器，支持 Python/C++/C 的 ACM 与核心代码模式。[下载可安装的 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.6)。插件与桌面应用独立编号，桌面版仍为 v1.0.11。
+新增 [Hot100 VS Code 插件](vscode-extension/README.md)，使用原生编辑器，支持 Python/C++/C 的 ACM 与核心代码模式。[下载可安装的 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.7)。插件与桌面应用独立编号，桌面版仍为 v1.0.11。
 
-插件使用方法见 [运行与提交说明](vscode-extension/运行与提交说明.txt)。
+插件使用方法见 [运行与提交说明](vscode-extension/运行与提交说明.md)。
 
 ## 启动
 

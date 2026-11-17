@@ -40,7 +40,7 @@ export class Enhancements {
             await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
         }));
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
-        command('usageGuide',async()=>vscode.window.showTextDocument(await vscode.workspace.openTextDocument(vscode.Uri.file(path.join(context.extensionPath,'运行与提交说明.txt'))),{preview:false}));
+        command('usageGuide',()=>vscode.commands.executeCommand('markdown.showPreview',vscode.Uri.file(path.join(context.extensionPath,'运行与提交说明.md'))));
         command('filter',()=>this.chooseFilter()); command('clearFilters',()=>provider.clearEnhancedFilters());
         command('resetPlan',()=>this.resetPlan());command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
         command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());

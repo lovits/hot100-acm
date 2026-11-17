@@ -18,4 +18,4 @@ jobs:
           cache: npm
           cache-dependency-path: vscode-extension/package-lock.json
       - run: npm ci
-      - run: npx @vscode/vsce publish --oidc
+      - run: npx @vscode/vsce@4.1.1 publish --oidc --no-dependencies --readme-path MARKETPLACE.md

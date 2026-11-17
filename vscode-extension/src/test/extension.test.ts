@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 
@@ -27,13 +28,17 @@ suite('Extension Smoke Test Suite', () => {
 			assert.ok(commands.includes(cmd), `核心命令 ${cmd} 应已注册`);
 		}
 	});
-    test('侧栏说明命令打开功能与快捷键文本', async () => {
+    test('侧栏说明打开 Markdown 渲染预览', async () => {
         await vscode.commands.executeCommand('hot100Pro.usageGuide');
-        const editor=vscode.window.activeTextEditor;
-        assert.ok(editor?.document.fileName.endsWith('运行与提交说明.txt'));
-        const text=editor!.document.getText();
-        assert.ok(text.includes('快捷键'));
-        assert.ok(text.includes('本机自定义用例'));
-        assert.ok(!text.includes('报错及修复'));
+        const uri=vscode.Uri.file(path.join(vscode.extensions.getExtension('lovits.hot100-practice')!.extensionPath,'运行与提交说明.md'));
+        const doc=await vscode.workspace.openTextDocument(uri);
+        assert.strictEqual(doc.languageId,'markdown');
+        assert.ok(doc.getText().includes('| 功能 | Mac | Windows/Linux |'));
+        assert.ok(!doc.getText().includes('报错及修复'));
+        for(let i=0;i<30;i++) {
+            if(vscode.window.tabGroups.all.some(g=>g.tabs.some(t=>t.input instanceof vscode.TabInputWebview&&t.label.includes('运行与提交说明'))))return;
+            await new Promise(resolve=>setTimeout(resolve,100));
+        }
+        assert.fail('应打开说明的 Markdown 预览页');
     });
 });
