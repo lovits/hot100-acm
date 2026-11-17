@@ -355,6 +355,7 @@ async function boot(){
   $('#drawer-company').onchange=$('#drawer-sort').onchange=renderList;
   const clear=$('#clear-filter').onclick;
   $('#clear-filter').onclick=()=>{$('#drawer-company').value=$('#drawer-category').value='';$('#drawer-sort').value='topic';clear();};
+  installFilterMenus();
   // Keep the editor mounted while changing only the left content panel.
   $('.top-right').prepend($('#timer'));
   $('.editor-status').prepend($('#save-state'));
