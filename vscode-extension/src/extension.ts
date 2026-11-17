@@ -1,3 +1,4 @@
+import { defaultFilters } from './enhanced/catalog';
 import { Enhancements } from './enhanced/controller';
 import { migrateLocalData } from './enhanced/migrate';
 /**
@@ -714,6 +715,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	const authManager = new AuthManager(context);
 	const leetCodeApi = new LeetCodeApi(authManager);
 	const hot100Provider = new Hot100Provider(leetCodeApi, context.globalState);
+    await hot100Provider.setEnhancedFilters({...defaultFilters});
+    hot100Provider.setGroupBy('category');
     const enhancements=new Enhancements(context,hot100Provider,leetCodeApi);
 
 	// 侧栏状态筛选（未做/已解决/尝试过），点击总进度行或命令面板均可触发

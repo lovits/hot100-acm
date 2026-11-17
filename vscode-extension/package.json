@@ -3,7 +3,7 @@
   "publisher": "lovits",
   "displayName": "LeetCode Hot100 Pro · ACM 增强版",
   "description": "基于 Hot100 Pro：ACM/核心模式、VS Code 本机工具链、公司高频筛选与可调整的间隔复习计划。",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "icon": "resources/hot100-pro.png",
   "engines": {
     "vscode": "^1.107.0",

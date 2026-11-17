@@ -3,7 +3,7 @@ import * as path from 'path';
 import { HOT_100_LIST, categoryLabel } from '../data/hot100Data';
 export interface CatalogProblem {
     id: number; title: string; difficulty: string; topic: string; topicTags: string[]; url: string;
-    officialHtml: string; officialTemplates: Record<string, string>;
+    explain?: string; officialHtml: string; officialTemplates: Record<string, string>;
     acm: { input: string; output: string; examples: Array<{input: string; output: string}>; template: Record<string, string> };
     core: unknown;
     freq: { value: number; updatedAt: string; companies: Array<{name: string; value: number}> };
@@ -20,4 +20,8 @@ export function matches(p: CatalogProblem, f: Filters, due = false): boolean {
     return (!f.difficulty || p.difficulty === f.difficulty) && (!f.topic || p.topic === f.topic)
         && (!f.tag || p.topicTags.includes(f.tag)) && (!f.company || p.freq.companies.some(c => c.name === f.company))
         && (!f.due || due) && (!f.search || `${p.id} ${p.title} ${p.url} ${p.topicTags.join(' ')}`.toLowerCase().includes(f.search.toLowerCase()));
+}
+
+export function topCompanyNames(p:CatalogProblem):string[] {
+    return [...p.freq.companies].sort((a,b)=>b.value-a.value).slice(0,7).map(c=>c.name);
 }

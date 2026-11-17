@@ -15,7 +15,6 @@ import { DifficultyLevel, DIFFICULTY_LABELS, DIFFICULTY_ZH, buildDifficultyGroup
 import { computeStudyStats, localDateStr, StudyStats } from '../utils/studyStats';
 import { pickDailyQuestion } from '../utils/dailyQuestion';
 import { GroupByMode, orderedQuestions } from '../utils/questionOrder';
-import { formatAcRate } from '../utils/metaFormat';
 
 export type { GroupByMode } from '../utils/questionOrder';
 
@@ -72,6 +71,7 @@ export class Hot100Provider implements vscode.TreeDataProvider<TreeNode> {
     private loadGeneration = 0;
     private filter: StatusFilter = 'all';
     private groupBy: GroupByMode = 'category';
+    private flatResults = false;
     private wrongList: WrongEntry[] = [];
     // 提交通过的日期集合（YYYY-MM-DD，本地时区；仅记扩展内通过，用于连续打卡/每日目标）
     private solvedDates: Set<string> = new Set();
@@ -124,12 +124,18 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
     /** 切换分组方式（按分类/按难度）并刷新树，选择持久化 */
     setGroupBy(mode: GroupByMode): void {
         this.groupBy = mode;
+        this.flatResults = false;
         this.store?.update(GROUP_BY_STORE_KEY, mode);
         this._onDidChangeTreeData.fire();
     }
 
     get enhancedFilters(): Filters { return {...defaultFilters,...this.store?.get<Filters>('enhancedFilters',defaultFilters)}; }
     async setEnhancedFilters(filters: Filters): Promise<void> { await this.store?.update('enhancedFilters',filters); this.rerender(); }
+    async clearEnhancedFilters(): Promise<void> {
+        this.flatResults = true;
+        this.setStatusFilter('all');
+        await this.setEnhancedFilters({...defaultFilters});
+    }
     private effectiveStatus(id:string): QuestionStatus { return this.questionStatusMap.get(id)==='ac' || this.store?.get<Record<string,boolean>>('enhancedLocalPassed',{})[id] ? 'ac' : this.store?.get<Record<string,boolean>>('enhancedLocalAttempted',{})[id]?'notac':statusOf(this.questionStatusMap.get(id)); }
     isSolved(id:string): boolean { return this.effectiveStatus(id)==='ac'; }
     filteredCatalog(): CatalogProblem[] {
@@ -277,7 +283,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
             );
             const nodes: TreeNode[] = [new ProgressItem(totalStats, this.filter), new StatsItem(), new DailyItem(pickDailyQuestion(localDateStr()))];
             const f=this.enhancedFilters;
-            const filterRow=new StatsRowItem(`筛选：${[f.difficulty,f.topic,f.tag,f.company,f.search,f.due?'待复习':'',f.sort==='frequency'?'高频优先':''].filter(Boolean).join(' · ')||'全部题目'}`,new vscode.ThemeIcon('filter'));
+            const filterRow=new StatsRowItem(`筛选：${[f.difficulty,f.topic,f.tag,f.company,f.search,f.due?'待复习':'',f.sort==='frequency'?'高频优先':''].filter(Boolean).join(' · ')||(this.flatResults?'全部题目 · 无筛选':'全部题目 · 按'+(this.groupBy==='category'?'专题':'难度')+'分组')}`,new vscode.ThemeIcon('filter'));
             filterRow.command={command:'hot100Pro.filter',title:'筛选题库'};nodes.splice(1,0,filterRow);
             if (this.wrongList.length > 0) {
                 nodes.push(new WrongCategoryItem(this.wrongList.length));
@@ -285,7 +291,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
             if (this.favoriteIds.size > 0) {
                 nodes.push(new FavoriteItem(this.favoriteIds.size));
             }
-            if (f.sort === 'frequency' || f.topic || f.tag || f.company || f.difficulty || f.search || f.due || this.filter !== 'all') {
+            if (this.flatResults || f.sort === 'frequency' || f.topic || f.tag || f.company || f.difficulty || f.search || f.due || this.filter !== 'all') {
                 nodes.push(...this.filteredQuestions().map(q=>this.toQuestionItem(q)));
                 return nodes;
             }
@@ -422,9 +428,6 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
                 'statsRow'
             ));
         }
-        for (const row of stats.categoryRows) {
-            rows.push(new StatsRowItem(`${categoryLabel(row.category)}：${row.solved} / ${row.total}`, new vscode.ThemeIcon('folder'), undefined, 'statsRow'));
-        }
         rows.push(new StatsRowItem(
             `连续打卡：${stats.streakDays} 天`,
             new vscode.ThemeIcon('flame', new vscode.ThemeColor('charts.orange')),
@@ -433,8 +436,9 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
         ));
         const goal = dailyGoal();
         const tasks=dayTasks(this.store?.get<PlanState>('enhancedPlan',emptyPlan())||emptyPlan(),localDateStr(),this.filteredCatalog().map(p=>String(p.id)),goal,vscode.workspace.getConfiguration('hot100Pro').get<number>('reviewLimit',20));
-        const planRow=new StatsRowItem(`复习计划：今日待复习 ${tasks.dueTotal} 道 · 逾期 ${tasks.overdue} 道`,new vscode.ThemeIcon('calendar'));
+        const planRow=new StatsRowItem('复习计划',new vscode.ThemeIcon('calendar'));
         planRow.command={command:'hot100Pro.studyPlan',title:'打开学习计划'};rows.push(planRow);
+        rows.push(new StatsRowItem(`今日目标：${stats.todaySolved} / ${goal}`,new vscode.ThemeIcon('target'),'点击修改每日目标','statsGoal'));
         rows.push(new StatsRowItem(
             `今日新题目标：${tasks.newDone.length} / ${goal}`,
             new vscode.ThemeIcon('target'),
@@ -598,7 +602,7 @@ export class DifficultyItem extends vscode.TreeItem {
 export class StatsItem extends vscode.TreeItem {
     constructor() {
         super('📈 刷题统计', vscode.TreeItemCollapsibleState.Collapsed);
-        this.tooltip = '总进度、难度/分类分布、连续打卡天数与每日目标';
+        this.tooltip = '总进度、难度分布、连续打卡天数与每日目标';
         this.iconPath = new vscode.ThemeIcon('graph-line');
         this.contextValue = 'stats';
     }
@@ -691,13 +695,11 @@ export class QuestionItem extends vscode.TreeItem {
             status: status
         };
 
-        const acRateText = formatAcRate(meta.acRate);
-        // 难度/通过率/会员/收藏均已行内可见（标签标记 + 描述列），不再重复悬浮窗；
-        // 空串显式关闭 VS Code 默认的"悬浮=标签文本"提示
+        // 行内仅保留题号、难度与中文题名，标签和考察次数放在悬浮提示中。
         const p=catalogById.get(hot100Question.frontendQuestionId);
         const company=meta.company||'';
         this.tooltip=p?`${p.topicTags.join(' · ')}\n${company||'总计'}考察 ${frequency(p,company)} 次\n${meta.localPassed?'本机评测已通过':''}`:'';
-        this.description = `${hot100Question.titleEn}${acRateText ? ` · ${acRateText}` : ''}${p?` · 考察 ${frequency(p,company)} 次`:''}`;
+        this.description = '';
 
         // 状态图标
         if (status === 'ac') {

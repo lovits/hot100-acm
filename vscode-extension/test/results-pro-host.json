@@ -1,4 +1,6 @@
 {
+  "version": "0.2.2",
+  "installedVSIXVerified": true,
   "checks": [
     {
       "language": "python3",
@@ -39,6 +41,13 @@
   "combinedFilters": true,
   "flatFilteredResults": true,
   "defaultGroupingPreserved": true,
+  "clearFiltersShowsAllFlat": true,
+  "compactStatsAndLabels": true,
+  "favoritesPreserved": true,
+  "manualReviewWithoutAC": true,
+  "statementTitleLink": true,
+  "statementMetadata": true,
+  "plainStatementTabs": true,
   "pickerOnEveryClick": true,
   "cancelPreservesDraft": true,
   "originalLanguageCount": 14,
@@ -47,7 +56,5 @@
   "calendarOpened": true,
   "calendarTitleOpensProblem": true,
   "newQuestionDeduplicated": true,
-  "customCasesInSixModes": true,
-  "installedVSIXVerified": true,
-  "version": "0.2.1"
+  "customCasesInSixModes": true
 }

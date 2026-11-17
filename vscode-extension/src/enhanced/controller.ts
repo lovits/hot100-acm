@@ -3,8 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { Hot100Provider } from '../views/hot100Provider';
 import { LeetCodeApi } from '../core/leetcodeApi';
-import { catalog, catalogById, defaultFilters, Filters } from './catalog';
-import { emptyPlan, intervalsOf, recordResult, replan, PlanState, addDays } from './studyPlan';
+import { catalog, catalogById, Filters } from './catalog';
+import { dayTasks, emptyPlan, intervalsOf, recordResult, replan, PlanState, addDays } from './studyPlan';
 import { localDateStr } from '../utils/studyStats';
 import { tryBeginJudge, releaseJudge } from '../judgeFeedback';
 import { resolveToolchain } from './toolchain';
@@ -40,7 +40,7 @@ export class Enhancements {
             await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
         }));
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
-        command('filter',()=>this.chooseFilter()); command('clearFilters',async()=>{provider.setStatusFilter('all');await provider.setEnhancedFilters({...defaultFilters});});
+        command('filter',()=>this.chooseFilter()); command('clearFilters',()=>provider.clearEnhancedFilters());
         command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
         command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());
         command('open',async()=>{await vscode.commands.executeCommand('workbench.view.extension.hot100-pro-enhanced');const p=catalog[0];return vscode.commands.executeCommand('hot100Pro.openProblem',{frontendQuestionId:String(p.id),titleSlug:p.url.split('/').filter(Boolean).at(-1),title:p.title});});
@@ -155,7 +155,7 @@ export class Enhancements {
     async chooseFilter() {
         const f=this.provider.enhancedFilters;
         const choice=await vscode.window.showQuickPick(['专题','算法标签','公司','难度','完成状态','排序','搜索','仅待复习','清空筛选'],{title:'筛选题库（条件组合生效）'});if(!choice)return;
-        if(choice==='清空筛选'){await this.provider.setEnhancedFilters({...defaultFilters});this.provider.setStatusFilter('all');return;}
+        if(choice==='清空筛选'){await this.provider.clearEnhancedFilters();return;}
         if(choice==='完成状态'){await vscode.commands.executeCommand('hot100Pro.setStatusFilter');return;}
         if(choice==='搜索'){const value=await vscode.window.showInputBox({title:'搜索题号、题名或标签',value:f.search});if(value!==undefined)await this.provider.setEnhancedFilters({...f,search:value});return;}
         if(choice==='仅待复习'){await this.provider.setEnhancedFilters({...f,due:!f.due});return;}
@@ -185,11 +185,10 @@ export class Enhancements {
     showPlan() {
         if(!this.planPanel){this.planPanel=vscode.window.createWebviewPanel('hot100Pro.studyPlan','Hot100 学习计划',vscode.ViewColumn.Active,{enableScripts:true,localResourceRoots:[]});this.planPanel.onDidDispose(()=>this.planPanel=undefined);this.planPanel.webview.onDidReceiveMessage(async m=>{try{
             if(m?.type==='configure')await this.configurePlan();if(m?.type==='include')await this.includeSolved();
-            if((m?.type==='open'||m?.type==='manual')&&catalogById.has(String(m.id))){if(m.type==='manual')await vscode.commands.executeCommand('hot100Pro.confirmReview',String(m.id));else await this.openId(String(m.id));}
+            if((m?.type==='open'||m?.type==='manual')&&catalogById.has(String(m.id))){if(m.type==='manual'){const id=String(m.id),today=localDateStr();if(dayTasks(this.state,today,[],0,100).reviewIds.includes(id))await this.record(id,true,'manual');}else await this.openId(String(m.id));}
         }catch(e){vscode.window.showErrorMessage(String(e));}});}
         const cfg=vscode.workspace.getConfiguration('hot100Pro'),goal=cfg.get<number>('dailyGoal',5),limit=cfg.get<number>('reviewLimit',20),today=localDateStr();
-        const eligible=this.provider.filteredCatalog().filter(p=>!this.provider.isSolved(String(p.id))).map(p=>String(p.id));
-        this.planPanel.webview.html=renderStudyCalendar({state:this.state,today,goal,limit,eligible,intervals:this.intervals,company:this.provider.enhancedFilters.company});
+        this.planPanel.webview.html=renderStudyCalendar({state:this.state,today,goal,limit,intervals:this.intervals,company:this.provider.enhancedFilters.company});
     }
 
     async openId(id:string){const p=catalogById.get(id);if(p)await vscode.commands.executeCommand('hot100Pro.openProblem',{frontendQuestionId:id,titleSlug:p.url.split('/').filter(Boolean).at(-1),title:p.title});}

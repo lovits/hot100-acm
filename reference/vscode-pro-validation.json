@@ -1,21 +1,19 @@
 {
-  "version": "0.2.1",
+  "version": "0.2.2",
   "validationDate": "2026-11-18",
   "unitTests": {
-    "passed": 158,
+    "passed": 161,
     "failed": 0
   },
   "lint": {
     "errors": 0,
-    "warnings": 180
+    "warnings": 183
   },
-  "installedVSIX": {
-    "extensionId": "lovits.hot100-practice",
-    "version": "0.2.1",
-    "matchedRuntimeFiles": 89,
-    "existingWindowReloadVerified": false
-  },
+  "installedRuntimeFilesMatched": 89,
+  "languagePickerAndEvaluatorsUnchanged": true,
   "host": {
+    "version": "0.2.2",
+    "installedVSIXVerified": true,
     "checks": [
       {
         "language": "python3",
@@ -56,6 +54,13 @@
     "combinedFilters": true,
     "flatFilteredResults": true,
     "defaultGroupingPreserved": true,
+    "clearFiltersShowsAllFlat": true,
+    "compactStatsAndLabels": true,
+    "favoritesPreserved": true,
+    "manualReviewWithoutAC": true,
+    "statementTitleLink": true,
+    "statementMetadata": true,
+    "plainStatementTabs": true,
     "pickerOnEveryClick": true,
     "cancelPreservesDraft": true,
     "originalLanguageCount": 14,
@@ -64,64 +69,30 @@
     "calendarOpened": true,
     "calendarTitleOpensProblem": true,
     "newQuestionDeduplicated": true,
-    "customCasesInSixModes": true,
-    "installedVSIXVerified": true,
-    "version": "0.2.1"
+    "customCasesInSixModes": true
   },
   "browser": {
-    "monthNavigation": true,
-    "historicalDaySelection": true,
-    "directTitleMessage": {
-      "type": "open",
-      "id": "15"
-    },
-    "narrowWidth": 480,
-    "horizontalOverflow": false,
-    "completedRowsNotCollapsed": true
-  },
-  "unchangedLanguagePicker": true,
-  "judges": {
-    "python3": {
-      "language": "python3",
-      "questions": 100,
-      "cases": 1083,
-      "failures": []
-    },
-    "cpp": {
-      "language": "cpp",
-      "questions": 100,
-      "cases": 1083,
-      "failures": []
-    },
-    "cCore": {
-      "questions": 100,
-      "cases": 533,
-      "missing": [],
-      "failures": []
-    },
-    "cACM": {
-      "questions": 5,
-      "cases": 28,
-      "failures": [],
-      "negativeChecks": [
-        "compile-error",
-        "wrong-answer",
-        "timeout"
-      ]
-    },
-    "cNegative": [
-      {
-        "id": 142,
-        "rejectedValueOnlyOrAliasedAnswer": true
-      },
-      {
-        "id": 160,
-        "rejectedValueOnlyOrAliasedAnswer": true
-      },
-      {
-        "id": 138,
-        "rejectedValueOnlyOrAliasedAnswer": true
-      }
-    ]
+    "firstDayPendingReviews": 0,
+    "noAutomaticNewQuestionList": true,
+    "compactTwoQueues": true,
+    "manualReviewMessage": true,
+    "noHorizontalOverflowAt380px": true,
+    "titleURL": "https://leetcode.cn/problems/two-sum/",
+    "titleColorUnchanged": true,
+    "titleUnderline": "none",
+    "statementFontSize": "15px",
+    "statementLineHeight": "27px",
+    "relatedCompanies": [
+      "字节跳动",
+      "美团",
+      "腾讯",
+      "阿里巴巴",
+      "百度",
+      "虾皮",
+      "微软"
+    ],
+    "companyCountsHidden": true,
+    "topicsAndHintsToggle": true,
+    "refreshButtons": 0
   }
 }
