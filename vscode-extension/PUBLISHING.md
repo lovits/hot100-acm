@@ -1,6 +1,6 @@
 # 发布 VS Code 扩展
 
-当前交付物为可直接安装的 VSIX，GitHub Release 标签为 `vscode-v0.2.7`。桌面应用 v1.0.11 的 Release 保留，插件独立编号。
+当前交付物为可直接安装的 VSIX，GitHub Release 标签为 `vscode-v0.2.8`。桌面应用 v1.0.11 的 Release 保留，插件独立编号。
 
 ## 上传扩展市场前
 
