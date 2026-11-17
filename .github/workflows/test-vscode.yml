@@ -3,6 +3,12 @@ on:
   push:
     paths: ['vscode-extension/**', '.github/workflows/test-vscode.yml']
   workflow_dispatch:
+    inputs:
+      suite:
+        type: choice
+        options: [all, c]
+        default: all
+        description: Regression suite
 permissions:
   contents: read
 jobs:
@@ -25,6 +31,9 @@ jobs:
           python-version: '3.12'
       - run: npm ci
       - run: npm test
+        if: inputs.suite != 'c'
+      - run: node test/c-core-test.js && node test/c-acm-test.js && node test/c-negative-test.js
+        if: inputs.suite == 'c' 
       - run: node test/official-test.js c
       - run: npx vsce package --out hot100-practice-0.1.0.vsix
       - uses: actions/upload-artifact@v4

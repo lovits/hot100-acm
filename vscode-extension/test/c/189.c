@@ -14,6 +14,7 @@ static void reverse(int *nums, int lo, int hi)
 
 static void rotate(int* nums, int numsSize, int k)
 {
+    if (numsSize == 0) return;
     k %= numsSize;
     if (k == 0) {
         return;
