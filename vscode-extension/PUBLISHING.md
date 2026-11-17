@@ -7,7 +7,7 @@
 - 提交版本：`0.2.8`，2026-11-18 已通过管理页上传，提交后状态为 **Public / Verifying**。
 - [市场页面](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)：校验通过后公开可用；上传成功不等于校验已完成。
 - [管理入口](https://marketplace.visualstudio.com/manage/publishers/lovits)。
-- [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.8)。
+- [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.81)。
 
 ## 后续发布
 

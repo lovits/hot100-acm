@@ -198,3 +198,28 @@ test('重置学习计划：取消不写入，确认仅清空计划并刷新', as
     assert.deepStrictEqual(writes, [['enhancedPlan', {learned: {}, events: []}]]);
     assert.strictEqual(refreshes, 2);
 });
+
+
+test('分组入口切换专题、难度与高频，保留组合筛选且解除旧高频排序', async () => {
+    const {Hot100Provider}=loadProblemPanel('../views/hot100Provider');
+    const state=new Map<string,unknown>([['enhancedFilters',{company:'字节跳动',tag:'数组',sort:'topic'}]]);
+    const provider=Object.create(Hot100Provider.prototype);
+    provider.store={get:(key:string,fallback:unknown)=>state.get(key)??fallback,update:async(key:string,value:unknown)=>{state.set(key,value);}};
+    provider._onDidChangeTreeData={fire:()=>{}};
+    await provider.setQuestionOrder('frequency');
+    assert.strictEqual(provider.enhancedFilters.sort,'frequency');
+    assert.strictEqual(provider.enhancedFilters.company,'字节跳动');
+    await provider.setQuestionOrder('difficulty');
+    assert.strictEqual(provider.enhancedFilters.sort,'topic');
+    assert.strictEqual(provider.currentGroupBy,'difficulty');
+    assert.strictEqual(provider.enhancedFilters.tag,'数组');
+    await provider.setQuestionOrder('category');
+    assert.strictEqual(provider.currentGroupBy,'category');
+    assert.strictEqual(provider.flatResults,false);
+    provider.questionStatusMap=new Map();provider.filter='all';
+    await provider.setQuestionOrder('id');
+    const ids=provider.ordered().map((q:{frontendQuestionId:string})=>Number(q.frontendQuestionId));
+    assert.ok(ids.length>0);
+    assert.deepStrictEqual(ids,[...ids].sort((a:number,b:number)=>a-b));
+    assert.strictEqual(provider.enhancedFilters.company,'字节跳动');
+});

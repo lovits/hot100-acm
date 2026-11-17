@@ -20,6 +20,7 @@ const {header}=require('../../c-driver');
 export class Enhancements {
     private output=vscode.window.createOutputChannel('Hot100 本机评测');
     private planPanel?: vscode.WebviewPanel;
+    private usagePanel?: vscode.WebviewPanel;
     private tests:Record<string,Record<string,any[]>>;
     private files=new Map<string,string>();
     private codeColumns=new Map<string,vscode.ViewColumn>();
@@ -40,7 +41,7 @@ export class Enhancements {
             await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
         }));
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
-        command('usageGuide',()=>vscode.commands.executeCommand('markdown.showPreview',vscode.Uri.file(path.join(context.extensionPath,'运行与提交说明.md'))));
+        command('usageGuide',()=>this.showUsageGuide());
         command('filter',()=>this.chooseFilter()); command('clearFilters',()=>provider.clearEnhancedFilters());
         command('resetPlan',()=>this.resetPlan());command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
         command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());
@@ -170,15 +171,15 @@ export class Enhancements {
     }
     async chooseFilter() {
         const f=this.provider.enhancedFilters;
-        const choice=await vscode.window.showQuickPick(['专题','算法标签','公司','难度','完成状态','排序','搜索','仅待复习','清空筛选'],{title:'筛选题库（条件组合生效）'});if(!choice)return;
+        const choice=await vscode.window.showQuickPick(['专题','算法标签','公司','难度','完成状态','搜索','仅待复习','清空筛选'],{title:'筛选题库（条件组合生效）'});if(!choice)return;
         if(choice==='清空筛选'){await this.provider.clearEnhancedFilters();return;}
         if(choice==='完成状态'){await vscode.commands.executeCommand('hot100Pro.setStatusFilter');return;}
         if(choice==='搜索'){const value=await vscode.window.showInputBox({title:'搜索题号、题名或标签',value:f.search});if(value!==undefined)await this.provider.setEnhancedFilters({...f,search:value});return;}
         if(choice==='仅待复习'){await this.provider.setEnhancedFilters({...f,due:!f.due});return;}
-        const keys:Record<string,keyof Filters>={'专题':'topic','算法标签':'tag','公司':'company','难度':'difficulty','排序':'sort'};const key=keys[choice];
-        const values=choice==='专题'?[...new Set(catalog.map(p=>p.topic))]:choice==='算法标签'?[...new Set(catalog.flatMap(p=>p.topicTags))]:choice==='公司'?[...new Set(catalog.flatMap(p=>p.freq.companies.map(c=>c.name)))]:choice==='难度'?['简单','中等','困难']:['专题顺序','高频优先'];
+        const keys:Record<string,keyof Filters>={'专题':'topic','算法标签':'tag','公司':'company','难度':'difficulty'};const key=keys[choice];
+        const values=choice==='专题'?[...new Set(catalog.map(p=>p.topic))]:choice==='算法标签'?[...new Set(catalog.flatMap(p=>p.topicTags))]:choice==='公司'?[...new Set(catalog.flatMap(p=>p.freq.companies.map(c=>c.name)))]:['简单','中等','困难'];
         const selected=await vscode.window.showQuickPick(['全部',...values],{title:choice});if(selected===undefined)return;
-        await this.provider.setEnhancedFilters({...f,[key]:key==='sort'?(selected==='高频优先'?'frequency':'topic'):selected==='全部'?'':selected});
+        await this.provider.setEnhancedFilters({...f,[key]:selected==='全部'?'':selected});
     }
     async configurePlan() {
         const cfg=vscode.workspace.getConfiguration('hot100Pro');
@@ -203,6 +204,14 @@ export class Enhancements {
         const selected=await vscode.window.showQuickPick(choices,{canPickMany:true,title:'将已有通过记录纳入复习（从今天开始排期）'});if(!selected?.length)return;
         const state=this.state,today=localDateStr();for(const item of selected)state.learned[item.id]={first:today,last:today,stage:0,due:addDays(today,this.intervals[0])};
         await this.context.globalState.update('enhancedPlan',state);this.provider.rerender();this.showPlan();
+    }
+    showUsageGuide() {
+        if(!this.usagePanel) {
+            this.usagePanel=vscode.window.createWebviewPanel('hot100Pro.usageGuide','运行与提交说明',vscode.ViewColumn.Active,{enableScripts:false,localResourceRoots:[]});
+            this.context.subscriptions.push(this.usagePanel);
+            this.usagePanel.onDidDispose(()=>this.usagePanel=undefined);
+            this.usagePanel.webview.html=fs.readFileSync(path.join(this.context.extensionPath,'运行与提交说明.html'),'utf8');
+        } else this.usagePanel.reveal();
     }
     showPlan() {
         if(!this.planPanel){this.planPanel=vscode.window.createWebviewPanel('hot100Pro.studyPlan','Hot100 学习计划',vscode.ViewColumn.Active,{enableScripts:true,localResourceRoots:[]});this.planPanel.onDidDispose(()=>this.planPanel=undefined);this.planPanel.webview.onDidReceiveMessage(async m=>{try{

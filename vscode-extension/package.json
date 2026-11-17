@@ -3,7 +3,7 @@
   "publisher": "lovits",
   "displayName": "Hot100 ACM",
   "description": "在 VS Code 中练习 Hot100：ACM 与核心代码模式、题库组合筛选、本机测试、收藏笔记与间隔复习。",
-  "version": "0.2.8",
+  "version": "0.2.81",
   "icon": "resources/hot100-acm.png",
   "engines": {
     "vscode": "^1.107.0",
@@ -103,7 +103,7 @@
       },
       {
         "command": "hot100Pro.setGroupBy",
-        "title": "侧栏分组：按分类/按难度",
+        "title": "侧栏分组方式：按专题/按难度/按题号/高频优先",
         "icon": "$(list-ordered)"
       },
       {

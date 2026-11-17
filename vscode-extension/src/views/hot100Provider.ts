@@ -129,6 +129,11 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
         this._onDidChangeTreeData.fire();
     }
 
+    async setQuestionOrder(mode: GroupByMode|'frequency'|'id'): Promise<void> {
+        await this.setEnhancedFilters({...this.enhancedFilters,sort:mode==='frequency'||mode==='id'?mode:'topic'});
+        this.setGroupBy(mode==='difficulty'?'difficulty':'category');
+    }
+
     get enhancedFilters(): Filters { return {...defaultFilters,...this.store?.get<Filters>('enhancedFilters',defaultFilters)}; }
     async setEnhancedFilters(filters: Filters): Promise<void> { await this.store?.update('enhancedFilters',filters); this.rerender(); }
     async clearEnhancedFilters(): Promise<void> {
@@ -141,11 +146,13 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
     filteredCatalog(): CatalogProblem[] {
         const f=this.enhancedFilters, plan=this.store?.get<PlanState>('enhancedPlan',emptyPlan()),today=localDateStr();
         const rows=catalog.filter(p=>matches(p,f,!!plan?.learned[p.id]?.due && plan.learned[p.id].due<=today) && matchesStatusFilter(this.effectiveStatus(String(p.id)),this.filter));
+        if(f.sort==='id')return rows.sort((a,b)=>a.id-b.id);
         return f.sort==='frequency'?rows.sort((a,b)=>frequency(b,f.company)-frequency(a,f.company)||a.id-b.id):rows;
     }
     private filteredQuestions(category?:string): Hot100Question[] {
         const ids=new Set(this.filteredCatalog().map(p=>String(p.id)));
         const rows=HOT_100_LIST.filter(q=>ids.has(q.frontendQuestionId) && (!category||q.category===category));
+        if(this.enhancedFilters.sort==='id')return rows.sort((a,b)=>Number(a.frontendQuestionId)-Number(b.frontendQuestionId));
         return this.enhancedFilters.sort==='frequency'?rows.sort((a,b)=>frequency(catalogById.get(b.frontendQuestionId)!,this.enhancedFilters.company)-frequency(catalogById.get(a.frontendQuestionId)!,this.enhancedFilters.company)):rows;
     }
     async recordLocalResult(id:string,ok:boolean): Promise<void> {
@@ -285,7 +292,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
             const usage=new StatsRowItem('运行与提交说明',new vscode.ThemeIcon('file-text'));
             usage.command={command:'hot100Pro.usageGuide',title:'运行与提交说明'};nodes.push(usage);
             const f=this.enhancedFilters;
-            const filterRow=new StatsRowItem(`筛选：${[f.difficulty,f.topic,f.tag,f.company,f.search,f.due?'待复习':'',f.sort==='frequency'?'高频优先':''].filter(Boolean).join(' · ')||(this.flatResults?'全部题目 · 无筛选':'全部题目 · 按'+(this.groupBy==='category'?'专题':'难度')+'分组')}`,new vscode.ThemeIcon('filter'));
+            const filterRow=new StatsRowItem(`筛选：${[f.difficulty,f.topic,f.tag,f.company,f.search,f.due?'待复习':'',f.sort==='frequency'?'高频优先':f.sort==='id'?'按题号':''].filter(Boolean).join(' · ')||(this.flatResults?'全部题目 · 无筛选':'全部题目 · 按'+(this.groupBy==='category'?'专题':'难度')+'分组')}`,new vscode.ThemeIcon('filter'));
             filterRow.command={command:'hot100Pro.filter',title:'筛选题库'};nodes.splice(1,0,filterRow);
             if (this.wrongList.length > 0) {
                 nodes.push(new WrongCategoryItem(this.wrongList.length));
@@ -293,8 +300,8 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
             if (this.favoriteIds.size > 0) {
                 nodes.push(new FavoriteItem(this.favoriteIds.size));
             }
-            if (this.flatResults || f.sort === 'frequency' || f.topic || f.tag || f.company || f.difficulty || f.search || f.due || this.filter !== 'all') {
-                nodes.push(...this.filteredQuestions().map(q=>this.toQuestionItem(q)));
+            if (this.flatResults || f.sort !== 'topic' || f.topic || f.tag || f.company || f.difficulty || f.search || f.due || this.filter !== 'all') {
+                nodes.push(...this.ordered().map(q=>this.toQuestionItem(q)));
                 return nodes;
             }
             if (this.groupBy === 'difficulty') {
@@ -332,7 +339,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
 
         // 我的收藏：按当前分组顺序排列（状态筛选与分类/难度分组一致）
         if (element instanceof FavoriteItem) {
-            return orderedQuestions(this.filteredQuestions(), this.groupBy)
+            return this.ordered()
                 .filter(q => this.isFavorite(q.frontendQuestionId)
                     && matchesStatusFilter(this.effectiveStatus(q.frontendQuestionId), this.filter))
                 .map(q => this.toQuestionItem(q));
@@ -391,7 +398,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
 
     /** 当前分组方式的题目顺序（不含状态筛选，供"下一题"命令用） */
     ordered(): Hot100Question[] {
-        return this.enhancedFilters.sort==='frequency'?this.filteredQuestions():orderedQuestions(this.filteredQuestions(), this.groupBy);
+        return this.enhancedFilters.sort!=='topic'?this.filteredQuestions():orderedQuestions(this.filteredQuestions(), this.groupBy);
     }
 
     /** 全量题目 + 状态/难度/元数据（搜索与随机抽题的候选池） */

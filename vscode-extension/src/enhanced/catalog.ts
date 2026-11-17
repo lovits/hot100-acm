@@ -11,7 +11,7 @@ export interface CatalogProblem {
 export const catalog: CatalogProblem[] = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/problems.json'), 'utf8'));
 for(const p of catalog){const base=HOT_100_LIST.find(q=>q.frontendQuestionId===String(p.id));if(base)p.topic=categoryLabel(base.category);}
 export const catalogById = new Map(catalog.map(p => [String(p.id), p]));
-export interface Filters { difficulty: string; topic: string; tag: string; company: string; search: string; due: boolean; sort: 'topic'|'frequency' }
+export interface Filters { difficulty: string; topic: string; tag: string; company: string; search: string; due: boolean; sort: 'topic'|'frequency'|'id' }
 export const defaultFilters: Filters = {difficulty:'',topic:'',tag:'',company:'',search:'',due:false,sort:'topic'};
 export function frequency(p: CatalogProblem, company = ''): number {
     return company ? p.freq.companies.find(c => c.name === company)?.value ?? 0 : p.freq.value;

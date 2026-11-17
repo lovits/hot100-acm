@@ -13,7 +13,7 @@ import { AuthManager } from './core/authManager';
 import { LeetCodeApi, Question } from './core/leetcodeApi';
 import { loginWithBrowser, pickChromiumChannel, detectDefaultBrowser } from './core/browserLogin';
 import { spawnSync } from 'child_process';
-import { Hot100Provider, GroupByMode } from './views/hot100Provider';
+import { Hot100Provider } from './views/hot100Provider';
 import { StatusFilter } from './utils/progressStats';
 import { Hot100Question, HOT_100_LIST, categoryLabel } from './data/hot100Data';
 import { DIFFICULTY_ZH, isDifficultyLevel } from './utils/difficultyGroups';
@@ -733,19 +733,18 @@ export async function activate(context: vscode.ExtensionContext) {
 		}
 	}));
 
-	// 侧栏分组方式（按分类/按难度），点击侧栏标题按钮或命令面板均可触发；选择持久化
+	// 统一侧栏分组与排序入口，筛选条件保持不变。
 	context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.setGroupBy', async () => {
-		const current = hot100Provider.currentGroupBy;
-		const GROUPS: { label: string; description: string; value: GroupByMode }[] = [
-			{ label: '按分类', description: '官网默认：哈希 / 链表 / 动态规划等', value: 'category' },
-			{ label: '按难度', description: '简单 / 中等 / 困难，同难度按题号升序', value: 'difficulty' }
-		];
-		const pick = await vscode.window.showQuickPick(GROUPS, {
-			title: `侧栏分组方式（当前：${current === 'difficulty' ? '按难度' : '按分类'}）`
-		});
-		if (pick) {
-			hot100Provider.setGroupBy(pick.value);
-		}
+        const sort=hot100Provider.enhancedFilters.sort;
+        const current=sort==='id'?'按题号':sort==='frequency'?'高频优先':hot100Provider.currentGroupBy==='difficulty'?'按难度':'按专题';
+        const groups: {label:string;description:string;value:'category'|'difficulty'|'frequency'|'id'}[] = [
+            {label:'按专题',description:'官网专题：哈希 / 链表 / 动态规划等',value:'category'},
+            {label:'按难度',description:'简单 / 中等 / 困难，同难度按题号升序',value:'difficulty'},
+            {label:'按题号',description:'题号从小到大排列',value:'id'},
+            {label:'高频优先',description:hot100Provider.enhancedFilters.company?`按${hot100Provider.enhancedFilters.company}考察次数降序`:'按总考察次数降序',value:'frequency'}
+        ];
+        const pick=await vscode.window.showQuickPick(groups,{title:`侧栏分组方式（当前：${current}）`});
+        if(pick)await hot100Provider.setQuestionOrder(pick.value);
 	}));
 
 	// 搜索题目：题号/中文名/英文名/分类模糊检索，回车打开
