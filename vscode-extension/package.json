@@ -182,6 +182,11 @@
       {
         "command": "hot100Pro.open",
         "title": "Hot100 Pro: 打开刷题台"
+      },
+      {
+        "command": "hot100Pro.localCustom",
+        "title": "Hot100 Pro: 本机自定义用例",
+        "icon": "$(beaker)"
       }
     ],
     "viewsContainers": {
@@ -253,6 +258,11 @@
           "command": "hot100Pro.localSubmit",
           "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/)",
           "group": "navigation@0"
+        },
+        {
+          "command": "hot100Pro.localCustom",
+          "when": "resourcePath =~ /leetcode/ && !(resourcePath =~ /notes/)",
+          "group": "navigation@1"
         },
         {
           "command": "hot100Pro.runDebug",

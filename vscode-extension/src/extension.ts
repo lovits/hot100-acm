@@ -2351,6 +2351,7 @@ const mp4Uri = vscode.Uri.joinPath(dirUri, videoId + '_v3.mp4');
 
 	// ==================== 自定义用例测试命令 ====================
 	const customTestDisposable = vscode.commands.registerCommand('hot100Pro.customTest', async () => {
+        const current=context.workspaceState.get<any>('currentProblem');if(current?.filePath?.replace(/\\/g,'/').includes('/acm/')){await enhancements.customLocal();return;}
 		// 检查登录状态
 		const isLoggedIn = await authManager.isLoggedIn();
 		if (!isLoggedIn) {

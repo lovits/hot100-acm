@@ -14,7 +14,7 @@ exports.run=async()=>{
   await e.switchMode(q,mode,language);const doc=vscode.window.activeTextEditor.document;
   const code=language==='c'?(mode==='core'?fs.readFileSync(path.join(__dirname,'c/1.c'),'utf8'):'#include <stdio.h>\n#include <stdlib.h>\nint main(){int n,t;scanf("%d",&n);int*a=malloc(n*sizeof(int));for(int i=0;i<n;i++)scanf("%d",a+i);scanf("%d",&t);for(int i=0;i<n;i++)for(int j=i+1;j<n;j++)if(a[i]+a[j]==t){printf("%d %d\\n",i,j);return 0;}}'):ss[1][language][mode];
   const edit=new vscode.WorkspaceEdit();edit.replace(doc.uri,new vscode.Range(doc.positionAt(0),doc.positionAt(doc.getText().length)),code);assert.ok(await vscode.workspace.applyEdit(edit));
-  const r=await e.runLocal(true,'1');assert.ok(r&&!r.error,JSON.stringify(r));assert.ok(r.results.every(x=>x.ok),JSON.stringify(r));checks.push({language,mode,cases:r.results.length});
+  const r=await e.runLocal(true,'1');assert.ok(r&&!r.error,JSON.stringify(r));assert.ok(r.results.every(x=>x.ok),JSON.stringify(r));checks.push({language,mode,cases:r.results.length});const custom=mode==='core'?{args:[[-3,4,3,90],0],expected:[0,2]}:{input:'4\n-3 4 3 90\n0\n',output:'0 2\n'};const cr=await e.runLocal(false,'1',[custom]);assert.ok(!cr.error&&cr.results.every(x=>x.ok),JSON.stringify(cr));
  }
  assert.equal(e.state.events.length,1,'six mode/language passes only count one new question');
  await e.switchMode(q,'acm','python3');assert.equal(vscode.window.activeTextEditor.document.getText(),ss[1].python3.acm);
@@ -23,5 +23,5 @@ exports.run=async()=>{
  const nodes=await api.provider.getChildren();assert.ok(nodes.some(n=>String(n.label).includes('筛选：')));assert.deepEqual(nodes.filter(n=>n.contextValue==='question').map(n=>n.question.frontendQuestionId),filtered.map(p=>String(p.id)));
  const stats=api.provider.buildStatsRows();assert.ok(stats.some(n=>n.command?.command==='hot100Pro.studyPlan'));e.showPlan();
  await cfg.update('dailyGoal',5,vscode.ConfigurationTarget.Workspace);await cfg.update('dailyGoal',2,vscode.ConfigurationTarget.Workspace);assert.equal(e.state.events.length,1);assert.equal(vscode.workspace.getConfiguration('hot100Pro').get('dailyGoal'),2);
- fs.writeFileSync(path.join(__dirname,'results-pro-host.json'),JSON.stringify({checks,defaultACM:true,modeDraftRestore:true,combinedFilters:true,editableGoal:true,reviewPlanOpened:true,newQuestionDeduplicated:true},null,2));
+ fs.writeFileSync(path.join(__dirname,'results-pro-host.json'),JSON.stringify({checks,defaultACM:true,modeDraftRestore:true,combinedFilters:true,editableGoal:true,reviewPlanOpened:true,newQuestionDeduplicated:true,customCasesInSixModes:true},null,2));
 };

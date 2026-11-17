@@ -36,7 +36,7 @@ export class Enhancements {
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
         command('filter',()=>this.chooseFilter()); command('clearFilters',async()=>{provider.setStatusFilter('all');await provider.setEnhancedFilters({...defaultFilters});});
         command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
-        command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));
+        command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());
         command('open',async()=>{await vscode.commands.executeCommand('workbench.view.extension.hot100-pro-enhanced');const p=catalog[0];return vscode.commands.executeCommand('hot100Pro.openProblem',{frontendQuestionId:String(p.id),titleSlug:p.url.split('/').filter(Boolean).at(-1),title:p.title});});
         command('confirmReview',async(id:string)=>{if(!catalogById.has(String(id)))return;const choice=await vscode.window.showWarningMessage('确认已独立完成这道题的复习？','确认完成');if(choice==='确认完成')await this.record(String(id),true,'manual');});
         context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e=>{if(e.affectsConfiguration('hot100Pro')){provider.rerender();if(this.planPanel)this.showPlan();}}));
@@ -83,7 +83,7 @@ export class Enhancements {
         await this.context.globalState.update('enhancedPlan',recordResult(this.state,id,ok,localDateStr(),this.intervals,source));
         this.provider.rerender();if(this.planPanel)this.showPlan();
     }
-    async runLocal(all:boolean,expectedId?:string) {
+    async runLocal(all:boolean,expectedId?:string,customTests?:any[]) {
         if(!vscode.workspace.isTrusted)throw Error('请先信任工作区，再执行本机代码。');
         const current=this.context.workspaceState.get<any>('currentProblem');
         const active=vscode.window.activeTextEditor;
@@ -101,7 +101,7 @@ export class Enhancements {
         if(!tryBeginJudge())return;
         try{
             await doc.save();const tools=await resolveToolchain(language,uri);
-            const cases=this.tests[id!][mode].slice(0,all?undefined:p.acm.examples.length||1);
+            const cases=customTests||this.tests[id!][mode].slice(0,all?undefined:p.acm.examples.length||1);
             this.output.clear();this.output.show(true);this.output.appendLine(`${p.id}. ${p.title} · ${language} · ${mode==='acm'?'ACM':'核心代码'} · ${all?'全部用例':'示例'}`);
             this.output.appendLine(`VS Code 工具链：${Object.values(tools).join(', ')||'系统 PATH 中的解释器/编译器'}`);
             const result:any=await vscode.window.withProgress<any>({location:vscode.ProgressLocation.Notification,title:'Hot100 正在使用本机环境运行'},()=>evaluate(p,language,mode,doc.getText(),cases,tools));
@@ -109,9 +109,19 @@ export class Enhancements {
             const passed=result.results.filter((r:any)=>r.ok).length;
             this.output.appendLine(`${passed}/${result.results.length} 通过`);
             result.results.forEach((r:any,i:number)=>this.output.appendLine(`用例 ${i+1}：${r.ok?'通过':JSON.stringify(r)}`));
-            if(all){const accepted=passed===result.results.length;await this.provider.recordLocalResult(String(p.id),accepted);await this.record(String(p.id),accepted);}
+            if(all&&!customTests){const accepted=passed===result.results.length;await this.provider.recordLocalResult(String(p.id),accepted);await this.record(String(p.id),accepted);}
             vscode.window.showInformationMessage(`Hot100 ${passed}/${result.results.length} 通过`);return result;
         }finally{releaseJudge();}
+    }
+    async customLocal() {
+        const current=this.context.workspaceState.get<any>('currentProblem');
+        const file=vscode.window.activeTextEditor?.document.uri.fsPath||current?.filePath||'';
+        const id=path.basename(file).match(/^(\d+)[_.-]/)?.[1];if(!id||!catalogById.has(id))throw Error('请先打开一道题目的代码。');
+        const mode=file.replace(/\\/g,'/').includes('/acm/')||path.basename(file).includes('-acm.')?'acm':'core';
+        const raw=await vscode.window.showInputBox({title:mode==='acm'?'自定义 ACM 用例（input / output）':'自定义核心用例（args / expected；设计类另含 ops）',value:JSON.stringify(this.tests[id][mode][0]),prompt:'修改用例 JSON，换行使用 \\n；自定义测试不计入刷题完成记录。'});
+        if(raw===undefined)return;let test:any;try{test=JSON.parse(raw);}catch{throw Error('请输入有效的 JSON 用例。');}
+        if(!test||typeof test!=='object'||(mode==='acm'?(typeof test.input!=='string'||typeof test.output!=='string'):(!Array.isArray(test.args)||!Object.hasOwn(test,'expected'))))throw Error('用例缺少必要的输入或期望输出。');
+        return this.runLocal(false,id,[test]);
     }
     async chooseFilter() {
         const f=this.provider.enhancedFilters;
