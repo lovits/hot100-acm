@@ -1,6 +1,6 @@
 # 来源和许可
 
-本插件原创代码采用 MIT 许可（LICENSE）。
+本插件新增代码采用 MIT 许可（LICENSE）；沿用代码保留原作者版权与 MIT 声明，见 UPSTREAM.md 和 licenses/upstream/ 原始快照。
 
 - 题目题面、示例、签名与图示来源：https://leetcode.cn/studyplan/top-100-liked/ 。题目内容及商标归各自权利人所有，不适用本项目的 MIT 代码许可。每题保留原题链接。本插件非力扣官方产品。
 - 频次来源：https://codetop.cc/ ，沿用 Hot100 桌面版 v1.0.11 数据快照，日期和统计范围见对应项目记录。

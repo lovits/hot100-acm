@@ -47,3 +47,7 @@ macOS 用户继续使用 v1.0.1。本版没有重建 macOS 应用。
 五个筛选项保持单行，窄抽屉可横向滑动。编辑器保留最近 8 份模型及其撤销历史，更早草稿的文字、光标继续保存在原学习数据中。本机性能对照见 `reference/performance-check.json`。
 
 复核入口：`node verify_official.cjs python3`、`node verify_official.cjs cpp`、`node verify_official_acm.cjs`、`node verify_judge_rules.cjs`。这些检查不等于力扣的全部隐藏测试。
+
+## VS Code 插件代码来源与许可
+
+插件保留上游原作者署名与 MIT 许可声明，详见 [版权与来源说明](vscode-extension/UPSTREAM.md)、[MIT 许可全文](vscode-extension/LICENSE)及[原始声明快照](vscode-extension/licenses/upstream/)。第三方题目、图片及依赖的权利说明见 [THIRD_PARTY.md](vscode-extension/THIRD_PARTY.md)。
