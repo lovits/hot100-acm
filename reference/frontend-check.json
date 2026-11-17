@@ -1,10 +1,12 @@
 {
-  "passed": 5,
+  "passed": 7,
   "checks": [
     "Concurrent code edits retain local text and a remote recovery copy",
     "Progress and nonconflicting remote notes survive merging",
     "Legacy submission receives a stable detail route id",
     "An open tab renews its session after server restart and merges disk data",
-    "Successful retry clears pending save and records the new revision"
+    "Successful retry clears pending save and records the new revision",
+    "An idle save does not block future edits",
+    "Editing after an idle save reaches storage"
   ]
 }

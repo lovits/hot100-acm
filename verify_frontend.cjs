@@ -16,10 +16,10 @@ const context = vm.createContext({
     if (writes++ === 0) return {ok: false, status: 403, json: async () => ({error: 'expired token'})};
     assert.equal(options.headers['X-Hot100-Token'], 'renewed-token');
     const saved = JSON.parse(options.body);
-    assert.equal(saved.revision, 2);
+    assert.equal(saved.revision, writes);
     assert.equal(saved.state.codes['1'], 'print("local")');
     assert.equal(saved.state.notes['49'], 'remote note');
-    return {ok: true, status: 200, json: async () => ({revision: 3})};
+    return {ok: true, status: 200, json: async () => ({revision: saved.revision + 1})};
   },
 });
 vm.runInContext(source.slice(0, source.indexOf('async function createEditor')), context);
@@ -42,6 +42,10 @@ test('Legacy submission receives a stable detail route id', result.history['1'][
   })()`, context);
   test('An open tab renews its session after server restart and merges disk data', requests.length === 3 && writes === 2 && badge.textContent === '已存储');
   test('Successful retry clears pending save and records the new revision', vm.runInContext('pendingSave===false && session.revision===3', context));
+  await vm.runInContext('flushDisk()', context);
+  test('An idle save does not block future edits', vm.runInContext('saving===null', context));
+  await vm.runInContext('persist(); flushDisk()', context);
+  test('Editing after an idle save reaches storage', writes===3 && vm.runInContext('pendingSave===false && saving===null', context));
   const report = {passed: checks.length, checks};
   fs.writeFileSync('reference/frontend-check.json', JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report));

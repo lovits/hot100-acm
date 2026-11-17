@@ -58,6 +58,7 @@ persist=function(){
 async function flushDisk(){
   if(saving)return saving;
   if(!session.token)return false;
+  if(!pendingSave)return true;
   saving=(async()=>{
     try{
       while(pendingSave){
