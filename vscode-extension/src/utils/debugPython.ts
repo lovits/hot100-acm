@@ -89,6 +89,10 @@ import base64
 import importlib.util
 import inspect
 import sys
+# VS Code captures UTF-8 output; Windows' default pipe encoding may reject Chinese and status symbols.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8")
 import os
 import io
 import collections

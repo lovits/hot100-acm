@@ -172,7 +172,7 @@ function runDriver(
         const gen = generateDebugFile('python3', questionId, titleSlug, cases, snippet, sol.replace(/\\/g, '/'), expected, exampleInputs);
         assert.ok(gen);
         fs.writeFileSync(driver, gen!.content);
-        const res = spawnSync(py, [driver], { encoding: 'utf8' });
+        const res = spawnSync(py, [driver], { encoding: 'utf8', env: { ...process.env, PYTHONIOENCODING: 'ascii' } });
         assert.ok(!res.stdout.includes('运行出错'), `驱动不应运行出错: ${res.stdout}\n${res.stderr}`);
         return res.stdout;
     } finally {
