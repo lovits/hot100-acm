@@ -21,9 +21,19 @@ suite('Extension Smoke Test Suite', () => {
 			'hot100Pro.viewSolution',
 			'hot100Pro.refreshList',
             'hot100Pro.resetPlan',
+            'hot100Pro.usageGuide',
 		];
 		for (const cmd of coreCommands) {
 			assert.ok(commands.includes(cmd), `核心命令 ${cmd} 应已注册`);
 		}
 	});
+    test('侧栏说明命令打开功能与快捷键文本', async () => {
+        await vscode.commands.executeCommand('hot100Pro.usageGuide');
+        const editor=vscode.window.activeTextEditor;
+        assert.ok(editor?.document.fileName.endsWith('运行与提交说明.txt'));
+        const text=editor!.document.getText();
+        assert.ok(text.includes('快捷键'));
+        assert.ok(text.includes('本机自定义用例'));
+        assert.ok(!text.includes('报错及修复'));
+    });
 });

@@ -40,6 +40,7 @@ export class Enhancements {
             await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
         }));
         const command=(name:string,handler:(...args:any[])=>unknown)=>context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.'+name,async(...args)=>{try{return await handler(...args);}catch(e){vscode.window.showErrorMessage(String(e));}}));
+        command('usageGuide',async()=>vscode.window.showTextDocument(await vscode.workspace.openTextDocument(vscode.Uri.file(path.join(context.extensionPath,'运行与提交说明.txt'))),{preview:false}));
         command('filter',()=>this.chooseFilter()); command('clearFilters',()=>provider.clearEnhancedFilters());
         command('resetPlan',()=>this.resetPlan());command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
         command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());
@@ -80,6 +81,13 @@ export class Enhancements {
             await vscode.workspace.fs.writeFile(uri,Buffer.from(text));
         }
         if(language==='cpp') {
+            const includeFolder=vscode.Uri.joinPath(folder,'bits'),includeFile=vscode.Uri.joinPath(includeFolder,'stdc++.h');
+            try{await vscode.workspace.fs.stat(includeFile);}catch(e){
+                if(!(e instanceof vscode.FileSystemError && e.code==='FileNotFound'))throw e;
+                await vscode.workspace.fs.createDirectory(includeFolder);
+                await vscode.workspace.fs.writeFile(includeFile,await vscode.workspace.fs.readFile(vscode.Uri.file(path.join(this.context.extensionPath,'runtime/native_judge/include/bits/stdc++.h'))));
+            }
+
             const doc=await vscode.workspace.openTextDocument(uri),source=doc.getText(),updated=cppEditorSource(source,mode==='core');
             if(updated!==source) {
                 const edit=new vscode.WorkspaceEdit();

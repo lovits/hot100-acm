@@ -14,5 +14,5 @@
 
 ## 使用
 
-从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.5) 下载 VSIX，在 VS Code 中选择“从 VSIX 安装”，打开工作区后进入插件侧栏。
+从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.6) 下载 VSIX，在 VS Code 中选择“从 VSIX 安装”，打开工作区后进入插件侧栏。
 本机测试使用已安装的 Python 解释器或 C/C++ 编译器；学习记录保存在扩展存储，代码草稿保存在工作区。

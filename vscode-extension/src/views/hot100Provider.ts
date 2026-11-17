@@ -282,6 +282,8 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
                 HOT_100_LIST.map(q => this.effectiveStatus(q.frontendQuestionId))
             );
             const nodes: TreeNode[] = [new ProgressItem(totalStats, this.filter), new StatsItem(), new DailyItem(pickDailyQuestion(localDateStr()))];
+            const usage=new StatsRowItem('运行与提交说明',new vscode.ThemeIcon('file-text'));
+            usage.command={command:'hot100Pro.usageGuide',title:'运行与提交说明'};nodes.push(usage);
             const f=this.enhancedFilters;
             const filterRow=new StatsRowItem(`筛选：${[f.difficulty,f.topic,f.tag,f.company,f.search,f.due?'待复习':'',f.sort==='frequency'?'高频优先':''].filter(Boolean).join(' · ')||(this.flatResults?'全部题目 · 无筛选':'全部题目 · 按'+(this.groupBy==='category'?'专题':'难度')+'分组')}`,new vscode.ThemeIcon('filter'));
             filterRow.command={command:'hot100Pro.filter',title:'筛选题库'};nodes.splice(1,0,filterRow);
