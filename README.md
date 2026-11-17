@@ -1,55 +1,130 @@
 # Hot100 ACM 刷题台
 
-离线 Hot 100 算法练习桌面应用，支持 C、C++、Python，ACM 和核心代码模式、测试用例、自动保存与本地进度。
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/lovits.hot100-practice?label=VS%20Code)](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
+[![Desktop](https://img.shields.io/badge/Desktop-v1.0.11-4285F4)](https://github.com/lovits/hot100-acm/releases/tag/v1.0.11)
+[![GitHub Issues](https://img.shields.io/github/issues/lovits/hot100-acm)](https://github.com/lovits/hot100-acm/issues)
 
-## VS Code 插件
+把 Hot100 算法练习、ACM 输入输出训练和间隔复习放进日常刷题流程。
 
-新增 [Hot100 VS Code 插件](vscode-extension/README.md)，使用原生编辑器，支持 Python/C++/C 的 ACM 与核心代码模式。[下载可安装的 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.81)。插件与桌面应用独立编号，桌面版仍为 v1.0.11。
+本仓库提供两种使用方式：**独立桌面刷题台**和 **VS Code 插件**。两者均支持 Python、C++、C 的 ACM 与核心代码练习，学习进度各自保存在本机。
 
-插件使用方法见 [运行与提交说明](vscode-extension/运行与提交说明.html)。
+## 选择使用方式
 
-## 启动
+| | 桌面刷题台 | VS Code 插件 |
+| --- | --- | --- |
+| 适合场景 | 打开独立应用，直接进入刷题界面 | 在熟悉的 VS Code 编辑器中练习 |
+| 界面 | 左侧题目，右侧代码和测试区域 | 题库侧栏、左侧题面、右侧原生代码编辑器 |
+| 本机测试 | 运行示例、自定义测试、提交本地评测 | 示例、自定义用例、全部用例评测 |
+| 官网提交 | 以本机评测为主，可打开原题 | 核心代码模式登录力扣后提交官网 |
+| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.11) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.82) |
 
-需要 Python 3。编辑器、Pyodide 与题库资源已包含在 `dist/`。
+## 安装
 
-```powershell
-python launch.pyw
+### VS Code：一条命令安装
+
+```sh
+code --install-extension lovits.hot100-practice
 ```
 
-默认进入做题页面，点击左上角“LeetCode 热题 100”可选择题目。学习进度和代码保存在本机。
+也可以在扩展市场搜索 **Hot100 ACM**。扩展标识为 `lovits.hot100-practice`，发布者为 `lovits`。
 
-## 构建发行包
+安装后打开一个保存练习代码的文件夹，从活动栏进入 Hot100 ACM，点击题目并选择语言即可开始。每次点击题目都会弹出语言选择；打开题目默认左侧题面、右侧代码。
 
-发行包和桌面应用构建材料见 GitHub Releases。
+若终端找不到 `code`，在 VS Code 命令面板执行 **Shell Command: Install 'code' command in PATH**。离线安装可下载 [VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.82)，在扩展面板选择“从 VSIX 安装”，或执行：
 
-## 第三方材料
+```sh
+code --install-extension ./hot100-practice-0.2.82.vsix
+```
 
-本源码包不含第三方作者的全文题解与配图。原始文章仅获准本机个人学习使用。Monaco、Pyodide、KaTeX 等组件的许可见各自目录。
+### 桌面版：下载后启动
 
-## Windows 轻量发行版（v1.0.2）
+| 平台 | 下载 |
+| --- | --- |
+| macOS · Apple Silicon | [Hot100-macOS-arm64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.11/Hot100-macOS-arm64-release.zip) |
+| macOS · Intel | [Hot100-macOS-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.11/Hot100-macOS-x64-release.zip) |
+| Windows · x64 | [Hot100-Windows-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.11/Hot100-Windows-x64-release.zip) |
 
-Windows 启动修复与轻量版。
+macOS 解压后打开 `Hot100.app`；Windows 完整解压后，从 `Hot100/Start-Hot100.vbs` 启动。桌面包与插件独立发布，分别在对应 Release 中更新。
 
-- 修复原进度目录被移动或磁盘断开时无法启动的问题：备份原目录配置，回退本机默认进度目录并提示。原目录数据不删除。
-- 本地服务退出时立即报告错误，避免启动器继续等待；本机健康检查绕过系统代理。
-- 移除源码中的开发者机器绝对路径。
-- Windows 主包使用系统默认浏览器，内置 Python 与 Node，无需另装 Python，无内置 Electron 浏览器。
+## 功能
 
-下载 `Hot100-Windows-x64-release.zip`，完整解压后双击 `Hot100/Start-Hot100.vbs`。双击 `Create-Desktop-Shortcut.vbs` 创建桌面入口。不要直接在 ZIP 内启动。
+### 桌面刷题台
 
-Python 练习开箱可用。C/C++ 用户额外下载 `Hot100-Windows-C-Cpp-addon.zip`，解压到同一目录，合并 Hot100 文件夹；附带完整离线编译工具，体积较大。也可使用 PATH 中已有的 gcc/g++。
+- **直接刷题**：启动进入题目与代码界面，点击左上角题库名称打开选题侧栏。
+- **两种模式**：ACM 模式训练完整输入输出，核心代码模式练习力扣函数或类接口。
+- **本机运行**：支持 Python、C++、C，查看测试输入、输出、通过情况与错误信息。
+- **组合选题**：按难度、完成状态、专题、公司筛选，支持搜索和高频排序。
+- **题目信息**：查看算法标签、相关企业、考察次数、提示与原题链接。
+- **练习记录**：自动保存代码草稿和本地进度，支持收藏、计时和布局调整。
 
-macOS 用户继续使用 v1.0.1。本版没有重建 macOS 应用。
+### VS Code 插件
 
+- **原生编辑**：使用 VS Code 编辑器、快捷键和本机工具链，ACM 与核心代码分别保留草稿。
+- **题库筛选**：专题、算法标签、公司、难度、完成状态等条件可以组合使用，每类条件单选。
+- **统一排序入口**：侧栏顶部“分组方式”提供按专题、按难度、按题号、高频优先；选定公司后，高频优先使用该公司考察次数。
+- **运行与提交**：运行示例、手动添加用例、评测本地全部用例；核心代码支持登录力扣并提交官网。
+- **学习计划**：月历展示实际练习记录，按历史完成记录安排间隔复习；支持修改目标、勾选复习完成和手动重置计划。
+- **收藏与笔记**：保留题目收藏、个人笔记及刷题统计。
+- **HTML 使用说明**：点击侧栏“运行与提交说明”，直接打开包含功能、执行命令和快捷键的页面。
 
-## v1.0.6 逐题核对与性能
+## 界面预览
 
-以力扣官方 Hot100 的 100 道题、248 个官网示例为核对基线，标签无中文译名时使用官方原名，消除空标签；约束与核心接口对齐原题，ACM 输入输出格式保留明确的本地序列化说明。逐题差异与验证记录见 `reference/leetcode-per-question-audit.json`，官网示例数据及各语言结果见 `reference/leetcode-official-*.json` 和 `reference/official-*-check-*.json`。
+### 桌面刷题台
 
-五个筛选项保持单行，窄抽屉可横向滑动。编辑器保留最近 8 份模型及其撤销历史，更早草稿的文字、光标继续保存在原学习数据中。本机性能对照见 `reference/performance-check.json`。
+题面、代码编辑区和测试区域在同一窗口中展示。
 
-复核入口：`node verify_official.cjs python3`、`node verify_official.cjs cpp`、`node verify_official_acm.cjs`、`node verify_judge_rules.cjs`。这些检查不等于力扣的全部隐藏测试。
+![Hot100 ACM 桌面刷题台](docs/images/desktop-workbench.png)
 
-## VS Code 插件代码来源与许可
+### VS Code 插件
 
-插件保留上游原作者署名与 MIT 许可声明，详见 [版权与来源说明](vscode-extension/UPSTREAM.md)、[MIT 许可全文](vscode-extension/LICENSE)及[原始声明快照](vscode-extension/licenses/upstream/)。第三方题目、图片及依赖的权利说明见 [THIRD_PARTY.md](vscode-extension/THIRD_PARTY.md)。
+题库侧栏、左侧题面和右侧代码编辑器；截图来自实际使用场景。
+
+![Hot100 ACM VS Code 插件](docs/images/vscode-extension.png)
+
+## 运行、测试与提交
+
+ACM 模式编写包含输入输出的完整程序；核心代码模式按题目模板实现函数或类。Python、C++、C 的本机评测使用本机可用的解释器或编译器。
+
+在 VS Code 中，先聚焦题目代码文件，再通过命令面板执行：
+
+| 命令 | 功能 |
+| --- | --- |
+| `Hot100 ACM: 本机运行示例` | 检查题目示例 |
+| `Hot100 ACM: 本机自定义用例` | 手动填写输入和期望结果 |
+| `Hot100 ACM: 本机评测全部用例` | 全部通过后更新本地完成记录 |
+| `LeetCode: 提交代码` | 核心代码提交官网；Python/C++/C 的 ACM 文件执行本机全部用例评测 |
+
+| 常用操作 | macOS | Windows / Linux |
+| --- | --- | --- |
+| 命令面板 | `Cmd + Shift + P` | `Ctrl + Shift + P` |
+| 测试 | `Cmd + Option + T` | `Ctrl + Alt + T` |
+| 提交 | `Cmd + Option + S` | `Ctrl + Alt + S` |
+| 下一题 | `Cmd + Option + →` | `Ctrl + Alt + →` |
+| 搜索题目 | `Cmd + Option + F` | `Ctrl + Alt + F` |
+
+更多功能和快捷键可在插件侧栏的 **运行与提交说明** 页面中查看。本机用例通过与力扣官网判题通过分别记录。
+
+## 题库与高频数据来源
+
+- **题目来源**：[力扣 LeetCode Hot 100](https://leetcode.cn/studyplan/top-100-liked/)。题目说明、难度、标签及核心代码接口参考官方原题；ACM 模式补充本地输入输出格式。
+- **高频与企业考察次数来源**：[CodeTop](https://codetop.cc/)。当前随包快照时间为 `2026-11-16T19:24:01+00:00`（北京时间 **2026-11-17**），并非实时统计。公司筛选下展示对应公司的次数，未指定公司时使用总次数。
+- **核对记录**：题目逐题检查见 [leetcode-per-question-audit.json](reference/leetcode-per-question-audit.json)，插件核对记录见 [vscode-official-audit.json](reference/vscode-official-audit.json)。
+
+## 从源码运行
+
+安装 Python 3 后，在仓库根目录启动本地服务：
+
+```sh
+python3 local_server.py
+```
+
+浏览器打开 <http://127.0.0.1:18765>。本机评测还需要 Node.js，以及所选语言对应的解释器或编译器。
+
+插件源码位于 [vscode-extension](vscode-extension/)，使用 `npm ci`、`npm run compile` 构建。
+
+## 链接与许可
+
+- [项目仓库](https://github.com/lovits/hot100-acm) · [插件主页](https://github.com/lovits/hot100-acm/tree/main/vscode-extension) · [问题反馈](https://github.com/lovits/hot100-acm/issues)
+- [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [全部 Release](https://github.com/lovits/hot100-acm/releases)
+- 插件保留原作者署名和 MIT 许可，见 [LICENSE](vscode-extension/LICENSE)、[上游版权说明](vscode-extension/UPSTREAM.md)与[原始声明快照](vscode-extension/licenses/upstream/)。
+- 题目、图示、商标及第三方依赖的权利归各自权利人所有，不随代码的 MIT 许可转移。详情见 [THIRD_PARTY.md](vscode-extension/THIRD_PARTY.md)。本项目非力扣或 CodeTop 官方产品。

@@ -1499,7 +1499,7 @@ export async function activate(context: vscode.ExtensionContext) {
 		const panelKey = String(question.titleSlug);
 		const existingPanel = problemPanels.get(panelKey);
 		if (existingPanel && initialTab === 'solution') {
-			existingPanel.reveal(existingPanel.viewColumn);
+			existingPanel.reveal(vscode.ViewColumn.One);
 			// 「查看题解」入口直达题解页：此前只聚焦不切页，用户停在题目描述页
 			if (initialTab === 'solution') {
 				void existingPanel.webview.postMessage({ type: 'navigate', tab: 'solution' } satisfies ExtensionToPanelMessage);
@@ -1559,13 +1559,13 @@ export async function activate(context: vscode.ExtensionContext) {
                     await vscode.window.showTextDocument(doc,{viewColumn:enhancements.codeColumn(String(q.questionFrontendId)),preview:false});
                     await context.workspaceState.update('currentProblem',{titleSlug:q.titleSlug,questionId:q.questionId,questionFrontendId:q.questionFrontendId,lang:langSlug,filePath:solutionFilePath,testCases:q.exampleTestcases||q.sampleTestCase});
                 }
-                if(existingPanel){existingPanel.reveal(existingPanel.viewColumn,true);return;}
+                if(existingPanel){existingPanel.reveal(vscode.ViewColumn.One,true);return;}
 
 				// 创建题目描述面板（每题唯一，key 为命令入口登记的 titleSlug）
 				const panel = vscode.window.createWebviewPanel(
 					'leetcodeProblem',
 					`${q.questionFrontendId}. ${q.translatedTitle || q.title}`,
-					vscode.ViewColumn.Two,
+					vscode.ViewColumn.One,
 					{ enableScripts: true, localResourceRoots: [vscode.Uri.file(context.extensionPath), context.globalStorageUri] }
 				);
 				problemPanels.set(panelKey, panel);

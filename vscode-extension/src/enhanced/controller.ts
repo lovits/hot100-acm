@@ -62,12 +62,12 @@ export class Enhancements {
         const prior=this.context.workspaceState.get<any>('currentProblem');
         const groups=vscode.window.tabGroups.all;
         const current=groups.find(group=>group.tabs.some(tab=>tab.input instanceof vscode.TabInputText && tab.input.uri.fsPath===prior?.filePath && String(prior.questionFrontendId)===id));
-        if(current)return current.viewColumn;
+        if(current)return Math.max(vscode.ViewColumn.Two,current.viewColumn);
         const remembered=this.codeColumns.get(id);
-        if(remembered&&groups.some(g=>g.viewColumn===remembered))return remembered;
+        if(remembered&&groups.some(g=>g.viewColumn===remembered))return Math.max(vscode.ViewColumn.Two,remembered);
         const match=groups.find(group=>group.tabs.some(tab=>tab.input instanceof vscode.TabInputText && path.basename(tab.input.uri.fsPath).startsWith(id+'_')));
         const editor=vscode.window.visibleTextEditors.find(e=>e.document.uri.fsPath===prior?.filePath);
-        return match?.viewColumn||editor?.viewColumn||vscode.ViewColumn.One;
+        return Math.max(vscode.ViewColumn.Two,match?.viewColumn||editor?.viewColumn||vscode.ViewColumn.Two);
     }
     async prepare(q:any,root:string,forceMode?:'core'|'acm',forceLanguage?:string) {
         const id=String(q.questionFrontendId),p=catalogById.get(id);if(!p)return undefined;

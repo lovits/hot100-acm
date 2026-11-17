@@ -22,12 +22,22 @@
 
 ## 开始使用
 
+```sh
+code --install-extension lovits.hot100-practice
+```
+
 1. 安装扩展并打开保存练习代码的工作区。
 2. 从 Hot100 ACM 侧栏选择题目及语言。
 3. 选择 ACM 或核心代码模式，编写代码后运行示例、自定义用例或全部用例评测。
 4. 核心代码可登录力扣后提交官网。其他语言保留对应的原有测试、提交流程。
 
 本机测试使用当前 VS Code 环境中的 Python 解释器或 C/C++ 编译器。学习记录保存在扩展存储，代码草稿保存在工作区。
+
+## 界面预览
+
+打开题目默认左侧题面、右侧代码；ACM 与核心代码模式切换复用代码分组。
+
+![Hot100 ACM VS Code 插件](https://raw.githubusercontent.com/lovits/hot100-acm/main/docs/images/vscode-extension.png)
 
 ## 快捷键
 
@@ -42,13 +52,17 @@
 
 测试与提交需聚焦题目代码编辑器；Python/C++/C 的 ACM 提交执行本机全部用例评测，核心代码提交官网。
 
+## 数据来源
+
+题目参考 [力扣 Hot100](https://leetcode.cn/studyplan/top-100-liked/)，高频与企业考察次数来自 [CodeTop](https://codetop.cc/)。随包数据为快照，非实时更新；当前快照为北京时间 2026-11-17。
+
 ## 链接
 
 - [项目仓库](https://github.com/lovits/hot100-acm)
 - [插件主页](https://github.com/lovits/hot100-acm/tree/main/vscode-extension)
 - [问题反馈](https://github.com/lovits/hot100-acm/issues)
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
-- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.81)
+- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.82)
 - [完整运行与提交说明](https://github.com/lovits/hot100-acm/blob/main/vscode-extension/运行与提交说明.html)
 
 **分类**：Education / Programming Languages · **扩展标识**：`lovits.hot100-practice`
