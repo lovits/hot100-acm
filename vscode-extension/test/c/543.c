@@ -1,0 +1,1 @@
+static int dep(struct TreeNode*r,int*best){if(!r)return 0;int l=dep(r->left,best),h=dep(r->right,best);if(l+h>*best)*best=l+h;return 1+(l>h?l:h);}int diameterOfBinaryTree(struct TreeNode*r){int best=0;dep(r,&best);return best;}

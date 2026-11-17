@@ -1,0 +1,1 @@
+int*partitionLabels(char*s,int*r){int last[256]={0};for(int i=0;s[i];i++)last[(unsigned char)s[i]]=i;int*out=malloc(26*sizeof(int)),start=0,end=0;*r=0;for(int i=0;s[i];i++){if(last[(unsigned char)s[i]]>end)end=last[(unsigned char)s[i]];if(i==end){out[(*r)++]=end-start+1;start=i+1;}}return out;}

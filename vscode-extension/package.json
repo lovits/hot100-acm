@@ -1,0 +1,99 @@
+{
+  "name": "hot100-practice",
+  "displayName": "Hot100 刷题台",
+  "description": "在 VS Code 中练习力扣 Hot100：Python、C++、C，ACM 与核心代码模式，本地运行与测试。",
+  "version": "0.1.0",
+  "publisher": "lovits",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Education",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "leetcode",
+    "hot100",
+    "ACM",
+    "C",
+    "Python"
+  ],
+  "main": "./extension.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lovits/hot100-acm.git",
+    "directory": "vscode-extension"
+  },
+  "homepage": "https://github.com/lovits/hot100-acm/tree/main/vscode-extension",
+  "bugs": {
+    "url": "https://github.com/lovits/hot100-acm/issues"
+  },
+  "icon": "media/icon.png",
+  "extensionKind": [
+    "workspace"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "可查看题目；执行代码须信任工作区。"
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "hot100.open",
+        "title": "Hot100: 打开刷题台"
+      },
+      {
+        "command": "hot100.choose",
+        "title": "Hot100: 选择题目"
+      },
+      {
+        "command": "hot100.run",
+        "title": "Hot100: 运行示例"
+      },
+      {
+        "command": "hot100.submit",
+        "title": "Hot100: 提交测试"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "hot100",
+          "title": "Hot100",
+          "icon": "media/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "hot100": [
+        {
+          "id": "hot100.questions",
+          "name": "Leetcode 热题 100"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "hot100.choose",
+          "when": "view == hot100.questions",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node test/engine-test.js python3 && node test/engine-test.js cpp && node test/c-core-test.js && node test/c-acm-test.js",
+    "package": "vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.0"
+  },
+  "dependencies": {
+    "sanitize-html": "^2.18.2"
+  }
+}

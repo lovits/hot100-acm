@@ -1,0 +1,2607 @@
+{
+  "checkedAt": "2026-11-17T12:16:48.209025+00:00",
+  "baseRelease": "v1.0.11",
+  "questions": [
+    {
+      "id": 1,
+      "url": "https://leetcode.cn/problems/two-sum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "两数之和",
+        "tags": [
+          "数组",
+          "哈希表"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "两数之和",
+        "tags": [
+          "数组",
+          "哈希表"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 2,
+      "url": "https://leetcode.cn/problems/add-two-numbers/",
+      "metadataMatches": true,
+      "before": {
+        "title": "两数相加",
+        "tags": [
+          "递归",
+          "链表",
+          "数学"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "两数相加",
+        "tags": [
+          "递归",
+          "链表",
+          "数学"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 3,
+      "url": "https://leetcode.cn/problems/longest-substring-without-repeating-characters/",
+      "metadataMatches": true,
+      "before": {
+        "title": "无重复字符的最长子串",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "滑动窗口"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "无重复字符的最长子串",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "滑动窗口"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 4,
+      "url": "https://leetcode.cn/problems/median-of-two-sorted-arrays/",
+      "metadataMatches": true,
+      "before": {
+        "title": "寻找两个正序数组的中位数",
+        "tags": [
+          "数组",
+          "二分查找",
+          "分治"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "寻找两个正序数组的中位数",
+        "tags": [
+          "数组",
+          "二分查找",
+          "分治"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 5,
+      "url": "https://leetcode.cn/problems/longest-palindromic-substring/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最长回文子串",
+        "tags": [
+          "双指针",
+          "字符串",
+          "动态规划",
+          "Manacher 算法"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最长回文子串",
+        "tags": [
+          "双指针",
+          "字符串",
+          "动态规划",
+          "Manacher 算法"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 11,
+      "url": "https://leetcode.cn/problems/container-with-most-water/",
+      "metadataMatches": true,
+      "before": {
+        "title": "盛最多水的容器",
+        "tags": [
+          "贪心",
+          "数组",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "盛最多水的容器",
+        "tags": [
+          "贪心",
+          "数组",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 15,
+      "url": "https://leetcode.cn/problems/3sum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "三数之和",
+        "tags": [
+          "数组",
+          "双指针",
+          "排序"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "三数之和",
+        "tags": [
+          "数组",
+          "双指针",
+          "排序"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 17,
+      "url": "https://leetcode.cn/problems/letter-combinations-of-a-phone-number/",
+      "metadataMatches": true,
+      "before": {
+        "title": "电话号码的字母组合",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "电话号码的字母组合",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 19,
+      "url": "https://leetcode.cn/problems/remove-nth-node-from-end-of-list/",
+      "metadataMatches": true,
+      "before": {
+        "title": "删除链表的倒数第 N 个结点",
+        "tags": [
+          "链表",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "删除链表的倒数第 N 个结点",
+        "tags": [
+          "链表",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 20,
+      "url": "https://leetcode.cn/problems/valid-parentheses/",
+      "metadataMatches": true,
+      "before": {
+        "title": "有效的括号",
+        "tags": [
+          "栈",
+          "字符串",
+          "括号序列"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "有效的括号",
+        "tags": [
+          "栈",
+          "字符串",
+          "括号序列"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 21,
+      "url": "https://leetcode.cn/problems/merge-two-sorted-lists/",
+      "metadataMatches": true,
+      "before": {
+        "title": "合并两个有序链表",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "合并两个有序链表",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 22,
+      "url": "https://leetcode.cn/problems/generate-parentheses/",
+      "metadataMatches": true,
+      "before": {
+        "title": "括号生成",
+        "tags": [
+          "字符串",
+          "动态规划",
+          "回溯",
+          "括号序列"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "括号生成",
+        "tags": [
+          "字符串",
+          "动态规划",
+          "回溯",
+          "括号序列"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 23,
+      "url": "https://leetcode.cn/problems/merge-k-sorted-lists/",
+      "metadataMatches": true,
+      "before": {
+        "title": "合并 K 个升序链表",
+        "tags": [
+          "链表",
+          "分治",
+          "堆（优先队列）",
+          "归并排序",
+          "锦标赛排序"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "合并 K 个升序链表",
+        "tags": [
+          "链表",
+          "分治",
+          "堆（优先队列）",
+          "归并排序",
+          "锦标赛排序"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 24,
+      "url": "https://leetcode.cn/problems/swap-nodes-in-pairs/",
+      "metadataMatches": true,
+      "before": {
+        "title": "两两交换链表中的节点",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "两两交换链表中的节点",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 25,
+      "url": "https://leetcode.cn/problems/reverse-nodes-in-k-group/",
+      "metadataMatches": true,
+      "before": {
+        "title": "K 个一组翻转链表",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "K 个一组翻转链表",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 31,
+      "url": "https://leetcode.cn/problems/next-permutation/",
+      "metadataMatches": true,
+      "before": {
+        "title": "下一个排列",
+        "tags": [
+          "数组",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "下一个排列",
+        "tags": [
+          "数组",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 32,
+      "url": "https://leetcode.cn/problems/longest-valid-parentheses/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最长有效括号",
+        "tags": [
+          "栈",
+          "字符串",
+          "动态规划",
+          "括号序列"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "最长有效括号",
+        "tags": [
+          "栈",
+          "字符串",
+          "动态规划",
+          "括号序列"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 33,
+      "url": "https://leetcode.cn/problems/search-in-rotated-sorted-array/",
+      "metadataMatches": true,
+      "before": {
+        "title": "搜索旋转排序数组",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "搜索旋转排序数组",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 34,
+      "url": "https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/",
+      "metadataMatches": true,
+      "before": {
+        "title": "在排序数组中查找元素的第一个和最后一个位置",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "在排序数组中查找元素的第一个和最后一个位置",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 35,
+      "url": "https://leetcode.cn/problems/search-insert-position/",
+      "metadataMatches": true,
+      "before": {
+        "title": "搜索插入位置",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "搜索插入位置",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 39,
+      "url": "https://leetcode.cn/problems/combination-sum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "组合总和",
+        "tags": [
+          "数组",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "组合总和",
+        "tags": [
+          "数组",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 41,
+      "url": "https://leetcode.cn/problems/first-missing-positive/",
+      "metadataMatches": true,
+      "before": {
+        "title": "缺失的第一个正数",
+        "tags": [
+          "数组",
+          "哈希表"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "缺失的第一个正数",
+        "tags": [
+          "数组",
+          "哈希表"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 42,
+      "url": "https://leetcode.cn/problems/trapping-rain-water/",
+      "metadataMatches": true,
+      "before": {
+        "title": "接雨水",
+        "tags": [
+          "栈",
+          "数组",
+          "双指针",
+          "动态规划",
+          "单调栈"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "接雨水",
+        "tags": [
+          "栈",
+          "数组",
+          "双指针",
+          "动态规划",
+          "单调栈"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 45,
+      "url": "https://leetcode.cn/problems/jump-game-ii/",
+      "metadataMatches": true,
+      "before": {
+        "title": "跳跃游戏 II",
+        "tags": [
+          "贪心",
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "跳跃游戏 II",
+        "tags": [
+          "贪心",
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 46,
+      "url": "https://leetcode.cn/problems/permutations/",
+      "metadataMatches": true,
+      "before": {
+        "title": "全排列",
+        "tags": [
+          "数组",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "全排列",
+        "tags": [
+          "数组",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 48,
+      "url": "https://leetcode.cn/problems/rotate-image/",
+      "metadataMatches": true,
+      "before": {
+        "title": "旋转图像",
+        "tags": [
+          "数组",
+          "数学",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "旋转图像",
+        "tags": [
+          "数组",
+          "数学",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 49,
+      "url": "https://leetcode.cn/problems/group-anagrams/",
+      "metadataMatches": true,
+      "before": {
+        "title": "字母异位词分组",
+        "tags": [
+          "数组",
+          "哈希表",
+          "字符串",
+          "排序"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "字母异位词分组",
+        "tags": [
+          "数组",
+          "哈希表",
+          "字符串",
+          "排序"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 51,
+      "url": "https://leetcode.cn/problems/n-queens/",
+      "metadataMatches": true,
+      "before": {
+        "title": "N 皇后",
+        "tags": [
+          "数组",
+          "回溯",
+          "X 算法"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "N 皇后",
+        "tags": [
+          "数组",
+          "回溯",
+          "X 算法"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 53,
+      "url": "https://leetcode.cn/problems/maximum-subarray/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最大子数组和",
+        "tags": [
+          "数组",
+          "分治",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最大子数组和",
+        "tags": [
+          "数组",
+          "分治",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 54,
+      "url": "https://leetcode.cn/problems/spiral-matrix/",
+      "metadataMatches": true,
+      "before": {
+        "title": "螺旋矩阵",
+        "tags": [
+          "数组",
+          "矩阵",
+          "模拟"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "螺旋矩阵",
+        "tags": [
+          "数组",
+          "矩阵",
+          "模拟"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 55,
+      "url": "https://leetcode.cn/problems/jump-game/",
+      "metadataMatches": true,
+      "before": {
+        "title": "跳跃游戏",
+        "tags": [
+          "贪心",
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "跳跃游戏",
+        "tags": [
+          "贪心",
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 56,
+      "url": "https://leetcode.cn/problems/merge-intervals/",
+      "metadataMatches": true,
+      "before": {
+        "title": "合并区间",
+        "tags": [
+          "数组",
+          "排序",
+          "快速排序"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "合并区间",
+        "tags": [
+          "数组",
+          "排序",
+          "快速排序"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 62,
+      "url": "https://leetcode.cn/problems/unique-paths/",
+      "metadataMatches": true,
+      "before": {
+        "title": "不同路径",
+        "tags": [
+          "数学",
+          "动态规划",
+          "组合数学"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "不同路径",
+        "tags": [
+          "数学",
+          "动态规划",
+          "组合数学"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 64,
+      "url": "https://leetcode.cn/problems/minimum-path-sum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最小路径和",
+        "tags": [
+          "数组",
+          "动态规划",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最小路径和",
+        "tags": [
+          "数组",
+          "动态规划",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 70,
+      "url": "https://leetcode.cn/problems/climbing-stairs/",
+      "metadataMatches": true,
+      "before": {
+        "title": "爬楼梯",
+        "tags": [
+          "记忆化",
+          "数学",
+          "动态规划"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "爬楼梯",
+        "tags": [
+          "记忆化",
+          "数学",
+          "动态规划"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 72,
+      "url": "https://leetcode.cn/problems/edit-distance/",
+      "metadataMatches": true,
+      "before": {
+        "title": "编辑距离",
+        "tags": [
+          "字符串",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "编辑距离",
+        "tags": [
+          "字符串",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 73,
+      "url": "https://leetcode.cn/problems/set-matrix-zeroes/",
+      "metadataMatches": true,
+      "before": {
+        "title": "矩阵置零",
+        "tags": [
+          "数组",
+          "哈希表",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "矩阵置零",
+        "tags": [
+          "数组",
+          "哈希表",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 74,
+      "url": "https://leetcode.cn/problems/search-a-2d-matrix/",
+      "metadataMatches": true,
+      "before": {
+        "title": "搜索二维矩阵",
+        "tags": [
+          "数组",
+          "二分查找",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "搜索二维矩阵",
+        "tags": [
+          "数组",
+          "二分查找",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 75,
+      "url": "https://leetcode.cn/problems/sort-colors/",
+      "metadataMatches": true,
+      "before": {
+        "title": "颜色分类",
+        "tags": [
+          "数组",
+          "双指针",
+          "冒泡排序",
+          "排序",
+          "快速排序"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "颜色分类",
+        "tags": [
+          "数组",
+          "双指针",
+          "冒泡排序",
+          "排序",
+          "快速排序"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 76,
+      "url": "https://leetcode.cn/problems/minimum-window-substring/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最小覆盖子串",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "滑动窗口"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "最小覆盖子串",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "滑动窗口"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 78,
+      "url": "https://leetcode.cn/problems/subsets/",
+      "metadataMatches": true,
+      "before": {
+        "title": "子集",
+        "tags": [
+          "位运算",
+          "数组",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "子集",
+        "tags": [
+          "位运算",
+          "数组",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 79,
+      "url": "https://leetcode.cn/problems/word-search/",
+      "metadataMatches": true,
+      "before": {
+        "title": "单词搜索",
+        "tags": [
+          "深度优先搜索",
+          "数组",
+          "字符串",
+          "回溯",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "单词搜索",
+        "tags": [
+          "深度优先搜索",
+          "数组",
+          "字符串",
+          "回溯",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 84,
+      "url": "https://leetcode.cn/problems/largest-rectangle-in-histogram/",
+      "metadataMatches": true,
+      "before": {
+        "title": "柱状图中最大的矩形",
+        "tags": [
+          "栈",
+          "数组",
+          "单调栈",
+          "区间最值查询"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "柱状图中最大的矩形",
+        "tags": [
+          "栈",
+          "数组",
+          "单调栈",
+          "区间最值查询"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 94,
+      "url": "https://leetcode.cn/problems/binary-tree-inorder-traversal/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树的中序遍历",
+        "tags": [
+          "栈",
+          "树",
+          "深度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "二叉树的中序遍历",
+        "tags": [
+          "栈",
+          "树",
+          "深度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 98,
+      "url": "https://leetcode.cn/problems/validate-binary-search-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "验证二叉搜索树",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉搜索树",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "验证二叉搜索树",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉搜索树",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 101,
+      "url": "https://leetcode.cn/problems/symmetric-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "对称二叉树",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "对称二叉树",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 102,
+      "url": "https://leetcode.cn/problems/binary-tree-level-order-traversal/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树的层序遍历",
+        "tags": [
+          "树",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "二叉树的层序遍历",
+        "tags": [
+          "树",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 104,
+      "url": "https://leetcode.cn/problems/maximum-depth-of-binary-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树的最大深度",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "二叉树的最大深度",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 105,
+      "url": "https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+      "metadataMatches": true,
+      "before": {
+        "title": "从前序与中序遍历序列构造二叉树",
+        "tags": [
+          "树",
+          "数组",
+          "哈希表",
+          "分治",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "从前序与中序遍历序列构造二叉树",
+        "tags": [
+          "树",
+          "数组",
+          "哈希表",
+          "分治",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 108,
+      "url": "https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "将有序数组转换为二叉搜索树",
+        "tags": [
+          "树",
+          "二叉搜索树",
+          "数组",
+          "分治",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "将有序数组转换为二叉搜索树",
+        "tags": [
+          "树",
+          "二叉搜索树",
+          "数组",
+          "分治",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 114,
+      "url": "https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树展开为链表",
+        "tags": [
+          "栈",
+          "树",
+          "深度优先搜索",
+          "链表",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "二叉树展开为链表",
+        "tags": [
+          "栈",
+          "树",
+          "深度优先搜索",
+          "链表",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 118,
+      "url": "https://leetcode.cn/problems/pascals-triangle/",
+      "metadataMatches": true,
+      "before": {
+        "title": "杨辉三角",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "杨辉三角",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 121,
+      "url": "https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/",
+      "metadataMatches": true,
+      "before": {
+        "title": "买卖股票的最佳时机",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "买卖股票的最佳时机",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 124,
+      "url": "https://leetcode.cn/problems/binary-tree-maximum-path-sum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树中的最大路径和",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "动态规划",
+          "二叉树",
+          "树形 DP"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "二叉树中的最大路径和",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "动态规划",
+          "二叉树",
+          "树形 DP"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 128,
+      "url": "https://leetcode.cn/problems/longest-consecutive-sequence/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最长连续序列",
+        "tags": [
+          "并查集",
+          "数组",
+          "哈希表"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最长连续序列",
+        "tags": [
+          "并查集",
+          "数组",
+          "哈希表"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 131,
+      "url": "https://leetcode.cn/problems/palindrome-partitioning/",
+      "metadataMatches": true,
+      "before": {
+        "title": "分割回文串",
+        "tags": [
+          "字符串",
+          "动态规划",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "分割回文串",
+        "tags": [
+          "字符串",
+          "动态规划",
+          "回溯"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 136,
+      "url": "https://leetcode.cn/problems/single-number/",
+      "metadataMatches": true,
+      "before": {
+        "title": "只出现一次的数字",
+        "tags": [
+          "位运算",
+          "数组"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "只出现一次的数字",
+        "tags": [
+          "位运算",
+          "数组"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 138,
+      "url": "https://leetcode.cn/problems/copy-list-with-random-pointer/",
+      "metadataMatches": true,
+      "before": {
+        "title": "随机链表的复制",
+        "tags": [
+          "哈希表",
+          "链表"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "随机链表的复制",
+        "tags": [
+          "哈希表",
+          "链表"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 139,
+      "url": "https://leetcode.cn/problems/word-break/",
+      "metadataMatches": true,
+      "before": {
+        "title": "单词拆分",
+        "tags": [
+          "字典树",
+          "记忆化",
+          "数组",
+          "哈希表",
+          "字符串",
+          "动态规划",
+          "Brute-Force Search"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "单词拆分",
+        "tags": [
+          "字典树",
+          "记忆化",
+          "数组",
+          "哈希表",
+          "字符串",
+          "动态规划",
+          "Brute-Force Search"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 141,
+      "url": "https://leetcode.cn/problems/linked-list-cycle/",
+      "metadataMatches": true,
+      "before": {
+        "title": "环形链表",
+        "tags": [
+          "哈希表",
+          "链表",
+          "双指针",
+          "Floyd 判圈算法"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "环形链表",
+        "tags": [
+          "哈希表",
+          "链表",
+          "双指针",
+          "Floyd 判圈算法"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 142,
+      "url": "https://leetcode.cn/problems/linked-list-cycle-ii/",
+      "metadataMatches": true,
+      "before": {
+        "title": "环形链表 II",
+        "tags": [
+          "哈希表",
+          "链表",
+          "双指针",
+          "Floyd 判圈算法"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "环形链表 II",
+        "tags": [
+          "哈希表",
+          "链表",
+          "双指针",
+          "Floyd 判圈算法"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 146,
+      "url": "https://leetcode.cn/problems/lru-cache/",
+      "metadataMatches": true,
+      "before": {
+        "title": "LRU 缓存",
+        "tags": [
+          "设计",
+          "哈希表",
+          "链表",
+          "双向链表"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "LRU 缓存",
+        "tags": [
+          "设计",
+          "哈希表",
+          "链表",
+          "双向链表"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 148,
+      "url": "https://leetcode.cn/problems/sort-list/",
+      "metadataMatches": true,
+      "before": {
+        "title": "排序链表",
+        "tags": [
+          "链表",
+          "双指针",
+          "分治",
+          "排序",
+          "归并排序"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "排序链表",
+        "tags": [
+          "链表",
+          "双指针",
+          "分治",
+          "排序",
+          "归并排序"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 152,
+      "url": "https://leetcode.cn/problems/maximum-product-subarray/",
+      "metadataMatches": true,
+      "before": {
+        "title": "乘积最大子数组",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "乘积最大子数组",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 153,
+      "url": "https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/",
+      "metadataMatches": true,
+      "before": {
+        "title": "寻找旋转排序数组中的最小值",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "寻找旋转排序数组中的最小值",
+        "tags": [
+          "数组",
+          "二分查找"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 155,
+      "url": "https://leetcode.cn/problems/min-stack/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最小栈",
+        "tags": [
+          "栈",
+          "设计"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最小栈",
+        "tags": [
+          "栈",
+          "设计"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 160,
+      "url": "https://leetcode.cn/problems/intersection-of-two-linked-lists/",
+      "metadataMatches": true,
+      "before": {
+        "title": "相交链表",
+        "tags": [
+          "哈希表",
+          "链表",
+          "双指针"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "相交链表",
+        "tags": [
+          "哈希表",
+          "链表",
+          "双指针"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 169,
+      "url": "https://leetcode.cn/problems/majority-element/",
+      "metadataMatches": true,
+      "before": {
+        "title": "多数元素",
+        "tags": [
+          "数组",
+          "哈希表",
+          "分治",
+          "计数",
+          "排序",
+          "摩尔投票算法"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "多数元素",
+        "tags": [
+          "数组",
+          "哈希表",
+          "分治",
+          "计数",
+          "排序",
+          "摩尔投票算法"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 189,
+      "url": "https://leetcode.cn/problems/rotate-array/",
+      "metadataMatches": true,
+      "before": {
+        "title": "轮转数组",
+        "tags": [
+          "数组",
+          "数学",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "轮转数组",
+        "tags": [
+          "数组",
+          "数学",
+          "双指针"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 198,
+      "url": "https://leetcode.cn/problems/house-robber/",
+      "metadataMatches": true,
+      "before": {
+        "title": "打家劫舍",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "打家劫舍",
+        "tags": [
+          "数组",
+          "动态规划"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 199,
+      "url": "https://leetcode.cn/problems/binary-tree-right-side-view/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树的右视图",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "二叉树的右视图",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 200,
+      "url": "https://leetcode.cn/problems/number-of-islands/",
+      "metadataMatches": true,
+      "before": {
+        "title": "岛屿数量",
+        "tags": [
+          "深度优先搜索",
+          "广度优先搜索",
+          "并查集",
+          "数组",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "岛屿数量",
+        "tags": [
+          "深度优先搜索",
+          "广度优先搜索",
+          "并查集",
+          "数组",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 206,
+      "url": "https://leetcode.cn/problems/reverse-linked-list/",
+      "metadataMatches": true,
+      "before": {
+        "title": "反转链表",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "反转链表",
+        "tags": [
+          "递归",
+          "链表"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 207,
+      "url": "https://leetcode.cn/problems/course-schedule/",
+      "metadataMatches": true,
+      "before": {
+        "title": "课程表",
+        "tags": [
+          "深度优先搜索",
+          "广度优先搜索",
+          "图",
+          "拓扑排序",
+          "有向无环图"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "课程表",
+        "tags": [
+          "深度优先搜索",
+          "广度优先搜索",
+          "图",
+          "拓扑排序",
+          "有向无环图"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 208,
+      "url": "https://leetcode.cn/problems/implement-trie-prefix-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "实现 Trie (前缀树)",
+        "tags": [
+          "设计",
+          "字典树",
+          "哈希表",
+          "字符串"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "实现 Trie (前缀树)",
+        "tags": [
+          "设计",
+          "字典树",
+          "哈希表",
+          "字符串"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 215,
+      "url": "https://leetcode.cn/problems/kth-largest-element-in-an-array/",
+      "metadataMatches": true,
+      "before": {
+        "title": "数组中的第K个最大元素",
+        "tags": [
+          "数组",
+          "分治",
+          "快速选择",
+          "排序",
+          "堆（优先队列）"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "数组中的第K个最大元素",
+        "tags": [
+          "数组",
+          "分治",
+          "快速选择",
+          "排序",
+          "堆（优先队列）"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 226,
+      "url": "https://leetcode.cn/problems/invert-binary-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "翻转二叉树",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "翻转二叉树",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "广度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 230,
+      "url": "https://leetcode.cn/problems/kth-smallest-element-in-a-bst/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉搜索树中第 K 小的元素",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉搜索树",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "二叉搜索树中第 K 小的元素",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉搜索树",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 234,
+      "url": "https://leetcode.cn/problems/palindrome-linked-list/",
+      "metadataMatches": true,
+      "before": {
+        "title": "回文链表",
+        "tags": [
+          "栈",
+          "递归",
+          "链表",
+          "双指针"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "回文链表",
+        "tags": [
+          "栈",
+          "递归",
+          "链表",
+          "双指针"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 236,
+      "url": "https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树的最近公共祖先",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉树",
+          "最近公共祖先",
+          "Binary Lifting"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "二叉树的最近公共祖先",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉树",
+          "最近公共祖先",
+          "Binary Lifting"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 238,
+      "url": "https://leetcode.cn/problems/product-of-array-except-self/",
+      "metadataMatches": true,
+      "before": {
+        "title": "除了自身以外数组的乘积",
+        "tags": [
+          "数组",
+          "前缀和"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "除了自身以外数组的乘积",
+        "tags": [
+          "数组",
+          "前缀和"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 239,
+      "url": "https://leetcode.cn/problems/sliding-window-maximum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "滑动窗口最大值",
+        "tags": [
+          "队列",
+          "数组",
+          "滑动窗口",
+          "单调队列",
+          "堆（优先队列）",
+          "区间最值查询"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "滑动窗口最大值",
+        "tags": [
+          "队列",
+          "数组",
+          "滑动窗口",
+          "单调队列",
+          "堆（优先队列）",
+          "区间最值查询"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 240,
+      "url": "https://leetcode.cn/problems/search-a-2d-matrix-ii/",
+      "metadataMatches": true,
+      "before": {
+        "title": "搜索二维矩阵 II",
+        "tags": [
+          "数组",
+          "二分查找",
+          "分治",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "搜索二维矩阵 II",
+        "tags": [
+          "数组",
+          "二分查找",
+          "分治",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 279,
+      "url": "https://leetcode.cn/problems/perfect-squares/",
+      "metadataMatches": true,
+      "before": {
+        "title": "完全平方数",
+        "tags": [
+          "广度优先搜索",
+          "数学",
+          "动态规划",
+          "背包问题",
+          "完全背包"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "完全平方数",
+        "tags": [
+          "广度优先搜索",
+          "数学",
+          "动态规划",
+          "背包问题",
+          "完全背包"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 283,
+      "url": "https://leetcode.cn/problems/move-zeroes/",
+      "metadataMatches": true,
+      "before": {
+        "title": "移动零",
+        "tags": [
+          "数组",
+          "双指针"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "移动零",
+        "tags": [
+          "数组",
+          "双指针"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 287,
+      "url": "https://leetcode.cn/problems/find-the-duplicate-number/",
+      "metadataMatches": true,
+      "before": {
+        "title": "寻找重复数",
+        "tags": [
+          "位运算",
+          "数组",
+          "双指针",
+          "二分查找",
+          "Floyd 判圈算法",
+          "抽屉原理"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "寻找重复数",
+        "tags": [
+          "位运算",
+          "数组",
+          "双指针",
+          "二分查找",
+          "Floyd 判圈算法",
+          "抽屉原理"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 295,
+      "url": "https://leetcode.cn/problems/find-median-from-data-stream/",
+      "metadataMatches": true,
+      "before": {
+        "title": "数据流的中位数",
+        "tags": [
+          "设计",
+          "双指针",
+          "数据流",
+          "排序",
+          "堆（优先队列）"
+        ],
+        "difficulty": "困难"
+      },
+      "official": {
+        "title": "数据流的中位数",
+        "tags": [
+          "设计",
+          "双指针",
+          "数据流",
+          "排序",
+          "堆（优先队列）"
+        ],
+        "difficulty": "困难"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 300,
+      "url": "https://leetcode.cn/problems/longest-increasing-subsequence/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最长递增子序列",
+        "tags": [
+          "数组",
+          "二分查找",
+          "动态规划",
+          "最长上升子序列"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最长递增子序列",
+        "tags": [
+          "数组",
+          "二分查找",
+          "动态规划",
+          "最长上升子序列"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 322,
+      "url": "https://leetcode.cn/problems/coin-change/",
+      "metadataMatches": true,
+      "before": {
+        "title": "零钱兑换",
+        "tags": [
+          "广度优先搜索",
+          "数组",
+          "动态规划",
+          "背包问题",
+          "完全背包"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "零钱兑换",
+        "tags": [
+          "广度优先搜索",
+          "数组",
+          "动态规划",
+          "背包问题",
+          "完全背包"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 347,
+      "url": "https://leetcode.cn/problems/top-k-frequent-elements/",
+      "metadataMatches": true,
+      "before": {
+        "title": "前 K 个高频元素",
+        "tags": [
+          "数组",
+          "哈希表",
+          "分治",
+          "桶排序",
+          "计数",
+          "快速选择",
+          "排序",
+          "堆（优先队列）"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "前 K 个高频元素",
+        "tags": [
+          "数组",
+          "哈希表",
+          "分治",
+          "桶排序",
+          "计数",
+          "快速选择",
+          "排序",
+          "堆（优先队列）"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 394,
+      "url": "https://leetcode.cn/problems/decode-string/",
+      "metadataMatches": true,
+      "before": {
+        "title": "字符串解码",
+        "tags": [
+          "栈",
+          "递归",
+          "字符串"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "字符串解码",
+        "tags": [
+          "栈",
+          "递归",
+          "字符串"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 416,
+      "url": "https://leetcode.cn/problems/partition-equal-subset-sum/",
+      "metadataMatches": true,
+      "before": {
+        "title": "分割等和子集",
+        "tags": [
+          "数组",
+          "动态规划",
+          "背包问题",
+          "0-1 背包"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "分割等和子集",
+        "tags": [
+          "数组",
+          "动态规划",
+          "背包问题",
+          "0-1 背包"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 437,
+      "url": "https://leetcode.cn/problems/path-sum-iii/",
+      "metadataMatches": true,
+      "before": {
+        "title": "路径总和 III",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "路径总和 III",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉树"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 438,
+      "url": "https://leetcode.cn/problems/find-all-anagrams-in-a-string/",
+      "metadataMatches": true,
+      "before": {
+        "title": "找到字符串中所有字母异位词",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "滑动窗口"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "找到字符串中所有字母异位词",
+        "tags": [
+          "哈希表",
+          "字符串",
+          "滑动窗口"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 543,
+      "url": "https://leetcode.cn/problems/diameter-of-binary-tree/",
+      "metadataMatches": true,
+      "before": {
+        "title": "二叉树的直径",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉树",
+          "树形 DP"
+        ],
+        "difficulty": "简单"
+      },
+      "official": {
+        "title": "二叉树的直径",
+        "tags": [
+          "树",
+          "深度优先搜索",
+          "二叉树",
+          "树形 DP"
+        ],
+        "difficulty": "简单"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 560,
+      "url": "https://leetcode.cn/problems/subarray-sum-equals-k/",
+      "metadataMatches": true,
+      "before": {
+        "title": "和为 K 的子数组",
+        "tags": [
+          "数组",
+          "哈希表",
+          "前缀和"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "和为 K 的子数组",
+        "tags": [
+          "数组",
+          "哈希表",
+          "前缀和"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 739,
+      "url": "https://leetcode.cn/problems/daily-temperatures/",
+      "metadataMatches": true,
+      "before": {
+        "title": "每日温度",
+        "tags": [
+          "栈",
+          "数组",
+          "单调栈"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "每日温度",
+        "tags": [
+          "栈",
+          "数组",
+          "单调栈"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 763,
+      "url": "https://leetcode.cn/problems/partition-labels/",
+      "metadataMatches": true,
+      "before": {
+        "title": "划分字母区间",
+        "tags": [
+          "贪心",
+          "哈希表",
+          "双指针",
+          "字符串"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "划分字母区间",
+        "tags": [
+          "贪心",
+          "哈希表",
+          "双指针",
+          "字符串"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 994,
+      "url": "https://leetcode.cn/problems/rotting-oranges/",
+      "metadataMatches": true,
+      "before": {
+        "title": "腐烂的橘子",
+        "tags": [
+          "广度优先搜索",
+          "数组",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "腐烂的橘子",
+        "tags": [
+          "广度优先搜索",
+          "数组",
+          "矩阵"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    },
+    {
+      "id": 1143,
+      "url": "https://leetcode.cn/problems/longest-common-subsequence/",
+      "metadataMatches": true,
+      "before": {
+        "title": "最长公共子序列",
+        "tags": [
+          "字符串",
+          "动态规划",
+          "最长公共子序列"
+        ],
+        "difficulty": "中等"
+      },
+      "official": {
+        "title": "最长公共子序列",
+        "tags": [
+          "字符串",
+          "动态规划",
+          "最长公共子序列"
+        ],
+        "difficulty": "中等"
+      },
+      "localStatementIsAdaptation": true,
+      "resolution": "插件使用本次获取的官方完整题面与官方三语言签名；按模式显示相应输入输出说明。"
+    }
+  ],
+  "count": 100,
+  "metadataDifferences": 0,
+  "note": "原应用题面为摘要/ACM改写，不是官网逐字复制。插件完整题面直接取官方；不声称覆盖官网私有隐藏用例。",
+  "studyPlanIdsMatch": true,
+  "officialStudyPlan": "https://leetcode.cn/studyplan/top-100-liked/"
+}

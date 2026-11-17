@@ -1,0 +1,10 @@
+{
+  "questions": 5,
+  "cases": 28,
+  "failures": [],
+  "negativeChecks": [
+    "compile-error",
+    "wrong-answer",
+    "timeout"
+  ]
+}

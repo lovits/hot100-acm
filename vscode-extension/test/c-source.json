@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/begeekmyfriend/leetcode",
+  "commit": "92af4a2591d7990cbca2f18073bbdec63342256f",
+  "license": "MIT",
+  "note": "测试参考解经接口适配，不随 VSIX 分发。"
+}

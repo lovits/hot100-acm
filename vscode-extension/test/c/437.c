@@ -1,0 +1,1 @@
+static int paths(struct TreeNode*r,long long t){if(!r)return 0;return (r->val==t)+paths(r->left,t-r->val)+paths(r->right,t-r->val);}int pathSum(struct TreeNode*r,int t){if(!r)return 0;return paths(r,t)+pathSum(r->left,t)+pathSum(r->right,t);}

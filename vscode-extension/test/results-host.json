@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "language": "python3",
+      "mode": "core",
+      "tests": 5,
+      "passed": true
+    },
+    {
+      "language": "python3",
+      "mode": "acm",
+      "tests": 5,
+      "passed": true
+    },
+    {
+      "language": "cpp",
+      "mode": "core",
+      "tests": 5,
+      "passed": true
+    },
+    {
+      "language": "cpp",
+      "mode": "acm",
+      "tests": 5,
+      "passed": true
+    },
+    {
+      "language": "c",
+      "mode": "core",
+      "tests": 5,
+      "passed": true
+    },
+    {
+      "language": "c",
+      "mode": "acm",
+      "tests": 5,
+      "passed": true
+    }
+  ],
+  "compileErrorVerified": true
+}

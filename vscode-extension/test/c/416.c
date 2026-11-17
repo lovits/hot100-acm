@@ -1,0 +1,1 @@
+bool canPartition(int*a,int n){int sum=0;for(int i=0;i<n;i++)sum+=a[i];if(sum%2)return false;int t=sum/2;bool*d=calloc(t+1,1);d[0]=true;for(int i=0;i<n;i++)for(int j=t;j>=a[i];j--)d[j]=d[j]||d[j-a[i]];bool r=d[t];free(d);return r;}

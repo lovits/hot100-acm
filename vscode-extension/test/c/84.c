@@ -1,0 +1,1 @@
+int largestRectangleArea(int*a,int n){int*s=malloc((n+1)*sizeof(int)),top=0,best=0;for(int i=0;i<=n;i++){int h=i==n?0:a[i];while(top&&a[s[top-1]]>h){int k=s[--top],w=top?i-s[top-1]-1:i,area=a[k]*w;if(area>best)best=area;}s[top++]=i;}free(s);return best;}

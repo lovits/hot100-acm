@@ -1,0 +1,36 @@
+name: Test VS Code extension
+on:
+  push:
+    paths: ['vscode-extension/**', '.github/workflows/test-vscode.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  judge:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: vscode-extension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm test
+      - run: node test/official-test.js c
+      - run: npx vsce package --out hot100-practice-0.1.0.vsix
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vscode-${{ matrix.os }}
+          path: |
+            vscode-extension/test/results-*.json
+            vscode-extension/*.vsix

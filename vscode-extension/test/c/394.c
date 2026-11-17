@@ -1,0 +1,1 @@
+static char*dec(char**p){char*out=calloc(100001,1);int n=0;while(**p&&**p!=']'){if(**p>='0'&&**p<='9'){int k=0;while(**p>='0'&&**p<='9'){k=k*10+*(*p)++-'0';}(*p)++;char*sub=dec(p);(*p)++;for(int i=0;i<k;i++){int l=strlen(sub);memcpy(out+n,sub,l);n+=l;}free(sub);}else out[n++]=*(*p)++;}return out;}char*decodeString(char*s){return dec(&s);}

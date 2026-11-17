@@ -1,0 +1,1 @@
+int*dailyTemperatures(int*a,int n,int*r){int*out=calloc(n,sizeof(int)),*s=malloc(n*sizeof(int)),top=0;for(int i=0;i<n;i++){while(top&&a[s[top-1]]<a[i]){int j=s[--top];out[j]=i-j;}s[top++]=i;}free(s);*r=n;return out;}

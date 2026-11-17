@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+static inline void swap(int *a, int *b)
+{
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+static void reverse(int *a, int size)
+{
+    int lo = 0;
+    int hi = size - 1;
+    while (lo < hi) {
+        swap(a + lo, a + hi);
+        lo++;
+        hi--;
+    }
+}
+
+static void nextPermutation(int* nums, int numsSize)
+{
+    // find the first smaller element in decreasing sequence from back to forth.
+    int i = numsSize - 2;
+    while (i >= 0 && nums[i] >= nums[i + 1]) {
+        i--;
+    }
+
+    // if found, find the first bigger element from back to forth and swap them.
+    if (i >= 0) {
+        int j = numsSize - 1;
+        while (j >= 0 && nums[j] <= nums[i]) {
+            j--;
+        }
+        swap(nums + i, nums + j);
+    }
+
+    // reverse the subsequence into increasing one.
+    reverse(nums + i + 1, numsSize - i - 1);
+}

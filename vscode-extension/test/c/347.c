@@ -1,0 +1,1 @@
+typedef struct{int x,n;}Pair;int cmp(const void*a,const void*b){return ((Pair*)b)->n-((Pair*)a)->n;}int*topKFrequent(int*a,int n,int k,int*r){Pair*p=calloc(n,sizeof(*p));int m=0;for(int i=0;i<n;i++){int j=0;while(j<m&&p[j].x!=a[i])j++;if(j==m)p[m++].x=a[i];p[j].n++;}qsort(p,m,sizeof(*p),cmp);int*out=malloc(k*sizeof(int));for(int i=0;i<k;i++)out[i]=p[i].x;*r=k;free(p);return out;}
