@@ -4,6 +4,7 @@ function installFilterMenus(){
   menu.id='drawer-filter-menu';menu.className='filter-menu';menu.setAttribute('role','listbox');menu.hidden=true;document.body.append(menu);
   let opened=null,active=0;
   const controls=[];
+  const measure=document.createElement('canvas').getContext('2d');
   function close(){
     if(opened){opened.button.setAttribute('aria-expanded','false');opened.button.removeAttribute('aria-activedescendant');}
     menu.hidden=true;opened=null;
@@ -11,7 +12,10 @@ function installFilterMenus(){
   function position(){
     if(!opened)return;
     const r=opened.button.getBoundingClientRect();
-    menu.style.left=r.left+'px';menu.style.top=(r.bottom+6)+'px';menu.style.width=r.width+'px';
+    measure.font=getComputedStyle(menu).font;
+    const textWidth=Math.max(...[...opened.select.options].map(option=>measure.measureText(option.text).width));
+    const width=Math.min(innerWidth-16,Math.max(r.width,140,Math.ceil(textWidth)+52));
+    menu.style.left=Math.max(8,Math.min(r.left,innerWidth-width-8))+'px';menu.style.top=(r.bottom+6)+'px';menu.style.width=width+'px';
     menu.style.maxHeight=Math.max(40,Math.min(280,innerHeight-r.bottom-14))+'px';
   }
   function highlight(index){

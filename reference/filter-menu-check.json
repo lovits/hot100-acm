@@ -1,0 +1,17 @@
+{
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "drawerWidths": [
+    560,
+    360
+  ],
+  "filters": 5,
+  "checks": 20,
+  "wrappedLabels": 0,
+  "clippedLabels": 0,
+  "keyboardSelection": "passed",
+  "menuOffset": 6,
+  "scrollbar": "thin gray thumb with transparent track"
+}
