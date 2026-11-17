@@ -547,6 +547,7 @@ export const generatePanelHtml = (
 	solutionContent: string = ''
 ): string => {
                         const enhanced=enhancedView(q,context);
+                        const difficultyClass=({'简单':'easy','中等':'medium','困难':'hard'} as Record<string,string>)[difficulty]||String(q.difficulty||'').toLowerCase();
 						const playerFiles = getPlayerFiles(context);
 						const playerView = playerFiles ? {
 							css: panel.webview.asWebviewUri(vscode.Uri.file(playerFiles.apiCss)).toString(),
@@ -1163,7 +1164,8 @@ export const generatePanelHtml = (
 							}
 
 						.enhanced-modes{display:flex;flex-wrap:wrap;margin-left:auto;gap:4px;align-items:center}.tabs{flex-wrap:wrap}.enhanced-modes .tab{font-size:13px;padding:8px 10px}.enhanced-modes .tab:focus-visible{outline:1px solid var(--vscode-focusBorder)}
-#problem-tab{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;font-size:max(15px,var(--vscode-font-size,15px));line-height:1.8}#problem-tab h1{font-size:24px;line-height:1.45;font-weight:650}#problem-tab h2,#problem-tab h3{font-size:16px;line-height:1.5}#problem-tab .problem-content{font-size:inherit;line-height:1.8}.problem-title-link,.problem-title-link:link,.problem-title-link:visited,.problem-title-link:hover,.problem-title-link:focus,.problem-title-link:active{color:inherit;text-decoration:none;background:transparent}.problem-title-link:focus-visible{outline:1px solid var(--vscode-focusBorder);outline-offset:4px}.tag-chips{display:inline-flex;vertical-align:middle;margin-right:7px}.problem-meta-controls{display:inline-flex;gap:7px;flex-wrap:wrap;align-items:center}.meta-toggle{font:inherit;color:inherit;cursor:pointer;min-height:28px;padding:3px 10px}.meta-toggle:hover,.meta-toggle[aria-expanded="true"]{background:var(--vscode-list-hoverBackground)}.companies-toggle{color:var(--vscode-editorWarning-foreground,#e6b65d)}.metadata-panel{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px;font-size:13px}.metadata-panel[hidden]{display:none}.hint-panel{display:block}.hint-panel p{margin:4px 0 10px}.problem-meta-controls .tag-chip{font-size:13px}
+#problem-tab{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;font-size:max(15px,var(--vscode-font-size,15px));line-height:1.8}#problem-tab h1{font-size:24px;line-height:1.45;font-weight:650}#problem-tab h2,#problem-tab h3{font-size:16px;line-height:1.5}#problem-tab .problem-content{font-size:inherit;line-height:1.8}.problem-title-link{border:0;padding:0;font:inherit;text-align:left;cursor:pointer}.problem-title-link,.problem-title-link:link,.problem-title-link:visited,.problem-title-link:hover,.problem-title-link:focus,.problem-title-link:active{color:inherit;text-decoration:none;background:transparent}.problem-title-link:focus-visible{outline:1px solid var(--vscode-focusBorder);outline-offset:4px}.tag-chips{display:inline-flex;vertical-align:middle;margin-right:7px}.problem-meta-controls{display:inline-flex;gap:7px;flex-wrap:wrap;align-items:center}.meta-toggle{font:inherit;color:inherit;cursor:pointer;min-height:28px;padding:3px 10px}.meta-toggle:hover,.meta-toggle[aria-expanded="true"]{background:var(--vscode-list-hoverBackground)}.companies-toggle{color:var(--vscode-editorWarning-foreground,#e6b65d)}.metadata-panel{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px;font-size:13px}.metadata-panel[hidden]{display:none}.hint-panel{display:block}.hint-panel p{margin:4px 0 10px}.problem-meta-controls .tag-chip{font-size:13px}
+#problem-tab .tag-chips{align-items:center;gap:7px}#problem-tab .problem-meta-controls{vertical-align:middle}#problem-tab .tag-chips>.tag-chip,#problem-tab .problem-meta-controls>.tag-chip{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;height:34px;min-height:34px;padding:0 12px;font-size:13px;line-height:20px;border-radius:999px;white-space:nowrap}
 </style>
 <!-- 加载 KaTeX 用于数学公式渲染（可选增强，加载失败时公式保留原文） -->
 							<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -1181,12 +1183,11 @@ export const generatePanelHtml = (
 						
 						<div class="content-wrapper">
 <div id="problem-tab" class="${activeTab === 'problem' ? '' : 'hidden'}">
-									<h1><a class="problem-title-link" data-problem-url="https://leetcode.cn/problems/${encodeURIComponent(String(q.titleSlug))}/" href="https://leetcode.cn/problems/${encodeURIComponent(String(q.titleSlug))}/">${escapeHtml(q.questionFrontendId)}. ${escapeHtml(title)}</a></h1>
+									<h1><button type="button" role="link" class="problem-title-link" data-problem-url="https://leetcode.cn/problems/${encodeURIComponent(String(q.titleSlug))}/">${escapeHtml(q.questionFrontendId)}. ${escapeHtml(title)}</button></h1>
 									<div class="meta">
-										<span class="difficulty-${escapeHtml(String(q.difficulty || '').toLowerCase())}">${escapeHtml(difficulty)}</span>
-										 | 👍 ${escapeHtml(String(q.likes ?? ''))} | 👎 ${escapeHtml(String(q.dislikes ?? ''))}
+										👍 ${escapeHtml(String(q.likes ?? ''))} | 👎 ${escapeHtml(String(q.dislikes ?? ''))}
 									</div>
-									<div class="tag-chips">${enhanced.tags}</div>${enhanced.metadata}<div id="problem-hints" class="metadata-panel hint-panel" hidden>${enhanced.hints.length?enhanced.hints.map((hint:string,i:number)=>`<div><strong>提示 ${i+1}</strong><p>${sanitizeUnsafeHtml(hint)}</p></div>`).join(''):'暂无提示'}</div>
+									<div class="tag-chips"><span class="tag-chip difficulty-${escapeHtml(difficultyClass)}">${escapeHtml(difficulty)}</span>${enhanced.tags}</div>${enhanced.metadata}<div id="problem-hints" class="metadata-panel hint-panel" hidden>${enhanced.hints.length?enhanced.hints.map((hint:string,i:number)=>`<div><strong>提示 ${i+1}</strong><p>${sanitizeUnsafeHtml(hint)}</p></div>`).join(''):'暂无提示'}</div>
 									<hr/>
 									<div class="problem-content">${sanitizeUnsafeHtml(questionContent)}</div>${enhanced.acm}
 									${similarHtml}
@@ -1199,7 +1200,7 @@ export const generatePanelHtml = (
 
 					<script nonce="${nonce}">
 const vscode = acquireVsCodeApi();
-document.querySelector('[data-problem-url]')?.addEventListener('click',e=>{e.preventDefault();vscode.postMessage({type:'openExternal',url:e.currentTarget.dataset.problemUrl});});
+document.querySelector('[data-problem-url]')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();vscode.postMessage({type:'openExternal',url:e.currentTarget.dataset.problemUrl});});
 document.querySelectorAll('[data-problem-meta]').forEach(button=>button.addEventListener('click',()=>{const panel=document.getElementById(button.dataset.problemMeta);if(panel){panel.hidden=!panel.hidden;button.setAttribute('aria-expanded',String(!panel.hidden));}}));
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>vscode.postMessage({type:'setMode',mode:b.dataset.mode})));
 document.querySelector('[data-local-language]')?.addEventListener('click',()=>vscode.postMessage({type:'localLanguage'}));

@@ -1,18 +1,12 @@
 {
-  "version": "0.2.2",
+  "version": "0.2.3",
   "validationDate": "2026-11-18",
-  "unitTests": {
-    "passed": 161,
-    "failed": 0
-  },
-  "lint": {
-    "errors": 0,
-    "warnings": 183
-  },
-  "installedRuntimeFilesMatched": 89,
-  "languagePickerAndEvaluatorsUnchanged": true,
+  "unitTestsPassed": 161,
+  "installedFilesVerified": 90,
+  "displayName": "Hot100 ACM",
+  "chosenIconMatchesOriginal": true,
   "host": {
-    "version": "0.2.2",
+    "version": "0.2.3",
     "installedVSIXVerified": true,
     "checks": [
       {
@@ -59,8 +53,11 @@
     "favoritesPreserved": true,
     "manualReviewWithoutAC": true,
     "statementTitleLink": true,
+    "singleTitleOpenRoute": true,
     "statementMetadata": true,
     "plainStatementTabs": true,
+    "uniformDifficultyChips": true,
+    "brandNameVerified": true,
     "pickerOnEveryClick": true,
     "cancelPreservesDraft": true,
     "originalLanguageCount": 14,
@@ -72,27 +69,21 @@
     "customCasesInSixModes": true
   },
   "browser": {
-    "firstDayPendingReviews": 0,
-    "noAutomaticNewQuestionList": true,
-    "compactTwoQueues": true,
-    "manualReviewMessage": true,
-    "noHorizontalOverflowAt380px": true,
-    "titleURL": "https://leetcode.cn/problems/two-sum/",
-    "titleColorUnchanged": true,
-    "titleUnderline": "none",
-    "statementFontSize": "15px",
-    "statementLineHeight": "27px",
-    "relatedCompanies": [
-      "字节跳动",
-      "美团",
-      "腾讯",
-      "阿里巴巴",
-      "百度",
-      "虾皮",
-      "微软"
+    "chipHeights": [
+      34,
+      34,
+      34,
+      34,
+      34
     ],
-    "companyCountsHidden": true,
-    "topicsAndHintsToggle": true,
-    "refreshButtons": 0
-  }
+    "difficultyColors": {
+      "easy": "#00b8a3",
+      "medium": "#ffc01e",
+      "hard": "#ff375f"
+    },
+    "singleClickOpenRequests": 1,
+    "titleNativeHref": null,
+    "titleUnderline": "none"
+  },
+  "marketplacePublished": false
 }

@@ -438,7 +438,6 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
         const tasks=dayTasks(this.store?.get<PlanState>('enhancedPlan',emptyPlan())||emptyPlan(),localDateStr(),this.filteredCatalog().map(p=>String(p.id)),goal,vscode.workspace.getConfiguration('hot100Pro').get<number>('reviewLimit',20));
         const planRow=new StatsRowItem('复习计划',new vscode.ThemeIcon('calendar'));
         planRow.command={command:'hot100Pro.studyPlan',title:'打开学习计划'};rows.push(planRow);
-        rows.push(new StatsRowItem(`今日目标：${stats.todaySolved} / ${goal}`,new vscode.ThemeIcon('target'),'点击修改每日目标','statsGoal'));
         rows.push(new StatsRowItem(
             `今日新题目标：${tasks.newDone.length} / ${goal}`,
             new vscode.ThemeIcon('target'),

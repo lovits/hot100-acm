@@ -1,5 +1,5 @@
 {
-  "version": "0.2.2",
+  "version": "0.2.3",
   "installedVSIXVerified": true,
   "checks": [
     {
@@ -46,8 +46,11 @@
   "favoritesPreserved": true,
   "manualReviewWithoutAC": true,
   "statementTitleLink": true,
+  "singleTitleOpenRoute": true,
   "statementMetadata": true,
   "plainStatementTabs": true,
+  "uniformDifficultyChips": true,
+  "brandNameVerified": true,
   "pickerOnEveryClick": true,
   "cancelPreservesDraft": true,
   "originalLanguageCount": 14,

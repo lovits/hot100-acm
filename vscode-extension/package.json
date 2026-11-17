@@ -1,10 +1,10 @@
 {
   "name": "hot100-practice",
   "publisher": "lovits",
-  "displayName": "LeetCode Hot100 Pro · ACM 增强版",
-  "description": "基于 Hot100 Pro：ACM/核心模式、VS Code 本机工具链、公司高频筛选与可调整的间隔复习计划。",
-  "version": "0.2.2",
-  "icon": "resources/hot100-pro.png",
+  "displayName": "Hot100 ACM",
+  "description": "在 VS Code 中练习 Hot100：ACM 与核心代码模式、题库组合筛选、本机测试、收藏笔记与间隔复习。",
+  "version": "0.2.3",
+  "icon": "resources/hot100-acm.png",
   "engines": {
     "vscode": "^1.107.0",
     "node": ">=20"
@@ -150,42 +150,42 @@
       },
       {
         "command": "hot100Pro.filter",
-        "title": "Hot100 Pro: 筛选题库",
+        "title": "Hot100 ACM: 筛选题库",
         "icon": "$(filter)"
       },
       {
         "command": "hot100Pro.clearFilters",
-        "title": "Hot100 Pro: 清空组合筛选"
+        "title": "Hot100 ACM: 清空组合筛选"
       },
       {
         "command": "hot100Pro.studyPlan",
-        "title": "Hot100 Pro: 学习计划与日历"
+        "title": "Hot100 ACM: 学习计划与日历"
       },
       {
         "command": "hot100Pro.configurePlan",
-        "title": "Hot100 Pro: 修改学习目标与间隔"
+        "title": "Hot100 ACM: 修改学习目标与间隔"
       },
       {
         "command": "hot100Pro.localRun",
-        "title": "Hot100 Pro: 本机运行示例",
+        "title": "Hot100 ACM: 本机运行示例",
         "icon": "$(play)"
       },
       {
         "command": "hot100Pro.localSubmit",
-        "title": "Hot100 Pro: 本机评测全部用例",
+        "title": "Hot100 ACM: 本机评测全部用例",
         "icon": "$(check-all)"
       },
       {
         "command": "hot100Pro.confirmReview",
-        "title": "Hot100 Pro: 确认复习完成"
+        "title": "Hot100 ACM: 确认复习完成"
       },
       {
         "command": "hot100Pro.open",
-        "title": "Hot100 Pro: 打开刷题台"
+        "title": "Hot100 ACM: 打开刷题台"
       },
       {
         "command": "hot100Pro.localCustom",
-        "title": "Hot100 Pro: 本机自定义用例",
+        "title": "Hot100 ACM: 本机自定义用例",
         "icon": "$(beaker)"
       }
     ],
@@ -193,7 +193,7 @@
       "activitybar": [
         {
           "id": "hot100-pro-enhanced",
-          "title": "Hot100 Pro 增强版",
+          "title": "Hot100 ACM",
           "icon": "$(code)"
         }
       ]
@@ -202,8 +202,8 @@
       "hot100-pro-enhanced": [
         {
           "id": "hot100-pro-questions",
-          "name": "Hot 100",
-          "contextualTitle": "Hot 100 Questions",
+          "name": "Hot100 ACM",
+          "contextualTitle": "Hot100 ACM",
           "icon": "resources/leetcode.svg"
         }
       ]
@@ -292,7 +292,7 @@
       ]
     },
     "configuration": {
-      "title": "LeetCode Hot100 Pro",
+      "title": "Hot100 ACM",
       "properties": {
         "hot100Pro.dailyGoal": {
           "type": "number",
