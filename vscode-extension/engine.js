@@ -12,7 +12,7 @@ async function judgeC(p,code,tests){
   const source=path.join(tmp,'main.c'),bin=path.join(tmp,process.platform==='win32'?'main.exe':'main');
   fs.writeFileSync(source,buildCDriver(p,code,tests));
   const compile=await runProcess(cc,[source,'-std=c11','-O2','-lm','-o',bin],{cwd:tmp,phase:'compile'});
-  if(compile.code!==0)return{error:compile.stderr||'C 编译失败',phase:'compile'};
+  if(compile.code!==0||compile.timedOut)return{error:compile.timedOut?`C 编译超时（${compile.ms}ms）`:compile.stderr||compile.error||`C 编译失败，退出码 ${compile.code}`,phase:'compile',elapsedMs:compile.ms,timedOut:compile.timedOut};
   const results=[];
   for(let i=0;i<tests.length;i++){
    const run=await runProcess(bin,[String(i)],{cwd:tmp});

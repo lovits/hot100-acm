@@ -36,5 +36,7 @@
   "combinedFilters": true,
   "editableGoal": true,
   "reviewPlanOpened": true,
-  "newQuestionDeduplicated": true
+  "newQuestionDeduplicated": true,
+  "installedVSIXVerified": true,
+  "version": "0.2.0"
 }

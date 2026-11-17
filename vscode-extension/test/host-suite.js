@@ -20,7 +20,7 @@ exports.run=async()=>{
  await e.switchMode(q,'acm','python3');assert.equal(vscode.window.activeTextEditor.document.getText(),ss[1].python3.acm);
  await api.provider.setEnhancedFilters({difficulty:'简单',company:'字节跳动',topic:'',tag:'哈希表',search:'',due:false,sort:'frequency'});
  const filtered=api.provider.filteredCatalog();assert.ok(filtered.length>0&&filtered.some(p=>p.id===1));assert.ok(filtered.every(p=>p.difficulty==='简单'&&p.topicTags.includes('哈希表')&&p.freq.companies.some(c=>c.name==='字节跳动')));
- const nodes=await api.provider.getChildren();assert.ok(nodes.some(n=>String(n.label).includes('筛选：')));
+ const nodes=await api.provider.getChildren();assert.ok(nodes.some(n=>String(n.label).includes('筛选：')));assert.deepEqual(nodes.filter(n=>n.contextValue==='question').map(n=>n.question.frontendQuestionId),filtered.map(p=>String(p.id)));
  const stats=api.provider.buildStatsRows();assert.ok(stats.some(n=>n.command?.command==='hot100Pro.studyPlan'));e.showPlan();
  await cfg.update('dailyGoal',5,vscode.ConfigurationTarget.Workspace);await cfg.update('dailyGoal',2,vscode.ConfigurationTarget.Workspace);assert.equal(e.state.events.length,1);assert.equal(vscode.workspace.getConfiguration('hot100Pro').get('dailyGoal'),2);
  fs.writeFileSync(path.join(__dirname,'results-pro-host.json'),JSON.stringify({checks,defaultACM:true,modeDraftRestore:true,combinedFilters:true,editableGoal:true,reviewPlanOpened:true,newQuestionDeduplicated:true},null,2));

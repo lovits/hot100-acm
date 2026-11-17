@@ -284,6 +284,10 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
             if (this.favoriteIds.size > 0) {
                 nodes.push(new FavoriteItem(this.favoriteIds.size));
             }
+            if (f.sort === 'frequency') {
+                nodes.push(...this.filteredQuestions().map(q=>this.toQuestionItem(q)));
+                return nodes;
+            }
             if (this.groupBy === 'difficulty') {
                 // 按难度：简单 → 中等 → 困难，组内按题号升序；筛选后无匹配题目时隐藏分组
                 for (const group of this.difficultyGroups()) {
