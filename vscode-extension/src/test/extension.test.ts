@@ -68,4 +68,52 @@ suite('Extension Smoke Test Suite', () => {
             }
         } finally {window.showQuickPick=original;window.showErrorMessage=originalError;}
     });
+    test('底部 Case 面板可打开并完成客户端就绪握手',async()=>{
+        const api=await vscode.extensions.getExtension('lovits.hot100-practice')!.activate();
+        await vscode.commands.executeCommand('hot100Pro.testCases');
+        for(let i=0;i<80;i++){
+            if(api.enhancements.casePanel.ready===api.enhancements.casePanel.key&&api.enhancements.casePanel.key)return;
+            await new Promise(resolve=>setTimeout(resolve,100));
+        }
+        assert.fail('Case 面板应完成 HTML 脚本就绪握手');
+    });
+    test('核心代码官方测试：发送自定义参数并轮询官方结果（模拟服务）',async()=>{
+        const api=await vscode.extensions.getExtension('lovits.hot100-practice')!.activate(),e=api.enhancements;
+        const q=(await api.api.getQuestionContent('two-sum')).data.question;
+        await e.switchMode(q,'core','python3');
+        const cookie=await e.context.secrets.get('leetcode_session_cookie');
+        const run=api.api.runCode,check=api.api.checkSubmission;let sent:any[]=[];
+        api.api.runCode=async(...args:any[])=>{sent=args;return{interpret_id:'offline-test'};};
+        api.api.checkSubmission=async()=>({state:'SUCCESS',status_msg:'Accepted',run_success:true,correct_answer:true,code_answer:['[0,1]']});
+        try{
+            await e.context.secrets.store('leetcode_session_cookie','offline-test-only');
+            const result:any=await vscode.commands.executeCommand('hot100Pro.officialCaseTest',{q,filePath:vscode.window.activeTextEditor!.document.uri.fsPath,lang:'python3',input:'[2,7]\n9'});
+            assert.strictEqual(sent[4],'[2,7]\n9');assert.strictEqual(sent[2],'python3');assert.strictEqual(result.status_msg,'Accepted');
+        }finally{
+            api.api.runCode=run;api.api.checkSubmission=check;
+            if(cookie)await e.context.secrets.store('leetcode_session_cookie',cookie);else await e.context.secrets.delete('leetcode_session_cookie');
+        }
+    });
+    test('ACM 本机运行通过打勾，重复通过不重复增加进度，错误与自定义测试不标完成',async()=>{
+        const api=await vscode.extensions.getExtension('lovits.hot100-practice')!.activate(),e=api.enhancements;
+        const q=(await api.api.getQuestionContent('two-sum')).data.question;
+        await e.switchMode(q,'acm','python3');
+        const doc=vscode.window.activeTextEditor!.document;
+        const runtime=createRequire(path.join(vscode.extensions.getExtension('lovits.hot100-practice')!.extensionPath,'out/extension.js'))('vscode') as typeof vscode;
+        const win=runtime.window as any,info=win.showInformationMessage;win.showInformationMessage=async()=>undefined;
+        const writes:any[]=[],record=e.provider.recordLocalResult,solved=e.provider.isSolved,plan=e.record;let done=false;
+        e.provider.recordLocalResult=async(id:string,ok:boolean)=>{writes.push([id,ok]);if(ok)done=true;};
+        e.provider.isSolved=()=>done;e.record=async(...args:any[])=>writes.push(['plan',...args]);
+        const setCode=async(code:string)=>{const edit=new vscode.WorkspaceEdit();edit.replace(doc.uri,new vscode.Range(doc.positionAt(0),doc.positionAt(doc.getText().length)),code);await vscode.workspace.applyEdit(edit);};
+        try{
+            await setCode('print("-1 -1")');await vscode.commands.executeCommand('hot100Pro.localRun');assert.strictEqual(done,false);
+            const correct='import sys\nxs=list(map(int,sys.stdin.read().split()))\nn=xs[0]; a=xs[1:1+n]; target=xs[1+n]\nfor i in range(n):\n for j in range(i+1,n):\n  if a[i]+a[j]==target: print(i,j); sys.exit()\n';
+            await setCode(correct);
+            const before=writes.length;await e.runLocal(false,'1',[{input:'2\n2 7\n9',output:'0 1'}]);assert.strictEqual(writes.length,before);assert.strictEqual(done,false);
+            await vscode.commands.executeCommand('hot100Pro.localRun');assert.strictEqual(done,true);
+            await vscode.commands.executeCommand('hot100Pro.localRun');
+            const events=writes.filter(w=>w[0]==='plan'&&w[2]===true);assert.strictEqual(events.length,2);assert.strictEqual(events[0][4],false);assert.strictEqual(events[1][4],true);
+        }finally{e.provider.recordLocalResult=record;e.provider.isSolved=solved;e.record=plan;win.showInformationMessage=info;}
+    });
+
 });

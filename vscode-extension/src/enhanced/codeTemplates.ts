@@ -43,3 +43,17 @@ export function cppEditorSource(source: string, core = false): string {
     }
     return result;
 }
+
+// Official Python snippets may end at an empty method body; keep the local starter parseable.
+export function coreEditorSource(source:string,language:string):string {
+    if(language!=='python3')return source;
+    const lines=source.split('\n'),out:string[]=[];
+    for(let i=0;i<lines.length;i++){
+        const line=lines[i];out.push(line);
+        if(!/^\s*(?:async\s+)?def\b.*:\s*$/.test(line))continue;
+        const indent=line.match(/^\s*/)?.[0].length||0;
+        let j=i+1;while(j<lines.length&&(!lines[j].trim()||lines[j].trim().startsWith('#')))j++;
+        if(j===lines.length||(lines[j].match(/^\s*/)?.[0].length||0)<=indent)out.push(' '.repeat(indent+4)+'pass');
+    }
+    return 'from typing import *\n'+out.join('\n');
+}

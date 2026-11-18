@@ -10,7 +10,9 @@ import { tryBeginJudge, releaseJudge } from '../judgeFeedback';
 import { resolveToolchain } from './toolchain';
 import { getExtension, langSlugOfExtension, normalizeLangSlug } from '../utils/languageUtils';
 import { selectLanguage } from '../views/languageQuickPick';
-import { acmTemplate, cppEditorSource } from './codeTemplates';
+import { acmTemplate, cppEditorSource, coreEditorSource } from './codeTemplates';
+import {CasePanel} from './casePanel';
+import {InputCase,caseFields,seedCases,officialInput} from './caseInputs';
 import { renderStudyCalendar } from './studyCalendar';
 // Existing six-mode evaluator; it invokes the selected local executables, with no bundled interpreter/compiler.
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -21,6 +23,8 @@ export class Enhancements {
     private output=vscode.window.createOutputChannel('Hot100 本机评测');
     private planPanel?: vscode.WebviewPanel;
     private usagePanel?: vscode.WebviewPanel;
+    readonly casePanel:CasePanel;
+    private caseQuestions=new Map<string,any>();
     private tests:Record<string,Record<string,any[]>>;
     private files=new Map<string,string>();
     private codeColumns=new Map<string,vscode.ViewColumn>();
@@ -29,6 +33,16 @@ export class Enhancements {
     readonly changed=new vscode.EventEmitter<string>();
     constructor(private context:vscode.ExtensionContext, private provider:Hot100Provider, private api:LeetCodeApi) {
         this.tests=JSON.parse(fs.readFileSync(path.join(context.extensionPath,'data/tests.json'),'utf8'));
+        this.casePanel=new CasePanel(context,()=>this.caseData(),async(data,cases:InputCase[])=>{
+            if(data.acm){
+                const result=await this.runLocal(false,data.id,cases.map(c=>({input:c.values[0],output:c.expected||undefined})));
+                if(!result)return{error:'已有评测任务正在运行。'};
+                if(result.results)result.results=result.results.map((r:any,i:number)=>({...r,ok:cases[i].expected?r.ok:undefined}));
+                return result;
+            }
+            return vscode.commands.executeCommand('hot100Pro.officialCaseTest',{...data,input:cases.map(c=>officialInput(c.values)).join('\n')});
+        });
+        context.subscriptions.push(vscode.window.registerWebviewViewProvider('hot100-test-cases',this.casePanel));
         context.subscriptions.push(this.output,this.changed);
         context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(async editor=>{
             if(!editor||this.changingEditor)return;const file=editor.document.uri.fsPath,id=path.basename(file).match(/^(\d+)[_.-]/)?.[1];
@@ -44,7 +58,7 @@ export class Enhancements {
         command('usageGuide',()=>this.showUsageGuide());
         command('filter',()=>this.chooseFilter()); command('clearFilters',()=>provider.clearEnhancedFilters());
         command('resetPlan',()=>this.resetPlan());command('studyPlan',()=>this.showPlan());command('configurePlan',()=>this.configurePlan());command('includeSolved',()=>this.includeSolved());
-        command('localRun',()=>this.runLocal(false));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.customLocal());
+        command('localRun',()=>this.runLocal(true));command('localSubmit',()=>this.runLocal(true));command('localCustom',()=>this.casePanel.open());command('testCases',()=>this.casePanel.open());command('caseRunAll',()=>this.casePanel.run(true));
         command('open',async()=>{await vscode.commands.executeCommand('workbench.view.extension.hot100-pro-enhanced');const p=catalog[0];return vscode.commands.executeCommand('hot100Pro.openProblem',{frontendQuestionId:String(p.id),titleSlug:p.url.split('/').filter(Boolean).at(-1),title:p.title});});
         command('confirmReview',async(id:string)=>{if(!catalogById.has(String(id)))return;const choice=await vscode.window.showWarningMessage('确认已独立完成这道题的复习？','确认完成');if(choice==='确认完成')await this.record(String(id),true,'manual');});
         context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e=>{if(e.affectsConfiguration('hot100Pro')){provider.rerender();if(this.planPanel)this.showPlan();}}));
@@ -71,6 +85,7 @@ export class Enhancements {
     }
     async prepare(q:any,root:string,forceMode?:'core'|'acm',forceLanguage?:string) {
         const id=String(q.questionFrontendId),p=catalogById.get(id);if(!p)return undefined;
+        this.caseQuestions.set(id,q);
         const mode=forceMode||this.mode(id),language=normalizeLangSlug(forceLanguage||this.language(id));
         const ext=getExtension(language);if(ext==='txt')throw Error('请选择题目支持的编程语言。');
         const snippet=q.codeSnippets?.find((s:any)=>normalizeLangSlug(s.langSlug)===language)?.code||p.officialTemplates[language];
@@ -78,7 +93,7 @@ export class Enhancements {
         const folder=vscode.Uri.file(path.join(root,'leetcode',mode==='acm'?'acm':''));await vscode.workspace.fs.createDirectory(folder);
         const uri=vscode.Uri.joinPath(folder,`${id}_${p.url.split('/').filter(Boolean).at(-1)}.${ext}`);
         try{await vscode.workspace.fs.stat(uri);}catch(e){if(!(e instanceof vscode.FileSystemError && e.code==='FileNotFound'))throw e;
-            const text=mode==='core'?(language==='c'?header+'\n':language==='python3'?'from typing import *\n':'')+snippet:p.acm.template[language]||acmTemplate(language);
+            const text=mode==='core'?(language==='c'?header+'\n':'')+coreEditorSource(snippet,language):p.acm.template[language]||acmTemplate(language);
             await vscode.workspace.fs.writeFile(uri,Buffer.from(text));
         }
         if(language==='cpp') {
@@ -119,6 +134,7 @@ export class Enhancements {
             await this.context.workspaceState.update('currentProblem',{...prior,titleSlug:q.titleSlug,questionId:q.questionId,questionFrontendId:q.questionFrontendId,lang:selected.language,filePath:selected.filePath,testCases:q.exampleTestcases||q.sampleTestCase});
             await vscode.commands.executeCommand('setContext','hot100Pro.acmActive',mode==='acm');
             this.changed.fire(id);
+            void this.casePanel.refresh();
         } finally {this.changingEditor=false;}
     }
     async chooseLanguage(q:any){
@@ -133,41 +149,42 @@ export class Enhancements {
         if(!vscode.workspace.isTrusted)throw Error('请先信任工作区，再执行本机代码。');
         const current=this.context.workspaceState.get<any>('currentProblem');
         const active=vscode.window.activeTextEditor;
-        const candidate=active?.document.uri.scheme==='file'&&/\.(py|cpp|c)$/.test(active.document.uri.fsPath)&&(!expectedId||path.basename(active.document.uri.fsPath).startsWith(expectedId+'_'))?active:undefined;
+        const candidate=active?.document.uri.scheme==='file'&&!!langSlugOfExtension(path.extname(active.document.uri.fsPath).slice(1))&&(!expectedId||path.basename(active.document.uri.fsPath).startsWith(expectedId+'_'))?active:undefined;
         const editor=candidate||vscode.window.visibleTextEditors.find(e=>e.document.uri.fsPath===current?.filePath);
         const storedFile=expectedId&&String(current?.questionFrontendId)!==expectedId?this.files.get(`${expectedId}:${this.mode(expectedId)}:${this.language(expectedId)}`):current?.filePath;
         const uri=(editor&&(!expectedId||path.basename(editor.document.uri.fsPath).startsWith(expectedId+'_'))?editor.document.uri:undefined)||(storedFile?vscode.Uri.file(storedFile):undefined);
         if(!uri)throw Error('请先打开一道题目的代码文件。');
         const doc=editor?.document.uri.toString()===uri.toString()?editor.document:await vscode.workspace.openTextDocument(uri);
-        if(!['.py','.cpp','.c'].includes(path.extname(uri.fsPath)))throw Error('本机评测支持 Python、C++、C；其他语言可继续使用原有官网流程。');
+
         const match=path.basename(uri.fsPath).match(/^(\d+)[_.-]/);const id=match?.[1],p=id?catalogById.get(id):undefined;
         if(!p||expectedId&&String(p.id)!==expectedId)throw Error('请先打开这道题对应的代码文件。');
-        const language=uri.fsPath.endsWith('.cpp')?'cpp':uri.fsPath.endsWith('.c')?'c':'python3';
+        const language=langSlugOfExtension(path.extname(uri.fsPath).slice(1));if(!language)throw Error('无法识别当前语言。');
         const mode=uri.fsPath.replace(/\\/g,'/').includes('/acm/')||path.basename(uri.fsPath).includes('-acm.')?'acm':'core';
+        if(mode==='core'&&!['python3','cpp','c'].includes(language))throw Error('核心代码请使用力扣官方测试。');
         if(!tryBeginJudge())return;
         try{
             await doc.save();const tools=await resolveToolchain(language,uri);
             const cases=customTests||this.tests[id!][mode].slice(0,all?undefined:p.acm.examples.length||1);
-            this.output.clear();this.output.show(true);this.output.appendLine(`${p.id}. ${p.title} · ${language} · ${mode==='acm'?'ACM':'核心代码'} · ${customTests?'自定义用例':all?'全部用例':'示例'}`);
+            this.output.clear();if(!customTests)this.output.show(true);this.output.appendLine(`${p.id}. ${p.title} · ${language} · ${mode==='acm'?'ACM':'核心代码'} · ${customTests?'自定义用例':all?'全部用例':'示例'}`);
             this.output.appendLine(`VS Code 工具链：${Object.values(tools).join(', ')||'系统 PATH 中的解释器/编译器'}`);
             const result:any=await vscode.window.withProgress<any>({location:vscode.ProgressLocation.Notification,title:'Hot100 正在使用本机环境运行'},()=>evaluate(p,language,mode,doc.getText(),cases,tools));
             if(result.error){this.output.appendLine(result.error);if(result.compileError)this.output.appendLine(result.compileError);vscode.window.showErrorMessage('本机评测失败，请查看“Hot100 本机评测”输出。');return result;}
             const passed=result.results.filter((r:any)=>r.ok).length;
             this.output.appendLine(`${passed}/${result.results.length} 通过`);
             result.results.forEach((r:any,i:number)=>this.output.appendLine(`用例 ${i+1}：${r.ok?'通过':JSON.stringify(r)}`));
-            if(all&&!customTests){const accepted=passed===result.results.length,alreadySolved=this.provider.isSolved(String(p.id));await this.provider.recordLocalResult(String(p.id),accepted);await this.record(String(p.id),accepted,'test',alreadySolved);}
-            vscode.window.showInformationMessage(`Hot100 ${passed}/${result.results.length} 通过`);return result;
+            if(all&&!customTests){const accepted=result.results.length>0&&passed===result.results.length,alreadySolved=this.provider.isSolved(String(p.id));await this.provider.recordLocalResult(String(p.id),accepted);await this.record(String(p.id),accepted,'test',alreadySolved);}
+            if(!customTests)vscode.window.showInformationMessage(`Hot100 ${passed}/${result.results.length} 通过`);return result;
         }finally{releaseJudge();}
     }
-    async customLocal() {
-        const current=this.context.workspaceState.get<any>('currentProblem');
-        const file=vscode.window.activeTextEditor?.document.uri.fsPath||current?.filePath||'';
-        const id=path.basename(file).match(/^(\d+)[_.-]/)?.[1];if(!id||!catalogById.has(id))throw Error('请先打开一道题目的代码。');
-        const mode=file.replace(/\\/g,'/').includes('/acm/')||path.basename(file).includes('-acm.')?'acm':'core';
-        const raw=await vscode.window.showInputBox({title:mode==='acm'?'自定义 ACM 用例（input / output）':'自定义核心用例（args / expected；设计类另含 ops）',value:JSON.stringify(this.tests[id][mode][0]),prompt:'修改用例 JSON，换行使用 \\n；自定义测试不计入刷题完成记录。'});
-        if(raw===undefined)return;let test:any;try{test=JSON.parse(raw);}catch{throw Error('请输入有效的 JSON 用例。');}
-        if(!test||typeof test!=='object'||(mode==='acm'?(typeof test.input!=='string'||typeof test.output!=='string'):(!Array.isArray(test.args)||!Object.hasOwn(test,'expected'))))throw Error('用例缺少必要的输入或期望输出。');
-        return this.runLocal(false,id,[test]);
+    async caseData() {
+        const current=this.context.workspaceState.get<any>('currentProblem');if(!current)return undefined;
+        const id=String(current.questionFrontendId),p=catalogById.get(id);if(!p)return undefined;
+        const active=vscode.window.activeTextEditor?.document.uri.fsPath;
+        const filePath=active&&path.basename(active).startsWith(id+'_')?active:current.filePath;
+        const acm=filePath.replace(/\\/g,'/').includes('/acm/');
+        const q=this.caseQuestions.get(id)||{questionId:current.questionId,titleSlug:current.titleSlug};
+        const fields=acm?['标准输入']:caseFields(q,p);
+        return {id,key:id+':'+(acm?'acm':'core'),title:p.id+'. '+p.title,acm,fields,q,filePath,lang:langSlugOfExtension(path.extname(filePath).slice(1)),cases:seedCases(q,p,this.tests[id][acm?'acm':'core'],acm)};
     }
     async chooseFilter() {
         const f=this.provider.enhancedFilters;

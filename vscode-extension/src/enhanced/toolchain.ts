@@ -6,6 +6,7 @@ function expand(value: string, uri: vscode.Uri): string {
     return value.replace(/\$\{workspaceFolder\}/g,root).replace(/\$\{env:([^}]+)\}/g,(_,name)=>process.env[name]||'').replace(/^~(?=[/\\])/,process.env.HOME||process.env.USERPROFILE||'');
 }
 export async function resolveToolchain(language: string, uri: vscode.Uri): Promise<Record<string,string>> {
+    if(!['python3','cpp','c'].includes(language))return {};
     const own=vscode.workspace.getConfiguration('hot100Pro',uri);
     if(language==='python3') {
         let executable=own.get<string>('pythonPath','');

@@ -2072,8 +2072,7 @@ const mp4Uri = vscode.Uri.joinPath(dirUri, videoId + '_v3.mp4');
 	async function runJudgeFlow(kind: '测试' | '提交'): Promise<void> {
         const current=context.workspaceState.get<any>('currentProblem');
         const activePath=vscode.window.activeTextEditor?.document.uri.fsPath||current?.filePath||'';
-        const ext=path.extname(activePath).toLowerCase();
-        if(['.py','.cpp','.c'].includes(ext) && (kind==='测试'||activePath.replace(/\\/g,'/').includes('/acm/'))){
+        if(activePath.replace(/\\/g,'/').includes('/acm/')){
             await enhancements.runLocal(kind==='提交');return;
         }
 		const isLoggedIn = await authManager.isLoggedIn();
@@ -2171,7 +2170,21 @@ const mp4Uri = vscode.Uri.joinPath(dirUri, videoId + '_v3.mp4');
 		});
 	}
 
-	const testDisposable = vscode.commands.registerCommand('hot100Pro.test', () => runJudgeFlow('测试'));
+	const testDisposable = vscode.commands.registerCommand('hot100Pro.test', () => enhancements.casePanel.run());
+    context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.officialCaseTest',async(data:any)=>{
+        if(!await authManager.isLoggedIn())throw Error('请先执行 LeetCode: 登录，再运行力扣官方测试。');
+        const doc=await vscode.workspace.openTextDocument(vscode.Uri.file(data.filePath));await doc.save();
+        if(!tryBeginJudge())throw Error('已有测试或提交正在运行。');
+        try {
+            const official=(await leetCodeApi.getQuestionContent(data.q.titleSlug))?.data?.question;
+            if(!official?.questionId)throw Error('未能获取官方题目编号，请重试。');
+            const started=await leetCodeApi.runCode(data.q.titleSlug,official.questionId,data.lang,doc.getText(),data.input);
+            if(!started.interpret_id)throw Error('官方测试发起失败：'+oneLine(JSON.stringify(started),200));
+            const result=await pollJudgeResult(leetCodeApi,started.interpret_id);
+            if(!result)throw Error('官方测试超时，请稍后重试。');
+            return result;
+        }finally{releaseJudge();}
+    }));
 	const submitDisposable = vscode.commands.registerCommand('hot100Pro.submit', () => runJudgeFlow('提交'));
 
 	// ==================== 创建调试文件命令 ====================
@@ -2283,7 +2296,7 @@ const mp4Uri = vscode.Uri.joinPath(dirUri, videoId + '_v3.mp4');
 
 	// ==================== 自定义用例测试命令 ====================
 	const customTestDisposable = vscode.commands.registerCommand('hot100Pro.customTest', async () => {
-        const current=context.workspaceState.get<any>('currentProblem');if(current?.filePath?.replace(/\\/g,'/').includes('/acm/')){await enhancements.customLocal();return;}
+        const current=context.workspaceState.get<any>('currentProblem');if(current?.filePath?.replace(/\\/g,'/').includes('/acm/')){await enhancements.casePanel.open();return;}
 		// 检查登录状态
 		const isLoggedIn = await authManager.isLoggedIn();
 		if (!isLoggedIn) {

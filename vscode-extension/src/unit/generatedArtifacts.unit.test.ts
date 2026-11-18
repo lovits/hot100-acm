@@ -223,3 +223,59 @@ test('分组入口切换专题、难度与高频，保留组合筛选且解除�
     assert.deepStrictEqual(ids,[...ids].sort((a:number,b:number)=>a-b));
     assert.strictEqual(provider.enhancedFilters.company,'字节跳动');
 });
+
+
+test('Case 面板：脚本语法、保存、运行及切题后拒绝旧消息',async()=>{
+    const {CasePanel}=loadProblemPanel('../enhanced/casePanel');
+    const data:any={key:'1:acm',id:'1',title:'两数之和',acm:true,fields:['标准输入'],cases:[{values:['2 5'],expected:'7',custom:false}]};
+    const stored=new Map(),messages:any[]=[];let handler:any,runs=0;
+    const panel=new CasePanel({workspaceState:{get:(k:string,f:any)=>stored.get(k)??f,update:async(k:string,v:any)=>{stored.set(k,v);}}},async()=>data,async()=>{runs++;return{results:[{ok:true,got:'7'}]};});
+    panel.resolveWebviewView({onDidDispose:()=>{},webview:{options:{},html:'',onDidReceiveMessage:(h:any)=>{handler=h;},postMessage:async(m:any)=>{messages.push(m);}}});
+    await panel.refresh();
+    const html=panel.view.webview.html;
+    assert.ok(html.includes('新建测试用例'));assert.ok(html.includes('删除当前自定义用例'));
+    for(const m of html.matchAll(/<script nonce="[^"]*">([\s\S]*?)<\/script>/g))assert.doesNotThrow(()=>new Function(m[1]));
+    class Element {
+        children:any[]=[];textContent='';value='';hidden=false;disabled=false;onclick?:()=>void;oninput?:()=>void;
+        replaceChildren(){this.children=[];}append(...nodes:any[]){this.children.push(...nodes);}setAttribute(){}
+    }
+    const elements=new Map<string,Element>(),sent:any[]=[];let receive:any;
+    const dom={getElementById:(id:string)=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id)!;},createElement:()=>new Element()};
+    const script=[...html.matchAll(/<script nonce="[^"]*">([\s\S]*?)<\/script>/g)][0][1];
+    new Function('document','window','acquireVsCodeApi',script)(dom,{addEventListener:(_:string,h:any)=>{receive=h;}},()=>({postMessage:(m:any)=>sent.push(JSON.parse(JSON.stringify(m)))}));
+    const tabs=dom.getElementById('cases');
+    assert.strictEqual(tabs.children[0].textContent,'Case 1');tabs.children.at(-1).onclick();
+    assert.strictEqual(tabs.children[1].textContent,'Case 2');
+    const fields=dom.getElementById('fields');fields.children[0].children[1].value='3 4';fields.children[0].children[1].oninput();
+    dom.getElementById('run').onclick!();assert.deepStrictEqual(sent.at(-1).cases[1].values,['3 4']);assert.strictEqual(sent.at(-1).index,1);
+    receive({data:{key:data.key,type:'result',result:{results:[{ok:true,got:'7'}]}}});
+    assert.strictEqual(dom.getElementById('results').hidden,false);
+    dom.getElementById('remove').onclick!();assert.strictEqual(tabs.children.length,2);
+    await handler({type:'run',key:data.key,cases:data.cases,index:0});
+    assert.strictEqual(runs,1);assert.ok(stored.has('casePanel:1:acm'));
+    data.key='2:acm';await handler({type:'run',key:'1:acm',cases:data.cases,index:0});assert.strictEqual(runs,1);
+    assert.ok(messages.some(m=>m.type==='result'));
+});
+
+test('ACM 本机通过与官网共用完成状态，重复通过只记录同一题',async()=>{
+    const {Hot100Provider}=loadProblemPanel('../views/hot100Provider');
+    const provider=Object.create(Hot100Provider.prototype),state=new Map();
+    provider.store={get:(k:string,f:any)=>state.get(k)??f,update:async(k:string,v:any)=>{state.set(k,v);}};
+    provider.questionStatusMap=new Map();provider.solvedDates=new Set();provider.solvedIdsByDate=new Map();provider.rerender=()=>{};
+    await provider.recordLocalResult('1',false);assert.strictEqual(provider.isSolved('1'),false);
+    await provider.recordLocalResult('1',true);await provider.recordLocalResult('1',true);
+    assert.strictEqual(provider.isSolved('1'),true);assert.deepStrictEqual(state.get('enhancedLocalPassed'),{'1':true});
+    assert.strictEqual([...provider.solvedIdsByDate.values()][0].size,1);
+    provider.questionStatusMap.set('1','ac');assert.strictEqual(provider.isSolved('1'),true);
+});
+
+test('多语言 ACM 使用题目评测规则，允许无需排序的答案',()=>{
+    const script=`const assert=require('assert/strict'),{evaluate}=require('./engine');
+    (async()=>{const p={acm:{judge:'unordered-lines'}};
+    const r=await evaluate(p,'javascript','acm','console.log("2 1\\\\n1 2")',[{input:'',output:'1 2\\n2 1'}]);
+    assert.equal(r.results[0].ok,true);
+    const wrong=await evaluate(p,'javascript','acm','console.log("wrong")',[{input:'',output:'1 2'}]);assert.equal(wrong.results[0].ok,false);
+    })().catch(e=>{console.error(e);process.exitCode=1;});`;
+    const r=spawnSync(process.execPath,['-e',script],{cwd:path.resolve(__dirname,'../..'),encoding:'utf8',timeout:15000});
+    assert.strictEqual(r.status,0,r.stderr);
+});

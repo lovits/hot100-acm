@@ -8457,7 +8457,7 @@
     ]
    },
    "templates": {
-    "python3": "class LRUCache:\n    def __init__(self, capacity: int):\n        # TODO\n\n    def get(self, key: int) -> int:\n        # TODO\n\n    def put(self, key: int, value: int) -> None:\n        # TODO\n",
+    "python3": "class LRUCache:\n    def __init__(self, capacity: int):\n        # TODO\n        pass\n\n    def get(self, key: int) -> int:\n        # TODO\n        pass\n\n    def put(self, key: int, value: int) -> None:\n        # TODO\n        pass\n",
     "cpp": "class LRUCache {\npublic:\n    LRUCache(int capacity) {\n        // TODO\n    }\n\n    int get(int key) {\n        // TODO\n    }\n\n    void put(int key, int value) {\n        // TODO\n    }\n};\n"
    }
   },
@@ -9052,7 +9052,7 @@
     ]
    },
    "templates": {
-    "python3": "class MinStack:\n    def __init__(self):\n        # TODO\n\n    def push(self, val: int) -> None:\n        # TODO\n\n    def pop(self) -> None:\n        # TODO\n\n    def top(self) -> int:\n        # TODO\n\n    def getMin(self) -> int:\n        # TODO\n",
+    "python3": "class MinStack:\n    def __init__(self):\n        # TODO\n        pass\n\n    def push(self, val: int) -> None:\n        # TODO\n        pass\n\n    def pop(self) -> None:\n        # TODO\n        pass\n\n    def top(self) -> int:\n        # TODO\n        pass\n\n    def getMin(self) -> int:\n        # TODO\n        pass\n",
     "cpp": "class MinStack {\npublic:\n    MinStack() {\n        // TODO\n    }\n\n    void push(int val) {\n        // TODO\n    }\n\n    void pop() {\n        // TODO\n    }\n\n    int top() {\n        // TODO\n    }\n\n    int getMin() {\n        // TODO\n    }\n};\n"
    }
   },
@@ -10235,7 +10235,7 @@
     }
    ],
    "template": {
-    "python3": "import sys\n\nclass Trie:\n    # TODO: 实现 Trie（insert / search / startsWith）\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    m = int(data[0])\n    # TODO: 依次处理 m 个操作（insert 单词 / search 单词 / startsWith 前缀），\n    #       输出所有 search 与 startsWith 的结果（true/false），每个一行\n\nif __name__ == \"__main__\":\n    main()\n",
+    "python3": "import sys\n\nclass Trie:\n    # TODO: 实现 Trie（insert / search / startsWith）\n    pass\n\ndef main():\n    data = sys.stdin.read().split()\n    if not data:\n        return\n    m = int(data[0])\n    # TODO: 依次处理 m 个操作（insert 单词 / search 单词 / startsWith 前缀），\n    #       输出所有 search 与 startsWith 的结果（true/false），每个一行\n\nif __name__ == \"__main__\":\n    main()\n",
     "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nclass Trie {\n    // TODO: 实现 Trie（insert / search / startsWith）\n};\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int m;\n    cin >> m;\n    // TODO: 依次处理 m 个操作（insert 单词 / search 单词 / startsWith 前缀），\n    //       输出所有 search 与 startsWith 的结果（true/false），每个一行\n    return 0;\n}\n"
    }
   },
@@ -10269,7 +10269,7 @@
     ]
    },
    "templates": {
-    "python3": "class Trie:\n    def __init__(self):\n        # TODO\n\n    def insert(self, word: str) -> None:\n        # TODO\n\n    def search(self, word: str) -> bool:\n        # TODO\n\n    def startsWith(self, prefix: str) -> bool:\n        # TODO\n",
+    "python3": "class Trie:\n    def __init__(self):\n        # TODO\n        pass\n\n    def insert(self, word: str) -> None:\n        # TODO\n        pass\n\n    def search(self, word: str) -> bool:\n        # TODO\n        pass\n\n    def startsWith(self, prefix: str) -> bool:\n        # TODO\n        pass\n",
     "cpp": "class Trie {\npublic:\n    Trie() {\n        // TODO\n    }\n\n    void insert(string word) {\n        // TODO\n    }\n\n    bool search(string word) {\n        // TODO\n    }\n\n    bool startsWith(string prefix) {\n        // TODO\n    }\n};\n"
    }
   },
@@ -11880,7 +11880,7 @@
     ]
    },
    "templates": {
-    "python3": "class MedianFinder:\n    def __init__(self):\n        # TODO\n\n    def addNum(self, num: int) -> None:\n        # TODO\n\n    def findMedian(self) -> float:\n        # TODO\n",
+    "python3": "class MedianFinder:\n    def __init__(self):\n        # TODO\n        pass\n\n    def addNum(self, num: int) -> None:\n        # TODO\n        pass\n\n    def findMedian(self) -> float:\n        # TODO\n        pass\n",
     "cpp": "class MedianFinder {\npublic:\n    MedianFinder() {\n        // TODO\n    }\n\n    void addNum(int num) {\n        // TODO\n    }\n\n    double findMedian() {\n        // TODO\n    }\n};\n"
    }
   },
