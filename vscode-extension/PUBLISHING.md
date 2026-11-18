@@ -4,10 +4,16 @@
 
 - Publisher：`lovits`，已创建，当前账号拥有 Owner 权限。
 - 扩展标识：`lovits.hot100-practice`。
-- 当前公开版本：`0.2.82`，2026-11-18 已核对 Marketplace 公开页面，版本号正确且 Install 按钮可用。
+- 当前公开版本：`0.2.84`，2026-11-18 已核对 Marketplace 公开页面，版本号正确且 Install 按钮可用。
 - [市场页面](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)：已上架，可直接安装。
 - [管理入口](https://marketplace.visualstudio.com/manage/publishers/lovits)。
-- [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.82)。
+- [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.84)。
+
+## 0.2.84 验证
+
+- Marketplace 管理页已显示 `0.2.84`、`Public`，验证状态已结束。
+- 本机安装已更新到 `lovits.hot100-practice@0.2.84`。
+- 修复 Linux 上 V8 虚拟地址空间限制冲突，并让 Windows Python 模板测试明确使用 UTF-8。
 
 ## 后续发布
 
