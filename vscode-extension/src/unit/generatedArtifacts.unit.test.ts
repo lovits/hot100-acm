@@ -273,7 +273,7 @@ test('多语言 ACM 使用题目评测规则，允许无需排序的答案',()=>
     const script=`const assert=require('assert/strict'),{evaluate}=require('./engine');
     (async()=>{const p={acm:{judge:'unordered-lines'}};
     const r=await evaluate(p,'javascript','acm','console.log("2 1\\\\n1 2")',[{input:'',output:'1 2\\n2 1'}]);
-    assert.equal(r.results[0].ok,true);
+    assert.equal(r.results[0].ok,true,JSON.stringify(r));
     const wrong=await evaluate(p,'javascript','acm','console.log("wrong")',[{input:'',output:'1 2'}]);assert.equal(wrong.results[0].ok,false);
     })().catch(e=>{console.error(e);process.exitCode=1;});`;
     const r=spawnSync(process.execPath,['-e',script],{cwd:path.resolve(__dirname,'../..'),encoding:'utf8',timeout:15000});

@@ -37,8 +37,9 @@ async function evaluateACM(p,language,code,tests){
    fs.writeFileSync(path.join(dir,'Practice.csproj'),`<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net${major}.0</TargetFramework></PropertyGroup></Project>`);
   }
   if(compiler){const c=await runProcess(compiler,args,{cwd:dir,phase:'compile',limits:false});if(c.code!==0||c.timedOut)return{error:c.stderr||c.stdout||c.error||'编译失败',phase:'compile'};}
+  // V8 reserves large virtual ranges; keep timeout and output limits without an address-space cap.
   const results=[];
-  for(const t of tests){const r=await runProcess(runner,runArgs,{cwd:dir,input:t.input,limits:!['java','go','kotlin','scala','csharp'].includes(language)});
+  for(const t of tests){const r=await runProcess(runner,runArgs,{cwd:dir,input:t.input,limits:!['javascript','typescript','java','go','kotlin','scala','csharp'].includes(language)});
    if(r.code!==0||r.timedOut){results.push({ok:false,error:r.stderr||r.error||'运行失败或超时'});continue;}
    results.push({ok:t.output==null||(p.acm?.judge?compareACMOutput(p.acm.judge,r.stdout,t.output,t.input):outputsEqual(t.output,r.stdout)),got:r.stdout,expected:t.output,ms:r.ms});
   }

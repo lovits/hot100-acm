@@ -75,7 +75,7 @@ Case 面板及本机运行快捷键从 0.2.83 起提供。
 - [插件主页](https://github.com/lovits/hot100-acm/tree/main/vscode-extension)
 - [问题反馈](https://github.com/lovits/hot100-acm/issues)
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
-- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.83)
+- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.84)
 - [完整运行与提交说明](https://github.com/lovits/hot100-acm/blob/main/vscode-extension/运行与提交说明.html)
 
 **分类**：Education / Programming Languages · **扩展标识**：`lovits.hot100-practice`
