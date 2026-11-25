@@ -27,6 +27,7 @@ for platform in ['macOS-arm64', 'macOS-x64', 'Windows-x64']:
     if mac:
         replacements[prefix + 'main.cjs'] = (ROOT / 'desktop/main.cjs').read_bytes()
         replacements[prefix + 'preload.cjs'] = (ROOT / 'desktop/preload.cjs').read_bytes()
+        replacements['Hot100.app/Contents/Resources/Hot100.icns'] = (ROOT / 'dist/assets/app.icns').read_bytes()
     else:
         for name in ['launch.pyw', 'README.md']:
             replacements[prefix + name] = (ROOT / name).read_bytes()
@@ -49,6 +50,8 @@ for platform in ['macOS-arm64', 'macOS-x64', 'Windows-x64']:
             new.writestr(name, data)
     with ZipFile(OUT / filename) as check:
         assert check.testzip() is None
+        if mac:
+            assert check.read('Hot100.app/Contents/Resources/Hot100.icns') == (ROOT / 'dist/assets/app.icns').read_bytes()
         for name, data in sources.items():
             assert check.read(prefix + name) == data, name
         assert not any('/dist/authors/' in name for name in check.namelist())

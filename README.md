@@ -1,7 +1,7 @@
 # Hot100 ACM 刷题台
 
 [![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/lovits.hot100-practice?label=VS%20Code)](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
-[![Desktop](https://img.shields.io/badge/Desktop-v1.0.11-4285F4)](https://github.com/lovits/hot100-acm/releases/tag/v1.0.11)
+[![Desktop](https://img.shields.io/badge/Desktop-v1.0.12-4285F4)](https://github.com/lovits/hot100-acm/releases/tag/v1.0.12)
 [![GitHub Issues](https://img.shields.io/github/issues/lovits/hot100-acm)](https://github.com/lovits/hot100-acm/issues)
 
 把 Hot100 算法练习、ACM 输入输出训练和间隔复习放进日常刷题流程。
@@ -16,7 +16,7 @@
 | 界面 | 左侧题目，右侧代码和测试区域 | 题库侧栏、左侧题面、右侧原生代码编辑器 |
 | 本机测试 | 运行示例、自定义测试、提交本地评测 | 示例、自定义用例、全部用例评测 |
 | 官网提交 | 以本机评测为主，可打开原题 | 核心代码模式登录力扣后提交官网 |
-| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.11) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.84) |
+| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.12) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.85) |
 
 ## 安装
 
@@ -28,21 +28,27 @@ code --install-extension lovits.hot100-practice
 
 也可以在扩展市场搜索 **Hot100 ACM**。扩展标识为 `lovits.hot100-practice`，发布者为 `lovits`。
 
+也可以把下面这句话交给 Codex、DeepSeek Harness 或其他具备本机操作能力的 Agent：
+
+> 请在我指定的 VS Code 或兼容扩展的 IDE 中，从扩展市场安装 Hot100 ACM（发布者 lovits，扩展标识 lovits.hot100-practice），确认安装成功；如需选择 IDE，请先列出本机可用的 IDE 让我选择。
+
+这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.85) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
+
 安装后打开一个保存练习代码的文件夹，从活动栏进入 Hot100 ACM，点击题目并选择语言即可开始。每次点击题目都会弹出语言选择；打开题目默认左侧题面、右侧代码。
 
-若终端找不到 `code`，在 VS Code 命令面板执行 **Shell Command: Install 'code' command in PATH**。离线安装可下载 [VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.84)，在扩展面板选择“从 VSIX 安装”，或执行：
+若终端找不到 `code`，在 VS Code 命令面板执行 **Shell Command: Install 'code' command in PATH**。离线安装可下载 [VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.85)，在扩展面板选择“从 VSIX 安装”，或执行：
 
 ```sh
-code --install-extension ./hot100-practice-0.2.84.vsix
+code --install-extension ./hot100-practice-0.2.85.vsix
 ```
 
 ### 桌面版：下载后启动
 
 | 平台 | 下载 |
 | --- | --- |
-| macOS · Apple Silicon | [Hot100-macOS-arm64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.11/Hot100-macOS-arm64-release.zip) |
-| macOS · Intel | [Hot100-macOS-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.11/Hot100-macOS-x64-release.zip) |
-| Windows · x64 | [Hot100-Windows-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.11/Hot100-Windows-x64-release.zip) |
+| macOS · Apple Silicon | [Hot100-macOS-arm64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.12/Hot100-macOS-arm64-release.zip) |
+| macOS · Intel | [Hot100-macOS-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.12/Hot100-macOS-x64-release.zip) |
+| Windows · x64 | [Hot100-Windows-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.12/Hot100-Windows-x64-release.zip) |
 
 macOS 解压后打开 `Hot100.app`；Windows 完整解压后，从 `Hot100/Start-Hot100.vbs` 启动。桌面包与插件独立发布，分别在对应 Release 中更新。
 

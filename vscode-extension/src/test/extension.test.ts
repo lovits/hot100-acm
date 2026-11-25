@@ -116,4 +116,23 @@ suite('Extension Smoke Test Suite', () => {
         }finally{e.provider.recordLocalResult=record;e.provider.isSolved=solved;e.record=plan;win.showInformationMessage=info;}
     });
 
+    test('笔记创建、保存与重复打开保留内容；收藏可切换并持久化',async()=>{
+        const api=await vscode.extensions.getExtension('lovits.hot100-practice')!.activate(),e=api.enhancements;
+        const runtime=createRequire(path.join(vscode.extensions.getExtension('lovits.hot100-practice')!.extensionPath,'out/extension.js'))('vscode') as typeof vscode;
+        const win=runtime.window as any,info=win.showInformationMessage;win.showInformationMessage=async()=>undefined;
+        const item={question:{frontendQuestionId:'136',titleSlug:'single-number',difficulty:'EASY'}};
+        const root=vscode.workspace.workspaceFolders![0].uri,note=vscode.Uri.joinPath(root,'leetcode','notes','136_single-number.md');
+        const prior=e.provider.isFavorite('136');
+        try{
+            await vscode.commands.executeCommand('hot100Pro.openNote',item);
+            let doc=await vscode.workspace.openTextDocument(note);assert.ok(doc.getText().includes('## 思路'));
+            const marker='\n笔记测试：异或，时间 O(n)，空间 O(1)。\n';
+            const edit=new vscode.WorkspaceEdit();edit.insert(note,doc.positionAt(doc.getText().length),marker);assert.ok(await vscode.workspace.applyEdit(edit));assert.ok(await doc.save());
+            await vscode.commands.executeCommand('hot100Pro.openNote',item);doc=await vscode.workspace.openTextDocument(note);
+            assert.ok(doc.getText().endsWith(marker));assert.ok(Buffer.from(await vscode.workspace.fs.readFile(note)).toString('utf8').endsWith(marker));
+            await vscode.commands.executeCommand('hot100Pro.toggleFavorite',item);assert.equal(e.provider.isFavorite('136'),!prior);
+            await vscode.commands.executeCommand('hot100Pro.toggleFavorite',item);assert.equal(e.provider.isFavorite('136'),prior);
+        }finally{win.showInformationMessage=info;if(e.provider.isFavorite('136')!==prior)e.provider.toggleFavorite('136');}
+    });
+
 });

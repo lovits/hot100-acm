@@ -997,7 +997,8 @@ export async function activate(context: vscode.ExtensionContext) {
 			let exists = true;
 			try {
 				await vscode.workspace.fs.stat(noteUri);
-			} catch {
+			} catch (error) {
+				if (!(error instanceof vscode.FileSystemError) || error.code !== 'FileNotFound') throw error;
 				exists = false;
 			}
 			if (!exists) {
