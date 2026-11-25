@@ -1,7 +1,7 @@
 # Hot100 ACM 刷题台
 
 [![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/lovits.hot100-practice?label=VS%20Code)](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
-[![Desktop](https://img.shields.io/badge/Desktop-v1.0.13-4285F4)](https://github.com/lovits/hot100-acm/releases/tag/v1.0.13)
+[![Desktop](https://img.shields.io/badge/Desktop-v1.0.14-4285F4)](https://github.com/lovits/hot100-acm/releases/tag/v1.0.14)
 [![GitHub Issues](https://img.shields.io/github/issues/lovits/hot100-acm)](https://github.com/lovits/hot100-acm/issues)
 
 把 Hot100 算法练习、ACM 输入输出训练和间隔复习放进日常刷题流程。
@@ -16,7 +16,7 @@
 | 界面 | 左侧题目，右侧代码和测试区域 | 题库侧栏、左侧题面、右侧原生代码编辑器 |
 | 本机测试 | 运行示例、自定义测试、提交本地评测 | 示例、自定义用例、全部用例评测 |
 | 官网提交 | 以本机评测为主，可打开原题 | 核心代码模式登录力扣后提交官网 |
-| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.13) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86) |
+| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.14) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86) |
 
 ## 安装
 
@@ -46,9 +46,9 @@ code --install-extension ./hot100-practice-0.2.86.vsix
 
 | 平台 | 下载 |
 | --- | --- |
-| macOS · Apple Silicon | [Hot100-macOS-arm64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.13/Hot100-macOS-arm64-release.zip) |
-| macOS · Intel | [Hot100-macOS-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.13/Hot100-macOS-x64-release.zip) |
-| Windows · x64 | [Hot100-Windows-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.13/Hot100-Windows-x64-release.zip) |
+| macOS · Apple Silicon | [Hot100-macOS-arm64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.14/Hot100-macOS-arm64-release.zip) |
+| macOS · Intel | [Hot100-macOS-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.14/Hot100-macOS-x64-release.zip) |
+| Windows · x64 | [Hot100-Windows-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.14/Hot100-Windows-x64-release.zip) |
 
 macOS 解压后打开 `Hot100.app`；Windows 完整解压后，从 `Hot100/Start-Hot100.vbs` 启动。桌面包与插件独立发布，分别在对应 Release 中更新。
 
