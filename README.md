@@ -16,7 +16,7 @@
 | 界面 | 左侧题目，右侧代码和测试区域 | 题库侧栏、左侧题面、右侧原生代码编辑器 |
 | 本机测试 | 运行示例、自定义测试、提交本地评测 | 示例、自定义用例、全部用例评测 |
 | 官网提交 | 以本机评测为主，可打开原题 | 核心代码模式登录力扣后提交官网 |
-| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.14) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86) |
+| 获取方式 | [macOS / Windows 安装包](https://github.com/lovits/hot100-acm/releases/tag/v1.0.14) | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice) · [离线 VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87) |
 
 ## 安装
 
@@ -32,14 +32,14 @@ code --install-extension lovits.hot100-practice
 
 > 请在我指定的 VS Code 或兼容扩展的 IDE 中，从扩展市场安装 Hot100 ACM（发布者 lovits，扩展标识 lovits.hot100-practice），确认安装成功；如需选择 IDE，请先列出本机可用的 IDE 让我选择。
 
-这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
+这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
 
 安装后打开一个保存练习代码的文件夹，从活动栏进入 Hot100 ACM，点击题目并选择语言即可开始。每次点击题目都会弹出语言选择；打开题目默认左侧题面、右侧代码。
 
-若终端找不到 `code`，在 VS Code 命令面板执行 **Shell Command: Install 'code' command in PATH**。离线安装可下载 [VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86)，在扩展面板选择“从 VSIX 安装”，或执行：
+若终端找不到 `code`，在 VS Code 命令面板执行 **Shell Command: Install 'code' command in PATH**。离线安装可下载 [VSIX](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87)，在扩展面板选择“从 VSIX 安装”，或执行：
 
 ```sh
-code --install-extension ./hot100-practice-0.2.86.vsix
+code --install-extension ./hot100-practice-0.2.87.vsix
 ```
 
 ### 桌面版：下载后启动

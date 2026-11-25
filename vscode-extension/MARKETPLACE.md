@@ -30,7 +30,7 @@ code --install-extension lovits.hot100-practice
 
 > 请在我指定的 VS Code 或兼容扩展的 IDE 中，从扩展市场安装 Hot100 ACM（发布者 lovits，扩展标识 lovits.hot100-practice），确认安装成功；如需选择 IDE，请先列出本机可用的 IDE 让我选择。
 
-这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
+这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
 
 1. 安装扩展并打开保存练习代码的工作区。
 2. 从 Hot100 ACM 侧栏选择题目及语言。
@@ -81,7 +81,7 @@ Case 面板及本机运行快捷键从 0.2.83 起提供。
 - [插件主页](https://github.com/lovits/hot100-acm/tree/main/vscode-extension)
 - [问题反馈](https://github.com/lovits/hot100-acm/issues)
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
-- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.86)
+- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87)
 - [完整运行与提交说明](https://github.com/lovits/hot100-acm/blob/main/vscode-extension/运行与提交说明.html)
 
 **分类**：Education / Programming Languages · **扩展标识**：`lovits.hot100-practice`
