@@ -1,6 +1,7 @@
 """Double-click launcher: verify identity, start quietly, open default browser."""
 from pathlib import Path
 import ctypes
+import hashlib
 import json
 import os
 import socket
@@ -17,11 +18,22 @@ DATA = Path(os.environ.get('LOCALAPPDATA', str(Path.home() / 'AppData/Local'))) 
 DATA.mkdir(parents=True, exist_ok=True)
 
 
+def instance_id():
+    digest = hashlib.sha256(os.path.normcase(str(ROOT)).encode('utf-8'))
+    for name in ('local_server.py', 'dist/index.html', 'dist/app.js', 'dist/sync-core.js'):
+        digest.update((ROOT / name).read_bytes())
+    return digest.hexdigest()
+
+
+INSTANCE_ID = instance_id()
+
+
 def identity():
     try:
         request = urllib.request.Request(URL + '/api/health')
         with urllib.request.build_opener(urllib.request.ProxyHandler({})).open(request, timeout=.2) as response:
-            return json.load(response).get('app') == 'hot100-acm-local-v2'
+            data = json.load(response)
+            return data.get('app') == 'hot100-acm-local-v2' and data.get('instance') == INSTANCE_ID
     except Exception:
         return False
 
@@ -46,7 +58,7 @@ def main():
             raise RuntimeError('另一个启动窗口仍在准备，请稍后再试。')
         if not identity():
             if occupied():
-                raise RuntimeError('本地端口 18765 已被其他程序使用。请关闭占用该端口的程序后重试。没有打开其他网站。')
+                raise RuntimeError('本地端口 18765 已被旧版 Hot100 或其他程序使用。请先保存未保存的内容，关闭旧程序及其本地服务后重试。')
             interpreter = Path(sys.executable).with_name('pythonw.exe')
             if not interpreter.exists():
                 interpreter = Path(sys.executable)

@@ -4,6 +4,7 @@ from http.client import HTTPException
 from pathlib import Path
 from urllib.parse import urlsplit
 import argparse
+import hashlib
 import json
 import logging
 import os
@@ -19,6 +20,16 @@ from leetcode_session import LeetCodeSession
 APP_ID = 'hot100-acm-local-v2'
 ROOT = Path(__file__).resolve().parent
 DEFAULT_DATA = (Path.home() / 'Library/Application Support' if sys.platform == 'darwin' else Path(os.environ.get('LOCALAPPDATA', str(Path.home() / 'AppData/Local')))) / 'Hot100ACM'
+
+
+def instance_id():
+    digest = hashlib.sha256(os.path.normcase(str(ROOT)).encode('utf-8'))
+    for name in ('local_server.py', 'dist/index.html', 'dist/app.js', 'dist/sync-core.js'):
+        digest.update((ROOT / name).read_bytes())
+    return digest.hexdigest()
+
+
+INSTANCE_ID = instance_id()
 
 
 class Store:
@@ -192,7 +203,7 @@ def make_server(port=18765, data_dir=DEFAULT_DATA):
             if not self.valid_host():
                 return self.reply(403, {'error': '请求地址不被允许'})
             if path == '/api/health':
-                return self.reply(200, {'app': APP_ID, 'version': 2})
+                return self.reply(200, {'app': APP_ID, 'version': 2, 'instance': INSTANCE_ID})
             if path.startswith('/api/'):
                 if not self.valid_origin():
                     return self.reply(403, {'error': '数据仅供本站访问'})

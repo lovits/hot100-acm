@@ -464,7 +464,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "test:unit": "node --test \"out/unit/*.unit.test.js\" test/network-retry-test.cjs ../tests/native-static-fallback.test.cjs",
+    "test:unit": "node --test \"out/unit/*.unit.test.js\" test/network-retry-test.cjs ../tests/native-static-fallback.test.cjs ../tests/mac-sdk-env.test.cjs",
     "release": "node scripts/release.mjs",
     "test:judge": "node test/engine-test.js python3 && node test/engine-test.js cpp && node test/c-core-test.js && node test/c-acm-test.js && node test/c-negative-test.js",
     "package": "npx @vscode/vsce@3.7.0 package --no-dependencies --readme-path MARKETPLACE.md"

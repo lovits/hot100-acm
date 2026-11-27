@@ -4,7 +4,7 @@
  * 进程执行器：负责编译/运行用户代码，带 CPU 时间、内存、输出体积限制。
  * 使用 `sh -c 'ulimit ...; exec "$@"'` 包装，对子进程施加 RLIMIT。
  */
-const { spawn, execFile } = require('child_process');
+const { spawn, execFile, execFileSync } = require('child_process');
 
 const DEFAULT_TIMEOUT_MS = 4000;   // 运行墙钟超时（毫秒）
 const COMPILE_TIMEOUT_MS = 30000;  // 编译墙钟超时（毫秒）
@@ -12,6 +12,17 @@ const DEFAULT_CPU_SEC = 5;         // 运行 CPU 时间上限（秒）
 const COMPILE_CPU_SEC = 30;        // 编译 CPU 时间上限（秒）
 const DEFAULT_MEM_KB = 524288;     // 地址空间上限（KB，即 512MB）
 const MAX_OUTPUT = 64 * 1024;      // stdout/stderr 各自上限
+
+function compilerEnv(command, isCompile) {
+  const env = {...process.env, PYTHONIOENCODING:'utf-8'};
+  if (process.platform === 'darwin' && isCompile && !env.SDKROOT && /^(?:g\+\+|gcc|clang\+\+|clang)(?:-\d+)?$/.test(require('path').basename(command))) {
+    try {
+      const sdk = execFileSync('/usr/bin/xcrun', ['--show-sdk-path'], {encoding:'utf8', timeout:5000}).trim();
+      if (sdk) env.SDKROOT = sdk;
+    } catch (_) { /* Keep the existing environment when the SDK cannot be located. */ }
+  }
+  return env;
+}
 
 function commandExists(command) {
   return new Promise((resolve) => {
@@ -58,7 +69,7 @@ function runProcessOnce(command, args, options = {}) {
       windowsHide: true,
       cwd: options.cwd,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+      env: compilerEnv(command, isCompile),
     });
 
     let stdout = '';
@@ -196,5 +207,5 @@ async function runCode({ language, code, input }) {
   }
 }
 
-module.exports = { runProcess, commandExists, checkCode, runCode, compileArgsFor, DEFAULT_TIMEOUT_MS };
+module.exports = { runProcess, commandExists, checkCode, runCode, compilerEnv, compileArgsFor, DEFAULT_TIMEOUT_MS };
 
