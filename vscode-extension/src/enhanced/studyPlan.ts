@@ -1,7 +1,7 @@
 export const defaultIntervals = [1,2,4,7,15,30];
 export interface Learned { first: string; last: string; stage: number; due: string }
-export interface StudyEvent { id: string; date: string; kind: 'new'|'review'; source: 'test'|'manual' }
-export interface PlanState { learned: Record<string, Learned>; events: StudyEvent[] }
+export interface StudyEvent { id: string; date: string; kind: 'new'|'review'; source: 'test'|'manual'; createdAt?:number }
+export interface PlanState { learned: Record<string, Learned>; events: StudyEvent[]; resetAt?:number; learnedMeta?:Record<string,{at:number;deleted:boolean}> }
 export function emptyPlan(): PlanState { return {learned:{},events:[]}; }
 export function addDays(date: string, days: number): string {
     const [y,m,d] = date.split('-').map(Number); const next = new Date(y,m-1,d+days,12);
@@ -12,20 +12,23 @@ export function intervalsOf(value: unknown): number[] {
         && value.every((n,i)=>Number.isInteger(n) && n>0 && n<=365 && (i===0 || n>value[i-1])) ? [...value] : [...defaultIntervals];
 }
 export function recordResult(state: PlanState, id: string, ok: boolean, date: string, intervals: number[], source: StudyEvent['source'] = 'test', alreadySolved = false): PlanState {
-    const next: PlanState = {learned: {...state.learned},events:[...state.events]}; const entry = next.learned[id];
+    const next: PlanState = {...state,learned: {...state.learned},events:[...state.events],learnedMeta:{...state.learnedMeta}}; const entry = next.learned[id];
+    const updatedAt=Math.max(Date.now(),(state.resetAt||0)+1,(state.learnedMeta?.[id]?.at||0)+1);
     if (!ok) {
-        if (entry?.due && entry.due<=date) { next.learned[id] = {...entry,due:addDays(date,1)}; }
+        if (entry?.due && entry.due<=date) { next.learned[id] = {...entry,due:addDays(date,1)}; next.learnedMeta![id]={at:updatedAt,deleted:false}; }
         return next;
     }
     if (next.events.some(e=>e.id===id && e.date===date)) { return next; }
     if (!entry) {
         next.learned[id] = {first:date,last:date,stage:0,due:addDays(date,intervals[0])};
-        next.events.push({id,date,kind:alreadySolved?'review':'new',source}); return next;
+        next.learnedMeta![id]={at:updatedAt,deleted:false};
+        next.events.push({id,date,kind:alreadySolved?'review':'new',source,createdAt:updatedAt}); return next;
     }
     if (!entry.due || entry.due>date) { return next; }
     const stage = entry.stage+1;
     next.learned[id] = {...entry,last:date,stage,due:stage<intervals.length ? addDays(date,intervals[stage]-intervals[stage-1]) : ''};
-    next.events.push({id,date,kind:'review',source}); return next;
+    next.learnedMeta![id]={at:updatedAt,deleted:false};
+    next.events.push({id,date,kind:'review',source,createdAt:updatedAt}); return next;
 }
 export function replan(state: PlanState, intervals: number[]): PlanState {
     return {...state,learned:Object.fromEntries(Object.entries(state.learned).map(([id,e])=>[id,{...e,due:e.stage<intervals.length ? addDays(e.last,e.stage===0?intervals[0]:intervals[e.stage]-intervals[e.stage-1]) : ''}]))};

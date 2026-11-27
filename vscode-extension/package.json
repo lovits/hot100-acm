@@ -41,6 +41,18 @@
   "contributes": {
     "commands": [
       {
+        "command": "hot100Pro.configurePrivateSync",
+        "title": "Hot100: 配置个人私网同步"
+      },
+      {
+        "command": "hot100Pro.syncPrivate",
+        "title": "Hot100: 立即同步个人数据"
+      },
+      {
+        "command": "hot100Pro.syncConflicts",
+        "title": "Hot100: 查看同步冲突"
+      },
+      {
         "command": "hot100Pro.login",
         "title": "LeetCode: 登录",
         "icon": "$(account)"
@@ -445,7 +457,8 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "node scripts/private-package-guard.cjs && npm run compile",
+    "precompile": "node scripts/sync-shared.cjs",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",

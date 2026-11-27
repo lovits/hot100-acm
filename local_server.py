@@ -1,5 +1,6 @@
 """Hot100 local static server. Practice programs run ONLY in the browser worker."""
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from http.client import HTTPException
 from pathlib import Path
 from urllib.parse import urlsplit
 import argparse
@@ -11,6 +12,9 @@ import shutil
 import threading
 import sys
 import subprocess
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sync_transport import SyncTransport
+from leetcode_session import LeetCodeSession
 
 APP_ID = 'hot100-acm-local-v2'
 ROOT = Path(__file__).resolve().parent
@@ -140,6 +144,8 @@ def make_server(port=18765, data_dir=DEFAULT_DATA):
             if not any((preferred / name).is_file() for name in ('learning.json', 'learning.backup.json')):
                 recovery_warning = '原进度目录不可用，已切换到本机默认目录。原目录配置已备份；如需恢复之前的进度，请在原目录可用后导入进度文件。'
     store = Store(preferred)
+    sync_transport = SyncTransport(data_dir)
+    leetcode = LeetCodeSession(os.environ.get('HOT100_NODE') or 'node')
     if recovery_warning and not store.recovery_warning:
         store.recovery_warning = recovery_warning
     token = secrets.token_urlsafe(32)
@@ -194,6 +200,13 @@ def make_server(port=18765, data_dir=DEFAULT_DATA):
                     return self.reply(200, {'token': token, 'dataDirectory': str(store.directory), **store.read()})
                 if path == '/api/progress':
                     return self.reply(200, store.read())
+                if path == '/api/sync/status':
+                    try:
+                        return self.reply(200, sync_transport.status())
+                    except (OSError, ValueError, TypeError):
+                        return self.reply(500, {'error': '同步配置无法读取'})
+                if path == '/api/leetcode/status':
+                    return self.reply(200, leetcode.status())
                 return self.reply(404, {'error': '没有这个接口'})
             # SimpleHTTPRequestHandler prevents '..' escapes; no source/data files are in dist.
             return super().do_GET()
@@ -202,6 +215,40 @@ def make_server(port=18765, data_dir=DEFAULT_DATA):
             if not self.valid_origin(write=True):
                 return self.reply(403, {'error': '数据仅接受本站请求'})
             path = urlsplit(self.path).path
+            if path.startswith('/api/leetcode/'):
+                try:
+                    length = int(self.headers.get('Content-Length', '0'))
+                    if not 0 < length <= 512 * 1024:
+                        return self.reply(413, {'error': '请求数据过大'})
+                    payload = json.loads(self.rfile.read(length))
+                    action = path.removeprefix('/api/leetcode/')
+                    if action == 'manual': result = leetcode.manual(payload.get('session', ''), payload.get('csrf', ''))
+                    elif action == 'browser': result = leetcode.browser()
+                    elif action == 'logout': result = leetcode.logout()
+                    elif action == 'solved': result = {'ids': leetcode.solved()}
+                    elif action == 'submissions': result = {'submissions': leetcode.submissions(payload.get('id'))}
+                    elif action == 'detail': result = {'detail': leetcode.detail(payload.get('id'), payload.get('submissionId'))}
+                    elif action == 'submit': result = leetcode.submit(payload.get('id'), payload.get('language'), payload.get('code'))
+                    elif action == 'check': result = leetcode.check(payload.get('submissionId'))
+                    else: return self.reply(404, {'error': '没有这个接口'})
+                    return self.reply(200, result)
+                except (ValueError, TypeError, AttributeError, KeyError, OSError, HTTPException, subprocess.SubprocessError):
+                    return self.reply(400, {'error': '力扣操作失败，请检查登录状态、网络或输入后重试'})
+            if path in ('/api/sync/config', '/api/sync/request'):
+                try:
+                    length = int(self.headers.get('Content-Length', '0'))
+                    if not 0 < length <= 5 * 1024 * 1024:
+                        return self.reply(413, {'error': '同步请求过大'})
+                    payload = json.loads(self.rfile.read(length))
+                    if path == '/api/sync/config':
+                        sync_transport.configure(payload)
+                        return self.reply(200, sync_transport.status())
+                    status, value = sync_transport.request(payload.get('method'), payload.get('path'), payload.get('body'), payload.get('query'))
+                    return self.reply(status, value)
+                except (ValueError, TypeError, AttributeError) as exc:
+                    return self.reply(400, {'error': str(exc)})
+                except (OSError, HTTPException):
+                    return self.reply(503, {'error': '无法连接私网同步服务，请检查 Tailscale 连接'})
             if path == '/api/directory':
                 try:
                     size = int(self.headers.get('Content-Length', '0'))

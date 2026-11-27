@@ -1,0 +1,1491 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hot100 ACM · 弹窗式学习计划、力扣登录与跨端同步原型 v6（浅色版）</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{background:#e6e7eb;color:#1f2328;padding:16px 18px 24px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+button:disabled{opacity:.42;cursor:not-allowed}
+svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.75;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.num{font-variant-numeric:tabular-nums}
+
+.h100-stage{max-width:1000px;margin:0 auto}
+
+/* Minimal prototype helper strip */
+.proto-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;padding:6px 10px;border-radius:8px;font-size:12px;border:1px solid var(--p-bar-border);background:var(--p-bar-bg);color:var(--p-bar-fg)}
+.proto-bar[data-surface="dark"]{--p-bar-bg:#141416;--p-bar-border:#2a2a2f;--p-bar-fg:#a1a1aa;--p-btn-bg:#232328;--p-btn-fg:#e4e4e7;--p-btn-active-bg:#3c9fff;--p-btn-active-fg:#081624}
+.proto-bar[data-surface="light"]{--p-bar-bg:#ffffff;--p-bar-border:#dcdfe5;--p-bar-fg:#606570;--p-btn-bg:#f2f3f5;--p-btn-fg:#262626;--p-btn-active-bg:#1689cf;--p-btn-active-fg:#ffffff}
+.proto-left{display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden}
+.proto-tag{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:999px;font-weight:600;font-size:11px;background:var(--p-btn-bg);color:var(--p-btn-fg);white-space:nowrap}
+.proto-tag i{width:6px;height:6px;border-radius:50%;background:#2cbb5d;display:inline-block}
+.proto-tip{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px}
+.proto-controls{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.proto-seg{display:inline-flex;padding:2px;border-radius:6px;background:var(--p-btn-bg);gap:2px}
+.proto-seg button{padding:3px 9px;border-radius:5px;font-size:11.5px;color:var(--p-bar-fg);white-space:nowrap;transition:background .12s,color .12s}
+.proto-seg button.active{background:var(--p-btn-active-bg);color:var(--p-btn-active-fg);font-weight:500}
+.proto-mini-btn{padding:4px 8px;border-radius:6px;font-size:11.5px;background:var(--p-btn-bg);color:var(--p-btn-fg);white-space:nowrap}
+
+/* ==================== AUTHENTIC HOT100 DESKTOP APP FRAME ==================== */
+.h100-app{
+  --h-bg:#1a1a1a;
+  --h-surface:#262626;
+  --h-surface2:#2f2f2f;
+  --h-surface-hover:#343434;
+  --h-ctrl:#333333;
+  --h-ctrl-hover:#3e3e3e;
+  --h-border:#3a3a3a;
+  --h-border-soft:#313131;
+  --h-text:#eff1f6;
+  --h-secondary:#a8a8a8;
+  --h-muted:#808080;
+  --h-green:#2cbb5d;
+  --h-green-soft:rgba(44,187,93,.15);
+  --h-accent:#3c9fff;
+  --h-accent-soft:rgba(60,159,255,.14);
+  --h-accent-text:#71b7ff;
+  --h-lc:#ffa116;
+  --h-lc-soft:rgba(255,161,22,.15);
+  --h-easy:#00b8a3;
+  --h-medium:#ffc01e;
+  --h-hard:#ff375f;
+  --h-freq-bg:#443a28;
+  --h-freq-fg:#f5cf83;
+  --h-chip-bg:#383838;
+  --h-chip-fg:#d4d4d8;
+  --h-danger:#ff5c7c;
+  --h-danger-bg:rgba(255,92,124,.14);
+  --h-danger-solid:#d9425b;
+  --h-heat-1:rgba(44,187,93,.06);
+  --h-heat-2:rgba(44,187,93,.11);
+  --h-heat-3:rgba(44,187,93,.18);
+  --h-scroll-thumb:rgba(255,255,255,.17);
+  --h-scroll-hover:rgba(255,255,255,.32);
+  --h-backdrop:rgba(10,12,16,.58);
+  --h-tooltip-bg:#111215;
+  --h-tooltip-fg:#f4f4f6;
+  --h-tooltip-border:#34363d;
+  --h-code-bg:#262626;
+  --h-code-kw:#569cd6;
+  --h-code-cm:#6a9955;
+  --h-shadow:0 18px 46px rgba(0,0,0,.44);
+  background:var(--h-bg);
+  color:var(--h-text);
+  border:1px solid var(--h-border);
+  border-radius:10px;
+  box-shadow:var(--h-shadow);
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  height:624px;
+}
+.h100-app[data-theme="light"]{
+  --h-bg:#f0f0f0;
+  --h-surface:#ffffff;
+  --h-surface2:#fafafa;
+  --h-surface-hover:#f4f5f6;
+  --h-ctrl:#e7e7e7;
+  --h-ctrl-hover:#dcdcdc;
+  --h-border:#e1e1e1;
+  --h-border-soft:#eeeeef;
+  --h-text:#262626;
+  --h-secondary:#737373;
+  --h-muted:#999999;
+  --h-green:#2cbb5d;
+  --h-green-soft:#ebf7ef;
+  --h-accent:#1689cf;
+  --h-accent-soft:rgba(22,137,207,.10);
+  --h-accent-text:#1689cf;
+  --h-lc:#e88b00;
+  --h-lc-soft:rgba(232,139,0,.12);
+  --h-easy:#00af9b;
+  --h-medium:#d7a016;
+  --h-hard:#ef4743;
+  --h-freq-bg:#fff1d3;
+  --h-freq-fg:#765312;
+  --h-chip-bg:#eeeeef;
+  --h-chip-fg:#3c3c3c;
+  --h-danger:#ef4743;
+  --h-danger-bg:rgba(239,71,67,.10);
+  --h-danger-solid:#dc3834;
+  --h-heat-1:rgba(44,187,93,.05);
+  --h-heat-2:rgba(44,187,93,.10);
+  --h-heat-3:rgba(44,187,93,.16);
+  --h-scroll-thumb:rgba(0,0,0,.15);
+  --h-scroll-hover:rgba(0,0,0,.28);
+  --h-backdrop:rgba(22,28,36,.36);
+  --h-tooltip-bg:#262626;
+  --h-tooltip-fg:#ffffff;
+  --h-tooltip-border:#3a3a3a;
+  --h-code-bg:#ffffff;
+  --h-code-kw:#0000ff;
+  --h-code-cm:#008000;
+  --h-shadow:0 14px 38px rgba(15,23,42,.12);
+}
+.h100-app :focus-visible{outline:2px solid var(--h-accent);outline-offset:2px}
+
+/* Instant crisp CSS tooltips for icon buttons */
+[data-tip]{position:relative}
+[data-tip]:hover::after,[data-tip]:focus-visible::after{
+  content:attr(data-tip);
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  padding:4px 8px;
+  border-radius:5px;
+  background:var(--h-tooltip-bg);
+  color:var(--h-tooltip-fg);
+  border:1px solid var(--h-tooltip-border);
+  font-size:11px;
+  font-weight:400;
+  line-height:1.3;
+  white-space:nowrap;
+  pointer-events:none;
+  z-index:90;
+  box-shadow:0 6px 18px rgba(0,0,0,.24);
+}
+[data-tip-pos="center"]:hover::after,[data-tip-pos="center"]:focus-visible::after{right:auto;left:50%;transform:translateX(-50%)}
+
+/* ==================== ORIGINAL TOPBAR (PURE ICON RIGHT GROUP + LEETCODE LOGIN) ==================== */
+.topbar{height:46px;flex-shrink:0;background:var(--h-bg);display:flex;align-items:center;justify-content:space-between;padding:0 12px;position:relative;gap:6px;z-index:10}
+.top-left{display:flex;align-items:center;gap:4px;min-width:0}
+.problem-menu{display:inline-flex;align-items:center;gap:6px;padding:5px 7px;border-radius:6px;font-size:13px;white-space:nowrap;color:var(--h-text)}
+.problem-menu:hover{background:var(--h-ctrl)}
+.problem-menu strong{font-weight:600}
+.prev-next{display:inline-flex;align-items:center;gap:1px}
+
+.work-actions{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:1px}
+.work-btn{height:29px;padding:0 10px;background:var(--h-ctrl);color:var(--h-secondary);font-size:12px;font-weight:500;display:inline-flex;align-items:center;gap:5px}
+.work-btn:hover{background:var(--h-ctrl-hover);color:var(--h-text)}
+.work-btn.run{border-radius:6px 0 0 6px;padding:0 9px}
+.work-btn.submit{border-radius:0 6px 6px 0;color:var(--h-green)}
+.timer-btn{margin-left:5px;height:29px;padding:0 8px;border-radius:6px;background:var(--h-ctrl);color:var(--h-accent-text);display:inline-flex;align-items:center;gap:4px;font-size:11.5px}
+.timer-btn:hover{background:var(--h-ctrl-hover)}
+
+.top-right{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.icon-btn{width:29px;height:29px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:var(--h-secondary);position:relative;transition:background .12s,color .12s}
+.icon-btn:hover{background:var(--h-ctrl);color:var(--h-text)}
+.icon-btn.active{background:var(--h-accent-soft);color:var(--h-accent-text)}
+.icon-btn.danger-icon:hover{background:var(--h-danger-bg);color:var(--h-danger)}
+.icon-btn.lc-logged{color:var(--h-lc)}
+.icon-btn.lc-logged:hover{background:var(--h-lc-soft);color:var(--h-lc)}
+
+/* Micro corner indicators */
+.icon-badge{position:absolute;top:1px;right:1px;min-width:14px;height:14px;padding:0 3px;border-radius:999px;background:var(--h-accent);color:#fff;font-size:9.5px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 0 0 1.5px var(--h-bg)}
+.h100-app[data-theme="dark"] .icon-badge{color:#081624}
+.icon-dot{position:absolute;right:3px;bottom:3px;width:7px;height:7px;border-radius:50%;background:var(--h-green);box-shadow:0 0 0 1.5px var(--h-bg)}
+.icon-btn[data-sync="syncing"] .icon-dot{background:var(--h-accent);animation:pulse .85s infinite}
+.icon-btn[data-sync="offline"] .icon-dot{background:var(--h-muted)}
+.icon-btn[data-sync="conflict"] .icon-dot{background:var(--h-medium)}
+.icon-btn[data-lc="out"] .icon-dot{background:var(--h-muted)}
+.icon-btn[data-lc="in"] .icon-dot{background:var(--h-lc)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ==================== UNTOUCHED ORIGINAL CODING WORKSPACE ==================== */
+.workspace-base{flex:1;min-height:0;padding:0 8px 8px;display:grid;grid-template-columns:minmax(240px,.96fr) minmax(240px,1.04fr);gap:8px}
+.ws-panel{background:var(--h-surface);border:1px solid var(--h-border);border-radius:8px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.ws-tabs{height:35px;background:var(--h-surface2);display:flex;align-items:center;gap:2px;padding:0 8px;flex-shrink:0;border-bottom:1px solid var(--h-border-soft)}
+.ws-tab{height:26px;padding:0 9px;border-radius:5px;font-size:12px;color:var(--h-muted);display:inline-flex;align-items:center;gap:5px}
+.ws-tab.active{background:var(--h-ctrl);color:var(--h-text);font-weight:500}
+.ws-tab svg{width:13px;height:13px}
+.ws-tab.desc svg{color:var(--h-accent)}
+.ws-tab.sol svg{color:var(--h-medium)}
+
+/* Adaptive smooth slim scrollbars everywhere */
+.slim-scroll{overflow-y:auto;scrollbar-gutter:stable}
+.slim-scroll::-webkit-scrollbar{width:6px;height:6px}
+.slim-scroll::-webkit-scrollbar-track{background:transparent}
+.slim-scroll::-webkit-scrollbar-thumb{background:var(--h-scroll-thumb);border-radius:999px;border:1px solid transparent;background-clip:padding-box}
+.slim-scroll::-webkit-scrollbar-thumb:hover{background:var(--h-scroll-hover);border:1px solid transparent;background-clip:padding-box}
+
+.problem-scroll{flex:1;min-height:0;padding:18px 20px}
+.problem-title-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.problem-title-line h1{margin:0;font-size:20px;font-weight:650;line-height:1.35;color:var(--h-text)}
+.fav-btn{width:28px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:var(--h-secondary)}
+.fav-btn:hover{background:var(--h-ctrl)}
+.fav-btn.starred{color:#e0a82e}
+.fav-btn.starred svg{fill:currentColor}
+
+/* Clickable '✓ 已解答' pops a tiny inline red '重置' button right underneath (NO modal, NO '未通过' when reset!) */
+.solved-wrap{margin-left:auto;position:relative;display:inline-flex;align-items:center}
+.solved-toggle{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:6px;font-size:12.5px;font-weight:500;color:var(--h-green);transition:background .14s}
+.solved-toggle svg{width:14px;height:14px;stroke-width:2.4}
+.solved-toggle:hover{background:var(--h-green-soft)}
+.reset-pop{position:absolute;top:calc(100% + 4px);right:0;z-index:25;display:none;background:var(--h-surface);border:1px solid var(--h-border);border-radius:7px;padding:4px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.h100-app[data-theme="light"] .reset-pop{box-shadow:0 8px 20px rgba(15,23,42,.14)}
+.reset-pop.open{display:block}
+.reset-pop-btn{display:inline-flex;align-items:center;justify-content:center;height:26px;padding:0 12px;border-radius:5px;background:var(--h-danger-solid);color:#fff;font-size:12px;font-weight:500;white-space:nowrap}
+.reset-pop-btn:hover{filter:brightness(1.08)}
+
+.problem-meta-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px}
+.meta-pill{font-size:12px;padding:2.5px 9px;border-radius:999px;background:var(--h-chip-bg);color:var(--h-chip-fg);display:inline-flex;align-items:center;gap:4px}
+.meta-pill.easy{color:var(--h-easy)}.meta-pill.medium{color:var(--h-medium)}.meta-pill.hard{color:var(--h-hard)}
+.meta-pill.company{background:var(--h-freq-bg);color:var(--h-freq-fg)}
+
+.stmt{font-size:13.5px;line-height:1.78;color:var(--h-text);margin:0 0 14px}
+.ws-h3{font-size:13.5px;font-weight:600;margin:14px 0 6px;color:var(--h-text)}
+.example-block{border-left:2px solid var(--h-border);padding-left:12px;margin:6px 0 14px;font-size:12.5px;line-height:1.65;color:var(--h-secondary)}
+.example-block pre{margin:2px 0 8px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--h-text);font-size:12.5px;white-space:pre-wrap}
+.problem-bottom{height:32px;padding:0 14px;border-top:1px solid var(--h-border-soft);background:var(--h-surface2);display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--h-muted);flex-shrink:0}
+
+.coding-col{display:grid;grid-template-rows:1.35fr .65fr;gap:8px;min-height:0}
+.lang-bar{height:35px;padding:0 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--h-border-soft);font-size:12px;flex-shrink:0}
+.lang-select{padding:2px 8px;border-radius:5px;background:var(--h-surface2);border:1px solid var(--h-border);color:var(--h-text);font-size:12px}
+.save-hint{margin-left:auto;font-size:11.5px;color:var(--h-muted);display:inline-flex;align-items:center;gap:5px}
+.save-dot{width:6px;height:6px;border-radius:50%;background:var(--h-green)}
+.code-area{flex:1;min-height:0;padding:12px 14px;background:var(--h-code-bg);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12.5px;line-height:1.7;color:var(--h-text)}
+.code-line{display:flex;gap:14px}
+.ln{width:18px;text-align:right;color:var(--h-muted);user-select:none;flex-shrink:0;opacity:.65}
+.kw{color:var(--h-code-kw)}.cm{color:var(--h-code-cm)}
+.editor-foot{height:26px;padding:0 12px;border-top:1px solid var(--h-border-soft);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--h-muted);flex-shrink:0}
+.test-body{flex:1;min-height:0;padding:10px 14px;font-size:12px}
+.case-row{display:flex;gap:6px;margin-bottom:8px}
+.case-chip{padding:3px 9px;border-radius:5px;background:var(--h-surface2);color:var(--h-secondary);font-size:11.5px}
+.case-chip.active{background:var(--h-ctrl);color:var(--h-text);font-weight:500}
+.stdin-box{background:var(--h-surface2);border:1px solid var(--h-border-soft);border-radius:6px;padding:8px 10px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.6;color:var(--h-text);white-space:pre-wrap}
+
+/* ==================== STUDY PLAN FLOATING MODAL ==================== */
+.plan-backdrop{position:absolute;inset:46px 0 0 0;background:var(--h-backdrop);backdrop-filter:blur(2.5px);display:none;place-items:center;padding:12px;z-index:30}
+.plan-backdrop.open{display:grid}
+.plan-dialog{width:min(784px,100%);height:min(532px,100%);background:var(--h-surface);border:1px solid var(--h-border);border-radius:11px;box-shadow:0 22px 64px rgba(0,0,0,.46);display:flex;flex-direction:column;overflow:hidden}
+.h100-app[data-theme="light"] .plan-dialog{box-shadow:0 20px 56px rgba(15,23,42,.20)}
+
+.plan-head{height:42px;padding:0 10px 0 14px;background:var(--h-surface2);border-bottom:1px solid var(--h-border-soft);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-shrink:0}
+.plan-head-left{display:flex;align-items:center;gap:8px;min-width:0}
+.plan-head-left svg{color:var(--h-accent-text)}
+.plan-head h2{margin:0;font-size:14.5px;font-weight:600;color:var(--h-text);white-space:nowrap}
+.plan-interval-chip{font-size:11px;color:var(--h-muted);padding:2px 7px;border-radius:999px;background:var(--h-surface);border:1px solid var(--h-border-soft);white-space:nowrap}
+.plan-icon-actions{display:flex;align-items:center;gap:3px;flex-shrink:0}
+.plan-icon-sep{width:1px;height:14px;background:var(--h-border);margin:0 3px}
+
+/* Single-Line Summary Bar */
+.summary-strip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 14px;background:var(--h-surface);border-bottom:1px solid var(--h-border);flex-shrink:0;font-size:12px}
+.summary-items{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.stat-inline{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.stat-inline .lbl{color:var(--h-secondary);font-size:11.5px}
+.stat-inline strong{font-size:13px;font-weight:650;color:var(--h-text)}
+.stat-inline strong small{font-size:11px;font-weight:400;color:var(--h-muted)}
+.mini-bar{width:38px;height:4px;border-radius:999px;background:var(--h-border);overflow:hidden;display:inline-block}
+.mini-bar i{display:block;height:100%;border-radius:999px;background:var(--h-accent);transition:width .25s}
+.mini-bar i.rev{background:var(--h-green)}
+.stat-div{width:1px;height:12px;background:var(--h-border);flex-shrink:0}
+.pill-warn{font-size:10.5px;padding:1px 5px;border-radius:4px;background:var(--h-danger-bg);color:var(--h-danger);font-weight:500}
+.pill-ok{font-size:10.5px;padding:1px 5px;border-radius:4px;background:var(--h-green-soft);color:var(--h-green);font-weight:500}
+.summary-right{font-size:11px;color:var(--h-muted);white-space:nowrap;flex-shrink:0}
+
+/* BALANCED PROPORTION: Square-ish Calendar (~53%) + Tight Task List (~47%) — zero empty dead zone! */
+.plan-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(322px,53%) minmax(276px,47%);gap:12px;padding:10px 12px 12px;overflow:hidden}
+
+/* Left: Smaller, Compact VS Code-style Grid Monthly Calendar */
+.cal-col{display:flex;flex-direction:column;min-height:0;min-width:0}
+.cal-box{flex:1;min-height:0;border:1px solid var(--h-border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;background:var(--h-surface)}
+.monthbar{height:34px;padding:0 9px;display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--h-surface2);border-bottom:1px solid var(--h-border);flex-shrink:0}
+.monthbar strong{font-size:12.5px;font-weight:600;white-space:nowrap}
+.monthnav{display:inline-flex;align-items:center;gap:3px}
+.monthnav button{height:22px;padding:0 7px;border:1px solid var(--h-border);border-radius:5px;background:var(--h-surface);font-size:11px;color:var(--h-secondary);display:inline-flex;align-items:center;justify-content:center}
+.monthnav button:hover{background:var(--h-surface-hover);color:var(--h-text)}
+
+.week-row{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:var(--h-surface2);border-bottom:1px solid var(--h-border);flex-shrink:0}
+.week-row span{padding:4px 0;text-align:center;font-size:10.5px;color:var(--h-muted);font-weight:500}
+
+.days-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:1fr}
+.cal-cell{border-style:solid;border-color:var(--h-border-soft);border-width:0 1px 1px 0;padding:4px 5px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;min-width:0;min-height:0;background:var(--h-surface);transition:background .1s}
+.cal-cell:nth-child(7n){border-right:0}
+.cal-cell.last-row{border-bottom:0}
+.cal-cell.blank{background:var(--h-surface2);cursor:default}
+.cal-cell:not(.blank):hover{background:var(--h-surface-hover)}
+.cal-cell.heat-1{background:var(--h-heat-1)}
+.cal-cell.heat-2{background:var(--h-heat-2)}
+.cal-cell.heat-3{background:var(--h-heat-3)}
+.cal-cell.selected{background:var(--h-accent-soft)!important;box-shadow:inset 0 0 0 1.5px var(--h-accent)}
+.cal-cell.future .day-num{color:var(--h-muted);opacity:.55}
+.day-head{display:flex;align-items:center;justify-content:space-between;gap:2px;line-height:1.15}
+.day-num{font-size:12.5px;font-weight:500;color:var(--h-text)}
+.cal-cell.selected .day-num{color:var(--h-accent-text);font-weight:650}
+.today-tag{font-size:9.5px;line-height:1;padding:1.5px 4px;border-radius:3px;background:var(--h-accent-soft);color:var(--h-accent-text);font-weight:600}
+/* Single horizontal line inside balanced square calendar cell (matching VS Code studyCalendar.ts) */
+.day-counts{display:flex;align-items:center;gap:3px;font-size:10px;line-height:1.2;white-space:nowrap;letter-spacing:-.2px}
+.day-counts .c-new{color:var(--h-text);opacity:.86}
+.day-counts .c-rev{color:var(--h-green)}
+.day-counts .c-zero{color:var(--h-muted);opacity:.62}
+
+.cal-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:6px;font-size:10.5px;color:var(--h-muted);flex-shrink:0}
+.heat-legend{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.heat-dot{width:8px;height:8px;border-radius:2px;border:1px solid var(--h-border-soft);display:inline-block}
+
+/* Right: Spacious Fixed-Height Scrollable Task List */
+.task-col{display:flex;flex-direction:column;min-height:0;min-width:0;border:1px solid var(--h-border);border-radius:8px;background:var(--h-surface);overflow:hidden}
+.task-head{height:35px;padding:0 12px;background:var(--h-surface2);border-bottom:1px solid var(--h-border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-shrink:0}
+.tabs{display:flex;align-items:center;gap:4px;height:100%}
+.tab-btn{position:relative;height:100%;padding:0 9px;font-size:12.5px;font-weight:500;color:var(--h-secondary);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.tab-btn:hover{color:var(--h-text)}
+.tab-btn.active{color:var(--h-text);font-weight:600}
+.tab-btn.active::after{content:'';position:absolute;left:7px;right:7px;bottom:0;height:2px;border-radius:2px;background:var(--h-accent)}
+.tab-num{font-size:10.5px;padding:1px 5.5px;border-radius:999px;background:var(--h-ctrl);color:var(--h-secondary);font-weight:600}
+.tab-btn.active .tab-num{background:var(--h-accent-soft);color:var(--h-accent-text)}
+
+.day-mode-head{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}
+.day-mode-title{display:flex;align-items:center;gap:7px;min-width:0}
+.day-mode-title strong{font-size:12.5px;font-weight:600;white-space:nowrap}
+.day-mode-title span{font-size:11px;color:var(--h-muted);white-space:nowrap}
+.back-today-btn{font-size:11px;color:var(--h-accent-text);padding:2.5px 7px;border-radius:5px;background:var(--h-accent-soft);white-space:nowrap}
+.date-chip{font-size:11px;color:var(--h-muted);white-space:nowrap}
+
+.task-tools{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--h-border-soft);background:var(--h-surface);flex-shrink:0}
+.search-wrap{flex:1;min-width:0;display:flex;align-items:center;gap:6px;height:27px;padding:0 8px;border-radius:6px;background:var(--h-surface2);border:1px solid var(--h-border-soft);color:var(--h-muted)}
+.search-wrap:focus-within{border-color:var(--h-accent)}
+.search-wrap input{border:0;background:transparent;width:100%;min-width:0;font-size:12px;color:var(--h-text);outline:none}
+.search-wrap input::placeholder{color:var(--h-muted)}
+.filter-pills{display:inline-flex;gap:3px;flex-shrink:0}
+.filter-pill{height:25px;padding:0 7px;border-radius:5px;font-size:11px;color:var(--h-secondary);border:1px solid transparent}
+.filter-pill:hover{background:var(--h-surface-hover);color:var(--h-text)}
+.filter-pill.active{background:var(--h-accent-soft);color:var(--h-accent-text);border-color:rgba(60,159,255,.22);font-weight:500}
+
+.task-scroll{flex:1;min-height:0;padding:2px 0}
+.task-row{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;border-bottom:1px solid var(--h-border-soft);transition:background .1s}
+.task-row:last-child{border-bottom:0}
+.task-row:hover{background:var(--h-surface-hover)}
+
+.check-btn{width:17px;height:17px;margin-top:2px;border-radius:50%;border:1.5px solid var(--h-muted);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:transparent;transition:border-color .15s,background .15s,color .15s}
+.check-btn:hover{border-color:var(--h-green);color:var(--h-green);background:var(--h-green-soft)}
+.check-btn svg{width:10px;height:10px;stroke-width:2.5}
+.done-mark{width:17px;height:17px;margin-top:2px;border-radius:50%;background:var(--h-green-soft);border:1px solid rgba(44,187,93,.45);color:var(--h-green);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.done-mark svg{width:10px;height:10px;stroke-width:2.5}
+
+.task-main{flex:1;min-width:0}
+.task-title-line{display:flex;align-items:center;gap:6px;min-width:0;flex-wrap:wrap}
+.task-link{font-size:13px;font-weight:500;color:var(--h-text);text-align:left;padding:0;line-height:1.38;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.task-link:hover{color:var(--h-accent-text)}
+.mini-badge{font-size:10px;line-height:1.2;padding:1.5px 5.5px;border-radius:4px;font-weight:500;white-space:nowrap;flex-shrink:0}
+.mini-badge.overdue{background:var(--h-danger-bg);color:var(--h-danger)}
+.mini-badge.kind-new{background:var(--h-accent-soft);color:var(--h-accent-text)}
+.mini-badge.kind-rev{background:var(--h-green-soft);color:var(--h-green)}
+.task-time{font-size:10.5px;color:var(--h-muted);white-space:nowrap}
+
+.task-chips{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:4px}
+.chip{font-size:10.5px;line-height:1.25;padding:1.5px 6.5px;border-radius:9px;background:var(--h-chip-bg);color:var(--h-chip-fg);white-space:nowrap}
+.chip.freq{background:var(--h-freq-bg);color:var(--h-freq-fg)}
+
+.task-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;padding-top:1px}
+.diff{font-size:11.5px;font-weight:500;white-space:nowrap}
+.diff.easy{color:var(--h-easy)}.diff.medium{color:var(--h-medium)}.diff.hard{color:var(--h-hard)}
+.stage-hint{font-size:10px;color:var(--h-muted);white-space:nowrap}
+
+.empty-box{padding:38px 18px;text-align:center;color:var(--h-muted);font-size:12px;line-height:1.75}
+.empty-box strong{display:block;color:var(--h-secondary);font-size:13px;margin-bottom:4px}
+
+/* ==================== SECONDARY DIALOGS (LEETCODE LOGIN / SYNC / RESET / BACKUP) ==================== */
+.modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);display:none;place-items:center;padding:14px;z-index:60}
+.modal-backdrop.open{display:grid}
+.modal-card{width:min(500px,100%);max-height:92%;overflow:hidden;background:var(--h-surface);border:1px solid var(--h-border);border-radius:10px;box-shadow:0 22px 64px rgba(0,0,0,.48);display:flex;flex-direction:column}
+.modal-head{padding:12px 16px;border-bottom:1px solid var(--h-border-soft);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}
+.modal-head h2{margin:0;font-size:14.5px;font-weight:600;color:var(--h-text)}
+.modal-body{padding:13px 16px;font-size:12.5px;line-height:1.62;color:var(--h-secondary);flex:1;min-height:0}
+.modal-body p{margin:0 0 9px}
+.modal-body ul{margin:4px 0 10px;padding-left:18px}
+.modal-body li{margin:3px 0}
+.modal-foot{padding:10px 16px;border-top:1px solid var(--h-border-soft);display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;flex-shrink:0;background:var(--h-surface)}
+
+.btn{height:30px;padding:0 12px;border-radius:6px;font-size:12px;font-weight:500;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--h-border);background:var(--h-surface2);color:var(--h-text)}
+.btn:hover:not(:disabled){background:var(--h-ctrl-hover)}
+.btn.primary{background:var(--h-accent);border-color:var(--h-accent);color:#fff}
+.h100-app[data-theme="dark"] .btn.primary{color:#081624;font-weight:600}
+.btn.lc-btn{background:var(--h-lc);border-color:var(--h-lc);color:#1a1205;font-weight:600}
+.btn.lc-btn:hover{filter:brightness(1.06)}
+.btn.danger{background:var(--h-danger-solid);border-color:var(--h-danger-solid);color:#fff}
+.btn.soft-left{margin-right:auto}
+
+.field{margin-bottom:10px}
+.field label{display:block;font-size:12px;color:var(--h-text);font-weight:500;margin-bottom:4px}
+.field input{width:100%;height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--h-border);background:var(--h-surface2);color:var(--h-text);font-size:12.5px}
+.field input:focus{outline:none;border-color:var(--h-accent)}
+.field small{display:block;margin-top:3px;font-size:11px;color:var(--h-muted)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.sec-box{border:1px solid var(--h-border-soft);border-radius:8px;padding:10px 12px;background:var(--h-surface2);margin-bottom:10px}
+.sec-box-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.sec-box-head strong{font-size:12.5px;color:var(--h-text)}
+.sec-box.danger-zone{background:var(--h-danger-bg);border-color:rgba(255,92,124,.28)}
+.sec-box.danger-zone strong{color:var(--h-danger)}
+.sec-box.lc-box{border-color:rgba(255,161,22,.32);background:var(--h-lc-soft)}
+.sec-box.lc-box strong{color:var(--h-lc)}
+details.cookie-fold{border:1px solid var(--h-border-soft);border-radius:8px;padding:9px 12px;background:var(--h-surface2)}
+details.cookie-fold summary{cursor:pointer;font-size:12.5px;font-weight:500;color:var(--h-text)}
+details.cookie-fold[open] summary{margin-bottom:9px}
+
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0 10px}
+.pipe-step{padding:7px 6px;border-radius:6px;border:1px solid var(--h-border-soft);background:var(--h-surface2);text-align:center;font-size:10.5px;color:var(--h-muted)}
+.pipe-step b{display:block;font-size:11px;color:var(--h-text);margin-bottom:2px;font-weight:500}
+.pipe-step.done{border-color:rgba(44,187,93,.35);background:var(--h-green-soft);color:var(--h-green)}
+.pipe-step.done b{color:var(--h-green)}
+.pipe-step.active{border-color:var(--h-accent);background:var(--h-accent-soft);color:var(--h-accent-text)}
+
+.domain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:8px 0 10px}
+.domain-item{display:flex;align-items:center;justify-content:space-between;padding:6px 9px;border-radius:6px;background:var(--h-surface2);border:1px solid var(--h-border-soft);font-size:11.5px}
+.domain-item b{color:var(--h-text);font-weight:500}
+
+.device-list{border:1px solid var(--h-border-soft);border-radius:7px;overflow:hidden;margin:8px 0 10px}
+.device-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 10px;background:var(--h-surface2);font-size:12px}
+.device-row+.device-row{border-top:1px solid var(--h-border-soft)}
+.device-row strong{color:var(--h-text);font-weight:500;display:block}
+.device-row span{font-size:11px;color:var(--h-muted)}
+
+.conflict-box{border:1px solid rgba(255,192,30,.38);background:rgba(255,192,30,.08);border-radius:7px;padding:9px 11px;margin:8px 0}
+.conflict-box strong{color:var(--h-medium);display:block;margin-bottom:4px}
+.conflict-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+
+.state-switch{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.state-chip{padding:3px 8px;border-radius:5px;font-size:11px;border:1px solid var(--h-border);background:var(--h-surface2);color:var(--h-secondary)}
+.state-chip.active{border-color:var(--h-accent);background:var(--h-accent-soft);color:var(--h-accent-text);font-weight:500}
+
+.toast{position:absolute;left:50%;bottom:16px;transform:translate(-50%,10px);background:#18181b;color:#f4f4f5;border:1px solid #3f3f46;padding:7px 14px;border-radius:8px;font-size:12px;box-shadow:0 10px 28px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:95;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:800px){
+  .work-actions{display:none}
+  .proto-tip,.plan-interval-chip{display:none}
+}
+@media(max-width:540px){
+  .h100-app{height:auto;min-height:700px}
+  .workspace-base{grid-template-columns:1fr}
+  .plan-grid{grid-template-columns:1fr;overflow:auto}
+  .cal-box{min-height:290px}
+  .task-col{min-height:300px}
+}
+</style>
+</head>
+<body>
+<div class="h100-stage">
+  <!-- Minimal Prototype Switcher -->
+  <div class="proto-bar" id="protoBar" data-surface="light">
+    <div class="proto-left">
+      <span class="proto-tag"><i></i>原型 v6 · 浅色版</span>
+      <span class="proto-tip">修正左右比例（去右侧留白）· 腾讯云 Docker 数据库同步 · 力扣登录图标</span>
+    </div>
+    <div class="proto-controls">
+      <div class="proto-seg" role="group" aria-label="弹窗状态">
+        <button id="togglePlanOpen" class="active">学习计划弹窗</button>
+        <button id="togglePlanClose">原做题界面</button>
+      </div>
+      <div class="proto-seg" role="group" aria-label="主题">
+        <button id="btnDark">深色</button>
+        <button id="btnLight">浅色</button>
+      </div>
+      <button class="proto-mini-btn" id="restoreDemo" hidden>恢复演示数据</button>
+    </div>
+  </div>
+
+  <!-- Authentic Hot100 ACM Desktop App -->
+  <div class="h100-app" id="app" data-theme="light">
+    <header class="topbar">
+      <div class="top-left">
+        <button class="problem-menu" id="btnMenu" title="打开题库侧栏">
+          <strong>Leetcode 热题 100</strong>
+        </button>
+        <div class="prev-next">
+          <button class="icon-btn" id="btnPrevP" data-tip="上一题" data-tip-pos="center"><svg viewBox="0 0 16 16"><path d="m10 3-5 5 5 5"/></svg></button>
+          <button class="icon-btn" id="btnNextP" data-tip="下一题" data-tip-pos="center"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+          <button class="icon-btn" id="btnRandP" data-tip="随机一题" data-tip-pos="center"><svg viewBox="0 0 16 16"><path d="M2 4h2l8 8h2M11 10l3 2-3 2M2 12h2l3-3m2-2 3-3h2m-3-2 3 2-3 2"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Center: Exact original Run / Submit -->
+      <div class="work-actions">
+        <button class="work-btn run" id="btnRun" data-tip="运行样例" data-tip-pos="center"><svg viewBox="0 0 16 16" style="fill:currentColor;stroke:none"><path d="m5 3 8 5-8 5Z"/></svg></button>
+        <button class="work-btn submit" id="btnSubmit"><svg viewBox="0 0 16 16"><path d="M8 11V2m-3 3 3-3 3 3M3 10v3h10v-3"/></svg>提交</button>
+      </div>
+
+      <!-- Right: PURE ICON BAR matching exact real app (进度统计删掉改为学习计划，保留布局/计时器/主题/退出) -->
+      <div class="top-right">
+        <button class="icon-btn active" id="navPlan" data-tip="学习计划（待复习 8 道）" aria-label="学习计划">
+          <svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.8"/><path d="M5 1.6V4M11 1.6V4M2 6.5h12"/></svg>
+          <span class="icon-badge num" id="navReviewBadge">8</span>
+        </button>
+        <button class="icon-btn" id="btnSync" data-sync="synced" data-tip="腾讯云 Docker MySQL 同步：已同步" aria-label="腾讯云同步">
+          <svg viewBox="0 0 16 16"><path d="M4.8 12.2H4a2.8 2.8 0 0 1-.6-5.5A4.4 4.4 0 0 1 12 6.4a2.6 2.6 0 0 1 .2 5.8h-1.1"/><path d="M6.3 9.4 7.8 11l2.8-3"/></svg>
+          <i class="icon-dot"></i>
+        </button>
+        <button class="icon-btn" id="btnTopBackup" data-tip="导出 / 导入备份" aria-label="导出备份">
+          <svg viewBox="0 0 16 16"><path d="M8 2v7.5M5.2 6.8 8 9.6l2.8-2.8M2.5 11.5v1.5a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1.5"/></svg>
+        </button>
+        <button class="icon-btn danger-icon" id="btnTopReset" data-tip="重置计划 / 重置所有数据" aria-label="重置数据">
+          <svg viewBox="0 0 16 16"><path d="M2.5 6.5a5.8 5.8 0 1 1 .5 4.2M2.5 2.8v3.8h3.8"/></svg>
+        </button>
+        <button class="icon-btn lc-logged" id="btnLeetCode" data-lc="in" data-tip="力扣已登录：qianye（点击管理）" aria-label="力扣登录">
+          <svg viewBox="0 0 16 16"><circle cx="8" cy="5.4" r="2.7"/><path d="M2.8 13.8a5.2 5.2 0 0 1 10.4 0"/></svg>
+          <i class="icon-dot"></i>
+        </button>
+        <button class="icon-btn" id="btnLayout" data-tip="工作区布局" aria-label="工作区布局">
+          <svg viewBox="0 0 16 16"><rect x="2.2" y="2.2" width="4.6" height="4.6" rx="1"/><rect x="9.2" y="2.2" width="4.6" height="4.6" rx="1"/><rect x="2.2" y="9.2" width="4.6" height="4.6" rx="1"/><rect x="9.2" y="9.2" width="4.6" height="4.6" rx="1"/></svg>
+        </button>
+        <button class="icon-btn" id="btnTimer" data-tip="计时器" aria-label="计时器" style="color:var(--h-accent-text)">
+          <svg viewBox="0 0 16 16"><circle cx="8" cy="9" r="5.2"/><path d="M6 1.5h4M8 9V6.2"/></svg>
+        </button>
+        <button class="icon-btn" id="btnTheme" data-tip="切换深浅主题" aria-label="切换深浅主题"></button>
+        <button class="icon-btn" id="btnExit" data-tip="退出本地服务" aria-label="退出本地服务">
+          <svg viewBox="0 0 16 16"><rect x="4" y="4" width="8" height="8" rx="1.2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Original Coding Workspace Base -->
+    <main class="workspace-base">
+      <section class="ws-panel">
+        <div class="ws-tabs">
+          <button class="ws-tab desc active"><svg viewBox="0 0 16 16"><path d="M9 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-8L9 1.5Z"/><path d="M9 2v4h4"/></svg>题目描述</button>
+          <button class="ws-tab sol"><svg viewBox="0 0 16 16"><path d="M8 4C6 2 3 2 1.5 3v10c2-1 4-1 6.5 1 2.5-2 4.5-2 6.5-1V3C13 2 10 2 8 4Zm0 0v10"/></svg>题解</button>
+          <button class="ws-tab"><svg viewBox="0 0 16 16"><path d="M2 6a6 6 0 1 1 0 4M2 2v4h4M8 5v4l3 1"/></svg>提交记录 <span class="num" style="opacity:.7">3</span></button>
+        </div>
+        <div class="problem-scroll slim-scroll" id="problemPaneBody"></div>
+        <footer class="problem-bottom">
+          <span class="num" id="problemIndex">23 / 100</span>
+          <span></span>
+        </footer>
+      </section>
+
+      <section class="coding-col">
+        <div class="ws-panel">
+          <div class="ws-tabs">
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:0 4px">
+              <svg viewBox="0 0 16 16" style="color:var(--h-green)"><path d="m5 4-4 4 4 4m6-8 4 4-4 4M9 2 7 14"/></svg>代码
+            </span>
+          </div>
+          <div class="lang-bar">
+            <span class="lang-select">C++ ▾</span>
+            <span class="lang-select">ACM 模式 ▾</span>
+            <span class="save-hint"><i class="save-dot"></i>已存储 · 云端同步 #418</span>
+          </div>
+          <div class="code-area slim-scroll" id="codePreview"></div>
+          <div class="editor-foot">
+            <span>行 6，列 24</span>
+            <span>UTF-8 · 4 空格 · Ctrl + Enter 运行</span>
+          </div>
+        </div>
+
+        <div class="ws-panel">
+          <div class="ws-tabs">
+            <button class="ws-tab active"><svg viewBox="0 0 16 16" style="color:var(--h-green)"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="m5 8 2 2 4-4"/></svg>测试用例</button>
+            <button class="ws-tab"><svg viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="m4 6 2 2-2 2m4 0h3"/></svg>测试结果</button>
+          </div>
+          <div class="test-body slim-scroll">
+            <div class="case-row">
+              <span class="case-chip active">Case 1</span>
+              <span class="case-chip">Case 2</span>
+              <span class="case-chip">Case 3</span>
+            </div>
+            <div class="stdin-box" id="casePreview"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= STUDY PLAN FLOATING MODAL ================= -->
+    <div class="plan-backdrop open" id="planBackdrop" role="dialog" aria-modal="true" aria-label="学习计划">
+      <div class="plan-dialog">
+        <div class="plan-head">
+          <div class="plan-head-left">
+            <svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.8"/><path d="M5 1.6V4M11 1.6V4M2 6.5h12"/></svg>
+            <h2>学习计划</h2>
+            <span class="plan-interval-chip num" id="intervalChip">间隔 1·2·4·7·15·30 天</span>
+          </div>
+          <div class="plan-icon-actions">
+            <button class="icon-btn" id="btnConfigure" data-tip="修改目标与复习间隔" aria-label="目标设置">
+              <svg viewBox="0 0 16 16"><path d="M2.5 4.5h6M11.5 4.5h2M2.5 8h2M7.5 8h6M2.5 11.5h7M12.5 11.5h1"/><circle cx="10" cy="4.5" r="1.4"/><circle cx="6" cy="8" r="1.4"/><circle cx="11" cy="11.5" r="1.4"/></svg>
+            </button>
+            <button class="icon-btn" id="btnBackup" data-tip="导出 / 导入备份" aria-label="导出备份">
+              <svg viewBox="0 0 16 16"><path d="M8 2v7.5M5.2 6.8 8 9.6l2.8-2.8M2.5 11.5v1.5a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1.5"/></svg>
+            </button>
+            <button class="icon-btn danger-icon" id="btnResetHub" data-tip="重置计划 / 重置所有数据" aria-label="重置数据">
+              <svg viewBox="0 0 16 16"><path d="M2.5 6.5a5.8 5.8 0 1 1 .5 4.2M2.5 2.8v3.8h3.8"/></svg>
+            </button>
+            <span class="plan-icon-sep"></span>
+            <button class="icon-btn" id="btnClosePlan" data-tip="关闭弹窗（返回做题）" aria-label="关闭学习计划">
+              <svg viewBox="0 0 16 16"><path d="m4 4 8 8M4 12l8-8"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Single-Line Summary Bar -->
+        <div class="summary-strip">
+          <div class="summary-items">
+            <span class="stat-inline">
+              <span class="lbl">今日新题</span>
+              <strong class="num" id="sNewVal">6<small>/5</small></strong>
+              <span class="mini-bar"><i id="sNewBar" style="width:100%"></i></span>
+            </span>
+            <span class="stat-div"></span>
+            <span class="stat-inline">
+              <span class="lbl">今日复习</span>
+              <strong class="num" id="sRevVal">4<small>/12</small></strong>
+              <span class="mini-bar"><i class="rev" id="sRevBar" style="width:33%"></i></span>
+              <span class="pill-warn num" id="sOverdue">2 逾期</span>
+            </span>
+            <span class="stat-div"></span>
+            <span class="stat-inline">
+              <span class="lbl">连续打卡</span>
+              <strong class="num" id="sStreakVal">6 天</strong>
+              <span class="pill-ok" id="sStreakTag">已打卡</span>
+            </span>
+          </div>
+          <span class="summary-right num" id="sMetaRight">本月 14 天 · 38/100</span>
+        </div>
+
+        <!-- LEFT: Smaller Compact Calendar (~39%) | RIGHT: Wider Scrollable 待复习 / 今日完成 (~61%) -->
+        <div class="plan-grid">
+          <div class="cal-col">
+            <div class="cal-box" aria-label="练习月历">
+              <div class="monthbar">
+                <strong class="num" id="calMonthTitle">2026 年 11 月</strong>
+                <div class="monthnav">
+                  <button id="calPrev" aria-label="上个月">‹</button>
+                  <button id="calToday">今天</button>
+                  <button id="calNext" aria-label="下个月">›</button>
+                </div>
+              </div>
+              <div class="week-row">
+                <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+              </div>
+              <div class="days-grid" id="calGrid"></div>
+            </div>
+            <div class="cal-foot">
+              <span>新/复 = 当日完成 · 点击查记录</span>
+              <span class="heat-legend">少<i class="heat-dot" style="background:var(--h-heat-1)"></i><i class="heat-dot" style="background:var(--h-heat-2)"></i><i class="heat-dot" style="background:var(--h-heat-3)"></i>多</span>
+            </div>
+          </div>
+
+          <div class="task-col" aria-label="待复习与今日完成">
+            <div class="task-head" id="taskHead"></div>
+            <div class="task-tools" id="taskTools">
+              <label class="search-wrap">
+                <svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m11 11 3.2 3.2"/></svg>
+                <input id="taskSearch" placeholder="搜索题号、题名或标签…" aria-label="搜索题目">
+              </label>
+              <div class="filter-pills" id="taskFilters"></div>
+            </div>
+            <div class="task-scroll slim-scroll" id="taskList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Modal (LeetCode Login / Single Reset / Global Reset / Sync / Backup / Settings) -->
+    <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h2 id="modalTitle"></h2>
+          <button class="icon-btn" id="modalClose" aria-label="关闭"><svg viewBox="0 0 16 16"><path d="m4 4 8 8M4 12l8-8"/></svg></button>
+        </div>
+        <div class="modal-body slim-scroll" id="modalBody"></div>
+        <div class="modal-foot" id="modalFoot"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const TODAY = '2026-11-27';
+
+const CATALOG = {
+  '1':   {id:'1',   order:1,  title:'两数之和', diff:'简单', freq:142, tags:['数组','哈希表'], stmt:'给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target 的那两个整数，并返回它们的数组下标。', sampleIn:'4 9\n2 7 11 15', sampleOut:'0 1', code:['import sys','','def solve():','    n, target = map(int, sys.stdin.readline().split())','    nums = list(map(int, sys.stdin.readline().split()))','    seen = {}','    for i, x in enumerate(nums):','        if target - x in seen:','            print(seen[target - x], i)','            return','        seen[x] = i']},
+  '146': {id:'146', order:35, title:'LRU 缓存', diff:'中等', freq:188, tags:['哈希表','双向链表'], stmt:'请你设计并实现一个满足 LRU（最近最少使用）缓存约束的数据结构，保证 get 和 put 均以 O(1) 平均时间复杂度运行。', sampleIn:'2\nput 1 1\nput 2 2\nget 1', sampleOut:'1', code:['from collections import OrderedDict','','class LRUCache:','    def __init__(self, capacity: int):','        self.cap = capacity','        self.cache = OrderedDict()','    def get(self, key: int) -> int:','        if key not in self.cache: return -1','        self.cache.move_to_end(key)','        return self.cache[key]']},
+  '3':   {id:'3',   order:8,  title:'无重复字符的最长子串', diff:'中等', freq:165, tags:['滑动窗口','哈希表'], stmt:'给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。', sampleIn:'abcabcbb', sampleOut:'3', code:['s = input().strip()','last, left, ans = {}, 0, 0','for i, ch in enumerate(s):','    if ch in last and last[ch] >= left:','        left = last[ch] + 1','    last[ch] = i','    ans = max(ans, i - left + 1)','print(ans)']},
+  '15':  {id:'15',  order:6,  title:'三数之和', diff:'中等', freq:154, tags:['双指针','排序'], stmt:'给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足三数之和等于 0，返回所有不重复的三元组。', sampleIn:'6\n-1 0 1 2 -1 -4', sampleOut:'-1 -1 2\n-1 0 1', code:['# 排序 + 双指针去重','nums.sort()','ans = []','for i in range(len(nums) - 2):','    if i > 0 and nums[i] == nums[i - 1]: continue','    l, r = i + 1, len(nums) - 1']},
+  '42':  {id:'42',  order:7,  title:'接雨水', diff:'困难', freq:136, tags:['双指针','单调栈'], stmt:'给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。', sampleIn:'12\n0 1 0 2 1 0 1 3 2 1 2 1', sampleOut:'6', code:['l, r = 0, len(h) - 1','lm = rm = ans = 0','while l < r:','    lm = max(lm, h[l]); rm = max(rm, h[r])','    if lm < rm: ans += lm - h[l]; l += 1','    else: ans += rm - h[r]; r -= 1']},
+  '206': {id:'206', order:23, title:'反转链表', diff:'简单', freq:762, tags:['链表','递归'], stmt:'给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。反转后原链表的最后一个节点成为新链表的头节点，原链表的头节点指向 null。使用 prev/cur/next 三个指针迭代即可完成反转。', sampleIn:'5\n1 2 3 4 5', sampleOut:'5 4 3 2 1', code:['#include <bits/stdc++.h>','using namespace std;','','struct ListNode {','    int val;','    ListNode *next;','    ListNode(int x = 0) : val(x), next(nullptr) {}','};','','int main() {','    ios::sync_with_stdio(false);','    cin.tie(nullptr);','    int n; cin >> n;','    ...']},
+  '53':  {id:'53',  order:13, title:'最大子数组和', diff:'中等', freq:121, tags:['动态规划','分治'], stmt:'给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组，返回其最大和。', sampleIn:'9\n-2 1 -3 4 -1 2 1 -5 4', sampleOut:'6', code:['cur = best = nums[0]','for x in nums[1:]:','    cur = max(x, cur + x)','    best = max(best, cur)','print(best)']},
+  '200': {id:'200', order:51, title:'岛屿数量', diff:'中等', freq:132, tags:['深度优先','并查集'], stmt:'给你一个由 1（陆地）和 0（水）组成的二维网格，请你计算网格中岛屿的数量。', sampleIn:'4 5\n11110\n11010\n11000\n00000', sampleOut:'1', code:['def dfs(r, c):','    if not (0 <= r < m and 0 <= c < n) or g[r][c] != "1":','        return','    g[r][c] = "0"']},
+  '215': {id:'215', order:74, title:'数组中的第 K 个最大元素', diff:'中等', freq:149, tags:['快速选择','堆'], stmt:'给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。', sampleIn:'6 2\n3 2 1 5 6 4', sampleOut:'5', code:['import heapq','print(heapq.nlargest(k, nums)[-1])']},
+  '25':  {id:'25',  order:31, title:'K 个一组翻转链表', diff:'困难', freq:128, tags:['链表','模拟'], stmt:'给你链表的头节点 head ，每 k 个节点一组进行翻转，请你返回修改后的链表。', sampleIn:'5 2\n1 2 3 4 5', sampleOut:'2 1 4 3 5', code:['# 哑节点 + 分组头尾指针反转','dummy = ListNode(0, head)']},
+  '56':  {id:'56',  order:14, title:'合并区间', diff:'中等', freq:118, tags:['数组','排序'], stmt:'以数组 intervals 表示若干个区间的集合，请你合并所有重叠的区间。', sampleIn:'4\n1 3\n2 6\n8 10\n15 18', sampleOut:'1 6\n8 10\n15 18', code:['intervals.sort()','res = [intervals[0]]']},
+  '20':  {id:'20',  order:69, title:'有效的括号', diff:'简单', freq:112, tags:['栈','字符串'], stmt:'给定一个只包括小括号、中括号、大括号的字符串 s ，判断字符串是否有效。', sampleIn:'()[]{}', sampleOut:'true', code:['mp = {")":"(","]":"[","}":"{"}']},
+  '121': {id:'121', order:77, title:'买卖股票的最佳时机', diff:'简单', freq:109, tags:['贪心','动态规划'], stmt:'给定一个数组 prices ，计算你所能获取的最大利润。', sampleIn:'6\n7 1 5 3 6 4', sampleOut:'5', code:['low, ans = float("inf"), 0']},
+  '2':   {id:'2',   order:28, title:'两数相加', diff:'中等', freq:98,  tags:['链表','数学'], stmt:'给你两个非空的链表，表示两个非负的整数，请将两个数相加并返回链表。', sampleIn:'2 4 3\n5 6 4', sampleOut:'7 0 8', code:['# 逐位模拟进位']},
+  '11':  {id:'11',  order:5,  title:'盛最多水的容器', diff:'中等', freq:94,  tags:['双指针','贪心'], stmt:'找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。', sampleIn:'9\n1 8 6 2 5 4 8 3 7', sampleOut:'49', code:['# 双指针向中间收敛']},
+  '5':   {id:'5',   order:92, title:'最长回文子串', diff:'中等', freq:104, tags:['双指针','动态规划'], stmt:'给你一个字符串 s，找到 s 中最长的回文子串。', sampleIn:'babad', sampleOut:'bab', code:['# 中心扩展法']},
+  '21':  {id:'21',  order:27, title:'合并两个有序链表', diff:'简单', freq:101, tags:['链表','递归'], stmt:'将两个升序链表合并为一个新的升序链表并返回。', sampleIn:'1 2 4\n1 3 4', sampleOut:'1 1 2 3 4 4', code:['# 哨兵节点合并']},
+  '102': {id:'102', order:40, title:'二叉树的层序遍历', diff:'中等', freq:116, tags:['二叉树','BFS'], stmt:'给你二叉树的根节点 root ，返回其节点值的层序遍历。', sampleIn:'3 9 20 null null 15 7', sampleOut:'3\n9 20\n15 7', code:['from collections import deque']},
+  '236': {id:'236', order:49, title:'二叉树的最近公共祖先', diff:'中等', freq:115, tags:['二叉树','递归'], stmt:'给定一个二叉树，找到该树中两个指定节点的最近公共祖先。', sampleIn:'3 5 1 ...', sampleOut:'3', code:['def lca(root, p, q): ...']},
+  '322': {id:'322', order:85, title:'零钱兑换', diff:'中等', freq:96,  tags:['动态规划','背包'], stmt:'计算并返回可以凑成总金额所需的最少的硬币个数。', sampleIn:'3 11\n1 2 5', sampleOut:'3', code:['dp = [0] + [10**9] * amount']},
+  '76':  {id:'76',  order:12, title:'最小覆盖子串', diff:'困难', freq:92,  tags:['滑动窗口','哈希表'], stmt:'返回 s 中涵盖 t 所有字符的最小子串。', sampleIn:'ADOBECODEBANC\nABC', sampleOut:'BANC', code:['# 滑动窗口']},
+  '46':  {id:'46',  order:55, title:'全排列', diff:'中等', freq:97,  tags:['回溯'], stmt:'给定一个不含重复数字的数组 nums ，返回其所有可能的全排列。', sampleIn:'3\n1 2 3', sampleOut:'1 2 3 ...', code:['def backtrack(path): ...']},
+  '124': {id:'124', order:50, title:'二叉树中的最大路径和', diff:'困难', freq:89, tags:['树形 DP','二叉树'], stmt:'计算并返回二叉树中的最大路径和。', sampleIn:'-10 9 20 null null 15 7', sampleOut:'42', code:['# 后序遍历']}
+};
+
+function initialState() {
+  return {
+    theme: 'light',
+    planOpen: true,
+    currentId: '206',
+    goal: 5,
+    reviewLimit: 20,
+    intervals: [1, 2, 4, 7, 15, 30],
+    year: 2026,
+    month: 11,
+    selectedDate: TODAY,
+    tab: 'review',
+    search: '',
+    onlyOverdue: false,
+    doneFilter: 'all',
+    syncState: 'synced',
+    syncRev: 418,
+    syncEpoch: 1,
+    syncServer: 'https://hot100-sync.your-cloud.cn',
+    syncStep: 4,
+    lcLoggedIn: true,
+    lcUser: 'qianye',
+    solvedSet: new Set(['1','146','3','15','42','206','53','200','215','25','56','20','121','2','11','5','21','102','236','322','76','46','124']),
+    extraSolvedCount: 15,
+    favorites: new Set(['1','146','42']),
+    reviewsDue: [
+      {id:'146', overdueDays:2, stage:2},
+      {id:'25',  overdueDays:1, stage:1},
+      {id:'3',   overdueDays:0, stage:3},
+      {id:'15',  overdueDays:0, stage:2},
+      {id:'53',  overdueDays:0, stage:1},
+      {id:'200', overdueDays:0, stage:2},
+      {id:'215', overdueDays:0, stage:1},
+      {id:'236', overdueDays:0, stage:3}
+    ],
+    history: {
+      '2026-11-27': [
+        {id:'1',kind:'review',time:'21:14'},{id:'76',kind:'new',time:'20:42'},{id:'124',kind:'new',time:'19:55'},
+        {id:'42',kind:'review',time:'17:30'},{id:'322',kind:'new',time:'16:12'},{id:'46',kind:'new',time:'15:08'},
+        {id:'206',kind:'review',time:'11:45'},{id:'56',kind:'new',time:'10:50'},{id:'102',kind:'review',time:'10:12'},{id:'20',kind:'new',time:'09:24'}
+      ],
+      '2026-11-26': [{id:'5',kind:'new',time:'21:30'},{id:'21',kind:'review',time:'20:15'},{id:'121',kind:'new',time:'18:40'},{id:'2',kind:'new',time:'16:05'},{id:'11',kind:'review',time:'11:20'}],
+      '2026-11-25': [{id:'146',kind:'review',time:'21:10'},{id:'3',kind:'new',time:'19:45'},{id:'15',kind:'new',time:'15:30'}],
+      '2026-11-24': [{id:'53',kind:'new',time:'20:20'},{id:'200',kind:'new',time:'16:50'},{id:'206',kind:'review',time:'10:40'}],
+      '2026-11-23': [{id:'215',kind:'new',time:'21:05'},{id:'1',kind:'review',time:'19:12'}],
+      '2026-11-22': [{id:'25',kind:'new',time:'18:30'},{id:'42',kind:'review',time:'14:18'}],
+      '2026-11-20': [{id:'56',kind:'new',time:'20:00'},{id:'20',kind:'review',time:'15:10'}],
+      '2026-11-19': [{id:'121',kind:'new',time:'21:40'}],
+      '2026-11-18': [{id:'102',kind:'new',time:'19:30'},{id:'236',kind:'new',time:'17:15'},{id:'5',kind:'review',time:'11:05'}],
+      '2026-11-16': [{id:'2',kind:'new',time:'20:10'},{id:'11',kind:'new',time:'16:22'}],
+      '2026-11-15': [{id:'21',kind:'new',time:'19:00'}],
+      '2026-11-12': [{id:'1',kind:'new',time:'21:12'},{id:'206',kind:'new',time:'19:50'},{id:'42',kind:'new',time:'17:30'}],
+      '2026-11-10': [{id:'146',kind:'new',time:'20:40'},{id:'3',kind:'review',time:'16:15'}],
+      '2026-11-08': [{id:'15',kind:'new',time:'18:20'}],
+      '2026-10-30': [{id:'1',kind:'new',time:'20:00'},{id:'20',kind:'new',time:'19:10'}]
+    },
+    wasWiped: false
+  };
+}
+
+let st = initialState();
+let toastTimer;
+
+function toast(msg) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+function diffClass(d) { return d === '简单' ? 'easy' : d === '困难' ? 'hard' : 'medium'; }
+function countDay(date) {
+  const list = st.history[date] || [];
+  let n = 0, r = 0;
+  for (const e of list) e.kind === 'new' ? n++ : r++;
+  return { newCount: n, reviewCount: r, total: list.length };
+}
+function computeStreak() {
+  let cursor = new Date(2026, 10, 27, 12);
+  const fmt = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  if ((st.history[fmt(cursor)] || []).length === 0) cursor.setDate(cursor.getDate() - 1);
+  let streak = 0;
+  while ((st.history[fmt(cursor)] || []).length > 0) { streak++; cursor.setDate(cursor.getDate() - 1); }
+  return streak;
+}
+function totalSolvedCount() { return st.solvedSet.size + st.extraSolvedCount; }
+
+function applyTheme() {
+  $('#app').dataset.theme = st.theme;
+  $('#protoBar').dataset.surface = st.theme;
+  $('#btnDark').classList.toggle('active', st.theme === 'dark');
+  $('#btnLight').classList.toggle('active', st.theme === 'light');
+  $('#btnTheme').innerHTML = st.theme === 'dark'
+    ? '<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3"/><path d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M3 3l1.3 1.3M11.7 11.7L13 13M3 13l1.3-1.3M11.7 4.3L13 3"/></svg>'
+    : '<svg viewBox="0 0 16 16"><path d="M13.5 9.5A5.8 5.8 0 0 1 6.5 2.5a5.8 5.8 0 1 0 7 7Z"/></svg>';
+}
+
+function applyPlanOpen() {
+  $('#planBackdrop').classList.toggle('open', st.planOpen);
+  $('#navPlan').classList.toggle('active', st.planOpen);
+  $('#togglePlanOpen').classList.toggle('active', st.planOpen);
+  $('#togglePlanClose').classList.toggle('active', !st.planOpen);
+}
+
+function renderTopbarIndicators() {
+  const dueLen = st.reviewsDue.length;
+  $('#navReviewBadge').textContent = dueLen;
+  $('#navReviewBadge').style.display = dueLen > 0 ? 'inline-flex' : 'none';
+  $('#navPlan').dataset.tip = dueLen > 0 ? `学习计划（待复习 ${dueLen} 道）` : '学习计划（今日已清零）';
+
+  const syncTips = {
+    synced: `腾讯云同步：已同步 (rev #${st.syncRev})`,
+    syncing: '腾讯云同步：正在同步…',
+    offline: '腾讯云同步：离线暂存本机',
+    conflict: '腾讯云同步：检测到代码冲突'
+  };
+  $('#btnSync').dataset.sync = st.syncState;
+  $('#btnSync').dataset.tip = syncTips[st.syncState];
+
+  const lcBtn = $('#btnLeetCode');
+  lcBtn.dataset.lc = st.lcLoggedIn ? 'in' : 'out';
+  lcBtn.classList.toggle('lc-logged', st.lcLoggedIn);
+  lcBtn.dataset.tip = st.lcLoggedIn ? `力扣已登录：${st.lcUser}（点击管理）` : '登录力扣（同步官网记录与提交）';
+
+  $('#restoreDemo').hidden = !st.wasWiped;
+}
+
+function renderProblemBase() {
+  const p = CATALOG[st.currentId] || CATALOG['1'];
+  const solved = st.solvedSet.has(p.id);
+  const starred = st.favorites.has(p.id);
+  const dc = diffClass(p.diff);
+
+  $('#problemIndex').textContent = `${String(p.order).padStart(2,'0')} / 100`;
+  $('#problemPaneBody').innerHTML = `
+    <div class="problem-title-line">
+      <h1>${p.id}. ${p.title}</h1>
+      <button class="fav-btn ${starred?'starred':''}" id="btnFav" data-tip="${starred?'取消收藏':'收藏本题'}" data-tip-pos="center">
+        <svg viewBox="0 0 16 16"><path d="m8 1.5 2 4.2 4.5.7-3.3 3.2.8 4.4-4-2.1-4 2.1.8-4.4-3.3-3.2 4.5-.7Z"/></svg>
+      </button>
+      ${solved
+        ? `<div class="solved-wrap">
+             <button class="solved-toggle" id="btnSolvedToggle" aria-expanded="false" aria-label="已解答"><svg viewBox="0 0 16 16"><path d="m3 8 3 3 7-7"/></svg>已解答</button>
+             <div class="reset-pop" id="resetPop"><button class="reset-pop-btn" id="btnInlineReset">重置</button></div>
+           </div>`
+        : ''
+      }
+    </div>
+    <div class="problem-meta-tags">
+      <span class="meta-pill ${dc}">${p.diff}</span>
+      <span class="meta-pill company num">考察 ${p.freq} 次</span>
+      <span class="meta-pill">相关标签</span>
+      <span class="meta-pill company">相关企业</span>
+      <span class="meta-pill">提示</span>
+      <span class="meta-pill">查看力扣原题</span>
+    </div>
+    <p class="stmt">${p.stmt}</p>
+    <div class="ws-h3">示例 1：</div>
+    <div class="example-block">
+      <div>输入：</div><pre>${p.sampleIn}</pre>
+      <div>输出：</div><pre>${p.sampleOut}</pre>
+    </div>
+  `;
+
+  $('#btnFav').onclick = () => { if (st.favorites.has(p.id)) st.favorites.delete(p.id); else st.favorites.add(p.id); renderProblemBase(); };
+  const solvedBtn = $('#btnSolvedToggle');
+  if (solvedBtn) {
+    solvedBtn.onclick = e => {
+      e.stopPropagation();
+      const pop = $('#resetPop');
+      const open = pop.classList.toggle('open');
+      solvedBtn.setAttribute('aria-expanded', String(open));
+    };
+    $('#btnInlineReset').onclick = e => {
+      e.stopPropagation();
+      st.solvedSet.delete(p.id);
+      st.reviewsDue = st.reviewsDue.filter(r => r.id !== p.id);
+      st.syncRev++;
+      renderAll();
+      toast(`已重置「${p.id}. ${p.title}」（恢复为未做新题，历史打卡已保留）`);
+    };
+  }
+
+  $('#codePreview').innerHTML = p.code.map((line, i) => {
+    const safe = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    let colored = safe;
+    if (/^\s*#include\b/.test(line)) {
+      colored = `<span class="cm">${safe}</span>`;
+    } else if (/^\s*(#|\/\/)/.test(line)) {
+      colored = `<span class="cm">${safe}</span>`;
+    } else {
+      colored = safe.replace(/\b(import|from|def|class|struct|using|namespace|int|return|if|else|for|in|while|not|and|or|continue|break|nullptr|false)\b/g,'<span class="kw">$1</span>');
+    }
+    return `<div class="code-line"><span class="ln num">${i+1}</span><span>${colored || '&nbsp;'}</span></div>`;
+  }).join('');
+  $('#casePreview').textContent = p.sampleIn;
+}
+
+function renderSummaryStrip() {
+  const todayStats = countDay(TODAY);
+  const overdue = st.reviewsDue.filter(r => r.overdueDays > 0).length;
+  const revTotal = todayStats.reviewCount + st.reviewsDue.length;
+  const streak = computeStreak();
+  const ymPrefix = `${st.year}-${String(st.month).padStart(2,'0')}-`;
+  const monthDays = Object.keys(st.history).filter(d => d.startsWith(ymPrefix) && st.history[d].length > 0).length;
+
+  $('#intervalChip').textContent = `间隔 ${st.intervals.join('·')} 天`;
+  $('#sNewVal').innerHTML = `${todayStats.newCount}<small>/${st.goal}</small>`;
+  $('#sNewBar').style.width = Math.min(100, (todayStats.newCount / Math.max(1, st.goal)) * 100) + '%';
+
+  $('#sRevVal').innerHTML = `${todayStats.reviewCount}<small>/${revTotal}</small>`;
+  $('#sRevBar').style.width = (revTotal === 0 ? 0 : Math.min(100, (todayStats.reviewCount / revTotal) * 100)) + '%';
+  const ov = $('#sOverdue');
+  if (overdue > 0) { ov.style.display = 'inline'; ov.textContent = `${overdue} 逾期`; }
+  else { ov.style.display = 'none'; }
+
+  $('#sStreakVal').textContent = `${streak} 天`;
+  $('#sStreakTag').textContent = todayStats.total > 0 ? '已打卡' : '待打卡';
+  $('#sStreakTag').className = todayStats.total > 0 ? 'pill-ok' : 'pill-warn';
+  $('#sMetaRight').textContent = `本月 ${monthDays} 天 · ${totalSolvedCount()}/100`;
+}
+
+function renderCalendar() {
+  const y = st.year, m = st.month;
+  $('#calMonthTitle').textContent = `${y} 年 ${m} 月`;
+  const start = (new Date(y, m - 1, 1, 12).getDay() + 6) % 7;
+  const count = new Date(y, m, 0, 12).getDate();
+  const totalCells = Math.ceil((start + count) / 7) * 7;
+  const lastRowStart = totalCells - 7;
+  const grid = $('#calGrid');
+  grid.innerHTML = '';
+
+  for (let i = 0; i < totalCells; i++) {
+    const day = i - start + 1;
+    const isLastRow = i >= lastRowStart;
+    if (day < 1 || day > count) {
+      const blank = document.createElement('div');
+      blank.className = 'cal-cell blank' + (isLastRow ? ' last-row' : '');
+      grid.appendChild(blank);
+      continue;
+    }
+    const date = `${y}-${String(m).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const c = countDay(date);
+    const isSelected = date === st.selectedDate;
+    const isToday = date === TODAY;
+    const isFuture = date > TODAY;
+    const heat = c.total === 0 ? '' : c.total >= 5 ? ' heat-3' : c.total >= 3 ? ' heat-2' : ' heat-1';
+
+    const btn = document.createElement('button');
+    btn.className = `cal-cell${heat}${isSelected ? ' selected' : ''}${isFuture ? ' future' : ''}${isLastRow ? ' last-row' : ''}`;
+    btn.dataset.date = date;
+    btn.setAttribute('aria-pressed', String(isSelected));
+    btn.title = `${date}` + (c.total > 0 ? ` · 新题 ${c.newCount} · 复习 ${c.reviewCount}` : ' · 无记录');
+    btn.innerHTML = `<div class="day-head"><span class="day-num num">${day}</span>${isToday ? '<span class="today-tag">今</span>' : ''}</div>`
+      + (c.total > 0
+        ? `<div class="day-counts num"><span class="${c.newCount ? 'c-new' : 'c-zero'}">新${c.newCount}</span><span class="${c.reviewCount ? 'c-rev' : 'c-zero'}">复${c.reviewCount}</span></div>`
+        : '<div class="day-counts">&nbsp;</div>');
+    btn.onclick = () => { st.selectedDate = date; st.search = ''; $('#taskSearch').value = ''; renderCalendar(); renderTasks(); };
+    grid.appendChild(btn);
+  }
+}
+
+function problemRowHtml(opts) {
+  const p = CATALOG[opts.id];
+  if (!p) return '';
+  const dc = diffClass(p.diff);
+  const leftCtrl = opts.checkable
+    ? `<button class="check-btn" data-check-review="${p.id}" title="手动确认复习完成"><svg viewBox="0 0 16 16"><path d="m3.2 8.2 3 3 6.6-6.6"/></svg></button>`
+    : `<span class="done-mark"><svg viewBox="0 0 16 16"><path d="m3.2 8.2 3 3 6.6-6.6"/></svg></span>`;
+  let badge = '';
+  if (opts.overdueDays > 0) badge = `<span class="mini-badge overdue num">逾期 ${opts.overdueDays} 天</span>`;
+  else if (opts.kind === 'new') badge = `<span class="mini-badge kind-new">新题</span>`;
+  else if (opts.kind === 'review') badge = `<span class="mini-badge kind-rev">复习</span>`;
+
+  const timeHtml = opts.time ? `<span class="task-time num">${opts.time}</span>` : '';
+  const stageHtml = opts.stage ? `<span class="stage-hint num">第 ${opts.stage} 轮</span>` : '';
+
+  return `<article class="task-row">
+    ${leftCtrl}
+    <div class="task-main">
+      <div class="task-title-line">
+        <button class="task-link" data-open-id="${p.id}">${p.id}. ${p.title}</button>
+        ${badge}
+        ${timeHtml}
+      </div>
+      <div class="task-chips">
+        <span class="chip freq num">考察 ${p.freq} 次</span>
+        ${p.tags.map(t => `<span class="chip">${t}</span>`).join('')}
+      </div>
+    </div>
+    <div class="task-right">
+      <span class="diff ${dc}">${p.diff}</span>
+      ${stageHtml}
+    </div>
+  </article>`;
+}
+
+function renderTasks() {
+  const isToday = st.selectedDate === TODAY;
+  const isFuture = st.selectedDate > TODAY;
+  const todayDone = st.history[TODAY] || [];
+  const head = $('#taskHead');
+  const tools = $('#taskTools');
+  const filters = $('#taskFilters');
+  const listEl = $('#taskList');
+
+  if (isToday) {
+    head.innerHTML = `<div class="tabs" role="tablist">
+        <button class="tab-btn ${st.tab==='review'?'active':''}" data-tab="review" role="tab">待复习 <span class="tab-num num">${st.reviewsDue.length}</span></button>
+        <button class="tab-btn ${st.tab==='done'?'active':''}" data-tab="done" role="tab">今日完成 <span class="tab-num num">${todayDone.length}</span></button>
+      </div>
+      <span class="date-chip num">11-27 今天</span>`;
+    head.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { st.tab = b.dataset.tab; renderTasks(); });
+    tools.style.display = 'flex';
+    if (st.tab === 'review') {
+      filters.innerHTML = `<button class="filter-pill ${!st.onlyOverdue?'active':''}" data-ov="0">全部</button><button class="filter-pill ${st.onlyOverdue?'active':''}" data-ov="1">仅逾期</button>`;
+      filters.querySelectorAll('[data-ov]').forEach(b => b.onclick = () => { st.onlyOverdue = b.dataset.ov === '1'; renderTasks(); });
+    } else {
+      filters.innerHTML = [['all','全部'],['new','新题'],['review','复习']].map(([k,l]) => `<button class="filter-pill ${st.doneFilter===k?'active':''}" data-df="${k}">${l}</button>`).join('');
+      filters.querySelectorAll('[data-df]').forEach(b => b.onclick = () => { st.doneFilter = b.dataset.df; renderTasks(); });
+    }
+
+    const q = st.search.trim().toLowerCase();
+    const matches = id => { const p = CATALOG[id]; return !q || (p && `${p.id} ${p.title} ${p.tags.join(' ')}`.toLowerCase().includes(q)); };
+
+    if (st.tab === 'review') {
+      const rows = st.reviewsDue.filter(r => (!st.onlyOverdue || r.overdueDays > 0) && matches(r.id));
+      listEl.innerHTML = rows.length
+        ? rows.map(r => problemRowHtml({id:r.id, checkable:true, overdueDays:r.overdueDays, stage:r.stage})).join('')
+        : `<div class="empty-box"><strong>${st.reviewsDue.length === 0 ? '今日复习已清零' : '没有匹配的题目'}</strong>${st.reviewsDue.length === 0 ? '关闭弹窗即可继续刷题。' : '试试清空搜索词或筛选。'}</div>`;
+    } else {
+      const rows = todayDone.filter(e => (st.doneFilter === 'all' || e.kind === st.doneFilter) && matches(e.id));
+      listEl.innerHTML = rows.length
+        ? rows.map(e => problemRowHtml({id:e.id, checkable:false, kind:e.kind, time:e.time})).join('')
+        : `<div class="empty-box"><strong>暂无完成记录</strong>提交通过或勾选复习后会自动记录到这里。</div>`;
+    }
+  } else {
+    const c = countDay(st.selectedDate);
+    head.innerHTML = `<div class="day-mode-head">
+      <div class="day-mode-title">
+        <strong class="num">${st.selectedDate}</strong>
+        <span class="num">${isFuture ? '未来日期' : c.total ? `新${c.newCount} · 复${c.reviewCount}` : '无记录'}</span>
+      </div>
+      <button class="back-today-btn" id="btnBackToday">回到今天</button>
+    </div>`;
+    $('#btnBackToday').onclick = () => { st.year = 2026; st.month = 11; st.selectedDate = TODAY; renderCalendar(); renderTasks(); };
+    tools.style.display = isFuture || c.total === 0 ? 'none' : 'flex';
+    filters.innerHTML = '';
+
+    if (isFuture) {
+      listEl.innerHTML = `<div class="empty-box"><strong>不预排未来任务</strong>到达当天后按实际练习进度自动生成复习列表。</div>`;
+    } else {
+      const q = st.search.trim().toLowerCase();
+      const rows = (st.history[st.selectedDate] || []).filter(e => { const p = CATALOG[e.id]; return !q || (p && `${p.id} ${p.title} ${p.tags.join(' ')}`.toLowerCase().includes(q)); });
+      listEl.innerHTML = rows.length
+        ? rows.map(e => problemRowHtml({id:e.id, checkable:false, kind:e.kind, time:e.time})).join('')
+        : `<div class="empty-box"><strong>当天没有练习记录</strong>点击其他带数字的日期即可查看记录。</div>`;
+    }
+  }
+
+  listEl.querySelectorAll('[data-open-id]').forEach(b => b.onclick = () => {
+    st.currentId = b.dataset.openId;
+    st.planOpen = false;
+    renderProblemBase();
+    applyPlanOpen();
+    toast(`已跳转到「${st.currentId}. ${CATALOG[st.currentId].title}」`);
+  });
+  listEl.querySelectorAll('[data-check-review]').forEach(b => b.onclick = () => completeReview(b.dataset.checkReview));
+}
+
+function completeReview(id) {
+  const idx = st.reviewsDue.findIndex(r => r.id === id);
+  if (idx === -1) return;
+  st.reviewsDue.splice(idx, 1);
+  if (!st.history[TODAY]) st.history[TODAY] = [];
+  st.history[TODAY].unshift({id, kind:'review', time:'刚刚'});
+  st.solvedSet.add(id);
+  st.syncRev++;
+  renderAll();
+  toast(`已完成「${id}. ${CATALOG[id].title}」复习并同步`);
+}
+
+/* ==================== MODALS ==================== */
+function openModal(title, bodyHtml, footHtml) {
+  $('#modalTitle').textContent = title;
+  $('#modalBody').innerHTML = bodyHtml;
+  $('#modalFoot').innerHTML = footHtml;
+  $('#modalBackdrop').classList.add('open');
+}
+function closeModal() { $('#modalBackdrop').classList.remove('open'); }
+
+function openLeetCodeModal() {
+  if (st.lcLoggedIn) {
+    openModal(
+      '力扣账号（LeetCode.cn）',
+      `<div class="sec-box lc-box">
+         <div class="sec-box-head">
+           <strong>已登录：${st.lcUser}</strong>
+           <span class="pill-ok">会话有效</span>
+         </div>
+         <p style="margin:0;font-size:12px;color:var(--h-text)">已与 VS Code 插件采用同一套力扣会话机制，支持同步官网 Hot100 通过记录、拉取云端提交代码，并在核心代码模式直交力扣官网。</p>
+       </div>
+       <div class="domain-grid">
+         <div class="domain-item"><span>官网 Hot100 通过</span><b class="num">${totalSolvedCount()} / 100</b></div>
+         <div class="domain-item"><span>当前登录方式</span><b>浏览器隔离会话</b></div>
+       </div>
+       <p style="font-size:11.5px;color:var(--h-muted);margin:0">说明：力扣账号用于官网判题与拉取官网提交记录；学习计划、日历打卡、ACM 代码与单题重置由你的腾讯云服务跨 Mac / Windows / VS Code 同步。</p>`,
+      `<button class="btn soft-left" id="mLcLogout">退出登录</button>
+       <button class="btn" id="mLcPull">拉取官网通过记录</button>
+       <button class="btn primary" id="mLcClose">关闭</button>`
+    );
+    $('#mLcClose').onclick = closeModal;
+    $('#mLcPull').onclick = () => toast('已同步力扣官网 Hot100 通过状态（无新增差异）');
+    $('#mLcLogout').onclick = () => {
+      st.lcLoggedIn = false;
+      renderTopbarIndicators();
+      openLeetCodeModal();
+      toast('已退出力扣账号登录');
+    };
+    return;
+  }
+
+  openModal(
+    '登录力扣（LeetCode.cn）',
+    `<div class="sec-box lc-box">
+       <div class="sec-box-head">
+         <strong>浏览器一键登录（推荐 · 与 VS Code 插件一致）</strong>
+       </div>
+       <p style="margin:0 0 8px;font-size:12px;color:var(--h-text)">调用系统 Chrome / Edge 打开全新隔离临时窗口登录 leetcode.cn（推荐力扣 App 扫码），不接触密码也不读取日常浏览器数据，登录完成自动提取 <code>LEETCODE_SESSION</code> 与 <code>csrftoken</code>。</p>
+       <button class="btn lc-btn" id="mLcAuto">打开浏览器一键登录</button>
+     </div>
+     <details class="cookie-fold">
+       <summary>手动粘贴 Cookie 登录（自动登录不可用时的兜底）</summary>
+       <div class="field">
+         <label for="inpLcSess">LEETCODE_SESSION（或粘贴整段 Cookie 自动拆分）</label>
+         <input id="inpLcSess" placeholder="eyJ... 或 LEETCODE_SESSION=...; csrftoken=...">
+       </div>
+       <div class="field" style="margin-bottom:8px">
+         <label for="inpLcCsrf">csrftoken（整段粘贴可留空）</label>
+         <input id="inpLcCsrf" placeholder="粘贴 csrftoken">
+       </div>
+       <button class="btn primary" id="mLcManual">验证并登录</button>
+     </details>`,
+    `<button class="btn" id="mLcClose">取消</button>`
+  );
+  $('#mLcClose').onclick = closeModal;
+  $('#mLcAuto').onclick = () => {
+    toast('正在打开隔离浏览器窗口登录 leetcode.cn…');
+    setTimeout(() => {
+      st.lcLoggedIn = true;
+      renderTopbarIndicators();
+      openLeetCodeModal();
+      toast('力扣登录成功：qianye');
+    }, 550);
+  };
+  $('#mLcManual').onclick = () => {
+    if (!$('#inpLcSess').value.trim()) { toast('请先粘贴 LEETCODE_SESSION 或整段 Cookie'); return; }
+    st.lcLoggedIn = true;
+    renderTopbarIndicators();
+    openLeetCodeModal();
+    toast('Cookie 校验通过，已登录力扣账号：qianye');
+  };
+}
+
+function openSingleResetModal(p) {
+  openModal(
+    `重置「${p.id}. ${p.title}」为未做新题？`,
+    `<p>点击「✓ 已解答」触发单题重置（方案 A）：</p>
+     <ul>
+       <li>取消「已解答」勾选，总通过进度减 1</li>
+       <li>清除本题复习排期，下次通过时重新按<strong>新题</strong>从第 1 天开始复习</li>
+       <li><strong>保留</strong>代码草稿、笔记、收藏及历史日历打卡（不断连续打卡）</li>
+       <li>写入 <code>reset_at</code> 时间戳并同步至 Mac / Windows / VS Code 插件</li>
+     </ul>`,
+    `<button class="btn" id="mCancel">取消</button><button class="btn danger" id="mConfirm">确认重置</button>`
+  );
+  $('#mCancel').onclick = closeModal;
+  $('#mConfirm').onclick = () => {
+    st.solvedSet.delete(p.id);
+    st.reviewsDue = st.reviewsDue.filter(r => r.id !== p.id);
+    st.syncRev++;
+    closeModal();
+    renderAll();
+    toast(`已将「${p.id}. ${p.title}」恢复为未做新题（历史打卡已保留）`);
+  };
+}
+
+function openResetHubModal() {
+  openModal(
+    '重置学习数据',
+    `<div class="sec-box">
+       <div class="sec-box-head">
+         <strong>仅重置学习计划</strong>
+         <button class="btn" id="btnDoPlanReset">重置计划</button>
+       </div>
+       <p style="margin:0;font-size:12px">清空复习排期与月历计划，<strong>保留</strong>题库已通过、代码、笔记、收藏与目标设置。</p>
+     </div>
+     <div class="sec-box danger-zone">
+       <div class="sec-box-head">
+         <strong>重置所有数据（全部清空）</strong>
+         <button class="btn" id="btnExportBeforeWipe">先导出备份</button>
+       </div>
+       <p style="margin:0 0 8px;font-size:12px;color:var(--h-text)">彻底清空全部已通过进度（归零 0/100）、学习计划、日历打卡、提交记录、收藏、笔记与代码草稿，并递增云端代际号 <code>data_epoch</code>（云端自动留存操作前快照）。</p>
+       <div class="field" style="margin:0">
+         <label for="wipeInput">输入「重置」二字解锁全部清空</label>
+         <input id="wipeInput" placeholder="输入：重置" autocomplete="off">
+       </div>
+     </div>`,
+    `<button class="btn" id="mCancel">取消</button><button class="btn danger" id="mWipeAll" disabled>确认重置所有数据</button>`
+  );
+  $('#mCancel').onclick = closeModal;
+  $('#btnExportBeforeWipe').onclick = () => toast('演示：已导出备份 hot100-acm-backup-20261127.json');
+  $('#btnDoPlanReset').onclick = () => {
+    st.reviewsDue = [];
+    st.history = {};
+    st.wasWiped = true;
+    st.syncRev++;
+    closeModal();
+    renderAll();
+    toast('已重置学习计划（题库通过与代码已保留）');
+  };
+  $('#wipeInput').oninput = e => { $('#mWipeAll').disabled = e.target.value.trim() !== '重置'; };
+  $('#mWipeAll').onclick = () => {
+    st.solvedSet.clear();
+    st.extraSolvedCount = 0;
+    st.favorites.clear();
+    st.reviewsDue = [];
+    st.history = {};
+    st.wasWiped = true;
+    st.syncEpoch++;
+    st.syncRev = 1;
+    closeModal();
+    renderAll();
+    toast('已重置所有数据并生成云端快照（顶部可恢复演示数据）');
+  };
+}
+
+function openBackupModal() {
+  openModal(
+    '本地备份与数据迁移',
+    `<div class="sec-box">
+       <div class="sec-box-head">
+         <strong>导出完整数据包 (.json)</strong>
+         <button class="btn primary" id="mDoExport">导出备份</button>
+       </div>
+       <p style="margin:0;font-size:12px">包含：已通过与重置记录、学习计划与日历、多语言代码草稿、笔记与提交历史（当前已通过 ${totalSolvedCount()} 题）。</p>
+     </div>
+     <div class="sec-box">
+       <div class="sec-box-head">
+         <strong>导入备份 / 恢复云端快照</strong>
+         <button class="btn" id="mDoImport">选择 JSON 文件</button>
+       </div>
+       <p style="margin:0;font-size:12px">按时间戳合并，同题代码冲突自动保存恢复副本，绝不静默丢代码。</p>
+     </div>
+     <p style="font-size:11.5px;color:var(--h-muted);margin:0">本地存储：<code>~/Library/Application Support/Hot100ACM/learning.json</code></p>`,
+    `<button class="btn" id="mCloseB">关闭</button>`
+  );
+  $('#mCloseB').onclick = closeModal;
+  $('#mDoExport').onclick = () => toast('演示：已导出 hot100-acm-backup-20261127.json');
+  $('#mDoImport').onclick = () => toast('演示：正式版在此选择 JSON 或云端快照恢复');
+}
+
+function openConfigureModal() {
+  openModal(
+    '学习计划目标与复习间隔',
+    `<div class="field-row">
+       <div class="field"><label for="inpGoal">每日新题目标（道）</label><input id="inpGoal" type="number" min="1" max="50" value="${st.goal}"></div>
+       <div class="field"><label for="inpLimit">每日复习上限（道）</label><input id="inpLimit" type="number" min="1" max="100" value="${st.reviewLimit}"></div>
+     </div>
+     <div class="field">
+       <label for="inpInt">艾宾浩斯复习间隔（天，逗号分隔）</label>
+       <input id="inpInt" value="${st.intervals.join(', ')}">
+       <small>修改后自动重排未到期题目并同步到 Mac / Windows / VS Code 插件。</small>
+     </div>
+     <div class="sec-box" style="margin:0">
+       <div class="sec-box-head" style="margin:0">
+         <span style="font-size:12px;color:var(--h-text)">将历史已通过但未排期的题目纳入复习计划</span>
+         <button class="btn" id="mIncSolved">一键纳入</button>
+       </div>
+     </div>`,
+    `<button class="btn" id="mCancel">取消</button><button class="btn primary" id="mSave">保存并同步</button>`
+  );
+  $('#mCancel').onclick = closeModal;
+  $('#mIncSolved').onclick = () => toast('所有已通过题目均已在当前复习计划中');
+  $('#mSave').onclick = () => {
+    const g = parseInt($('#inpGoal').value, 10);
+    const l = parseInt($('#inpLimit').value, 10);
+    const arr = $('#inpInt').value.split(/[,，\s]+/).map(Number).filter(n => Number.isInteger(n) && n > 0 && n <= 365);
+    if (g >= 1 && g <= 50) st.goal = g;
+    if (l >= 1 && l <= 100) st.reviewLimit = l;
+    if (arr.length) st.intervals = [...new Set(arr)].sort((a,b) => a - b);
+    st.syncRev++;
+    closeModal();
+    renderAll();
+    toast('计划设置已保存并同步');
+  };
+}
+
+function openSyncModal() {
+  const stepNames = [
+    ['1. 版本校验', `本地 #${st.syncRev}`],
+    ['2. 拉取增量', '云端变更集'],
+    ['3. 冲突合并', 'LWW + 墓碑'],
+    ['4. 落库完成', `Docker DB #${st.syncRev}`]
+  ];
+  const pipeHtml = stepNames.map(([t, s], i) => {
+    const cls = st.syncState === 'synced' ? 'done'
+      : st.syncState === 'syncing' ? (i < st.syncStep ? 'done' : i === st.syncStep ? 'active' : '')
+      : st.syncState === 'conflict' ? (i < 2 ? 'done' : i === 2 ? 'active' : '')
+      : (i === 0 ? 'active' : '');
+    return `<div class="pipe-step ${cls}"><b>${t}</b>${s}</div>`;
+  }).join('');
+
+  const conflictHtml = st.syncState === 'conflict'
+    ? `<div class="conflict-box">
+         <strong>检测到代码冲突：146. LRU 缓存（Python · ACM）</strong>
+         <div>Mac 本地（21:14 修改）与 Windows 云端（21:08 修改）离线同时改动了代码：</div>
+         <div class="conflict-actions">
+           <button class="btn primary" id="cKeepLocal">保留 Mac 本地</button>
+           <button class="btn" id="cKeepRemote">采用 Windows 云端</button>
+           <button class="btn" id="cKeepBoth">保留双方副本</button>
+         </div>
+       </div>`
+    : '';
+
+  openModal(
+    '腾讯云数据库同步与设备管理',
+    `<div class="field-row">
+       <div class="field"><label>腾讯云同步地址</label><input id="inpServer" value="${st.syncServer}"></div>
+       <div class="field"><label>同步代际 / 版本</label><input value="epoch ${st.syncEpoch} · rev #${st.syncRev}" readonly></div>
+     </div>
+     <div style="font-size:12px;color:var(--h-text);font-weight:500">数据同步过程（事务级增量推拉）</div>
+     <div class="pipeline">${pipeHtml}</div>
+     ${conflictHtml}
+     <div class="domain-grid">
+       <div class="domain-item"><span>题库状态 + 单题重置</span><b class="num">${totalSolvedCount()} 题 · reset_at</b></div>
+       <div class="domain-item"><span>学习计划 + 月历打卡</span><b class="num">${st.reviewsDue.length} 待复习 · ${computeStreak()} 天</b></div>
+       <div class="domain-item"><span>多语言代码草稿</span><b class="num">23 份 · 按题号/模式</b></div>
+       <div class="domain-item"><span>笔记 + 提交历史</span><b class="num">增量同步 · 留副本</b></div>
+     </div>
+     <div class="device-list">
+       <div class="device-row"><div><strong>MacBook Pro · 桌面端（当前）</strong><span>learning.json ↔ 腾讯云 Docker (MySQL 8.0)</span></div><span class="pill-ok">在线</span></div>
+       <div class="device-row"><div><strong>Windows 台式机 · 桌面端</strong><span>上次同步：18 分钟前 · rev #${st.syncRev}</span></div><span>已同步</span></div>
+       <div class="device-row"><div><strong>VS Code 插件（Hot100 Pro）</strong><span>上次同步：2 小时前 · globalState 对齐</span></div><span>已同步</span></div>
+     </div>
+     <div style="font-size:11px;color:var(--h-muted)">预览同步状态：</div>
+     <div class="state-switch">
+       ${[['synced','正常已同步'],['syncing','同步进行中'],['offline','离线待续传'],['conflict','代码冲突处理']].map(([k,l]) => `<button class="state-chip ${st.syncState===k?'active':''}" data-ss="${k}">${l}</button>`).join('')}
+     </div>`,
+    `<button class="btn soft-left" id="mCopyToken">复制同步密钥</button>
+     <button class="btn" id="mRunSync">演示同步过程</button>
+     <button class="btn primary" id="mDoneSync">关闭</button>`
+  );
+
+  $('#mDoneSync').onclick = closeModal;
+  $('#mCopyToken').onclick = () => toast('已复制同步密钥（粘贴到 Windows 与 VS Code 插件即可配对）');
+  $('#mRunSync').onclick = () => {
+    st.syncState = 'syncing'; st.syncStep = 0; renderTopbarIndicators(); openSyncModal();
+    const tick = s => {
+      if (s > 3) {
+        st.syncRev++; st.syncState = 'synced'; st.syncStep = 4; renderTopbarIndicators();
+        if ($('#modalBackdrop').classList.contains('open')) openSyncModal();
+        toast(`同步完成，云端已更新至 rev #${st.syncRev}`);
+        return;
+      }
+      st.syncStep = s;
+      if ($('#modalBackdrop').classList.contains('open')) openSyncModal();
+      setTimeout(() => tick(s + 1), 300);
+    };
+    setTimeout(() => tick(1), 260);
+  };
+  $('#modalBody').querySelectorAll('[data-ss]').forEach(b => b.onclick = () => {
+    st.syncState = b.dataset.ss;
+    if (st.syncState === 'syncing') st.syncStep = 2;
+    renderTopbarIndicators(); openSyncModal();
+  });
+  for (const [id, msg] of [['#cKeepLocal','已保留 Mac 本地代码并推送至云端'],['#cKeepRemote','已采用 Windows 云端版本并留存本地备份'],['#cKeepBoth','已保存双方恢复副本']]) {
+    const el = $(id);
+    if (el) el.onclick = () => { st.syncState = 'synced'; st.syncRev++; renderTopbarIndicators(); openSyncModal(); toast(msg); };
+  }
+}
+
+function openProgressModal() {
+  openModal(
+    '我的进度统计',
+    `<div class="domain-grid">
+       <div class="domain-item"><span>已通过题目</span><b class="num">${totalSolvedCount()} / 100</b></div>
+       <div class="domain-item"><span>连续打卡</span><b class="num">${computeStreak()} 天</b></div>
+       <div class="domain-item"><span>收藏题目</span><b class="num">${st.favorites.size} 题</b></div>
+       <div class="domain-item"><span>力扣账号</span><b>${st.lcLoggedIn ? st.lcUser : '未登录'}</b></div>
+     </div>
+     <p style="font-size:12px">保持原有统计面板简洁不变；学习计划、云同步、导出备份、重置与力扣登录均以统一图标收在顶栏右侧。</p>`,
+    `<button class="btn" id="mOpenBkp">导出 / 导入备份</button><button class="btn primary" id="mCloseStat">关闭</button>`
+  );
+  $('#mCloseStat').onclick = closeModal;
+  $('#mOpenBkp').onclick = openBackupModal;
+}
+
+function renderAll() {
+  applyTheme();
+  renderTopbarIndicators();
+  renderProblemBase();
+  renderSummaryStrip();
+  renderCalendar();
+  renderTasks();
+  applyPlanOpen();
+}
+
+/* Bindings */
+$('#navPlan').onclick = () => { st.planOpen = !st.planOpen; applyPlanOpen(); };
+$('#btnClosePlan').onclick = () => { st.planOpen = false; applyPlanOpen(); };
+$('#planBackdrop').onclick = e => { if (e.target.id === 'planBackdrop') { st.planOpen = false; applyPlanOpen(); } };
+$('#togglePlanOpen').onclick = () => { st.planOpen = true; applyPlanOpen(); };
+$('#togglePlanClose').onclick = () => { st.planOpen = false; applyPlanOpen(); };
+
+$('#btnDark').onclick = () => { st.theme = 'dark'; applyTheme(); };
+$('#btnLight').onclick = () => { st.theme = 'light'; applyTheme(); };
+$('#btnTheme').onclick = () => { st.theme = st.theme === 'dark' ? 'light' : 'dark'; applyTheme(); };
+
+$('#calPrev').onclick = () => { if (--st.month < 1) { st.month = 12; st.year--; } st.selectedDate = `${st.year}-${String(st.month).padStart(2,'0')}-01`; renderSummaryStrip(); renderCalendar(); renderTasks(); };
+$('#calNext').onclick = () => { if (++st.month > 12) { st.month = 1; st.year++; } st.selectedDate = `${st.year}-${String(st.month).padStart(2,'0')}-01`; renderSummaryStrip(); renderCalendar(); renderTasks(); };
+$('#calToday').onclick = () => { st.year = 2026; st.month = 11; st.selectedDate = TODAY; renderSummaryStrip(); renderCalendar(); renderTasks(); };
+
+$('#taskSearch').oninput = e => { st.search = e.target.value; renderTasks(); };
+$('#btnConfigure').onclick = openConfigureModal;
+$('#btnBackup').onclick = openBackupModal;
+$('#btnTopBackup').onclick = openBackupModal;
+$('#btnResetHub').onclick = openResetHubModal;
+$('#btnTopReset').onclick = openResetHubModal;
+$('#btnSync').onclick = openSyncModal;
+$('#btnLayout').onclick = () => toast('保留原有工作区布局切换功能');
+$('#btnLeetCode').onclick = openLeetCodeModal;
+
+const ids = Object.keys(CATALOG);
+$('#btnPrevP').onclick = () => { const i = ids.indexOf(st.currentId); st.currentId = ids[(i - 1 + ids.length) % ids.length]; renderProblemBase(); };
+$('#btnNextP').onclick = () => { const i = ids.indexOf(st.currentId); st.currentId = ids[(i + 1) % ids.length]; renderProblemBase(); };
+$('#btnRandP').onclick = () => { st.currentId = ids[Math.floor(Math.random() * ids.length)]; renderProblemBase(); };
+$('#btnMenu').onclick = () => toast('正式版此处滑出「Leetcode 热题 100」题库抽屉');
+$('#btnRun').onclick = () => toast('样例运行通过（3 / 3 用例）');
+$('#btnSubmit').onclick = () => {
+  const id = st.currentId, wasSolved = st.solvedSet.has(id);
+  st.solvedSet.add(id);
+  st.reviewsDue = st.reviewsDue.filter(r => r.id !== id);
+  if (!st.history[TODAY]) st.history[TODAY] = [];
+  if (!st.history[TODAY].some(e => e.id === id)) st.history[TODAY].unshift({id, kind: wasSolved ? 'review' : 'new', time:'刚刚'});
+  st.syncRev++;
+  renderAll();
+  toast(wasSolved ? '提交通过！已记为今日复习并同步云端' : '提交通过！已作为新题计入今日目标并开启复习排期');
+};
+$('#restoreDemo').onclick = () => { const t = st.theme, o = st.planOpen; st = initialState(); st.theme = t; st.planOpen = o; renderAll(); toast('已恢复演示数据'); };
+
+$('#btnExit').onclick = () => toast('正式版此处保存并退出本地服务');
+$('#modalClose').onclick = closeModal;
+$('#modalBackdrop').onclick = e => { if (e.target.id === 'modalBackdrop') closeModal(); };
+document.addEventListener('click', () => { const pop = $('#resetPop'); if (pop) pop.classList.remove('open'); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const pop = $('#resetPop'); if (pop) pop.classList.remove('open');
+    if ($('#modalBackdrop').classList.contains('open')) closeModal();
+    else if (st.planOpen) { st.planOpen = false; applyPlanOpen(); }
+  }
+});
+
+const qTheme = new URLSearchParams(location.search).get('theme');
+if (qTheme === 'dark' || qTheme === 'light') st.theme = qTheme;
+
+renderAll();
+</script>
+</body>
+</html>

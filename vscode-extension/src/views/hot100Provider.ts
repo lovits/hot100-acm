@@ -141,7 +141,23 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
         this.setStatusFilter('all');
         await this.setEnhancedFilters({...defaultFilters});
     }
-    private effectiveStatus(id:string): QuestionStatus { return this.questionStatusMap.get(id)==='ac' || this.store?.get<Record<string,boolean>>('enhancedLocalPassed',{})[id] ? 'ac' : this.store?.get<Record<string,boolean>>('enhancedLocalAttempted',{})[id]?'notac':statusOf(this.questionStatusMap.get(id)); }
+    private effectiveStatus(id:string): QuestionStatus {
+        const meta=this.store?.get<Record<string,{solvedAt?:number;resetAt?:number}>>('hot100SyncProgressMeta',{})[id];
+        if(meta?.resetAt && meta.resetAt >= (meta.solvedAt||0))return null;
+        return this.questionStatusMap.get(id)==='ac' || this.store?.get<Record<string,boolean>>('enhancedLocalPassed',{})[id] ? 'ac' : this.store?.get<Record<string,boolean>>('enhancedLocalAttempted',{})[id]?'notac':statusOf(this.questionStatusMap.get(id));
+    }
+    private markPersonalSolved(id:string):void {
+        if(!this.store)return;
+        const all=this.store.get<Record<string,{solvedAt?:number;resetAt?:number;favoriteAt?:number}>>('hot100SyncProgressMeta',{}), prior=all[id]||{};
+        if(prior.resetAt && prior.resetAt >= (prior.solvedAt||0))void this.store.update('hot100SyncProgressMeta',{...all,[id]:{...prior,solvedAt:Math.max(Date.now(),prior.resetAt+1)}});
+    }
+    async applyPersonalSync(accepted:number[],favorites:number[],meta:Record<string,unknown>):Promise<void> {
+        if(!this.store)return;
+        await this.store.update('hot100SyncProgressMeta',meta);
+        await this.store.update('enhancedLocalPassed',Object.fromEntries(accepted.map(id=>[String(id),true])));
+        await this.store.update(FAVORITES_KEY,favorites.map(String));
+        this.favoriteIds=new Set(favorites.map(String));this.rerender();
+    }
     isSolved(id:string): boolean { return this.effectiveStatus(id)==='ac'; }
     filteredCatalog(): CatalogProblem[] {
         const f=this.enhancedFilters, plan=this.store?.get<PlanState>('enhancedPlan',emptyPlan()),today=localDateStr();
@@ -156,6 +172,7 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
         return this.enhancedFilters.sort==='frequency'?rows.sort((a,b)=>frequency(catalogById.get(b.frontendQuestionId)!,this.enhancedFilters.company)-frequency(catalogById.get(a.frontendQuestionId)!,this.enhancedFilters.company)):rows;
     }
     async recordLocalResult(id:string,ok:boolean): Promise<void> {
+        if(ok)this.markPersonalSolved(id);
         if(ok)await this.store?.update('enhancedLocalPassed',{...this.store.get<Record<string,boolean>>('enhancedLocalPassed',{}),[id]:true});
         else { await this.store?.update('enhancedLocalAttempted',{...this.store.get<Record<string,boolean>>('enhancedLocalAttempted',{}),[id]:true}); }
         if(ok){const today=localDateStr();this.solvedDates.add(today);const ids=this.solvedIdsByDate.get(today)||new Set<string>();ids.add(id);this.solvedIdsByDate.set(today,ids);await this.store?.update(SOLVED_DATES_KEY,[...this.solvedDates]);await this.store?.update(SOLVED_IDS_BY_DATE_KEY,Object.fromEntries([...this.solvedIdsByDate].map(([d,v])=>[d,[...v]])));}
@@ -230,6 +247,8 @@ const cached = store?.get<WrongEntry[]>(WRONG_STORE_KEY, []);
 			this.store?.update(WRONG_STORE_KEY, this.wrongList);
 		}
 		if(opts.solved && opts.recordWrong && id && this.store){
+            this.markPersonalSolved(id);
+            void this.store.update('enhancedLocalPassed',{...this.store.get<Record<string,boolean>>('enhancedLocalPassed',{}),[id]:true});
             void this.store.update('enhancedPlan',recordResult(this.store.get<PlanState>('enhancedPlan',emptyPlan()),id,true,localDateStr(),intervalsOf(vscode.workspace.getConfiguration('hot100Pro').get('reviewIntervals')),'test',alreadySolved));
         }
 		// 提交通过当日打卡：连续打卡/每日目标进度依赖此集合（仅 Hot 100）

@@ -8,6 +8,7 @@ const requests = [];
 let writes = 0;
 const context = vm.createContext({
   state: {}, KEY: 'hot100-acm-v1',
+  StudyPlan: require('./dist/study-plan.js'),
   $: () => badge, localStorage: {setItem() {}, removeItem() {}},
   setTimeout: () => 0, clearTimeout() {}, setInterval() {},
   fetch: async (url, options) => {

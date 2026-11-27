@@ -4,6 +4,7 @@ import plistlib
 import sys
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
+from leetcode_package import runtime_files
 
 VERSION = sys.argv[1] if len(sys.argv) > 1 else '1.0.5'
 
@@ -17,7 +18,10 @@ for directory in ['dist', 'native_judge']:
     for path in (ROOT / directory).rglob('*'):
         if path.is_file() and 'authors' not in path.relative_to(ROOT).parts and '__pycache__' not in path.parts:
             sources[path.relative_to(ROOT).as_posix()] = path.read_bytes()
-sources['local_server.py'] = (ROOT / 'local_server.py').read_bytes()
+for name in ['local_server.py', 'sync_transport.py', 'leetcode_session.py', 'leetcode_browser.cjs']:
+    sources[name] = (ROOT / name).read_bytes()
+for name, path in runtime_files():
+    sources[name] = path.read_bytes()
 
 for platform in ['macOS-arm64', 'macOS-x64', 'Windows-x64']:
     filename = f'Hot100-{platform}-release.zip'

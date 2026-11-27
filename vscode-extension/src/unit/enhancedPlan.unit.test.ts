@@ -50,3 +50,10 @@ test('legacy solved problems without dates start review, never inflate new-quest
  const tasks=dayTasks(state,'2026-11-17',['2','3','4','5','6'],5,20);
  assert.equal(tasks.newDone.length,0);assert.equal(tasks.reviewDone.length,1);assert.equal(tasks.newIds.length,5);
 });
+test('recording after a plan reset retains its reset boundary and timestamps new events',()=>{
+ const reset={...emptyPlan(),resetAt:Date.now()};
+ const state=recordResult(reset,'1',true,'2026-11-27',defaultIntervals);
+ assert.equal(state.resetAt,reset.resetAt);
+ assert.ok(state.events[0].createdAt!>reset.resetAt);
+ assert.ok(state.learnedMeta!['1'].at>reset.resetAt);
+});

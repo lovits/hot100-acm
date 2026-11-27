@@ -6,24 +6,34 @@ let models=new Map(), lastFocus=null,restoringReading=false,serviceStopped=false
 const clone=x=>JSON.parse(JSON.stringify(x));
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 function normalizeState(value={}){
-  const next={codes:{},notes:{},accepted:[],favorites:[],history:{},editorViews:{},reading:{},testInputs:{},conflicts:[],theme:'light',fontSize:14,last:1,testsCollapsed:false,...value};
-  for(const k of ['codes','notes','history','editorViews','reading','testInputs','testWorkspaces','codeBookmarks'])if(!next[k]||typeof next[k]!=='object'||Array.isArray(next[k]))next[k]={};
+  const next={codes:{},notes:{},accepted:[],favorites:[],history:{},editorViews:{},reading:{},testInputs:{},conflicts:[],progressMeta:{},localEpoch:0,studyPlan:{learned:{},events:[]},studySettings:{dailyGoal:5,reviewLimit:20,intervals:[1,2,4,7,15,30]},theme:'light',fontSize:14,last:1,testsCollapsed:false,...value};
+  for(const k of ['codes','notes','history','editorViews','reading','testInputs','testWorkspaces','codeBookmarks','progressMeta'])if(!next[k]||typeof next[k]!=='object'||Array.isArray(next[k]))next[k]={};
   for(const k of ['accepted','favorites','conflicts'])if(!Array.isArray(next[k]))next[k]=[];
+  if(!next.studyPlan||typeof next.studyPlan!=='object'||Array.isArray(next.studyPlan))next.studyPlan={};
+  if(!next.studyPlan.learned||typeof next.studyPlan.learned!=='object'||Array.isArray(next.studyPlan.learned))next.studyPlan.learned={};
+  if(!Array.isArray(next.studyPlan.events))next.studyPlan.events=[];
+  if(!next.studySettings||typeof next.studySettings!=='object'||Array.isArray(next.studySettings))next.studySettings={};
+  next.studySettings={dailyGoal:5,reviewLimit:20,...next.studySettings,intervals:StudyPlan.intervalsOf(next.studySettings.intervals)};
   for(const [id,rows] of Object.entries(next.history))next.history[id]=(Array.isArray(rows)?rows:[]).filter(r=>r&&typeof r.code==='string').map((r,i)=>({...r,id:r.id||`legacy-${r.time}-${i}`}));
   return next;
 }
 function mergeState(base,local,remote){
+  const localEpoch=Number(local.localEpoch)||0,remoteEpoch=Number(remote.localEpoch)||0;
+  if(localEpoch!==remoteEpoch){
+    const winner=normalizeState(localEpoch>remoteEpoch?local:remote),older=localEpoch>remoteEpoch?remote:local;
+    if(!same(older,base)&&Object.keys(older).length)winner.conflicts.push({key:'resetRecovery',id:'local',time:Date.now(),value:JSON.stringify(older)});
+    return winner;
+  }
   const result=normalizeState(remote), conflicts=[...(remote.conflicts||[]),...(local.conflicts||[])];
   for(const key of new Set([...Object.keys(local),...Object.keys(remote)])){
-    if(key==='conflicts')continue;
+    if(['conflicts','accepted','favorites','progressMeta','studyPlan'].includes(key))continue;
     if(key==='history'){
       result.history={...remote.history};
       for(const id of new Set([...Object.keys(local.history||{}),...Object.keys(remote.history||{})])){
         const rows=[...(remote.history?.[id]||[]),...(local.history?.[id]||[])];
         result.history[id]=[...new Map(rows.map(r=>[r.id||`${r.time}-${r.code}`,r])).values()].sort((a,b)=>b.time-a.time);
       }
-    }else if(key==='accepted')result[key]=[...new Set([...(local[key]||[]),...(remote[key]||[])])];
-    else if(['codes','notes','editorViews','reading','testInputs','testWorkspaces','codeBookmarks'].includes(key)){
+    }else if(['codes','notes','editorViews','reading','testInputs','testWorkspaces','codeBookmarks'].includes(key)){
       result[key]={...remote[key]};
       for(const [id,value] of Object.entries(local[key]||{}))if(!same(value,base[key]?.[id])){
         if(['codes','notes'].includes(key)&&remote[key]?.[id]!=null&&!same(remote[key][id],base[key]?.[id])&&!same(remote[key][id],value))conflicts.push({key,id,time:Date.now(),value:remote[key][id]});
@@ -31,6 +41,8 @@ function mergeState(base,local,remote){
       }
     }else if(!same(local[key],base[key]))result[key]=local[key];
   }
+  Object.assign(result,StudyPlan.mergeProgress(normalizeState(local),normalizeState(remote)));
+  result.studyPlan=StudyPlan.mergePlans(normalizeState(local).studyPlan,normalizeState(remote).studyPlan);
   result.conflicts=[...new Map(conflicts.map(c=>[`${c.key}-${c.id}-${c.value}`,c])).values()];
   return normalizeState(result);
 }
@@ -184,7 +196,7 @@ document.addEventListener('click',e=>{
   for(const other of group.querySelectorAll('[data-meta]'))other.setAttribute('aria-expanded',String(open && other===button));
   for(const other of group.querySelectorAll('[data-values]'))other.hidden=!(open && other===panel);
 });
-titleHTML=function(){return `<div class="problem-title-line"><h1><span class="title-id">${current.id}.</span> ${esc(current.title)}</h1><button type="button" class="icon-btn" id="favorite">${icon('star')}</button>${state.accepted.includes(current.id)?`<span class="solved-badge">${icon('check')}已解答</span>`:''}</div>${relatedMetadata(current)}`;};
+titleHTML=function(){return `<div class="problem-title-line"><h1><span class="title-id">${current.id}.</span> ${esc(current.title)}</h1><button type="button" class="icon-btn" id="favorite">${icon('star')}</button>${state.accepted.includes(current.id)?`<span class="sp-solved-wrap"><button type="button" class="solved-badge" id="sp-solved" aria-expanded="false">${icon('check')}已解答</button><button type="button" class="sp-reset-one" id="sp-reset-one" hidden>重置</button></span>`:''}</div>${relatedMetadata(current)}`;};
 function descriptionHTML(){
   return `${titleHTML()}<p class="statement">${esc(current.statement)}</p><h3>输入格式</h3><p class="format-text">${esc(current.input)}</p><h3>输出格式</h3><p class="format-text">${esc(current.output)}</p>${current.tests.slice(0,current.sampleCount).map((test,i)=>`<div class="example"><div class="example-head"><strong>示例 ${i+1}：</strong><button class="text-btn" data-use-case="${i}">用作测试 ${icon('arrow')}</button></div><div class="example-content"><div><label>输入：</label><pre>${esc(test.input)}</pre></div><div><label>输出：</label><pre>${esc(test.output)}</pre></div></div></div>`).join('')}<h3>提示：</h3><div class="constraints">${esc(current.constraints)}</div><details class="hint"><summary>${icon('bulb')}提示 1 ${icon('down')}</summary><p>${esc(current.idea[0])}</p></details>`;
 }
@@ -248,6 +260,7 @@ renderContent=function(){
     $('#favorite').onclick=()=>{
       const id=current.id;
       state.favorites=state.favorites.includes(id)?state.favorites.filter(value=>value!==id):[...state.favorites,id];
+      const meta=state.progressMeta[id]||{};state.progressMeta[id]={...meta,favoriteAt:Math.max(Date.now(),(meta.favoriteAt||0)+1)};
       updateFavorite();renderList();persist();
     };
   }
@@ -284,7 +297,7 @@ async function loadTrainingIndex(){
 }
 function mergeTrainingProgress(){
   const solved=JSON.parse(localStorage.getItem('hot100-acm:v2:progress')||'{}');
-  const added=problems.filter(p=>solved[p.id]==='solved'&&!state.accepted.includes(p.id));
+  const added=problems.filter(p=>solved[p.id]==='solved'&&!state.accepted.includes(p.id)&&!state.progressMeta[p.id]?.resetAt);
   const updates=JSON.parse(localStorage.getItem('training-favorite-changes')||'{}');
   const favorites=new Set(state.favorites);
   Object.entries(updates).forEach(([id,on])=>on?favorites.add(Number(id)):favorites.delete(Number(id)));
@@ -328,12 +341,12 @@ progress=function(){
   saveCode();
   modal('学习进度与本地备份',`<div class="stats-grid"><div class="stat"><b>${state.accepted.length}</b><span>已通过 / 100</span></div><div class="stat"><b>${state.favorites.length}</b><span>已收藏</span></div><div class="stat"><b>${Object.values(state.history).flat().length}</b><span>提交记录</span></div></div><p>代码、进度、笔记和记录自动保存到电脑。更新网站文件不会覆盖这些数据。</p><p class="data-path">进度文件　<code>${esc(session.directory)}${session.directory.includes('\\')?'\\':'/'}learning.json</code></p><div class="solution-actions"><button class="button" id="change-directory">更改保存位置</button><button class="button submit" id="export-v2">导出完整备份</button><button class="button" id="import-v2">导入旧版 / 本地备份</button></div><input id="import-file-v2" type="file" accept=".json" hidden><p class="small muted">在线版记录需先在原网址导出 JSON，再在此导入。导入会合并提交记录，原有同题代码保留恢复副本。</p><details><summary>代码恢复副本（${state.conflicts.length}）</summary>${state.conflicts.slice().reverse().map((c,i)=>`<div class="recovery-row"><span>${c.id} · ${c.key==='notes'?'笔记':'代码'} · ${new Date(c.time).toLocaleString('zh-CN')}</span><button class="text-btn" data-recovery="${state.conflicts.length-1-i}">下载副本</button></div>`).join('')||'<p class="muted">暂无副本</p>'}</details>`);
   $('#change-directory').onclick=storageSettings;
-  $('#export-v2').onclick=()=>download('hot100-acm-backup.json',JSON.stringify({app:KEY,schemaVersion:2,...state},null,2),'application/json');
+  $('#export-v2').onclick=()=>{const {cloudSync,pendingCloudReset,...backup}=state;download('hot100-acm-backup.json',JSON.stringify({app:KEY,schemaVersion:2,...backup},null,2),'application/json');};
   $('#import-v2').onclick=()=>$('#import-file-v2').click();
   $('#import-file-v2').onchange=async e=>{try{
     const file=e.target.files[0];if(!file)return;if(file.size>64*1024*1024)throw Error('文件超过 64 MB');
     const imported=JSON.parse(await file.text());if(imported.app!==KEY)throw Error('不是本站导出的备份');
-    const incoming=normalizeState(imported);const ids=new Set(problems.map(p=>String(p.id)));
+    const incoming=normalizeState(imported);delete incoming.cloudSync;delete incoming.pendingCloudReset;incoming.localEpoch=state.localEpoch;const ids=new Set(problems.map(p=>String(p.id)));
     for(const key of ['theme','fontSize','last','split','editorRatio','testsCollapsed','catalogFilters'])if(!Object.hasOwn(imported,key))incoming[key]=state[key];
     for(const key of ['codes','notes'])for(const [id,value] of Object.entries(incoming[key]))if(!(ids.has(id)||(key==='codes'&&ids.has(id.split(':')[0])&&/^\d+:(c:acm|cpp:(acm|core)|python3:core)$/.test(id)))||typeof value!=='string')throw Error('代码或笔记数据格式不正确');
     incoming.accepted=incoming.accepted.filter(id=>ids.has(String(id))).map(Number);incoming.favorites=incoming.favorites.filter(id=>ids.has(String(id))).map(Number);
@@ -349,7 +362,7 @@ async function boot(){
   document.addEventListener('keydown',e=>{if(e.key==='Tab'||e.key.startsWith('Arrow'))document.body.classList.add('keyboard-navigation');});
   document.addEventListener('pointerdown',()=>document.body.classList.remove('keyboard-navigation'));
 
-  const [problemResponse]=await Promise.all([fetch('problems.json'),loadSession(),loadTrainingIndex(),loadAuthorLibrary()]);await init(problemResponse);bindPractice();mergeTrainingProgress();
+  const [problemResponse]=await Promise.all([fetch('problems.json'),loadSession(),loadTrainingIndex(),loadAuthorLibrary()]);await init(problemResponse);bindPractice();mergeTrainingProgress();installStudyUI();installCloudSync();installLeetCode();
   for(const category of new Set(problems.map(p=>p.category)))$('#drawer-category').add(new Option(category,category));
   for(const company of [...new Set([...trainingIndex.values()].flatMap(p=>(p.freq?.companies||[]).map(c=>c.name)))].sort((a,b)=>a.localeCompare(b,'zh-CN')))$('#drawer-company').add(new Option(company,company));
   $('#drawer-category').onchange=e=>{categoryFilter=e.target.value;renderList();};

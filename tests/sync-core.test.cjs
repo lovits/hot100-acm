@@ -1,0 +1,34 @@
+'use strict';
+const assert = require('node:assert/strict');
+const core = require('../dist/sync-core');
+function state() {
+  return {accepted: [1], favorites: [1], progressMeta: {'1': {solvedAt: 10, resetAt: 0, favoriteAt: 11}}, studyPlan: {learned: {'1': {first: '2026-11-01', last: '2026-11-01', stage: 0, due: '2026-11-02'}}, learnedMeta: {'1': {at: 12, deleted: false}}, events: [{id: '1', date: '2026-11-01', kind: 'new', source: 'test', createdAt: 12}]}, codes: {'1': 'draft'}, notes: {'1': 'note'}, history: {'1': [{id: 'submission-1', code: 'draft', verdict: 'Accepted'}]}, studySettings: {dailyGoal: 5, reviewLimit: 20, intervals: [1, 2]}, conflicts: []};
+}
+const local = state(), view = core.capture(local), known = core.empty();
+const ops = core.operations(view, known);
+assert.deepEqual(ops.map(o => o.kind).sort(), ['draft', 'draft', 'event', 'learned', 'progress', 'settings', 'submission']);
+assert.equal(ops.find(o => o.kind === 'draft' && o.mode === 'acm').baseHash, null);
+const incoming = [{kind: 'progress', entityKey: '1', value: {solvedAt: 10, resetAt: 20, favorite: false, favoriteAt: 30}}];
+core.apply(local, known, incoming, view);
+assert.deepEqual(local.accepted, []);
+assert.deepEqual(local.favorites, []);
+assert.equal(local.progressMeta['1'].resetAt, 20);
+const draftChange = {kind: 'draft', entityKey: '1:python3:acm', value: {id: '1', lang: 'python3', mode: 'acm', code: 'remote', note: null, hash: 'abc'}};
+core.apply(local, known, [draftChange], view);
+assert.equal(local.codes['1'], 'remote');
+assert.equal(local.conflicts[0].value, 'draft');
+local.codes['1'] = 'edited while syncing';
+core.apply(local, known, [{...draftChange, value: {...draftChange.value, code: 'new remote', hash: 'def'}}], view);
+assert.equal(local.codes['1'], 'edited while syncing');
+assert.equal(local.conflicts[1].value, 'new remote');
+core.apply(local, known, [{kind: 'plan-reset', entityKey: 'plan', value: {planEpoch: 1}}], view);
+assert.equal(local.studyPlan.events.length, 0);
+assert.ok(local.conflicts.some(c => c.key === 'studyPlan'));
+const recoveryOps = core.operations(core.capture(local), known).filter(op => op.kind === 'recovery');
+assert.ok(recoveryOps.some(op => op.value === 'draft'));
+const other = state(); other.conflicts = [];
+const otherKnown = core.empty();
+core.apply(other, otherKnown, recoveryOps.map(op => ({kind:'recovery',entityKey:op.recoveryId,value:op})), {drafts:{}});
+assert.ok(other.conflicts.some(c => c.value === 'draft'));
+assert.equal(core.operations(core.capture(other), otherKnown).filter(op => op.kind === 'recovery').length, 0);
+console.log('sync core tests passed');

@@ -5,6 +5,7 @@ import subprocess
 import urllib.request
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
+from leetcode_package import runtime_files
 
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / 'release-work'
@@ -30,8 +31,10 @@ prefix = 'Hot100/'
 with ZipFile(OUT / 'Hot100-Windows-x64-release.zip', 'w', ZIP_DEFLATED, compresslevel=9) as out:
     for directory in ['dist', 'native_judge']:
         write_tree(out, ROOT / directory, prefix + directory + '/')
-    for name in ['launch.pyw', 'local_server.py', 'README.md']:
+    for name in ['launch.pyw', 'local_server.py', 'sync_transport.py', 'leetcode_session.py', 'leetcode_browser.cjs', 'README.md']:
         out.write(ROOT / name, prefix + name)
+    for name, source in runtime_files():
+        out.write(source, prefix + name)
     with ZipFile(python_zip) as source:
         for name in source.namelist():
             out.writestr(prefix + 'runtime/python/' + name, source.read(name))

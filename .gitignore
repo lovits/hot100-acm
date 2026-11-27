@@ -7,6 +7,14 @@ learning.backup.json
 *.log
 *.tmp
 *.corrupt.*.json
+private-artifacts/
 
 reference/official-acm-results.json
 reference/official-native-acm-results.json
+
+# Local sync credentials and server data
+sync-server/.env
+sync-server/data/
+sync-server/backups/
+sync-server/node_modules/
+sync-auth.json

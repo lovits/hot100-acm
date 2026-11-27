@@ -7,12 +7,12 @@
   <title>HOT 100 · ACM 训练室</title>
   <link rel="icon" href="assets/app-hot100oj.ico">
   <link rel="stylesheet" href="style.css"><link rel="stylesheet" href="leetcode.css"><link rel="stylesheet" href="local.css"><link rel="stylesheet" href="workspace.css"><link rel="stylesheet" href="vendor/katex/katex.min.css"><link rel="stylesheet" href="authors.css">
-<link rel="stylesheet" href="docking.css"><link rel="stylesheet" href="polish.css"></head>
+<link rel="stylesheet" href="docking.css"><link rel="stylesheet" href="polish.css"><link rel="stylesheet" href="study-ui.css"></head>
 <body class="leetcode-layout">
 <header class="topbar">
   <div class="top-left"><button class="problem-menu" id="nav-problems"><strong>Leetcode 热题 100</strong></button><div class="prev-next"><button class="icon-btn" id="prev" title="上一题" aria-label="上一题" data-icon="left"></button><button class="icon-btn" id="next" title="下一题" aria-label="下一题" data-icon="right"></button><button class="icon-btn" id="random" title="随机一题" aria-label="随机一题" data-icon="shuffle"></button></div></div>
   <div class="work-actions"><button class="button run" id="run" aria-label="运行" title="Ctrl + Enter"><span data-icon="play"></span><span>运行</span></button><button class="button submit" id="submit"><span data-icon="upload"></span><span>提交</span></button><button class="button stop" id="stop" hidden><span data-icon="stop"></span>停止</button><button class="timer" id="timer" title="开始 / 暂停计时"><span data-icon="timer"></span><span id="timer-text">00:00</span></button></div>
-  <div class="top-right"><button class="icon-btn" id="nav-progress" title="我的进度" aria-label="我的进度" data-icon="chart"></button><button class="icon-btn" id="theme-btn" title="切换深浅主题" aria-label="切换深浅主题"></button><button class="icon-btn" id="shutdown" title="退出本地服务" aria-label="退出本地服务" data-icon="stop"></button></div>
+  <div class="top-right"><button class="icon-btn sp-nav" id="nav-study" title="学习计划" aria-label="学习计划" data-icon="calendar"></button><button class="icon-btn sp-nav" id="nav-sync" title="远程同步" aria-label="远程同步" data-icon="cloud"></button><button class="icon-btn" id="nav-backup" title="导出 / 导入备份" aria-label="导出或导入备份" data-icon="download"></button><button class="icon-btn" id="nav-reset" title="重置数据" aria-label="重置数据" data-icon="reset"></button><button class="icon-btn sp-nav" id="nav-leetcode" title="力扣登录" aria-label="力扣登录" data-icon="user"></button><button class="icon-btn" id="theme-btn" title="切换深浅主题" aria-label="切换深浅主题"></button><button class="icon-btn" id="shutdown" title="退出本地服务" aria-label="退出本地服务" data-icon="stop"></button></div>
 </header>
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
 <div class="app-shell">
@@ -43,7 +43,8 @@
 </div>
 <div id="toast" class="toast" role="status"></div>
 <dialog id="modal"><div class="modal-header"><h2 id="modal-title"></h2><button class="icon-btn" id="close-modal" aria-label="关闭" data-icon="close"></button></div><div id="modal-body"></div></dialog>
-<script src="vendor/katex/katex.min.js"></script><script src="vendor/monaco/vs/loader.js"></script><script src="judge-rules.js"></script><script src="app.js"></script><script src="authors.js"></script><script src="diagnostics.js"></script><script src="test-workspace.js"></script><script src="code-toolbar.js"></script><script src="practice.js"></script><script src="workspace-settings.js"></script><script src="docking.js"></script><script src="filter-menu.js"></script><script src="local.js"></script>
+<dialog id="study-plan-dialog" aria-label="学习计划"></dialog>
+<script src="vendor/katex/katex.min.js"></script><script src="vendor/monaco/vs/loader.js"></script><script src="judge-rules.js"></script><script src="study-plan.js"></script><script src="sync-core.js"></script><script src="app.js"></script><script src="authors.js"></script><script src="diagnostics.js"></script><script src="test-workspace.js"></script><script src="code-toolbar.js"></script><script src="practice.js"></script><script src="workspace-settings.js"></script><script src="docking.js"></script><script src="filter-menu.js"></script><script src="study-ui.js"></script><script src="sync-controller.js"></script><script src="leetcode-ui.js"></script><script src="local.js"></script>
 </body>
 </html>
 

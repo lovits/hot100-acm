@@ -4,6 +4,9 @@ const paths={search:'<circle cx="7" cy="7" r="4.5"/><path d="m11 11 3.5 3.5"/>',
 function icon(name){return `<svg viewBox="0 0 16 16" aria-hidden="true">${paths[name]||paths.code}</svg>`;}
 paths.expand='<path d="M6 2H2v4m8-4h4v4M2 10v4h4m8-4v4h-4"/>';
 paths.chart='<path d="M3 13V8m5 5V3m5 10V6M1 15h14"/>';
+paths.calendar='<rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 1v4m6-4v4M2 6.5h12"/>';
+paths.settings='<path d="M2 4h6m3 0h3M2 8h2m3 0h7M2 12h7m3 0h2"/><circle cx="9.5" cy="4" r="1.2"/><circle cx="5.5" cy="8" r="1.2"/><circle cx="10.5" cy="12" r="1.2"/>';
+paths.user='<circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.5-5 6-5s6 2 6 5"/>';
 function icons(root=document){root.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));}
 function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const KEY='hot100-acm-v1';
@@ -111,7 +114,17 @@ function finishJob(forcedLabel){
   if(job.submit){
     const verdict=forcedLabel||(error?'Runtime Error':good?'Accepted':'Wrong Answer');
     const history=state.history[job.problem.id]||[];history.unshift({id:crypto.randomUUID(),time:Date.now(),verdict,language:job.language||'python3',mode:job.mode||'acm',passed,total:job.tests.length,code:job.code,items:job.items});state.history[job.problem.id]=history;
-    if(good&&!forcedLabel&&!state.accepted.includes(job.problem.id)){state.accepted.push(job.problem.id);clockRunning=false;$('#timer').classList.remove('running');notify('通过！又掌握了一道经典题。');}
+    if(good&&!forcedLabel&&!error){
+      const id=job.problem.id,alreadySolved=state.accepted.includes(id);
+      if(!alreadySolved){
+        state.accepted.push(id);
+        const meta=state.progressMeta[id]||{};
+        state.progressMeta[id]={...meta,solvedAt:Math.max(Date.now(),(meta.resetAt||0)+1)};
+        clockRunning=false;$('#timer').classList.remove('running');notify('通过！又掌握了一道经典题。');
+      }
+      state.studyPlan=StudyPlan.record(state.studyPlan,id,StudyPlan.localDate(),state.studySettings.intervals||StudyPlan.defaultIntervals,'test',alreadySolved);
+      updateStudyBadge();
+    }
     persist();renderList();if(!job.silent&&current?.id===job.problem.id)navigate(`#/problems/${current.id}/submissions/${history[0].id}`);
   }
   $('#runtime-state').innerHTML='<i></i> 执行结束';$('#result-dot').textContent=good?' ·':' !';renderTest();
@@ -161,7 +174,7 @@ async function init(problemResponse){
   }
   resizePanels($('#vertical-splitter'),$('.workspace'),'--split',true,28,72);
   resizePanels($('#horizontal-splitter'),$('.coding-column'),'--editor-ratio',false,35,80);
-  $('#nav-progress').onclick=progress;
+  $('#nav-backup').onclick=progress;
   $('#prev').onclick=()=>go(problems[current.order-2]?.id);$('#next').onclick=()=>go(problems[current.order]?.id);$('#random').onclick=()=>{const pool=problems.filter(p=>p.id!==current.id&&!state.accepted.includes(p.id));const ps=pool.length?pool:problems.filter(p=>p.id!==current.id);go(ps[Math.floor(Math.random()*ps.length)].id);};
   $('#run').onclick=()=>runCode(false);$('#submit').onclick=()=>runCode(true);$('#stop').onclick=()=>cancelJob();
   $('#input-tab').onclick=()=>{bottomTab='input';renderTest();};$('#result-tab').onclick=()=>{bottomTab='result';renderTest();};
