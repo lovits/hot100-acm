@@ -20,10 +20,6 @@
 | 学习管理 | 收藏、笔记、刷题进度、月历与间隔复习，可修改目标、重置计划 |
 | 使用说明 | 点击左侧“运行与提交说明”，直接阅读带表格的格式化说明和快捷键 |
 
-## 可选的私网同步
-
-桌面端和插件可通过自行部署的服务器同步学习进度、计划、代码和笔记。服务器支持 Docker 的云主机或自建 Linux，使用 Tailscale 私网 HTTPS；[按步骤配置服务器和多台设备](https://github.com/lovits/hot100-acm/blob/main/docs/private-sync.md)。默认不启用：在命令面板运行“Hot100: 配置个人私网同步”，输入自己的设备名、私网 IP 和令牌。配置时可选择复用本机桌面端配置；令牌存于 VS Code Secret Storage。离线时保留本地数据，代码冲突保留恢复副本。
-
 ## 开始使用
 
 ```sh
@@ -34,7 +30,7 @@ code --install-extension lovits.hot100-practice
 
 > 请在我指定的 VS Code 或兼容扩展的 IDE 中，从扩展市场安装 Hot100 ACM（发布者 lovits，扩展标识 lovits.hot100-practice），确认安装成功；如需选择 IDE，请先列出本机可用的 IDE 让我选择。
 
-这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.88) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
+这句话用于让 Agent 执行安装；插件安装到目标编辑器中。若该编辑器无法访问 Visual Studio Marketplace，可从 [GitHub Release](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87) 下载 VSIX，通过编辑器的“从 VSIX 安装”完成安装。兼容性以目标编辑器实际支持为准。
 
 1. 安装扩展并打开保存练习代码的工作区。
 2. 从 Hot100 ACM 侧栏选择题目及语言。
@@ -85,7 +81,7 @@ Case 面板及本机运行快捷键从 0.2.83 起提供。
 - [插件主页](https://github.com/lovits/hot100-acm/tree/main/vscode-extension)
 - [问题反馈](https://github.com/lovits/hot100-acm/issues)
 - [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=lovits.hot100-practice)
-- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.88)
+- [VSIX 下载](https://github.com/lovits/hot100-acm/releases/tag/vscode-v0.2.87)
 - [完整运行与提交说明](https://github.com/lovits/hot100-acm/blob/main/vscode-extension/运行与提交说明.html)
 
 **分类**：Education / Programming Languages · **扩展标识**：`lovits.hot100-practice`

@@ -4,7 +4,7 @@
  * 进程执行器：负责编译/运行用户代码，带 CPU 时间、内存、输出体积限制。
  * 使用 `sh -c 'ulimit ...; exec "$@"'` 包装，对子进程施加 RLIMIT。
  */
-const { spawn, execFile, execFileSync } = require('child_process');
+const { spawn, execFile } = require('child_process');
 
 const DEFAULT_TIMEOUT_MS = 4000;   // 运行墙钟超时（毫秒）
 const COMPILE_TIMEOUT_MS = 30000;  // 编译墙钟超时（毫秒）
@@ -13,40 +13,12 @@ const COMPILE_CPU_SEC = 30;        // 编译 CPU 时间上限（秒）
 const DEFAULT_MEM_KB = 524288;     // 地址空间上限（KB，即 512MB）
 const MAX_OUTPUT = 64 * 1024;      // stdout/stderr 各自上限
 
-function compilerEnv(command, isCompile) {
-  const env = {...process.env, PYTHONIOENCODING:'utf-8'};
-  if (process.platform === 'darwin' && isCompile && !env.SDKROOT && /^(?:g\+\+|gcc|clang\+\+|clang)(?:-\d+)?$/.test(require('path').basename(command))) {
-    try {
-      const sdk = execFileSync('/usr/bin/xcrun', ['--show-sdk-path'], {encoding:'utf8', timeout:5000}).trim();
-      if (sdk) env.SDKROOT = sdk;
-    } catch (_) { /* Keep the existing environment when the SDK cannot be located. */ }
-  }
-  return env;
-}
-
 function commandExists(command) {
   const configured=require('./toolchain').configuredCommand(command);
   if(configured)return Promise.resolve(configured);
   return new Promise((resolve) => {
     if(command==='python3' && process.env.HOT100_PYTHON) return resolve(process.env.HOT100_PYTHON);
     if (process.platform === 'win32') {
-      if(command==='python3') {
-        execFile('where.exe', ['python3'], (_error, first) => {
-          execFile('where.exe', ['python'], (_fallbackError, second) => {
-            const candidates=[...new Set(`${first||''}\n${second||''}`.split(/\r?\n/).map(x=>x.trim()).filter(Boolean))];
-            candidates.sort((a,b)=>Number(/[/\\]WindowsApps[/\\]/i.test(a))-Number(/[/\\]WindowsApps[/\\]/i.test(b)));
-            const probe=(index)=>{
-              if(index>=candidates.length)return resolve(null);
-              execFile(candidates[index],['--version'],{timeout:5000,windowsHide:true},(error,stdout,stderr)=>{
-                if(!error && /^Python 3\./.test((stdout||stderr||'').trim()))return resolve(candidates[index]);
-                probe(index+1);
-              });
-            };
-            probe(0);
-          });
-        });
-        return;
-      }
       execFile('where.exe', [command], (error, stdout) => resolve(error ? null : stdout.trim().split(/\r?\n/)[0]));
       return;
     }
@@ -63,16 +35,7 @@ function commandExists(command) {
  * @param {{cwd?:string, input?:string, timeout?:number, cpuSeconds?:number, limits?:boolean, phase?:'compile'|'run'}} options
  * @returns {Promise<{code:number, stdout:string, stderr:string, timedOut:boolean, ms:number, killedByLimit?:string}>}
  */
-async function runProcess(command, args, options = {}) {
-  const result = await runProcessOnce(command, args, options);
-  const compiler = require('path').basename(command);
-  if (process.platform === 'win32' && options.phase === 'compile' && args.includes('-o') && /^(?:gcc|g\+\+)(?:[-.\d]*)(?:\.exe)?$/i.test(compiler) && result.code !== 0 && !result.timedOut) {
-    return runProcessOnce(command, args, {...options, dynamicFallback:true});
-  }
-  return result;
-}
-
-function runProcessOnce(command, args, options = {}) {
+function runProcess(command, args, options = {}) {
   return new Promise((resolve) => {
     const started = Date.now();
     const limit = options.limits !== false && process.platform !== 'win32';
@@ -82,7 +45,7 @@ function runProcessOnce(command, args, options = {}) {
     if(process.platform==='darwin' && ['g++','clang++'].includes(require('path').basename(command))) args=['-I',require('path').join(__dirname,'include'),...args];
     if(options.phase==='compile' && args[0]?.endsWith('.cpp') && !/cl(?:\.exe)?$/i.test(command)) args=['-x','c++',...args];
     if(options.phase==='compile' && args[0]?.endsWith('.c') && !/cl(?:\.exe)?$/i.test(command)) args=['-x','c',...args];
-    if(isCompile){args=require('./compiler-command').compilerArgs(command,args);if(options.dynamicFallback)args=args.filter(arg=>arg!=='-static');}
+    if(isCompile)args=require('./compiler-command').compilerArgs(command,args);
     const realArgs = limit
       ? ['-c', `ulimit -t ${cpuSec} 2>/dev/null; ulimit -v ${DEFAULT_MEM_KB} 2>/dev/null; exec "$@"`, 'runner', command, ...args]
       : args;
@@ -92,7 +55,7 @@ function runProcessOnce(command, args, options = {}) {
       windowsHide: true,
       cwd: options.cwd,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: compilerEnv(command, isCompile),
+      env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
     });
 
     let stdout = '';
@@ -228,5 +191,5 @@ async function runCode({ language, code, input }) {
   }
 }
 
-module.exports = { runProcess, commandExists, checkCode, runCode, compilerEnv, DEFAULT_TIMEOUT_MS };
+module.exports = { runProcess, commandExists, checkCode, runCode, DEFAULT_TIMEOUT_MS };
 

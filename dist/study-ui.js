@@ -104,7 +104,7 @@ function resetDataDialog() {
   const confirm = $('#sp-reset-confirm'), all = $('#sp-reset-all');
   $('#sp-export-before-reset').onclick = () => {
     saveCode(); saveView();
-    const {cloudSync, pendingCloudReset, ...backup} = state;
+    const {cloudSync, pendingCloudReset, storageNamespace, ...backup} = state;
     download('hot100-acm-before-reset.json', JSON.stringify({app: KEY, schemaVersion: 2, ...backup}, null, 2), 'application/json');
     exported = true; all.disabled = confirm.value !== '重置';
   };

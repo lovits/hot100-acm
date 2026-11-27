@@ -17,7 +17,7 @@ test('macOS compiler SDK discovery is scoped and respects existing settings', ()
       calls++;
       return '/test/MacOSX.sdk\n';
     };
-    const runners = [require('../native_judge/runner'), require('../vscode-extension/runtime/native_judge/runner')];
+    const runners = [require('../native_judge/runner')];
     for (const runner of runners) {
       assert.equal(runner.compilerEnv('/opt/homebrew/bin/g++-16', true).SDKROOT, '/test/MacOSX.sdk');
       assert.equal(process.env.SDKROOT, undefined);
@@ -27,12 +27,12 @@ test('macOS compiler SDK discovery is scoped and respects existing settings', ()
       assert.equal(runner.compilerEnv('/usr/bin/clang++', true).SDKROOT, '/user/sdk');
       delete process.env.SDKROOT;
     }
-    assert.equal(calls, 2);
+    assert.equal(calls, 1);
     child.execFileSync = () => { throw new Error('xcrun unavailable'); };
     for (const runner of runners) {
       delete require.cache[require.resolve(runner === runners[0] ? '../native_judge/runner' : '../vscode-extension/runtime/native_judge/runner')];
     }
-    for (const name of ['../native_judge/runner', '../vscode-extension/runtime/native_judge/runner']) {
+    for (const name of ['../native_judge/runner']) {
       assert.equal(require(name).compilerEnv('/usr/bin/gcc', true).SDKROOT, undefined);
     }
   } finally {

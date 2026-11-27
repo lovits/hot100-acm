@@ -20,7 +20,7 @@ with tempfile.TemporaryDirectory() as temporary:
         process = subprocess.Popen([str(app / 'runtime/python/python.exe'), str(app / 'local_server.py')], cwd=app, env=env, stdout=log, stderr=log)
     origin = 'http://127.0.0.1:18765'
     def read(path, data=None, token=None):
-        headers = {'Referer': origin + '/'}
+        headers = {'Referer': origin + '/', 'X-Hot100-Session-Protocol': '2'}
         if data is not None:
             headers.update({'Content-Type': 'application/json', 'Origin': origin, 'X-Hot100-Token': token})
         request = urllib.request.Request(origin + path, data=json.dumps(data).encode() if data is not None else None, headers=headers)

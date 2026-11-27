@@ -35,7 +35,7 @@ class EndpointTests(unittest.TestCase):
                 except HTTPError as error:
                     with error: return error.code, json.load(error)
             try:
-                status, session = request('/api/session', headers={'Referer': origin + '/'})
+                status, session = request('/api/session', headers={'Referer': origin + '/', 'X-Hot100-Session-Protocol':'2'})
                 self.assertEqual(status, 200)
                 headers = {'Origin': origin, 'Content-Type': 'application/json', 'X-Hot100-Token': session['token']}
                 self.assertEqual(request('/api/leetcode/manual', {'session':'session', 'csrf':'csrf'}, {'Origin':'https://example.com'})[0], 403)

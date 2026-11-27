@@ -20,7 +20,7 @@ DATA.mkdir(parents=True, exist_ok=True)
 
 def instance_id():
     digest = hashlib.sha256(os.path.normcase(str(ROOT)).encode('utf-8'))
-    for name in ('local_server.py', 'dist/index.html', 'dist/app.js', 'dist/sync-core.js'):
+    for name in ('local_server.py', 'sync_transport.py', 'leetcode_session.py', 'leetcode_browser.cjs', 'dist/index.html', 'dist/app.js', 'dist/local.js', 'dist/practice.js', 'dist/test-workspace.js', 'dist/study-ui.js', 'dist/study-plan.js', 'dist/sync-core.js', 'dist/sync-controller.js', 'dist/training/index.html', 'dist/training/app.js', 'native_judge/judge.js', 'native_judge/runner.js'):
         digest.update((ROOT / name).read_bytes())
     return digest.hexdigest()
 

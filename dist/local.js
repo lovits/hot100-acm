@@ -1,6 +1,9 @@
 'use strict';
 // Local persistence is independent of browser origin storage and application updates.
-let session={token:null,revision:0,base:{},directory:''},pendingSave=false,saving=null,diskTimer;
+let session={token:null,revision:0,base:{},directory:'',storageNamespace:''},pendingSave=false,saving=null,diskTimer,bootstrapInFlight=false;
+let pageGeneration=document.querySelector('meta[name="hot100-page"]')?.content||'';
+const sessionHeaders=()=>({'X-Hot100-Page':pageGeneration,'X-Hot100-Session-Protocol':'2'});
+const namespacedKey=key=>session.storageNamespace?`${key}:ns:${session.storageNamespace}`:key;
 let route={path:'',kind:'description',detail:''}, routeEpoch=0;
 let models=new Map(), lastFocus=null,restoringReading=false,serviceStopped=false;
 const clone=x=>JSON.parse(JSON.stringify(x));
@@ -47,27 +50,28 @@ function mergeState(base,local,remote){
   return normalizeState(result);
 }
 async function loadSession(){
-  const response=await fetch('/api/session');
+  const response=await fetch('/api/session',{headers:sessionHeaders()});
   if(!response.ok)throw Error('请通过桌面快捷方式启动本地服务。');
-  const data=await response.json();session={token:data.token,revision:data.revision,base:clone(data.state),directory:data.dataDirectory};
-  const previousDirectory=localStorage.getItem('hot100-directory');
+  const data=await response.json();session={token:data.token,revision:data.revision,base:clone(data.state),directory:data.dataDirectory,storageNamespace:data.state.storageNamespace||''};
+  const previousDirectory=localStorage.getItem(namespacedKey('hot100-directory'));
   const sameDirectory=!previousDirectory||previousDirectory===data.dataDirectory;
-  let pending;try{pending=JSON.parse(localStorage.getItem('hot100-pending')||'null');}catch{}
+  let pending;try{pending=JSON.parse(localStorage.getItem(namespacedKey('hot100-pending'))||'null');}catch{}
   if(!sameDirectory)pending=null;
   const initial=Object.keys(data.state).length?data.state:(sameDirectory?state:{});
   state=normalizeState(pending?mergeState(pending.base||{},pending.state,initial):initial);
-  localStorage.setItem('hot100-directory',data.dataDirectory);
+  localStorage.setItem(namespacedKey('hot100-directory'),data.dataDirectory);
   if(data.recovered)setTimeout(()=>notify('主数据损坏，已从上一次备份恢复。原文件仍保留。'),1500);
   if(data.recoveryWarning)setTimeout(()=>modal('学习数据恢复提示',`<p>${esc(data.recoveryWarning)}</p>`),1600);
 }
 persist=function(){
   if(serviceStopped)return;
   pendingSave=true;
-  try{localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem('hot100-pending',JSON.stringify({base:session.base,state}));}catch{}
+  try{localStorage.setItem(namespacedKey(KEY),JSON.stringify(state));localStorage.setItem(namespacedKey('hot100-pending'),JSON.stringify({base:session.base,state}));}catch{}
   if($('#save-state'))$('#save-state').textContent='保存中…';
   clearTimeout(diskTimer);diskTimer=setTimeout(flushDisk,250);
 };
 async function flushDisk(){
+  if(serviceStopped||bootstrapInFlight)return false;
   if(saving)return saving;
   if(!session.token)return false;
   if(!pendingSave)return true;
@@ -78,7 +82,7 @@ async function flushDisk(){
         const response=await fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json','X-Hot100-Token':session.token},body:JSON.stringify({revision:session.revision,state:snapshot})});
         const data=await response.json();
         if(response.status===403){
-          const renewed=await fetch('/api/session');
+          const renewed=await fetch('/api/session',{headers:sessionHeaders()});
           if(!renewed.ok)throw Error('本地服务连接需要刷新');
           const latest=await renewed.json();
           if(latest.dataDirectory!==session.directory)throw Error('学习数据目录已变更，请刷新页面');
@@ -87,7 +91,7 @@ async function flushDisk(){
         if(response.status===409){state=mergeState(base,state,data.state);session.base=clone(data.state);session.revision=data.revision;pendingSave=true;continue;}
         if(!response.ok)throw Error(data.error||'保存失败');
         session.revision=data.revision;session.base=snapshot;
-        if(!pendingSave)localStorage.removeItem('hot100-pending');
+        if(!pendingSave)localStorage.removeItem(namespacedKey('hot100-pending'));
       }
       $('#save-state').textContent='已存储';return true;
     }catch(error){pendingSave=true;$('#save-state').textContent='暂存于浏览器 · 等待重连';return false;}
@@ -108,7 +112,7 @@ async function createEditor(){
   const adapter={instance,getValue:()=>instance.getValue(),setValue:v=>instance.setValue(v),refresh:()=>instance.layout(),hasFocus:()=>instance.hasTextFocus(),focus:()=>instance.focus(),getWrapperElement:()=>$('#editor'),getInputField:()=>$('#editor'),getCursor:()=>{const p=instance.getPosition()||{lineNumber:1,column:1};return{line:p.lineNumber-1,ch:p.column-1};},on:(event,cb)=>event==='change'?instance.onDidChangeModelContent(cb):instance.onDidChangeCursorPosition(cb),switchProblem:p=>{
     const key=draftKey(p.id),lang=language(), ext=extensions[lang];
     if(!models.has(key)){
-      const value=state.codes[key]??(!classic()?localStorage.getItem('hot100-acm:v2:'+key):null)??practiceTemplate(p);
+      const value=state.codes[key]??(!classic()?localStorage.getItem(namespacedKey('hot100-acm:v2:'+key)):null)??practiceTemplate(p);
       const model=monaco.editor.createModel(value,lang==='python3'?'python':lang,monaco.Uri.parse('inmemory://hot100/'+key.replaceAll(':','/')+'/main.'+ext));
       model.updateOptions({tabSize:4,insertSpaces:true});models.set(key,model);
     }
@@ -162,7 +166,7 @@ function routePage(){
 }
 pickProblem=function(id){
   const p=practiceProblem(problems.find(p=>p.id===Number(id))||problems[0]);
-  if(activeJob)cancelJob(false);if(current){saveCode();saveView();state.testInputs[draftKey(current.id)]=customInput;}
+  if(activeJob)cancelJob(false);if(current){saveCode();saveView();saveCurrentInput();}
   loadingCode=true;current=p;state.last=p.id;editor.switchProblem(p);loadingCode=false;
   solutionQuery='';solutionTopic='不限';
   bottomTab='input';loadCases();results=null;
@@ -296,14 +300,14 @@ async function loadTrainingIndex(){
   rows.forEach(row=>trainingIndex.set(row.id,row));
 }
 function mergeTrainingProgress(){
-  const solved=JSON.parse(localStorage.getItem('hot100-acm:v2:progress')||'{}');
+  const solved=JSON.parse(localStorage.getItem(namespacedKey('hot100-acm:v2:progress'))||'{}');
   const added=problems.filter(p=>solved[p.id]==='solved'&&!state.accepted.includes(p.id)&&!state.progressMeta[p.id]?.resetAt);
-  const updates=JSON.parse(localStorage.getItem('training-favorite-changes')||'{}');
+  const updates=JSON.parse(localStorage.getItem(namespacedKey('training-favorite-changes'))||'{}');
   const favorites=new Set(state.favorites);
   Object.entries(updates).forEach(([id,on])=>on?favorites.add(Number(id)):favorites.delete(Number(id)));
   if(added.length||Object.keys(updates).length){
     state.accepted.push(...added.map(p=>p.id));state.favorites=[...favorites];persist();
-    localStorage.removeItem('training-favorite-changes');
+    localStorage.removeItem(namespacedKey('training-favorite-changes'));
   }
 }
 window.addEventListener('pageshow',e=>{if(e.persisted) location.reload();});
@@ -341,12 +345,12 @@ progress=function(){
   saveCode();
   modal('学习进度与本地备份',`<div class="stats-grid"><div class="stat"><b>${state.accepted.length}</b><span>已通过 / 100</span></div><div class="stat"><b>${state.favorites.length}</b><span>已收藏</span></div><div class="stat"><b>${Object.values(state.history).flat().length}</b><span>提交记录</span></div></div><p>代码、进度、笔记和记录自动保存到电脑。更新网站文件不会覆盖这些数据。</p><p class="data-path">进度文件　<code>${esc(session.directory)}${session.directory.includes('\\')?'\\':'/'}learning.json</code></p><div class="solution-actions"><button class="button" id="change-directory">更改保存位置</button><button class="button submit" id="export-v2">导出完整备份</button><button class="button" id="import-v2">导入旧版 / 本地备份</button></div><input id="import-file-v2" type="file" accept=".json" hidden><p class="small muted">在线版记录需先在原网址导出 JSON，再在此导入。导入会合并提交记录，原有同题代码保留恢复副本。</p><details><summary>代码恢复副本（${state.conflicts.length}）</summary>${state.conflicts.slice().reverse().map((c,i)=>`<div class="recovery-row"><span>${c.id} · ${c.key==='notes'?'笔记':'代码'} · ${new Date(c.time).toLocaleString('zh-CN')}</span><button class="text-btn" data-recovery="${state.conflicts.length-1-i}">下载副本</button></div>`).join('')||'<p class="muted">暂无副本</p>'}</details>`);
   $('#change-directory').onclick=storageSettings;
-  $('#export-v2').onclick=()=>{const {cloudSync,pendingCloudReset,...backup}=state;download('hot100-acm-backup.json',JSON.stringify({app:KEY,schemaVersion:2,...backup},null,2),'application/json');};
+  $('#export-v2').onclick=()=>{const {cloudSync,pendingCloudReset,storageNamespace,...backup}=state;download('hot100-acm-backup.json',JSON.stringify({app:KEY,schemaVersion:2,...backup},null,2),'application/json');};
   $('#import-v2').onclick=()=>$('#import-file-v2').click();
   $('#import-file-v2').onchange=async e=>{try{
     const file=e.target.files[0];if(!file)return;if(file.size>64*1024*1024)throw Error('文件超过 64 MB');
     const imported=JSON.parse(await file.text());if(imported.app!==KEY)throw Error('不是本站导出的备份');
-    const incoming=normalizeState(imported);delete incoming.cloudSync;delete incoming.pendingCloudReset;incoming.localEpoch=state.localEpoch;const ids=new Set(problems.map(p=>String(p.id)));
+    const incoming=normalizeState(imported);delete incoming.cloudSync;delete incoming.pendingCloudReset;delete incoming.storageNamespace;incoming.localEpoch=state.localEpoch;const ids=new Set(problems.map(p=>String(p.id)));
     for(const key of ['theme','fontSize','last','split','editorRatio','testsCollapsed','catalogFilters'])if(!Object.hasOwn(imported,key))incoming[key]=state[key];
     for(const key of ['codes','notes'])for(const [id,value] of Object.entries(incoming[key]))if(!(ids.has(id)||(key==='codes'&&ids.has(id.split(':')[0])&&/^\d+:(c:acm|cpp:(acm|core)|python3:core)$/.test(id)))||typeof value!=='string')throw Error('代码或笔记数据格式不正确');
     incoming.accepted=incoming.accepted.filter(id=>ids.has(String(id))).map(Number);incoming.favorites=incoming.favorites.filter(id=>ids.has(String(id))).map(Number);

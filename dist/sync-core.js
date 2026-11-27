@@ -54,6 +54,22 @@ const Hot100SyncCore = (() => {
     view.settings = {updatedAt: state.studySettingsAt || 1, value: state.studySettings};
     return view;
   }
+  function isPristine(state) {
+    if (!state || typeof state !== 'object' || Array.isArray(state) || state.cloudSync || state.pendingCloudReset || state.localEpoch || state.storageNamespace) return false;
+    for (const key of ['accepted', 'favorites', 'conflicts']) if (!Array.isArray(state[key]) || state[key].length) return false;
+    for (const key of ['progressMeta', 'codes', 'notes', 'history', 'testInputs', 'testWorkspaces', 'codeBookmarks']) {
+      const value = state[key];
+      if (value !== undefined && (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length)) return false;
+    }
+    const plan = state.studyPlan;
+    if (!plan || typeof plan !== 'object' || Array.isArray(plan) || plan.resetAt) return false;
+    for (const key of ['learned', 'learnedMeta']) {
+      const value = plan[key];
+      if (value !== undefined && (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length)) return false;
+    }
+    if (!Array.isArray(plan.events) || plan.events.length) return false;
+    return (!state.studySettingsAt || state.studySettingsAt === 1) && equal(state.studySettings, {dailyGoal: 5, reviewLimit: 20, intervals: [1, 2, 4, 7, 15, 30]});
+  }
   function operations(view, known) {
     const result = [];
     for (const domain of ['progress', 'learned', 'events', 'submissions', 'recoveries']) for (const [key, value] of Object.entries(view[domain])) {
@@ -134,7 +150,7 @@ const Hot100SyncCore = (() => {
     }
     return state;
   }
-  return {empty, capture, operations, apply};
+  return {empty, capture, isPristine, operations, apply};
 })();
 
 if (typeof module !== 'undefined') module.exports = Hot100SyncCore;

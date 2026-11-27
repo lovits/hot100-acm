@@ -27,7 +27,7 @@ function syncControls(){
 }
 function switchPractice(lang,mode){
   if(activeJob) cancelJob(false);
-  saveCode();saveView();state.testInputs[draftKey(current.id)]=customInput;
+  saveCode();saveView();saveCurrentInput();
   state.practiceLanguage=lang;state.practiceMode=lang==='c'?'acm':mode;
   const id=current.id;current=null;pickProblem(id);syncControls();
 }

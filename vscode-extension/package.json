@@ -3,7 +3,7 @@
   "publisher": "lovits",
   "displayName": "Hot100 ACM",
   "description": "在 VS Code 中练习 Hot100：ACM 与核心代码模式、题库组合筛选、本机测试、收藏笔记与间隔复习。",
-  "version": "0.2.89",
+  "version": "0.2.87",
   "icon": "resources/taffy-marketplace.png",
   "engines": {
     "vscode": "^1.107.0",
@@ -40,18 +40,6 @@
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "hot100Pro.configurePrivateSync",
-        "title": "Hot100: 配置个人私网同步"
-      },
-      {
-        "command": "hot100Pro.syncPrivate",
-        "title": "Hot100: 立即同步个人数据"
-      },
-      {
-        "command": "hot100Pro.syncConflicts",
-        "title": "Hot100: 查看同步冲突"
-      },
       {
         "command": "hot100Pro.login",
         "title": "LeetCode: 登录",
@@ -457,14 +445,13 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "node scripts/private-package-guard.cjs && npm run compile",
-    "precompile": "node scripts/sync-shared.cjs",
+    "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "test:unit": "node --test \"out/unit/*.unit.test.js\" test/network-retry-test.cjs ../tests/native-static-fallback.test.cjs ../tests/mac-sdk-env.test.cjs",
+    "test:unit": "node --test \"out/unit/*.unit.test.js\"",
     "release": "node scripts/release.mjs",
     "test:judge": "node test/engine-test.js python3 && node test/engine-test.js cpp && node test/c-core-test.js && node test/c-acm-test.js && node test/c-negative-test.js",
     "package": "npx @vscode/vsce@3.7.0 package --no-dependencies --readme-path MARKETPLACE.md"

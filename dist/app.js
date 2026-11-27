@@ -69,7 +69,7 @@ function go(id){if(current?.id===id)return;location.hash='problem/'+id;}
 function renderTest(){
   renderCases();renderResults();
 }
-function saveCode(){if(current&&editor&&!loadingCode){state.codes[draftKey(current.id)]=editor.getValue();persist();}}
+function saveCode(){if(current&&editor&&!loadingCode){const key=draftKey(current.id),value=editor.getValue();if(Object.hasOwn(state.codes,key)||value!==practiceTemplate(problems.find(p=>p.id===current.id)))state.codes[key]=value;persist();}}
 function equalOutput(actual,expected,judge,input){if(judge&&!['tokens','float'].includes(judge))return Hot100Judge.compareACMOutput(judge,actual,expected,input);const a=actual.trim().split(/\s+/).filter(Boolean),b=expected.trim().split(/\s+/).filter(Boolean);if(a.length!==b.length)return false;return a.every((x,i)=>judge==='float'?Number.isFinite(Number(x))&&Math.abs(Number(x)-Number(b[i]))<=1e-6:x===b[i]);}
 function setBusy(on){$('#run').disabled=on;$('#submit').disabled=on;$('#stop').hidden=!on;$('#reset-code').disabled=on;}
 function armTimeout(ms,message){clearTimeout(watchdog);watchdog=setTimeout(()=>{

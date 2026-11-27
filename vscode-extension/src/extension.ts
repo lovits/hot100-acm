@@ -7,7 +7,6 @@ import { migrateLocalData } from './enhanced/migrate';
  */
 
 import * as vscode from 'vscode';
-import { PrivateSync } from './enhanced/privateSync';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AuthManager } from './core/authManager';
@@ -719,8 +718,6 @@ export async function activate(context: vscode.ExtensionContext) {
     await hot100Provider.setEnhancedFilters({...defaultFilters});
     hot100Provider.setGroupBy('category');
     const enhancements=new Enhancements(context,hot100Provider,leetCodeApi);
-    const privateSync=new PrivateSync(context,hot100Provider,()=>enhancements.refreshSyncedPlan());
-    enhancements.onPrivatePlanReset=()=>privateSync.resetPlan();
 
 	// 侧栏状态筛选（未做/已解决/尝试过），点击总进度行或命令面板均可触发
 	context.subscriptions.push(vscode.commands.registerCommand('hot100Pro.setStatusFilter', async () => {
@@ -2532,7 +2529,7 @@ const mp4Uri = vscode.Uri.joinPath(dirUri, videoId + '_v3.mp4');
 			runDebugDisposable,
 			viewSolutionDisposable
 		);
-    return {enhancements,provider:hot100Provider,api:leetCodeApi,privateSync};
+    return {enhancements,provider:hot100Provider,api:leetCodeApi};
 }
 
 /**

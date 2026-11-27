@@ -67,6 +67,10 @@ function updateCaseInput(){
   try{customInput=caseTest(caseRows[caseIndex]).input;}
   catch{customInput=caseRows[caseIndex].join('\n');}
 }
+function saveCurrentInput(){
+  const key=draftKey(current.id), initial=caseTest(caseValues(current.tests[0].input)).input;
+  if(Object.hasOwn(state.testInputs,key)||customInput!==initial)state.testInputs[key]=customInput;
+}
 function saveCases(){
   updateCaseInput();
   const key=draftKey(current.id);

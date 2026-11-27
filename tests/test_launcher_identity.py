@@ -16,8 +16,8 @@ class LauncherIdentityTests(unittest.TestCase):
         loader = importlib.machinery.SourceFileLoader('hot100_launcher', str(file))
         spec = importlib.util.spec_from_loader(loader.name, loader)
         launcher = importlib.util.module_from_spec(spec)
-        loader.exec_module(launcher)
-        with tempfile.TemporaryDirectory() as data:
+        with tempfile.TemporaryDirectory() as data, patch.dict('os.environ', {'LOCALAPPDATA': data}):
+            loader.exec_module(launcher)
             with socket.socket() as probe:
                 probe.bind(('127.0.0.1', 0))
                 port = probe.getsockname()[1]

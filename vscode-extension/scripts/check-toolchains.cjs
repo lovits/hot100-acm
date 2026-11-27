@@ -6,4 +6,4 @@ try{for(const [compiler,extension,source]of [['gcc','c','#include <stdio.h>\nint
  fs.writeFileSync(file,source);execFileSync(compiler,[file,'-o',bin],{timeout:90000,stdio:'pipe'});
  if(execFileSync(bin,{encoding:'utf8',timeout:10000}).trim()!=='hot100')throw Error('Compiler smoke check failed: '+compiler);
  console.log(compiler+' compile/run verified');
-}}finally{fs.rmSync(dir,{recursive:true,force:true,maxRetries:10,retryDelay:300});}
+}}finally{fs.rmSync(dir,{recursive:true,force:true});}

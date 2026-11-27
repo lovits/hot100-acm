@@ -28,7 +28,7 @@ with tempfile.TemporaryDirectory(prefix='hot100-check-',dir=ROOT.parent) as temp
     status,_,_=request('/api/progress');checked('No cross-origin data reads',status==403)
     status,_,_=request('/api/session',headers={'Origin':'https://example.com'});checked('Reject external Origin',status==403)
     status,_,_=request('/api/health',headers={'Host':'attacker.test:23865'});checked('Reject unapproved Host',status==403)
-    status,raw,_=request('/api/session',headers={'Referer':origin+'/'});session=json.loads(raw);checked('Same-origin session',status==200 and bool(session['token']))
+    status,raw,_=request('/api/session',headers={'Referer':origin+'/', 'X-Hot100-Session-Protocol':'2'});session=json.loads(raw);checked('Same-origin session',status==200 and bool(session['token']))
     headers={'Origin':origin,'Content-Type':'application/json','X-Hot100-Token':session['token']}
     status,_,_=request('/api/progress','POST',[],headers);checked('Malformed JSON structure rejected',status==400)
     status,_,_=request('/api/progress','POST',{'revision':0,'state':{'codes':{'1':'print(1)'}}},headers={'Origin':origin});checked('Reject writes without token',status==403)

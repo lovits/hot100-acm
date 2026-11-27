@@ -81,17 +81,74 @@ async function processCloudReset() {
   }
   if (state.pendingCloudReset) throw Error('云端数据持续变化，请稍后重试重置');
 }
-async function runCloudSync() {
+function pristineBrowserStorage() {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if ((key.startsWith('hot100-acm:v2:') && !['hot100-acm:v2:theme', 'hot100-acm:v2:sidebar-width'].includes(key)) || key === 'training-favorite-changes' || key.startsWith('hot100-acm-v1:ns:') || key.startsWith('hot100-pending:ns:')) return false;
+    }
+    const saved = localStorage.getItem('hot100-acm-v1');
+    if (saved && !Hot100SyncCore.isPristine(JSON.parse(saved))) return false;
+    const pending = localStorage.getItem('hot100-pending');
+    if (pending) {
+      const value = JSON.parse(pending);
+      const safe = item => item && typeof item === 'object' && !Array.isArray(item) && (!Object.keys(item).length || Hot100SyncCore.isPristine(item));
+      if (!value || !safe(value.base) || !safe(value.state)) return false;
+    }
+    return true;
+  } catch { return false; }
+}
+function confirmCleanBootstrap() {
+  return new Promise(resolve => {
+    const dialog = $('#modal'); let accepted = false;
+    dialog.addEventListener('close', () => resolve(accepted), {once: true});
+    modal('连接重置后的云端', '<p>云端曾重置数据。本机未检测到学习记录。</p><p>请确认本机和浏览器没有需要保留的旧题解，再作为新设备连接。</p><div class="solution-actions"><button class="button submit" id="cloud-bootstrap-confirm">确认连接</button><button class="button" id="cloud-bootstrap-cancel">取消</button></div>');
+    $('#cloud-bootstrap-confirm').onclick = () => { accepted = true; closeModal(); };
+    $('#cloud-bootstrap-cancel').onclick = () => closeModal();
+  });
+}
+async function runCloudSync(manual = false) {
   if (!cloudConfigured) return;
   cloudIndicator('busy');
   try {
     if (!state.cloudSync) {
+      if (state.pendingCloudReset) throw Error('本地存在未完成的重置但缺少同步版本；请先检查恢复方式');
       const meta = await cloudRequest('GET', '/v1/meta');
-      if ((meta.epoch || meta.planEpoch) && !state.pendingCloudReset) throw Error('云端曾重置数据；请先导出本地备份并检查恢复方式');
-      state.cloudSync = {deviceId: crypto.randomUUID(), epoch: meta.epoch, planEpoch: meta.planEpoch, revision: 0, known: Hot100SyncCore.empty(), outbox: null};
-      await cloudSave();
+      if (meta.epoch || meta.planEpoch) {
+        if (!Hot100SyncCore.isPristine(state) || !pristineBrowserStorage()) throw Error('云端曾重置数据；检测到本地或浏览器旧数据，请先备份并检查恢复方式');
+        if (!manual) throw Error('云端曾重置数据；请手动配置同步并确认这是一台全新设备');
+        if (!await confirmCleanBootstrap()) throw Error('已取消新设备连接');
+        if (!Hot100SyncCore.isPristine(state) || !pristineBrowserStorage()) throw Error('确认期间检测到本地或浏览器数据变更，请先检查');
+        const latest = await cloudRequest('GET', '/v1/meta');
+        if (latest.epoch !== meta.epoch || latest.planEpoch !== meta.planEpoch) throw Error('确认期间云端重置状态发生变化，请重试');
+        if (!await flushDisk() || !Hot100SyncCore.isPristine(state) || !pristineBrowserStorage()) throw Error('本地数据尚未稳定，请检查后重试');
+        const candidate = clone(state);
+        bootstrapInFlight = true;
+        try {
+          const response = await fetch('/api/sync/bootstrap', {method:'POST',headers:{'Content-Type':'application/json','X-Hot100-Token':session.token},body:JSON.stringify({epoch:meta.epoch,planEpoch:meta.planEpoch,revision:session.revision,state:candidate})});
+          const result = await response.json();
+          if (!response.ok) throw Error(result.error || '无法安全初始化同步');
+          if (!same(state,candidate) || !pristineBrowserStorage()) {
+            serviceStopped = true;
+            throw Error('连接期间本地数据发生变化，已停止保存；请先导出当前代码后刷新检查');
+          }
+          pageGeneration = result.page;
+          session.token = result.token; session.revision = result.revision; session.base = clone(result.state);
+          session.storageNamespace = result.state.storageNamespace; state = normalizeState(result.state); pendingSave = false;
+        } finally { bootstrapInFlight = false; }
+      } else {
+        state.cloudSync = {deviceId: crypto.randomUUID(), epoch: meta.epoch, planEpoch: meta.planEpoch, revision: 0, initialPullPending: true, known: Hot100SyncCore.empty(), outbox: null};
+        await cloudSave();
+      }
     }
     if (state.pendingCloudReset) await processCloudReset();
+    if (state.cloudSync.initialPullPending) {
+      const cloud = state.cloudSync;
+      const result = await cloudRequest('GET', '/v1/changes', null, {epoch: cloud.epoch, after: cloud.revision});
+      applyCloud(result, {drafts: {}});
+      state.cloudSync.initialPullPending = false;
+      await cloudSave();
+    }
     let rounds = 0;
     while (++rounds <= 30) {
       let cloud = state.cloudSync;
@@ -125,9 +182,9 @@ async function runCloudSync() {
     throw error;
   }
 }
-function syncCloud() {
+function syncCloud(manual = false) {
   if (cloudBusy) return cloudBusy;
-  const run = () => runCloudSync();
+  const run = () => runCloudSync(manual);
   cloudBusy = (navigator.locks ? navigator.locks.request('hot100-private-sync', {ifAvailable: true}, lock => lock ? run() : undefined) : run()).finally(() => { cloudBusy = null; });
   return cloudBusy;
 }
@@ -138,14 +195,14 @@ async function cloudDialog() {
   modal('远程同步', `<p>通过已加入的 Tailscale 私网同步学习进度、代码和笔记。</p><p>状态：${esc({offline:'离线',busy:'同步中',ok:'已同步',conflict:'有待处理内容'}[cloudState])}</p><p><label>私网设备名 <input id="cloud-host" value="${esc(info.host || '')}"></label></p><p><label>私网地址 <input id="cloud-address" value="${esc(info.address || '')}"></label></p><p><label>同步令牌 <input id="cloud-token" type="password" autocomplete="off" placeholder="${info.configured ? '已配置，留空保持原令牌' : '输入个人同步令牌'}"></label></p><div class="solution-actions"><button class="button submit" id="cloud-save">保存并同步</button>${info.configured ? '<button class="button" id="cloud-now">立即同步</button>' : ''}</div>`);
   $('#cloud-save').onclick = async () => {
     const token = $('#cloud-token').value;
-    if (info.configured && !token) { closeModal(); return syncCloud().catch(error => notify('同步失败：' + error.message)); }
+    if (info.configured && !token) { closeModal(); return syncCloud(true).catch(error => notify('同步失败：' + error.message)); }
     try {
       const response = await fetch('/api/sync/config', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Hot100-Token': session.token}, body: JSON.stringify({host: $('#cloud-host').value.trim(), address: $('#cloud-address').value.trim(), token})});
       const result = await response.json(); if (!response.ok) throw Error(result.error || '配置失败');
-      cloudConfigured = true; closeModal(); await syncCloud(); notify('同步完成');
+      cloudConfigured = true; closeModal(); await syncCloud(true); notify('同步完成');
     } catch (error) { notify('同步失败：' + error.message); }
   };
-  if ($('#cloud-now')) $('#cloud-now').onclick = () => { closeModal(); syncCloud().catch(error => notify('同步失败：' + error.message)); };
+  if ($('#cloud-now')) $('#cloud-now').onclick = () => { closeModal(); syncCloud(true).catch(error => notify('同步失败：' + error.message)); };
 }
 function installCloudSync() {
   $('#nav-sync').onclick = cloudDialog; cloudIndicator('offline');

@@ -30,7 +30,7 @@ with tempfile.TemporaryDirectory() as tmp:
     thread.start()
     try:
         for _ in range(2):
-            request = urllib.request.Request('http://127.0.0.1:23868/api/session', headers={'Referer': 'http://127.0.0.1:23868/'})
+            request = urllib.request.Request('http://127.0.0.1:23868/api/session', headers={'Referer': 'http://127.0.0.1:23868/', 'X-Hot100-Session-Protocol': '2'})
             with urllib.request.urlopen(request) as response:
                 session = json.load(response)
             assert session['state'] == progress['state']

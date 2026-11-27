@@ -5,7 +5,6 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const desktop = require('../native_judge/runner');
-const plugin = require('../vscode-extension/runtime/native_judge/runner');
 
 test('static compilation failure retries once with the original dynamic arguments', {skip:process.platform!=='win32'}, async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'hot100-static-fallback-'));
@@ -19,11 +18,6 @@ test('static compilation failure retries once with the original dynamic argument
     const result = await desktop.runProcess(compiler, [...args, '-static'], {cwd:dir, phase:'compile'});
     assert.equal(result.code, 0); assert.equal(result.stdout, 'dynamic-ok');
     assert.equal(fs.readFileSync(log, 'utf8'), 'static\ndynamic\n');
-    if (process.platform === 'win32') {
-      fs.writeFileSync(log, '');
-      const pluginResult = await plugin.runProcess(compiler, args, {cwd:dir, phase:'compile'});
-      assert.equal(pluginResult.code, 0); assert.equal(pluginResult.stdout, 'dynamic-ok');
-      assert.equal(fs.readFileSync(log, 'utf8'), 'static\ndynamic\n');
-    }
+
   } finally { fs.rmSync(dir, {recursive:true, force:true}); }
 });

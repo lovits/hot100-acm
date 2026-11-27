@@ -1,25 +1,21 @@
 # 自建远程同步：服务器和两台电脑
 
-本文适用于桌面版 v1.0.15 及 VS Code 插件 0.2.88 及以后包含此功能的版本。请确认桌面顶栏有云图标，插件命令面板有“Hot100: 配置个人私网同步”。同步服务是单用户设计：同一个服务和令牌对应同一份学习数据，请勿多人共用。
+本文介绍 Mac 和 Windows 桌面版之间的同步。请确认桌面顶栏有云图标。同步服务是单用户设计：同一个服务和令牌对应同一份学习数据，请勿多人共用。
 
 任何能够运行 Docker 和 Tailscale 的 Linux 服务器均可使用，包括不同云厂商的云主机或自己的 Linux 机器。下面以 Ubuntu Linux、MySQL 8 和 Tailscale 私网 HTTPS 为例。当前客户端只支持 Tailscale 的 `*.ts.net` 设备名、Tailscale IP 和 HTTPS 443；尚不支持普通域名、自定义端口或其他 VPN。无需购买域名，也无需对公网开放数据库或 API 端口。服务器仍需能联网安装软件并与 Tailscale 建立连接。
 
-## 获取支持同步的桌面包和插件
+## 获取支持同步的桌面包
 
-当前源码可使用已有的同平台 Hot100 运行时制作测试包；旧版 Release 本身不含本次新功能。构建机需要 Node.js、Python 3、扩展依赖，以及已有的桌面运行时包。以仓库根目录为当前目录：
+当前源码可使用已有的同平台 Hot100 运行时制作测试包；旧版 Release 本身不含本次新功能。构建机需要 Node.js、Python 3，以及已有的桌面运行时包。以仓库根目录为当前目录：
 
 ```sh
-cd vscode-extension
-npm ci
-npm run compile
-cd ..
 # macOS：使用本机已有的同架构 Hot100.app 作为运行时
 python3 scripts/stage_private_macos.py --source-app /path/to/Hot100.app --output-app /path/to/Hot100-sync.app
 # Windows：使用已有的 Windows x64 Release ZIP 作为运行时
 python3 scripts/stage_private_windows.py --source-zip /path/to/Hot100-Windows-x64-release.zip --output-zip /path/to/Hot100-Windows-sync.zip
 ```
 
-把 macOS 成品复制到“应用程序”；Windows 完整解压后运行 `Hot100/Start-Hot100.vbs`。VS Code 插件可在 `vscode-extension` 目录执行 `HOT100_PRIVATE_SYNC_BUILD=1 npm run package` 生成本地 VSIX（PowerShell 使用 `$env:HOT100_PRIVATE_SYNC_BUILD="1"; npm run package`），再从 VSIX 安装。上述测试包不是新的官方 Release；构建不应包含个人 `.env`、`sync-auth.json` 或学习数据。
+把 macOS 成品复制到“应用程序”；Windows 完整解压后运行 `Hot100/Start-Hot100.vbs`。上述测试包不是新的官方 Release；构建不应包含个人 `.env`、`sync-auth.json` 或学习数据。
 
 ## 1. 准备服务器
 
@@ -74,11 +70,7 @@ tailscale status
 
 桌面令牌保存在该机用户数据目录的 `Hot100ACM/sync-auth.json`；不要分享这个文件。macOS 位于 `~/Library/Application Support/Hot100ACM/`，Windows 位于 `%LOCALAPPDATA%\\Hot100ACM\\`。
 
-## 5. VS Code 插件（可选）
-
-安装包含同步功能的插件构建，并打开一个用于保存题解的工作区。在命令面板执行“Hot100: 配置个人私网同步”，依次输入相同的设备名、地址和令牌。同机桌面端已配置时，运行配置命令可选择复用其配置；插件不会在首次安装时自动启用同步。令牌存入 VS Code Secret Storage。命令“Hot100: 立即同步个人数据”和“Hot100: 查看同步冲突”可手动检查。当前插件包构建保护需要显式设置 `HOT100_PRIVATE_SYNC_BUILD=1`；不要将个人配置或令牌打包发布。
-
-## 6. 常见问题
+## 5. 常见问题
 
 - **连接失败**：检查三个设备的 Tailscale 登录、访问权限、服务器在线状态、Serve 状态、完整设备域名、IP、HTTPS 证书与 API 容器日志。
 - **认证失败**：检查两台电脑输入的令牌是否与服务器 `.env` 中一致。更换令牌需要同时更新服务器和所有客户端。

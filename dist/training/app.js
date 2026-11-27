@@ -113,8 +113,10 @@ function esc(s) {
 }
 
 function storageKey(id, lang, mode) {
-  return `hot100-acm:v2:${id}:${lang}:${mode}`;
+  return trainingKey(`hot100-acm:v2:${id}:${lang}:${mode}`);
 }
+let trainingNamespace = '';
+const trainingKey = key => trainingNamespace ? `${key}:ns:${trainingNamespace}` : key;
 const PROGRESS_KEY = 'hot100-acm:v2:progress';
 const STAR_KEY = 'hot100-acm:v2:starred';
 const THEME_KEY = 'hot100-acm:v2:theme';
@@ -639,7 +641,7 @@ function truncate(s, n) {
 function markProgress(id, status) {
   if (status === 'failed' && state.progress[id] === 'solved') return; // 已通过的不降级
   state.progress[id] = status;
-  localStorage.setItem(PROGRESS_KEY, JSON.stringify(state.progress));
+  localStorage.setItem(trainingKey(PROGRESS_KEY), JSON.stringify(state.progress));
   renderList();
   renderProgress();
   const pill = $('problemStatus');
@@ -761,10 +763,10 @@ function setupEvents() {
     const id = state.selectedId;
     if (state.starred[id]) delete state.starred[id];
     else state.starred[id] = true;
-    localStorage.setItem(STAR_KEY, JSON.stringify(state.starred));
-    const changes=JSON.parse(localStorage.getItem('training-favorite-changes')||'{}');
+    localStorage.setItem(trainingKey(STAR_KEY), JSON.stringify(state.starred));
+    const changes=JSON.parse(localStorage.getItem(trainingKey('training-favorite-changes'))||'{}');
     changes[state.selectedId]=!!state.starred[state.selectedId];
-    localStorage.setItem('training-favorite-changes', JSON.stringify(changes));
+    localStorage.setItem(trainingKey('training-favorite-changes'), JSON.stringify(changes));
     renderProblem();
     renderList();
   });
@@ -866,13 +868,20 @@ async function boot() {
     return;
   }
   try {
-    judgeSession = await (await fetch('/api/session')).json();
-    state.progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
+    const page=document.querySelector('meta[name="hot100-page"]')?.content||'';
+    const response=await fetch('/api/session',{headers:{'X-Hot100-Page':page,'X-Hot100-Session-Protocol':'2'}});
+    if(!response.ok)throw Error('页面已过期，请刷新后重试');
+    judgeSession = await response.json();
+    trainingNamespace=judgeSession.state.storageNamespace||'';
+    state.progress = JSON.parse(localStorage.getItem(trainingKey(PROGRESS_KEY)) || '{}');
     for (const id of judgeSession.state.accepted || []) if (state.problems.some(p => p.id === id)) state.progress[id] = 'solved';
-    const pendingStars=JSON.parse(localStorage.getItem('training-favorite-changes')||'{}');
+    const pendingStars=JSON.parse(localStorage.getItem(trainingKey('training-favorite-changes'))||'{}');
     state.starred=Object.fromEntries((judgeSession.state.favorites||[]).map(id=>[id,true]));
     Object.assign(state.starred,pendingStars);
-  } catch (e) { state.progress = {}; state.starred = {}; }
+  } catch (e) {
+    $('splash').querySelector('.splash-sub').textContent = '本地会话不可用或页面已过期，请先保存其他窗口中的代码，再刷新此页面。';
+    return;
+  }
 
   state.selectedId = state.problems[0].id;
   applyUrlParams();

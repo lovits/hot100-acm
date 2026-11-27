@@ -20,7 +20,6 @@ const {evaluate}=require('../../engine');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const {header}=require('../../c-driver');
 export class Enhancements {
-    onPrivatePlanReset?:()=>Promise<boolean>;
     private output=vscode.window.createOutputChannel('Hot100 本机评测');
     private planPanel?: vscode.WebviewPanel;
     private usagePanel?: vscode.WebviewPanel;
@@ -67,7 +66,6 @@ export class Enhancements {
     get modeMap():Record<string,string>{return this.context.globalState.get('enhancedModes',{});}
     mode(id:string):'acm'|'core'{return this.modeMap[id]==='core'?'core':'acm';}
     get state():PlanState{return this.context.globalState.get('enhancedPlan',emptyPlan());}
-    refreshSyncedPlan():void {this.provider.rerender();if(this.planPanel)this.showPlan();}
     get intervals():number[]{return intervalsOf(vscode.workspace.getConfiguration('hot100Pro').get('reviewIntervals'));}
     language(id:string):string {return this.context.globalState.get<Record<string,string>>('enhancedLanguages',{})[id]||this.context.globalState.get('enhancedLanguage','python3');}
     private async rememberLanguage(id:string,language:string) {
@@ -214,7 +212,6 @@ export class Enhancements {
     async resetPlan() {
         const choice=await vscode.window.showWarningMessage('重置学习计划？将清空全部学习与复习记录、日历和完成进度，从零开始；保留目标设置、题库通过状态、收藏、笔记和代码。此操作无法撤销。',{modal:true},'确认重置');
         if(choice!=='确认重置')return;
-        if(this.onPrivatePlanReset && await this.onPrivatePlanReset())return;
         await this.context.globalState.update('enhancedPlan',emptyPlan());
         this.provider.rerender();this.showPlan();
     }
