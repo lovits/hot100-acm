@@ -26,17 +26,7 @@ export class PrivateSync {
         context.subscriptions.push(this.status,vscode.commands.registerCommand('hot100Pro.configurePrivateSync',()=>this.configure()),vscode.commands.registerCommand('hot100Pro.syncPrivate',()=>this.manual()),vscode.commands.registerCommand('hot100Pro.syncConflicts',()=>this.showConflicts()));
         const timer=setInterval(()=>{void this.sync().catch(()=>{});},30000);
         context.subscriptions.push({dispose:()=>clearInterval(timer)},vscode.workspace.onDidSaveTextDocument(()=>{void this.sync().catch(()=>{});}));
-        void this.connectDesktop().catch(()=>{});
-    }
-    private async connectDesktop():Promise<void>{
-        if(!this.context.globalState.get(SERVER)&&!await this.context.secrets.get(SECRET)){
-            const desktop=await desktopSyncConfig();
-            if(desktop){
-                await this.context.secrets.store(SECRET,desktop.token);
-                await this.context.globalState.update(SERVER,{host:desktop.host,address:desktop.address});
-            }
-        }
-        await this.sync();
+        void this.sync().catch(()=>{});
     }
     private async configure():Promise<void>{
         const previous=this.context.globalState.get<PrivateSyncServer>(SERVER),desktop=await desktopSyncConfig();
