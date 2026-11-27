@@ -50,11 +50,11 @@ code --install-extension ./hot100-practice-0.2.89.vsix
 
 | 平台 | 下载 |
 | --- | --- |
-| macOS · Apple Silicon | [Hot100-macOS-arm64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.16/Hot100-macOS-arm64-release.zip) |
-| macOS · Intel | [Hot100-macOS-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.16/Hot100-macOS-x64-release.zip) |
-| Windows · x64 | [Hot100-Windows-x64-release.zip](https://github.com/lovits/hot100-acm/releases/download/v1.0.16/Hot100-Windows-x64-release.zip) |
+| macOS · Apple Silicon | [Hot100-macOS-arm64.dmg](https://github.com/lovits/hot100-acm/releases/download/v1.0.16/Hot100-macOS-arm64.dmg) |
+| macOS · Intel | [Hot100-macOS-x64.dmg](https://github.com/lovits/hot100-acm/releases/download/v1.0.16/Hot100-macOS-x64.dmg) |
+| Windows · x64 | [Hot100-Windows-x64-Setup.exe](https://github.com/lovits/hot100-acm/releases/download/v1.0.16/Hot100-Windows-x64-Setup.exe) |
 
-macOS 解压后打开 `Hot100.app`；Windows 完整解压后，从 `Hot100/Start-Hot100.vbs` 启动。桌面包与插件独立发布，分别在对应 Release 中更新。
+macOS 打开 DMG 后将 `Hot100.app` 拖入“应用程序”；Windows 运行安装程序并选择安装位置。桌面包与插件独立发布，分别在对应 Release 中更新。
 
 ## 功能
 

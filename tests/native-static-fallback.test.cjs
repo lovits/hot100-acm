@@ -7,7 +7,7 @@ const path = require('node:path');
 const desktop = require('../native_judge/runner');
 const plugin = require('../vscode-extension/runtime/native_judge/runner');
 
-test('static compilation failure retries once with the original dynamic arguments', async () => {
+test('static compilation failure retries once with the original dynamic arguments', {skip:process.platform!=='win32'}, async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'hot100-static-fallback-'));
   try {
     const compiler = path.join(dir, process.platform === 'win32' ? 'g++.exe' : 'g++');

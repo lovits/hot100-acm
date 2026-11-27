@@ -48,7 +48,7 @@ body:not(.catalog-mode) .hint p{line-height:22px;font-size:14px}
 #problem-content h3+.format-text{margin-top:0}
 #problem-content .example{margin:24px 0}
 #problem-content .example-content{padding-left:12px;margin-top:8px}
-#problem-content .example pre{font-size:clamp(13px,2.35cqi,14px);line-height:1.6}
+#problem-content .example pre{font-size:clamp(14px,2.6cqi,15px);line-height:1.6}
 #problem-content .example-head .text-btn{font-size:12px;min-height:26px}
 body:not(.catalog-mode) .problem-bottom{height:36px;font-size:12px;border-top:0;padding:0 12px;background:#fafafa}
 body:not(.catalog-mode) .editor-header{padding:0 12px}
