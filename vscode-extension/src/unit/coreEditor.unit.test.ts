@@ -20,6 +20,6 @@ test('100 题的 Python 初始模板在两种模式均可解析',()=>{
         {name:p.id+':training-core',code:p.core.templates.python3},
         {name:p.id+':acm',code:p.acm.template.python3}
     ]);
-    const r=spawnSync('python3',['-X','utf8','-c','import json,sys\nfor row in json.load(sys.stdin): compile(row["code"],row["name"],"exec")'],{input:JSON.stringify(sources),encoding:'utf8',timeout:10000});
+    const r=spawnSync(process.env.HOT100_TEST_PYTHON||'python3',['-X','utf8','-c','import json,sys\nfor row in json.load(sys.stdin): compile(row["code"],row["name"],"exec")'],{input:JSON.stringify(sources),encoding:'utf8',timeout:10000});
     assert.equal(r.status,0,r.stderr);
 });

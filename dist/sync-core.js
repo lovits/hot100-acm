@@ -113,7 +113,9 @@ const Hot100SyncCore = (() => {
       else if (change.kind === 'conflict') addConflict(state, value.mode === 'note' ? 'notes' : 'codes', value.mode === 'note' ? value.problemId : draftKey(value.problemId, value.lang, value.mode), value.mode === 'note' ? value.note : value.code);
       else if (change.kind === 'recovery') {
         const {kind, recoveryId: id, ...entry} = value;
-        if (!state.conflicts.some(c => c.key === entry.key && String(c.id) === entry.id && c.value === entry.value)) state.conflicts.push(entry);
+        const existing = state.conflicts.find(c => c.key === entry.key && String(c.id) === entry.id && c.value === entry.value);
+        if (existing) existing.time = entry.time;
+        else state.conflicts.push(entry);
         known.recoveries[key] = {recoveryId:id, ...entry};
       } else if (change.kind === 'submission') {
         const rows = state.history[value.id] || (state.history[value.id] = []);

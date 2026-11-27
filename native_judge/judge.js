@@ -8,7 +8,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { runProcess, commandExists, DEFAULT_TIMEOUT_MS } = require('./runner');
+const { runProcess, commandExists, compileArgsFor, DEFAULT_TIMEOUT_MS } = require('./runner');
 const { buildPythonDriver, buildCppDriver } = require('./core-driver');
 
 const { compareCoreResult, compareACMOutput } = require('../dist/judge-rules');
@@ -52,9 +52,7 @@ async function judgeACM({ language, code, tests, judge }) {
       const source = path.join(tmp, language === 'c' ? 'main.c' : 'main.cpp');
       const binary = path.join(tmp, process.platform === 'win32' ? 'main.exe' : 'main');
       fs.writeFileSync(source, code, 'utf8');
-      const args = language === 'c'
-        ? [source, '-O2', '-std=c11', '-lm', '-o', binary]
-        : [source, '-O2', '-std=c++17', '-o', binary];
+      const args = compileArgsFor(language, source, binary);
       const compiled = await runProcess(compiler, args, { cwd: tmp, phase: 'compile' });
       if (compiled.code !== 0 || compiled.timedOut) return { error: compiled.stderr || '编译失败', phase: 'compile' };
       runCmd = { command: binary, args: [] };
@@ -129,7 +127,7 @@ async function judgeCore({ language, code, core, tests }) {
       const casesFile = path.join(tmp, 'cases.json');
       fs.writeFileSync(srcFile, source, 'utf8');
       fs.writeFileSync(casesFile, JSON.stringify(cases.map(c => core.kind === 'ops' ? [c.ops,c.args,c.expected] : [c.args,c.expected])), 'utf8');
-      const compiled = await runProcess(compiler, [srcFile, '-O2', '-std=c++17', '-o', binary], { cwd: tmp, phase: 'compile' });
+      const compiled = await runProcess(compiler, compileArgsFor('cpp', srcFile, binary), { cwd: tmp, phase: 'compile' });
       if (compiled.code !== 0 || compiled.timedOut) {
         return { error: '编译错误（驱动已注入，请检查核心函数/类签名）', compileError: compiled.stderr || compiled.error, phase: 'compile' };
       }

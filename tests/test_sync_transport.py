@@ -52,6 +52,36 @@ class SyncTransportTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     transport.request('GET', '/v1/changes', query={'epoch': 0, 'after': -1})
 
+    def test_retry_only_transient_get_failures(self):
+        class Response:
+            status = 200
+            def read(self, limit):
+                return b'{}'
+
+        class Connection:
+            attempts = 0
+            def __init__(self, host, address):
+                pass
+            def request(self, method, path, body, headers):
+                Connection.attempts += 1
+                if Connection.attempts == 1:
+                    raise TimeoutError('simulated timeout')
+            def getresponse(self):
+                return Response()
+            def close(self):
+                pass
+
+        with tempfile.TemporaryDirectory() as directory:
+            transport = SyncTransport(directory)
+            transport.configure(CONFIG)
+            with patch('sync_transport.PrivateHTTPSConnection', Connection), patch('sync_transport.time.sleep'):
+                self.assertEqual(transport.request('GET', '/v1/meta'), (200, {}))
+                self.assertEqual(Connection.attempts, 2)
+                Connection.attempts = 0
+                with self.assertRaises(TimeoutError):
+                    transport.request('POST', '/v1/sync', payload={})
+                self.assertEqual(Connection.attempts, 1)
+
 
 if __name__ == '__main__':
     unittest.main()

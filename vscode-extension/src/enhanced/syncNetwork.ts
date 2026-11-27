@@ -24,7 +24,15 @@ export function validPrivateServer(server:PrivateSyncServer):boolean {
     return family===6 && server.address.toLowerCase().startsWith('fd7a:115c:a1e0:');
 }
 export class SyncHttpError extends Error {constructor(message:string,readonly status:number){super(message);}}
-export function syncRequest(server:PrivateSyncServer, token:string, method:'GET'|'POST', route:string, body?:unknown):Promise<any> {
+export async function syncRequest(server:PrivateSyncServer, token:string, method:'GET'|'POST', route:string, body?:unknown):Promise<any> {
+    try{return await syncRequestOnce(server,token,method,route,body);}
+    catch(error){
+        if(method!=='GET'||!['ETIMEDOUT','ECONNRESET','ECONNREFUSED','ECONNABORTED','EHOSTUNREACH','ENETUNREACH'].includes((error as NodeJS.ErrnoException).code||''))throw error;
+        await new Promise(resolve=>setTimeout(resolve,250));
+        return syncRequestOnce(server,token,method,route,body);
+    }
+}
+function syncRequestOnce(server:PrivateSyncServer, token:string, method:'GET'|'POST', route:string, body?:unknown):Promise<any> {
     if(!validPrivateServer(server)||!/^[A-Za-z0-9_-]{32,256}$/.test(token))return Promise.reject(Error('私网同步配置无效'));
     if(!/^\/v1\/(meta|changes\?epoch=\d+&after=\d+|sync|reset-plan|reset-all)$/.test(route))return Promise.reject(Error('不支持的同步请求'));
     return new Promise((resolve,reject)=>{
@@ -40,7 +48,7 @@ export function syncRequest(server:PrivateSyncServer, token:string, method:'GET'
                 resolve(value);
             }catch(error){reject(error);}});
         });
-        request.on('timeout',()=>request.destroy(Error('同步连接超时')));
+        request.on('timeout',()=>request.destroy(Object.assign(Error('同步连接超时'),{code:'ETIMEDOUT'})));
         request.on('error',reject);
         request.end(data);
     });

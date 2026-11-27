@@ -8,6 +8,7 @@ import re
 import secrets
 import socket
 import ssl
+import time
 from urllib.parse import urlencode
 
 MAX_RESPONSE = 32 * 1024 * 1024
@@ -88,14 +89,19 @@ class SyncTransport:
         elif query:
             raise ValueError('不支持的同步参数')
         config = self.load()
-        connection = PrivateHTTPSConnection(config['host'], config['address'])
-        try:
-            body = None if payload is None else json.dumps(payload, ensure_ascii=False).encode('utf-8')
-            connection.request(method, path, body=body, headers={'Authorization': 'Bearer ' + config['token'], 'Content-Type': 'application/json'})
-            response = connection.getresponse()
-            raw = response.read(MAX_RESPONSE + 1)
-            if len(raw) > MAX_RESPONSE:
-                raise ValueError('同步响应过大')
-            return response.status, json.loads(raw)
-        finally:
-            connection.close()
+        body = None if payload is None else json.dumps(payload, ensure_ascii=False).encode('utf-8')
+        for attempt in range(2):
+            connection = PrivateHTTPSConnection(config['host'], config['address'])
+            try:
+                connection.request(method, path, body=body, headers={'Authorization': 'Bearer ' + config['token'], 'Content-Type': 'application/json'})
+                response = connection.getresponse()
+                raw = response.read(MAX_RESPONSE + 1)
+                if len(raw) > MAX_RESPONSE:
+                    raise ValueError('同步响应过大')
+                return response.status, json.loads(raw)
+            except (TimeoutError, ConnectionError):
+                if method != 'GET' or attempt:
+                    raise
+                time.sleep(0.25)
+            finally:
+                connection.close()

@@ -33,7 +33,15 @@ function commandExists(command) {
  * @param {{cwd?:string, input?:string, timeout?:number, cpuSeconds?:number, limits?:boolean, phase?:'compile'|'run'}} options
  * @returns {Promise<{code:number, stdout:string, stderr:string, timedOut:boolean, ms:number, killedByLimit?:string}>}
  */
-function runProcess(command, args, options = {}) {
+async function runProcess(command, args, options = {}) {
+  const result = await runProcessOnce(command, args, options);
+  if (options.phase === 'compile' && args.includes('-static') && result.code !== 0 && !result.timedOut) {
+    return runProcessOnce(command, args.filter(arg => arg !== '-static'), options);
+  }
+  return result;
+}
+
+function runProcessOnce(command, args, options = {}) {
   return new Promise((resolve) => {
     const started = Date.now();
     const limit = options.limits !== false && process.platform !== 'win32';
@@ -95,9 +103,11 @@ function runProcess(command, args, options = {}) {
 }
 
 function compileArgsFor(language, source, output) {
-  return language === 'c'
+  const args = language === 'c'
     ? [source, '-O2', '-std=c11', '-lm', '-o', output]
     : [source, '-O2', '-std=c++17', '-o', output];
+  if (process.platform === 'win32') args.push('-static');
+  return args;
 }
 
 /**
@@ -186,5 +196,5 @@ async function runCode({ language, code, input }) {
   }
 }
 
-module.exports = { runProcess, commandExists, checkCode, runCode, DEFAULT_TIMEOUT_MS };
+module.exports = { runProcess, commandExists, checkCode, runCode, compileArgsFor, DEFAULT_TIMEOUT_MS };
 

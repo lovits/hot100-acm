@@ -19,6 +19,23 @@ function commandExists(command) {
   return new Promise((resolve) => {
     if(command==='python3' && process.env.HOT100_PYTHON) return resolve(process.env.HOT100_PYTHON);
     if (process.platform === 'win32') {
+      if(command==='python3') {
+        execFile('where.exe', ['python3'], (_error, first) => {
+          execFile('where.exe', ['python'], (_fallbackError, second) => {
+            const candidates=[...new Set(`${first||''}\n${second||''}`.split(/\r?\n/).map(x=>x.trim()).filter(Boolean))];
+            candidates.sort((a,b)=>Number(/[/\\]WindowsApps[/\\]/i.test(a))-Number(/[/\\]WindowsApps[/\\]/i.test(b)));
+            const probe=(index)=>{
+              if(index>=candidates.length)return resolve(null);
+              execFile(candidates[index],['--version'],{timeout:5000,windowsHide:true},(error,stdout,stderr)=>{
+                if(!error && /^Python 3\./.test((stdout||stderr||'').trim()))return resolve(candidates[index]);
+                probe(index+1);
+              });
+            };
+            probe(0);
+          });
+        });
+        return;
+      }
       execFile('where.exe', [command], (error, stdout) => resolve(error ? null : stdout.trim().split(/\r?\n/)[0]));
       return;
     }
@@ -35,7 +52,16 @@ function commandExists(command) {
  * @param {{cwd?:string, input?:string, timeout?:number, cpuSeconds?:number, limits?:boolean, phase?:'compile'|'run'}} options
  * @returns {Promise<{code:number, stdout:string, stderr:string, timedOut:boolean, ms:number, killedByLimit?:string}>}
  */
-function runProcess(command, args, options = {}) {
+async function runProcess(command, args, options = {}) {
+  const result = await runProcessOnce(command, args, options);
+  const compiler = require('path').basename(command);
+  if (process.platform === 'win32' && options.phase === 'compile' && args.includes('-o') && /^(?:gcc|g\+\+)(?:[-.\d]*)(?:\.exe)?$/i.test(compiler) && result.code !== 0 && !result.timedOut) {
+    return runProcessOnce(command, args, {...options, dynamicFallback:true});
+  }
+  return result;
+}
+
+function runProcessOnce(command, args, options = {}) {
   return new Promise((resolve) => {
     const started = Date.now();
     const limit = options.limits !== false && process.platform !== 'win32';
@@ -45,7 +71,7 @@ function runProcess(command, args, options = {}) {
     if(process.platform==='darwin' && ['g++','clang++'].includes(require('path').basename(command))) args=['-I',require('path').join(__dirname,'include'),...args];
     if(options.phase==='compile' && args[0]?.endsWith('.cpp') && !/cl(?:\.exe)?$/i.test(command)) args=['-x','c++',...args];
     if(options.phase==='compile' && args[0]?.endsWith('.c') && !/cl(?:\.exe)?$/i.test(command)) args=['-x','c',...args];
-    if(isCompile)args=require('./compiler-command').compilerArgs(command,args);
+    if(isCompile){args=require('./compiler-command').compilerArgs(command,args);if(options.dynamicFallback)args=args.filter(arg=>arg!=='-static');}
     const realArgs = limit
       ? ['-c', `ulimit -t ${cpuSec} 2>/dev/null; ulimit -v ${DEFAULT_MEM_KB} 2>/dev/null; exec "$@"`, 'runner', command, ...args]
       : args;
