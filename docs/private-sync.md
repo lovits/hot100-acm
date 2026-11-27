@@ -6,16 +6,7 @@
 
 ## 获取支持同步的桌面包
 
-当前源码可使用已有的同平台 Hot100 运行时制作测试包；旧版 Release 本身不含本次新功能。构建机需要 Node.js、Python 3，以及已有的桌面运行时包。以仓库根目录为当前目录：
-
-```sh
-# macOS：使用本机已有的同架构 Hot100.app 作为运行时
-python3 scripts/stage_private_macos.py --source-app /path/to/Hot100.app --output-app /path/to/Hot100-sync.app
-# Windows：使用已有的 Windows x64 Release ZIP 作为运行时
-python3 scripts/stage_private_windows.py --source-zip /path/to/Hot100-Windows-x64-release.zip --output-zip /path/to/Hot100-Windows-sync.zip
-```
-
-把 macOS 成品复制到“应用程序”；Windows 完整解压后运行 `Hot100/Start-Hot100.vbs`。上述测试包不是新的官方 Release；构建不应包含个人 `.env`、`sync-auth.json` 或学习数据。
+从 [v1.0.17 Release](https://github.com/lovits/hot100-acm/releases/tag/v1.0.17) 下载对应平台的正式安装包：Mac 根据处理器选择 arm64 或 x64 DMG，Windows 选择 x64 安装程序。安装后打开应用，确认顶栏有云图标。
 
 ## 1. 准备服务器
 
